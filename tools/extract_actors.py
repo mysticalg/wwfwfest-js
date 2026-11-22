@@ -96,7 +96,9 @@ def main():
                            (0x10832, 0x1084a, 0x10862, 0x1087a)],
         'standingAttacks': [descriptor(address) for address in (0x11a90, 0x19206)],
         'standingPunchAssist': descriptor(0x11aac),
-        'groundAnimations': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854+action*4)[0]) for action in (60,62,117)},
+        'groundAnimations': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854+action*4)[0]) for action in (8,60,62,117,121)},
+        'tauntAnimations': [descriptor(struct.unpack_from('>I', program, 0x1954c+i*4)[0]) for i in range(12)],
+        'tauntRepeats': list(program[0x1957c:0x19588]),
         'standingReactions': [descriptor(address) for address in (0x1a2c0, 0x1a612)],
         'contacts': [list(program[0x2411c + index * 7:0x2411c + (index + 1) * 7])
                      for index in range(34)],

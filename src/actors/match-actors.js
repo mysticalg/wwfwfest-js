@@ -116,7 +116,7 @@ export class MatchActors {
   }
  }}
  computer(){for(const fighter of this.participants)if(fighter.nativeBody&&(this.match.ai||this.match.world.tagTeams&&!(fighter.original.flags56&128)))stepComputerGrapple(fighter.original,{ground:this.match.world.nativeMovementAI});}
- stepReferee(){this.referee.step();this.match.soundCommands.push(...this.referee.sounds);}
+ stepReferee(){if(this.match.world.tagTeams)this.referee.projectionCamera={x:this.match.camera.x,y:this.match.camera.y};this.referee.step();this.match.soundCommands.push(...this.referee.sounds);}
  contacts(){
   if(!this.active)return;
   this.sync();
@@ -137,6 +137,7 @@ export class MatchActors {
  advance(fighter){
   const body=fighter.nativeBody;if(!body)return false;
   body.cameraY=this.match.camera.y;
+  if(this.match.world.tagTeams)body.projectionCamera={x:this.match.camera.x,y:this.match.camera.y};
   // Two-person component callers cannot supply the corner partner graph.
   if(body.state===5&&(body.action&255)===102&&!body.partner?.active){
    this.match.handoff={slot:body.slot,state:body.state,action:body.action,reaction:body.reaction,reason:'tag-team-pool'};body.sounds=[];

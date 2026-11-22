@@ -27,10 +27,12 @@ export function spritePosition(actor, camera = practiceCamera) {
 
 export function projectionSnapshot(body) {
   return {xFixed: body.xFixed, yFixed: body.yFixed, zFixed: body.zFixed,
-    facing: body.facing, offsetX: body.offsetX || 0, offsetY: body.offsetY || 0};
+    facing: body.facing, offsetX: body.offsetX || 0, offsetY: body.offsetY || 0,
+    ...(body.projectionCamera?{camera:{...body.projectionCamera}}:{})};
 }
 
 export function projectedPosition(snapshot, camera = practiceCamera) {
+  camera=snapshot.camera||camera;
   const offsetX = snapshot.offsetX << 24 >> 24, offsetY = snapshot.offsetY << 24 >> 24;
   return {x: (snapshot.xFixed >>> 16) - camera.x + (snapshot.facing & 0x8000 ? -offsetX : offsetX),
     y: 232 + camera.y - (snapshot.yFixed >>> 16) - (snapshot.zFixed >>> 16) - offsetY};

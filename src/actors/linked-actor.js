@@ -61,6 +61,7 @@ export class LinkedActor extends GrappleActor {
     if([2,3,6].includes(this.state)){
       const previousState=this.pendingState?this.clock.flags:this.previousState;
       const body=new Running({...this,clock:this.clock,pose:this.clock.pose,bounceCount:this.holdFlags});
+      body.projectionCamera=this.projectionCamera;
       body.pendingState=this.pendingState;body.inputInitialized=Boolean(this.inputInitialized);body.collision=this.collision;
       body.step({sampleInput:false,forcedStop:Boolean(this.forced&0x8000)});Object.assign(this,body);this.holdFlags=body.bounceCount;
       this.previousState=previousState;
@@ -78,6 +79,7 @@ export class LinkedActor extends GrappleActor {
       body.action=this.action;body.pendingState=this.pendingState;body.previousState=this.previousState&255;
       body.collision=this.collision;
       body.linkIdentity=this;
+      body.projectionCamera=this.projectionCamera;
       body.lastHit=this.lastHit;
       for(const key of ['paddingX','paddingY','paddingZ','offsetX','offsetY'])body[key]=this[key]||0;
       body.step({pressed:this.pressedButtons,sampleRecoveryInput:false,linkedFlags34:this.opponent?.flags34||0});

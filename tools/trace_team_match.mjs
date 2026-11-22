@@ -11,8 +11,10 @@ const pool=Array.from({length:9},(_,i)=>0x1c05b0+i*0x10c),slots=[0,1,4,5],bases=
 const word=a=>memory[a]*256+memory[a+1],long=a=>(word(a)*65536+word(a+2))|0;
 const put=(a,v)=>{memory[a]=v>>>8;memory[a+1]=v;},putLong=(a,v)=>{put(a,v>>>16);put(a+2,v);};
 const sounds=[],entropy=[],effects=[];
+const d1History=[];
+const debugHold=Boolean(process.env.DEBUG_HOLD),debugSound=Boolean(process.env.DEBUG_SOUND);
 const manual=false,expanded=true;
-cpu.memorymap[0x1400].write16=(a,v)=>{if(a===0x14000c){sounds.push(v&255);if(process.env.DEBUG_SOUND)console.log(JSON.stringify({tick:long(0x1c0080),sound:v&255,pc:cpu.pc.toString(16),stack:Array.from({length:5},(_,i)=>(long(cpu.a[7]+i*4)>>>0).toString(16))}));}};
+cpu.memorymap[0x1400].write16=(a,v)=>{if(a===0x14000c){sounds.push(v&255);if(debugSound)console.log(JSON.stringify({tick:long(0x1c0080),sound:v&255,pc:cpu.pc.toString(16),stack:Array.from({length:5},(_,i)=>(long(cpu.a[7]+i*4)>>>0).toString(16))}));}};
 function call(address,actor=bases[0]){
  cpu.pc=address;cpu.a[0]=actor;cpu.sr=0x2700;cpu.a[7]=0x1c3a00;putLong(cpu.a[7],0x7ff00);let steps=0;
  while(cpu.pc!==0x7ff00&&steps++<100000){
@@ -21,7 +23,10 @@ function call(address,actor=bases[0]){
   if(cpu.pc===0x102e6)entropy.push({kind:'pin',value:cpu.d[0]&255});
   if(cpu.pc===0xe938)entropy.push({kind:'arbitration',value:cpu.d[0]&15});
   if(cpu.pc===0xff7a)effects.push({actor:bases.indexOf(cpu.a[0]),kind:cpu.d[0]&255});
+  if(debugHold&&cpu.pc===0x14c26)console.log(JSON.stringify({tick:long(0x1c0080),actor:bases.indexOf(cpu.a[0]),d1:cpu.d[1]&255,history:d1History}));
+  const priorD1=cpu.d[1],priorPC=cpu.pc;
   cpu._execute();
+  if(debugHold&&priorD1!==cpu.d[1]){d1History.push([priorPC.toString(16),cpu.d[1]]);if(d1History.length>8)d1History.shift();}
  }
  assert(steps<100000,`Tag call stuck ${cpu.pc.toString(16)}`);
 }
@@ -52,7 +57,8 @@ function snapshot(){
 }
 
 const sequences=[],filter=process.env.TEAM_FILTER?JSON.parse(process.env.TEAM_FILTER):{};
-for(const profile of ['neutral','advance','run','tag'])for(const type of [0,7,10]){
+const profiles=process.env.TEAM_TAUNT?['taunt-human','taunt-cpu','taunt-loop']:process.env.TEAM_HOLD?['hold29','hold29-cpu','hold29-broken','hold29-escape','held83-punch','held83-kick']:process.env.TEAM_GETUP?['getup','getup-broken','getup-back','getup-cpu-boost','getup-human-boost']:['neutral','advance','run','tag'];
+for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.env.TEAM_HOLD||process.env.TEAM_TAUNT?Array.from({length:12},(_,i)=>i):[0,7,10]){
  const config={profile,type};if(!Object.entries(filter).every(([k,v])=>config[k]===v))continue;
  memory.fill(0,0x1c0000,0x1c4000);memory.fill(0,0x180000,0x181000);memory.fill(0,0xc0000,0xc4000);cpu.d.fill(0);cpu.a.fill(0);
  put(0x1c007c,0x8000);put(0x1c0066,16);put(0x1c16a0,0x30);putLong(0x1c005c,0);
@@ -61,6 +67,31 @@ for(const profile of ['neutral','advance','run','tag'])for(const type of [0,7,10
  const seed=new Match(type,6,{tagTeams:true}),world={inGame:true,gameFlags:0x8000,mode:0,round:0,clockMinutesBCD:0x30,dipSwitches:seed.world.dipSwitches,
   message:0,controlsRefresh:1,cornerOccupancy:0,switchTimer:0,activeA:0,activeB:2,paletteUpdates:{}};
  if(profile==='tag')Object.assign(seed.fighters[0].original,{xFixed:528*65536,yFixed:390*65536});
+ if(profile.startsWith('getup')){
+  const a=seed.fighters[0].original,p=seed.fighters[1].original;
+  a.change(5,8);a.auxiliary=p;p.auxiliary=profile==='getup-broken'?null:a;
+  a.facing=p.facing=type&1?0:0x8000;a.xFixed=(type%3===0?480:type%3===1?640:784)*65536+0x1234;
+  p.xFixed=a.xFixed+24*65536;p.yFixed=a.yFixed+0x4321;p.change(4);p.reaction=profile==='getup-back'?9:8;p.recoveryTimer=600;
+  if(profile.includes('boost')){p.flags33|=32;p.apronTimer=1000;}
+  if(profile==='getup-cpu-boost')a.flags56=128;
+ }
+ if(profile.startsWith('hold')||profile.startsWith('held')){
+  let a=seed.fighters[0].original,p=seed.fighters[1].original;
+  p.type=p.flags57=(type+3)%12;
+  if(profile==='hold29-cpu'||profile==='hold29-escape')[a,p]=[p,a];
+  a.change(5,29);a.auxiliary=p;p.auxiliary=profile==='hold29-broken'?null:a;
+  a.facing=p.facing=type&1?0:0x8000;a.xFixed=(type%3===0?500:type%3===1?640:768)*65536+0x1234;
+  p.xFixed=a.xFixed+24*65536;p.yFixed=a.yFixed+0x4321;p.change(4);p.reaction=1;
+  if(profile.startsWith('held')){
+   a.change(5,0xc053);a.holdFlags=profile==='held83-punch'?1:2;
+   p.change(5,profile==='held83-punch'?0xc073:0xc074);a.flags33|=64;p.flags33|=64;
+  }
+ }
+ if(profile.startsWith('taunt')){
+  const a=seed.fighters[profile==='taunt-cpu'?1:0].original;
+  a.type=a.flags57=type;a.change(5,profile==='taunt-loop'?0x8079:121);
+  a.holdFlags=profile==='taunt-loop'?2:0;a.facing=type&1?0:0x8000;a.flags34|=16;
+ }
  for(const[slot,base]of pool.entries()){putLong(base+0x86,pool[slot^1]||pool[8]);memory[base+0x56]=slot<4?64:128;memory[base+0x32]=1;}
  for(const[i,base]of bases.entries()){
   const body=seed.nativeActors.pool[slots[i]];put(base,0x8000);
@@ -81,6 +112,7 @@ for(const profile of ['neutral','advance','run','tag'])for(const type of [0,7,10
    input.vertical=tick<3?-1:0;
    if(!tagPressed&&word(bases[1]+0xae)===0x8002){input.strike=true;tagPressed=true;}
   }
+  if(profile==='hold29-escape')input.strike=tick>50&&(tick%4===0);
   const buttons=(input.strike?1:0)|(input.heavy?2:0),pressed=(buttons&~previousButtons)|((input.run&&!inputs.at(-1)?.run)?3:0);previousButtons=buttons;
   const mask=(input.horizontal>0?1:input.horizontal<0?2:0)|(input.vertical<0?4:input.vertical>0?8:0);
   for(const base of bases){memory[base+0xa3]=long(base+0x8a)===0x140020?pressed:0;put(base+0xa8,long(base+0x8a)===0x140020?mask:0);}

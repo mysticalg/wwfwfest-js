@@ -3634,6 +3634,21 @@ export const actorTables = {
     ]
   },
   "groundAnimations": {
+    "8": {
+      "source": 74668,
+      "update": 74688,
+      "mode": 1,
+      "delays": [
+        6,
+        12,
+        8
+      ],
+      "poses": [
+        203,
+        204,
+        205
+      ]
+    },
     "60": {
       "source": 94818,
       "update": 94824,
@@ -3659,6 +3674,31 @@ export const actorTables = {
         104
       ]
     },
+    "121": {
+      "source": 103422,
+      "update": 103630,
+      "mode": 1,
+      "delays": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        16,
+        48
+      ],
+      "poses": [
+        89,
+        90,
+        91,
+        89,
+        90,
+        91,
+        92,
+        93
+      ]
+    },
     "rushMoving": {
       "source": 103128,
       "update": 103148,
@@ -3675,6 +3715,202 @@ export const actorTables = {
       ]
     }
   },
+  "tauntAnimations": [
+    {
+      "source": 103422,
+      "update": 103630,
+      "mode": 1,
+      "delays": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6,
+        16,
+        48
+      ],
+      "poses": [
+        89,
+        90,
+        91,
+        89,
+        90,
+        91,
+        92,
+        93
+      ]
+    },
+    {
+      "source": 103462,
+      "update": 103630,
+      "mode": 1,
+      "delays": [
+        16,
+        16
+      ],
+      "poses": [
+        90,
+        89
+      ]
+    },
+    {
+      "source": 103478,
+      "update": 103630,
+      "mode": 1,
+      "delays": [
+        6,
+        6,
+        6,
+        6
+      ],
+      "poses": [
+        89,
+        90,
+        91,
+        92
+      ]
+    },
+    {
+      "source": 103502,
+      "update": 103630,
+      "mode": 1,
+      "delays": [
+        16,
+        24
+      ],
+      "poses": [
+        89,
+        90
+      ]
+    },
+    {
+      "source": 103502,
+      "update": 103630,
+      "mode": 1,
+      "delays": [
+        16,
+        24
+      ],
+      "poses": [
+        89,
+        90
+      ]
+    },
+    {
+      "source": 103502,
+      "update": 103630,
+      "mode": 1,
+      "delays": [
+        16,
+        24
+      ],
+      "poses": [
+        89,
+        90
+      ]
+    },
+    {
+      "source": 103518,
+      "update": 103630,
+      "mode": 1,
+      "delays": [
+        48,
+        16
+      ],
+      "poses": [
+        89,
+        90
+      ]
+    },
+    {
+      "source": 103534,
+      "update": 103630,
+      "mode": 1,
+      "delays": [
+        16,
+        16,
+        16,
+        16,
+        16
+      ],
+      "poses": [
+        89,
+        90,
+        91,
+        90,
+        89
+      ]
+    },
+    {
+      "source": 103562,
+      "update": 103630,
+      "mode": 1,
+      "delays": [
+        40,
+        24,
+        4
+      ],
+      "poses": [
+        89,
+        90,
+        0
+      ]
+    },
+    {
+      "source": 103582,
+      "update": 103630,
+      "mode": 1,
+      "delays": [
+        12,
+        12
+      ],
+      "poses": [
+        89,
+        90
+      ]
+    },
+    {
+      "source": 103598,
+      "update": 103630,
+      "mode": 1,
+      "delays": [
+        8,
+        8
+      ],
+      "poses": [
+        89,
+        90
+      ]
+    },
+    {
+      "source": 103614,
+      "update": 103630,
+      "mode": 1,
+      "delays": [
+        16,
+        48
+      ],
+      "poses": [
+        89,
+        90
+      ]
+    }
+  ],
+  "tauntRepeats": [
+    1,
+    2,
+    2,
+    1,
+    1,
+    1,
+    1,
+    1,
+    1,
+    4,
+    2,
+    1
+  ],
   "standingReactions": [
     {
       "source": 107200,

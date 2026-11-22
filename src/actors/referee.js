@@ -146,7 +146,10 @@ export class Referee {
     if(!initialized){this.clock.flags|=0x8000;this.delay(8);this.frame(4);this.pose(0);this.poseFacing();this.movementMode=1;}
     let direction=(this.flags35&0x1e)>>>1;
     const delta=u16(this.centerX-(this.xFixed>>>16)),masked=direction&10;
-    if(delta<8&&masked&&masked!==10){this.speed=0;return;}
+    if(delta<8&&masked&&masked!==10){this.world.actorScratch1=masked;this.speed=0;return;}
+    // $01f7d2 leaves D1 live for subsequent actor handlers. Action 29's first
+    // loop has a cosmetic effect gate that reads that byte without loading it.
+    this.world.actorScratch1=this.centerX;
     if(this.centerX<(this.xFixed>>>16)){direction|=16;this.facing|=0x8000;}
     low(this,'direction',actorTables.referee.walkDirections[direction]);low(this,'speed',22);
     stepMovement(this);this.collisionAt();

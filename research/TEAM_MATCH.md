@@ -20,12 +20,11 @@ tag timers, announcer queue, human input, AI, referee, actor dispatcher,
 collision/projection/physics, alternating contact/damage and sprite queues.
 The native `Match` replays the same input and observed random values.
 
-**12 sequences / 4,582 updates** match all captured actor fields and links,
+**12 sequences / 4,800 updates** match all captured actor fields and links,
 clocks, projected positions, world requests, announcer state, camera, referee,
 effects and sound-command order. Neutral, approach/attack, running and manual
-tag profiles use player types 0, 7 and 10. Ten reach the 400-update cap; two
-approach cases stop before the unimplemented action 8 on update 290. Those
-boundaries are asserted. The trace preserves the partial earlier actor updates
+tag profiles use player types 0, 7 and 10. All now reach the 400-update cap;
+the earlier action-8 boundaries have native continuations. The trace preserves the partial earlier actor updates
 on the boundary phase rather than inventing an unsupported continuation.
 
 These comparisons exposed and fixed the human selector's word/byte gate and
@@ -80,3 +79,48 @@ python tools/extract_announcer.py path/to/wwfwfest.zip
 `TEAM_FILTER` accepts a JSON profile/type filter, `DETAIL=1` retains detailed
 rows, and `TEAM_FIXTURE` selects a private comparison file. The external CPU,
 program image and detailed research files are excluded from browser delivery.
+
+## Get-up grapple and standing hold update (0.1.26)
+
+Action 8 now raises a front-prone opponent into the original standing clinch,
+including interrupted grabs, paired positions, camera priority and boosted CPU
+arbitration. Another **60 sequences / 19,656 updates** cover all twelve player
+types, both facings, several ring positions, lost links, back-prone targets and
+CPU/human boost variations. They retain explicit later-action boundaries or a
+400-update cap.
+
+`actors/standing-holds.js` adds action 29's staggered hold, victim 83's normal
+and two impact loops, holder impact actions 115/116, elbow escape 87 and holder
+reaction 118. It preserves paired links, mash/AI escape clocks, combo timing,
+partner assistance and controller requests. Another **72 sequences / 18,724
+updates** compare both holder sides, all twelve type combinations, interrupted
+links, punch/kick reactions and repeated human escape input. The source trace
+executes the original whole four-record core around those seeded situations;
+it stops on later unsupported actions or at 400 updates.
+
+These scenarios exposed cached projection behavior when an actor update is
+interrupted: source screen coordinates retain the camera from their own update.
+Native projection snapshots now preserve that camera, including temporary
+running/knockdown adapters. They also expose a source effect gate at `$014c26`
+that reads the live D1 byte. The recovered path retains the referee roam value
+and the holder descriptor-index writes rather than always requesting an effect.
+Other ambient register context and the moving effect-object layer remain work.
+
+Action 121 now uses each character's original taunt descriptor, repeat count
+and one-time sound request. Another **36 sequences / 14,400 updates** cover
+all twelve types in human, CPU and already-started-loop contexts; all reach
+the 400-update cap.
+
+The combined four-record comparison now covers **180 sequences / 57,580
+updates**. An uncontrolled native neutral run with the default RNG now reaches
+1,257 updates before untranslated action 39, compared with the earlier
+standing-hold boundary around 388. That diagnostic is progress evidence, not a
+source-matched complete match. Outside/Rumble behavior, action 28's related hold,
+rescue actions, other remaining moves and complete rounds are unfinished.
+
+Set `TEAM_GETUP=1`, `TEAM_HOLD=1` or `TEAM_TAUNT=1` to regenerate the corresponding
+seeded scenarios. The normal twelve-profile fixture uses none of these options.
+Use the matching output filename under `tests/fixtures` and retain the stated
+caps/boundaries. `DEBUG_HOLD=1` logs the original live D1 history for the effect
+request gate; `DEBUG_SOUND=1` logs sound callers. Debug flags are cached outside
+the instruction loop so disabled diagnostics do not slow offline tracing.

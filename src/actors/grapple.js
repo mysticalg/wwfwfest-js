@@ -11,6 +11,7 @@ import {isTagAction,stepTagAction,isCornerAttack,stepCornerAttack} from './tag.j
 import {isStandingAction,stepStandingAction} from './standing-action.js';
 import {isGroundActorAction,stepGroundActorAction} from './ground-actor.js';
 import {isRunningAction,stepRunningAction,isRunningVictim,stepRunningVictim} from './running-action.js';
+import {isStandingHold,stepStandingHold} from './standing-holds.js';
 
 const u16 = value => value & 65535;
 const stateWord=actor=>typeof actor.pendingState==='boolean'?actor.state|(actor.pendingState?0:0x8000):actor.state;
@@ -165,7 +166,7 @@ export class GrappleActor {
   get pendingTransition() {
     return ![11,12,255].includes(this.state)
       && !(this.state===4&&(this.reaction===1||isRunningVictim(this.reaction)))
-      && !(this.state===5&&([21,22,23,41,80,123,124].includes(this.action&255)||isStandingAction(this.action)||isGroundActorAction(this.action)||isRunningAction(this.action)||isGrappleThrow(this.action)||isGrappleCounter(this.action)||isGrappleSubmission(this.action)||isPinAction(this.action)||isTagAction(this.action)||isCornerAttack(this.action)));
+      && !(this.state===5&&([21,22,23,41,80,123,124].includes(this.action&255)||isStandingHold(this.action)||isStandingAction(this.action)||isGroundActorAction(this.action)||isRunningAction(this.action)||isGrappleThrow(this.action)||isGrappleCounter(this.action)||isGrappleSubmission(this.action)||isPinAction(this.action)||isTagAction(this.action)||isCornerAttack(this.action)));
   }
 
   // The byte tested at $b7 is the low half of the input-block word at $b6.
@@ -341,6 +342,7 @@ export class GrappleActor {
       const action=this.action&255;
       descriptor=data[({21:'hold',22:'carry',23:'whip',41:'clinchStrike',80:'break',123:'held',124:'escape'})[action]];
       if(isStandingAction(action))descriptor=stepStandingAction(this,initialized);
+      else if(isStandingHold(action))descriptor=stepStandingHold(this,peer,initialized);
       else if(isGroundActorAction(action))descriptor=stepGroundActorAction(this,initialized);
       else if(isRunningAction(action))descriptor=stepRunningAction(this,initialized);
       else if(isPinAction(action))descriptor=stepPinAction(this,peer,initialized);

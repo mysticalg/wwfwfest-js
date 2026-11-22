@@ -5,7 +5,8 @@ import {createHash} from 'node:crypto';
 import {Match} from '../src/game.js';
 import {projectedPosition} from '../src/actors/projection.js';
 
-const fixture=JSON.parse(readFileSync(process.env.TEAM_FIXTURE||new URL('./fixtures/team-match-reference.json',import.meta.url)));
+const files=process.env.TEAM_FIXTURE?[process.env.TEAM_FIXTURE]:['team-match-reference.json','getup-match-reference.json','standing-hold-match-reference.json','taunt-match-reference.json'].map(name=>new URL(`./fixtures/${name}`,import.meta.url));
+const fixture={sequences:files.flatMap(file=>JSON.parse(readFileSync(file)).sequences)};
 const pointerKeys=['auxiliaryIndex','opponentIndex','partnerIndex','lastHitIndex','secondaryPinnerIndex','secondaryOpponentIndex'];
 for(const sequence of fixture.sequences)test(`composed native tag match ${JSON.stringify(sequence.config)}`,()=>{
  const match=new Match(sequence.config.type,6,{tagTeams:true}),world=match.world;

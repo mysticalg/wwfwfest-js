@@ -125,7 +125,7 @@ function finishCarry(actor){
  return selectedAction(actor,9);
 }
 
-const held={93:[2,103],95:[2,92],96:[3,91],97:[5,89],98:[4,90],99:[4,85]};
+const held={82:[0,88],83:[1,87],93:[2,103],95:[2,92],96:[3,91],97:[5,89],98:[4,90],99:[4,85]};
 const noOpHandlers=new Set([0x1d47a]);
 export function supportsComputerGrapple(actor){
  if(supportsComputerGround(actor))return true;
@@ -134,7 +134,7 @@ export function supportsComputerGrapple(actor){
  if(actor.state!==5)return false;
  const action=actor.action&255,handler=aiTables.actionHandlers[action]&0x7fffffff;
  if(!actor.pendingState&&!(aiTables.actionHandlers[action]&0x80000000))return true;
- return noOpHandlers.has(handler)||handler===0x1d908||handler===0x1d678||[21,22,23,74,75,80,86,93,94,95,96,97,98,99].includes(action)
+ return noOpHandlers.has(handler)||handler===0x1d908||handler===0x1d678||[21,22,23,74,75,80,82,83,86,93,94,95,96,97,98,99].includes(action)
   ||supportsGroundAction(handler)
   ||(handler===0x1d9b8&&Boolean(flags(actor)&16));
 }
@@ -255,7 +255,7 @@ export function stepComputerAction(actor){ // $01d208 and the recovered handlers
    actor.action|=0x4000;actor.aiEscapeTimer=aiTables.heldEscapeTimes[held[action][0]][actor.severity];actor.controlCounter=held[action][1];
   }
   actor.aiEscapeTimer=u16(actor.aiEscapeTimer-1);
-  if(!actor.aiEscapeTimer){if(action===97&&actor.holdFlags)actor.aiEscapeTimer=1;else actor.change(5,actor.controlCounter);}return true;
+  if(!actor.aiEscapeTimer){if([82,83,97].includes(action)&&actor.holdFlags)actor.aiEscapeTimer=1;else actor.change(5,actor.controlCounter);}return true;
  }
  if(handler===0x1d9b8&&(flags(actor)&16)){
   if(!(actor.action&0x4000)){
