@@ -27,6 +27,8 @@ Controls use arrows to move, Z to strike, X for a heavy strike, C to run, Space 
 
 The animation explorer exposes all recovered frame table entries, including records marked as requiring additional animation context. The first 12 actor types each have 565 entries. The referee has 19 entries. Successful extraction of a frame does not establish the correct gameplay use or timing of that frame.
 
+Native match animations skip unresolved or empty frame records. The explorer preserves those records for continued research.
+
 ## Current scope
 
 Recovered material includes 65,536 sprite tiles, 4,096 background tiles, 4,096 character tiles, original palette data, the wrestler frame lookup tables, standalone sprite chain recipes, and sampled arena and selection layouts.

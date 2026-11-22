@@ -137,8 +137,9 @@ export class Match {
     }
   }
 
-  pose(actor) {
+  pose(actor, frames) {
     const animation = animations[actor.state];
-    return animation.poses[Math.floor(actor.stateTicks / animation.ticks) % animation.poses.length];
+    const poses = animation.poses.filter(index => frames[index]?.pieces.length && !frames[index].requiresContext);
+    return poses[Math.floor(actor.stateTicks / animation.ticks) % poses.length] ?? 0;
   }
 }

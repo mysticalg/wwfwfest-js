@@ -109,7 +109,8 @@ function drawMatch() {
   // Characters are independent JS objects drawn between original stage layers.
   const sorted = [...match.fighters].sort((a, b) => a.y - b.y);
   for (const actor of sorted) {
-    renderer.drawPose(tables.get(actor.type), match.pose(actor), actor.x, actor.y - 8, actor.facing > 0);
+    const frames = tables.get(actor.type);
+    renderer.drawPose(frames, match.pose(actor, frames), actor.x, actor.y - 8, actor.facing > 0);
   }
   context.drawImage(renderer.foreground, 0, 0);
   context.fillStyle = '#071323';
