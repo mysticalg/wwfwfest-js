@@ -75,7 +75,7 @@ def main():
             ('largeTarget',0x1789c),('wallSlam',0x1421e),('alternateLift',0x15ebe))},
         'automaticPinThresholds': words(0x10308, 12),
         'grappleVictims': {str(reaction): descriptor(struct.unpack_from('>I', program, 0x1a214 + reaction * 4)[0])
-                           for reaction in (14, 15, 19, 21, 22, 33, 34, 35, 36, 37, 38, 41)},
+                           for reaction in (14, 15, 19, 21, 22, 28, 33, 34, 35, 36, 37, 38, 41)},
         'grappleAnimations': {name: descriptor(address) for name, address in {
             'contested': 0x11690, 'entry': 0x116a8, 'control': 0x11722,
             'hidden': 0x11800, 'hold': 0x13f20, 'carry': 0x13fca,

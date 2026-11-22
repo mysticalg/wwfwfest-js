@@ -1,6 +1,7 @@
 import {aiTables} from '../data/ai-tables.js';
 import {pursuePoint} from './grapple-services.js';
 import {addPositionWord} from './ring-collision.js';
+import {supportsComputerTag,stepComputerTag} from './computer-tag.js';
 
 const u16=value=>value&65535;
 const flags=actor=>(actor.inputBlockA||0)&255;
@@ -139,11 +140,12 @@ function finishCarry(actor){
 const held={93:[2,103],95:[2,92],96:[3,91],98:[4,90],99:[4,85]};
 const noOpHandlers=new Set([0x1d47a]);
 export function supportsComputerGrapple(actor){
+ if(supportsComputerTag(actor))return true;
  if([4,7,11,12].includes(actor.state))return true;
  if(actor.state!==5)return false;
  const action=actor.action&255,handler=aiTables.actionHandlers[action]&0x7fffffff;
  if(!actor.pendingState&&!(aiTables.actionHandlers[action]&0x80000000))return true;
- return noOpHandlers.has(handler)||[21,22,23,74,75,80,86,93,94,95,96,98,99].includes(action)
+ return noOpHandlers.has(handler)||handler===0x1d908||[21,22,23,74,75,80,86,93,94,95,96,98,99].includes(action)
   ||(handler===0x1d9b8&&Boolean(flags(actor)&16));
 }
 
@@ -240,6 +242,10 @@ export function stepComputerAction(actor){ // $01d208 and the recovered handlers
  const action=actor.action&255,entry=aiTables.actionHandlers[action],handler=entry&0x7fffffff;
  if(!(entry&0x80000000)&&actor.state===5&&!actor.pendingState)return true;
  if(noOpHandlers.has(handler))return true;
+ if(handler===0x1d908){
+  if(!(actor.action&0x4000)){actor.action|=0x4000;actor.auxiliary=actor.opponent;if(!actor.opponent.auxiliary)actor.opponent.auxiliary=actor;}
+  return true;
+ }
  if(action===21)return headlock(actor);
  if(action===22)return carry(actor);
  if(action===23){setFlags(actor,flags(actor)|8);actor.flagsB7&=~12;return true;}
@@ -280,6 +286,7 @@ export function stepComputerGrapple(actor){
  updateComputerTarget(actor);
  if(!gameFlags(actor.world))for(const[offset,value]of [[0xd2,3],[0xd4,2],[0xd6,3],[0xd8,2],[0xda,3],[0xde,3],[0xe4,4]])actor.attempts[offset]=value;
  if(!supportsComputerGrapple(actor))return false;
+ if(supportsComputerTag(actor))return stepComputerTag(actor,{choose:computerWeightedChoice,action:stepComputerAction});
  if(actor.state===4)return downed(actor);
  if(actor.state===7)return true;
  if(actor.state===5)return stepComputerAction(actor);

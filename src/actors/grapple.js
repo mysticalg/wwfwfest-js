@@ -7,6 +7,7 @@ import {isGrappleThrow,stepGrappleThrow} from './grapple-throws.js';
 import {isGrappleCounter,stepGrappleCounter} from './grapple-counters.js';
 import {isGrappleSubmission,stepGrappleSubmission} from './grapple-submissions.js';
 import {isPinAction,stepPinAction} from './pin.js';
+import {isTagAction,stepTagAction,isCornerAttack,stepCornerAttack} from './tag.js';
 
 const u16 = value => value & 65535;
 const stateWord=actor=>typeof actor.pendingState==='boolean'?actor.state|(actor.pendingState?0:0x8000):actor.state;
@@ -161,7 +162,7 @@ export class GrappleActor {
   get pendingTransition() {
     return ![11,12,255].includes(this.state)
       && !(this.state===4&&this.reaction===1)
-      && !(this.state===5&&([21,22,23,41,80,123,124].includes(this.action&255)||isGrappleThrow(this.action)||isGrappleCounter(this.action)||isGrappleSubmission(this.action)||isPinAction(this.action)));
+      && !(this.state===5&&([21,22,23,41,80,123,124].includes(this.action&255)||isGrappleThrow(this.action)||isGrappleCounter(this.action)||isGrappleSubmission(this.action)||isPinAction(this.action)||isTagAction(this.action)||isCornerAttack(this.action)));
   }
 
   // The byte tested at $b7 is the low half of the input-block word at $b6.
@@ -335,6 +336,8 @@ export class GrappleActor {
       const action=this.action&255;
       descriptor=data[({21:'hold',22:'carry',23:'whip',41:'clinchStrike',80:'break',123:'held',124:'escape'})[action]];
       if(isPinAction(action))descriptor=stepPinAction(this,peer,initialized);
+      else if(isTagAction(action))descriptor=stepTagAction(this,peer,initialized);
+      else if(isCornerAttack(action))descriptor=stepCornerAttack(this,peer,initialized);
       else if(isGrappleCounter(action))descriptor=stepGrappleCounter(this,peer,initialized);
       else if(isGrappleSubmission(action))descriptor=stepGrappleSubmission(this,peer,initialized);
       else if(isGrappleThrow(action))descriptor=stepGrappleThrow(this,peer,initialized);

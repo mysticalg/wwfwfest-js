@@ -2818,6 +2818,17 @@ export const actorTables = {
         179
       ]
     },
+    "28": {
+      "source": 110302,
+      "update": 110314,
+      "mode": 1,
+      "delays": [
+        16
+      ],
+      "poses": [
+        419
+      ]
+    },
     "33": {
       "source": 110502,
       "update": 110508,

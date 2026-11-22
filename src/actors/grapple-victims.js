@@ -1,7 +1,7 @@
 import {actorTables} from '../data/actor-tables.js';
 import {addPositionWord} from './ring-collision.js';
 const u16=value=>value&65535;
-export const isGrappleVictim=reaction=>[14,15,19,21,22,33,34,35,36,37,38,41].includes(reaction&255);
+export const isGrappleVictim=reaction=>[14,15,19,21,22,28,33,34,35,36,37,38,41].includes(reaction&255);
 
 function depthVelocity(actor,amount=48) {
   const y=actor.yFixed>>>16;
@@ -30,7 +30,14 @@ function land(actor,{whole=false,shift=0}={}) {
 export function stepGrappleVictim(actor,initialized) {
   const reaction=actor.reaction&255,data=actorTables.grappleVictims;
   let descriptor=data[reaction];
-  if(reaction===15){ // $01a8c4, thrown away by a pin escape
+  if(reaction===28){ // $01aeea, partner's corner attack releases the holder
+    const peer=actor.auxiliary;
+    if(!initialized)peer.change(255);
+    else if(actor.clock.index===0xfe){
+      actor.change(4,2);actor.reaction=2;actor.facing^=0x8000;peer.change(0);
+      actor.unlinkMarked=true;actor.flags33&=~64;peer.flags33&=~64;
+    }
+  }else if(reaction===15){ // $01a8c4, thrown away by a pin escape
     if(!initialized){
       actor.profile(5);depthVelocity(actor);
       const skip=actor.reaction&0x1000;actor.reaction&=~0x1000;

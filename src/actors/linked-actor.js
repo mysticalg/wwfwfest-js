@@ -5,14 +5,17 @@ import {insideRingCollision,outsideRingCollision,addPositionWord} from './ring-c
 import {projectionSnapshot} from './projection.js';
 import {actorTables} from '../data/actor-tables.js';
 import {pinEscapeInput} from './pin.js';
+import {stepTagWalk,stepCornerState} from './tag-states.js';
 
-const knockdowns=[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,18,19,21,22,23,24,25,27,29,33,34,35,36,37,38,41];
+const knockdowns=[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,18,19,21,22,23,24,25,27,28,29,33,34,35,36,37,38,41];
 
 // Stable linked identities across the translated grapple/knockdown/idle states.
 // Unsupported move, counter and outside-state handoffs remain observable.
 export class LinkedActor extends GrappleActor {
   get pendingTransition() {
     if([0,2,3,6,7].includes(this.state))return false;
+    if(this.state===1&&(this.walkMode&63)<12)return false;
+    if([8,9,10].includes(this.state))return false;
     if(this.state===4&&knockdowns.includes(this.reaction&255))return false;
     if(this.state===5&&[56,120].includes(this.action))return false;
     return super.pendingTransition;
@@ -52,10 +55,14 @@ export class LinkedActor extends GrappleActor {
 
   step() {
     if(this.state===0)return this.idleStep();
+    if(this.state===1)return stepTagWalk(this);
+    if([8,9,10].includes(this.state))return stepCornerState(this);
     if([2,3,6].includes(this.state)){
+      const previousState=this.pendingState?this.clock.flags:this.previousState;
       const body=new Running({...this,clock:this.clock,pose:this.clock.pose,bounceCount:this.holdFlags});
       body.pendingState=this.pendingState;body.inputInitialized=Boolean(this.inputInitialized);body.collision=this.collision;
       body.step({sampleInput:false,forcedStop:Boolean(this.forced&0x8000)});Object.assign(this,body);this.holdFlags=body.bounceCount;
+      this.previousState=previousState;
       for(const event of body.ropeEvents){
         const index=event.side==='left'?0:2;
         if(event.strength===2||!(this.world.rope[index]&255))this.world.rope[index]=this.world.rope[index+1]=event.strength;
@@ -64,6 +71,7 @@ export class LinkedActor extends GrappleActor {
     }
     if((this.state===4&&knockdowns.includes(this.reaction&255))||this.state===7
       ||(this.state===5&&[56,120].includes(this.action))){
+      const previousState=this.pendingState?this.clock.flags:this.previousState;
       const body=new Knockdown({...this,clock:this.clock,pose:this.clock.pose,
         captureTimer:this.timer,attacker:this.auxiliary||this.attacker,world:this.world});
       body.action=this.action;body.pendingState=this.pendingState;body.previousState=this.previousState&255;
@@ -74,6 +82,7 @@ export class LinkedActor extends GrappleActor {
       if(body.comboTimerStart)body.comboTimer=body.comboTimerStart;
       if(body.comboReset)body.comboCount=body.comboTimer=0;
       Object.assign(this,body);this.timer=body.captureTimer;
+      this.previousState=previousState;
       return this;
     }
     return super.step();
@@ -81,7 +90,7 @@ export class LinkedActor extends GrappleActor {
 
   idleStep() {
     this.sounds=[];
-    if(this.pendingState){this.previousState=this.clock.flags&255;this.clock.flags=0;this.pendingState=false;}
+    if(this.pendingState){this.previousState=this.clock.flags;this.clock.flags=0;this.pendingState=false;}
     this.collision={...this.collision,kind:0,flags:0};
     if(this.movementMode){
       this.collision=(this.flags33&4?outsideRingCollision:insideRingCollision)({x:this.xFixed>>>16,y:this.yFixed>>>16,
@@ -92,8 +101,8 @@ export class LinkedActor extends GrappleActor {
     this.clock.idle(this.facing);
     if(!initialized){
       this.movementMode=0;this.flags33&=~0x58;this.flags32&=~4;
-      this.mash=this.holdFlags=this.timer=0;this.offsetX=this.offsetY=this.paddingX=this.paddingY=this.paddingZ=0;
-      this.flags32&=~8;
+      this.mash=this.holdFlags=this.timer=this.drawMode=0;this.offsetX=this.offsetY=this.paddingX=this.paddingY=this.paddingZ=0;
+      if(!((this.world.gameFlags||0)&0x8000))this.flags32&=~8;
       if(!this.idleTimer)this.idleTimer=208;
       if(this.flags32&16)this.change(5,122);
       if(this.flags34&64){this.flags34&=~64;if(this.opponent)this.opponent.flags34&=~128;this.sceneRefresh=1;this.world.controlsRefresh=1;}
