@@ -24,6 +24,7 @@ Open http://localhost:8765. GitHub Pages serves the same static files.
 - `assets/arena-palettes.json` preserves editable stage colors. `tools/extract_stage.py` regenerates the scrolling artwork and data from the archive.
 - `src/sprite-recipes.js` expands original raw/compressed/paired/list recipes; `src/renderer.js` draws their tile chains and palettes.
 - `src/app.js` connects the controls, match screen and animation explorer.
+- `src/arcade-input.js` preserves the original alternating action-button sampling; `src/timing.js` records the estimated video timing used by the browser.
 - `assets/poses-*.json` contains editable standalone frame snapshots. Set a frame's `override` property to `true` to draw its edited pieces. Available records carry their original source address.
 - `assets/palettes.json` contains editable original RGBA palettes.
 - `assets/sprite-indices.png` stores the decoded original four-bit sprite pixels. Each grayscale value divided by 17 is a palette index.
@@ -42,6 +43,8 @@ The first connected controller is used for the current single-player prototype. 
 The animation explorer exposes the original frame tables and paired artwork. Use Other wrestler to choose the linked type for holds and throws. The first twelve tables each contain 564 indexed entries and a final terminator; the referee has eighteen indexed entries and a terminator. Missing entries and unsupported pairs remain empty. Correct artwork does not establish the gameplay use or timing of a pose.
 
 Match rendering expands original sprite data at actual projected coordinates, including mirroring and hardware clipping. The explorer preserves standalone JSON snapshots, paired poses and unused markers for continued research.
+
+The translated main loop alternates contact/damage and crowd/streaming services on their original phases. Sprite positions are captured before each physics update, as in the original actor loop. [Frame timing research](research/FRAME_TIMING.md) documents the input latch, service ordering, original-program comparisons and estimated video pace.
 
 ## Current scope
 

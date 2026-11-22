@@ -98,7 +98,8 @@ for (const fixture of fixtures.matches) {
         actor.animation.pose, actor.contact, world.xFixed, world.yFixed, world.zFixed,
         actor.health, actor.severity, actor.comboCount, actor.comboTimer, actor.facing > 0 ? 0x8000 : 0];
       }), sounds: match.takeSoundCommands(), camera: [match.camera.x, match.camera.y,
-        match.camera.backgroundX, match.camera.backgroundY]};
+        match.camera.backgroundX, match.camera.backgroundY],
+        projection: match.fighters.map(actor=>{const p=match.drawPosition(actor);return[p.x,p.y];})};
       if (fixture.rows) assert.deepEqual(row, fixture.rows[tick], `tick ${tick}`);
       hash.add(row);
     }

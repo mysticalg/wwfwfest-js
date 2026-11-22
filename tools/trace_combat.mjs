@@ -187,8 +187,7 @@ for (const button of [0, 1]) for (const distance of [40, 70, 80]) {
       call(0x1b27e, base);
     }
     call(0x232b6);
-    call(0x23288);
-    call(0x2407e);
+    if (!(tick & 1)) { call(0x23288); call(0x2407e); }
     rows.push({actors: [actor, target].map(base => [word(base + 4), word(base + 0x4c),
       word(base + 0x20) & 255, word(base + 0x66), word(base + 0x52), word(base + 0x54)]),
       sounds: sounds.slice(firstSound)});

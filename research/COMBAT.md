@@ -54,6 +54,8 @@ Ordinary punch reaction 0 uses descriptor `$01a2c0`, handler `$01a2d0`, poses 15
 
 Browser checks additionally exercised both actions through a simulated standard gamepad, verified the visible punch/kick poses, one/two-point damage and exact routed sound commands, and found no page errors. Physical controller testing is still pending.
 
+The six integrated sequences now follow the original alternating contact/damage phase, as documented in [frame timing research](FRAME_TIMING.md). The combo window counts damage-service calls, so a 64-count window spans 128 actor updates.
+
 The bounded standing-attack fixtures bypass world-boundary correction to isolate those handlers. Inside-ring collision and the punch entry nudge now use the separate translated ring routine, with broader controlled-input integration runs described in [knockdown research](KNOCKDOWNS.md). Combined-button running and normal rebound physics now have separate comparisons in [running research](RUNNING.md). [Running action research](RUNNING_ATTACKS.md) now covers the ordinary running contacts and captures. The alternate status-dependent punch descriptor, standing paired-state arbitration, other move rows, original actor health initialization, AI and match rules remain incomplete. Health still uses the practice prototype's 100-point maximum. Full combat parity is not claimed.
 
 Regenerate the fixture from a separately interleaved original program image:

@@ -84,7 +84,8 @@ function matchSnapshot(match) {
     return [state,state === 5 ? body.action : state === 4 ? body.reaction : 0,
       actor.animation.pose,actor.contact,world.xFixed,world.yFixed,world.zFixed,
       actor.health,actor.severity,actor.facing > 0 ? 0x8000 : 0,actor.movementMode,
-      actor.spriteOffsetX || 0,actor.spriteOffsetY || 0];
+      actor.spriteOffsetX || 0,actor.spriteOffsetY || 0,
+      match.drawPosition(actor).x + match.camera.x,232 + match.camera.y - match.drawPosition(actor).y];
   }),sounds:match.takeSoundCommands()};
 }
 test('holding the dedicated Run shortcut keeps punch/kick edges available', () => {

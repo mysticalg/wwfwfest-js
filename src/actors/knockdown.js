@@ -2,7 +2,7 @@ import {ActorAnimation} from './animation.js';
 import {stepMovement} from './movement.js';
 import {insideRingCollision, addPositionWord} from './ring-collision.js';
 import {actorTables} from '../data/actor-tables.js';
-import {worldPosition} from './projection.js';
+import {worldPosition, projectionSnapshot} from './projection.js';
 
 const u16 = value => value & 0xffff;
 
@@ -276,6 +276,7 @@ export class Knockdown {
       } else throw new RangeError(`Untranslated knockdown reaction ${reaction}`);
     }
     this.clock.step(descriptor, this.facing);
+    this.projection = projectionSnapshot(this);
     stepMovement(this);
     this.done = this.state === 0;
     return this;

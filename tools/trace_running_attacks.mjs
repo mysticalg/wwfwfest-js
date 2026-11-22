@@ -149,12 +149,14 @@ for (const choice of matchChoices.values()) for (const facing of [0,0x8000]) {
           call(0x27302,base);
           for(const [position,correction]of [[6,0x38],[10,0x3a],[14,0x3c]])putWord(base+position,word(base+position)+word(base+correction));
         }
-        call(0x1b27e,base);call(0x2218,base);
+        call(0x1b27e,base);call(0x248c,base);call(0x2218,base);
       }
-      call(0x232b6);call(0x23288);call(0x2407e);
+      call(0x232b6);
+      if(!(tick&1)){call(0x23288);call(0x2407e);}
       const row={actors:bases.map(base=>{const state=word(base+0x20)&255;return[state,state===5?word(base+0x60):state===4?word(base+0x64):0,
         word(base+4),word(base+0x4c),long(base+6),long(base+10),long(base+14),word(base+0x66),word(base+0x70),word(base+0x2e),
-        memory[base+1],word(base+0x18),word(base+0x1a)];}),sounds:[...sounds]};
+        memory[base+1],word(base+0x18),word(base+0x1a),
+        (word(base+0x14)<<16>>16)+word(0x1c17e6),(word(base+0x16)<<16>>16)+word(0x1c17ee)];}),sounds:[...sounds]};
       hash.update(JSON.stringify(row)+'\n');if(process.env.DETAIL)rows.push(row);
       for(const base of bases)if((word(base+4)&0x7fff)!==0x7fff&&(memory[base+0x26]&128)&&!word(base+0xfe))putLong(base+0x26,0);
     }

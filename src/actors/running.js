@@ -2,6 +2,7 @@ import {ActorAnimation} from './animation.js';
 import {stepMovement} from './movement.js';
 import {insideRingCollision, addPositionWord} from './ring-collision.js';
 import {actorTables} from '../data/actor-tables.js';
+import {projectionSnapshot} from './projection.js';
 
 // Normal inside-ring states 2/3/6. Input $e58c precedes state initialization;
 // handlers $10ec2/$10fce/$11020 precede the descriptor clock and movement.
@@ -130,6 +131,7 @@ export class Running {
       this.contact = 32;
     } else throw new RangeError(`Untranslated running state ${this.state}`);
     this.clock.step(descriptor, this.facing);
+    this.projection = projectionSnapshot(this);
     stepMovement(this);
     if (this.clock.pose !== this.lastPose) {
       this.contact = 0;

@@ -21,10 +21,19 @@ export function updateScreenPosition(actor, world) {
 // Combining those yields the 232 constant for the recovered local recipes.
 export function spritePosition(actor, camera = practiceCamera) {
   const world = worldPosition(actor);
-  const offsetX = (actor.spriteOffsetX || 0) << 24 >> 24;
-  const offsetY = (actor.spriteOffsetY || 0) << 24 >> 24;
-  return {x: (world.xFixed >>> 16) - camera.x + (actor.facing > 0 ? -offsetX : offsetX),
-    y: 232 + camera.y - (world.yFixed >>> 16) - (world.zFixed >>> 16) - offsetY};
+  return projectedPosition({...world, facing: actor.facing > 0 ? 0x8000 : 0,
+    offsetX: actor.spriteOffsetX || 0, offsetY: actor.spriteOffsetY || 0}, camera);
+}
+
+export function projectionSnapshot(body) {
+  return {xFixed: body.xFixed, yFixed: body.yFixed, zFixed: body.zFixed,
+    facing: body.facing, offsetX: body.offsetX || 0, offsetY: body.offsetY || 0};
+}
+
+export function projectedPosition(snapshot, camera = practiceCamera) {
+  const offsetX = snapshot.offsetX << 24 >> 24, offsetY = snapshot.offsetY << 24 >> 24;
+  return {x: (snapshot.xFixed >>> 16) - camera.x + (snapshot.facing & 0x8000 ? -offsetX : offsetX),
+    y: 232 + camera.y - (snapshot.yFixed >>> 16) - (snapshot.zFixed >>> 16) - offsetY};
 }
 
 // $0240e8, after pending damage is applied. The low-health threshold is the

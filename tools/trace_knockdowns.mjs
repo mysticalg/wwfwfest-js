@@ -245,15 +245,16 @@ for (const attackerIndex of [0, 1]) for (const initialHealth of [100, 20, 3]) {
         }
       }
       call(0x1b27e, base);
+      call(0x248c, base);
       call(0x2218, base);
     }
     call(0x232b6);
-    call(0x23288);
-    call(0x2407e);
+    if (!(tick & 1)) { call(0x23288); call(0x2407e); }
     const row = {actors: [actor, target].map(base => [word(base + 0x20) & 255, word(base + 4),
       word(base + 0x4c), long(base + 6), long(base + 10), long(base + 14),
       word(base + 0x66), word(base + 0x70), word(base + 0x52), word(base + 0x54), word(base + 0x2e)]),
-      sounds: [...sounds], camera: [word(0x1c17e6), word(0x1c17ee), word(0x1c17ea), word(0x1c17f2)]};
+      sounds: [...sounds], camera: [word(0x1c17e6), word(0x1c17ee), word(0x1c17ea), word(0x1c17f2)],
+      projection: [actor,target].map(base=>[word(base+0x14)<<16>>16,232-(word(base+0x16)<<16>>16)])};
     hash.add(row);
     rows.push(row);
     if ((word(actor + 0x20) & 255) === 4 && (word(actor + 0x64) & 255) >= 2) sawKnockdown = true;

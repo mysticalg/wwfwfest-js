@@ -35,7 +35,7 @@ Contact dispatch now follows the current contact record rather than requiring a 
 
 Actions 4 and 5 can move the target into a 32-update invisible capture state, reset the attack clock, then select shared poses. Their target release writes integer position words while preserving the target's fractional words. Action 4 clears the whole reaction word on release; action 5 writes its low byte. The different severity-bit behavior is preserved.
 
-Action `$41` lets reaction `$1d` draw both wrestlers, while the attacking actor becomes invisible. A previously running target follows reaction `$1b` with a different airborne profile and mat probe. Other targets follow the ordinary airborne knockdown. Shared body references preserve changes when the target has already had its update that frame; rendering synchronizes both actors afterward.
+Action `$41` lets reaction `$1d` draw both wrestlers, while the attacking actor becomes invisible. A previously running target follows reaction `$1b` with a different airborne profile and mat probe. Other targets follow the ordinary airborne knockdown. Shared body references preserve physical changes when the target has already had its update that frame, while its already calculated sprite projection retains the original actor-order timing.
 
 Body collision against another runner knocks both actors back with the original eighty-update recovery override. Against another eligible actor it gives the runner the short reaction `$18` stagger and knocks the target down. Those collision hits do not subtract health. The short stagger still starts the original combo timer.
 
@@ -49,6 +49,8 @@ Body collision against another runner knocks both actors back with the original 
 - **612 controlled 420-update sequences** through the original input choice, state initialization, collision, all actor updates, movement, pose cleanup, contact dispatch and damage service. These total **257,040 updates** and cover all eight actions, both actor update orders, both facings, three health bands, hit/miss distances and moving targets for the shared grab. The actual native `Match` produces identical state/action/reaction, pose, contact, fixed positions, health/severity, facing, movement mode, offsets and sound-command streams at every update, as checked by complete sequence hashes.
 
 Browser checks exercise all eight actions through simulated standard gamepad input with browser audio enabled. They verify selected actions, expected damage, impact commands, running and airborne poses, three visible paired captures, and attacking while the dedicated Run shortcut remains held. The menu, pause, reconnect and other controller flow also passed. Physical controller and listening acceptance remain unverified.
+
+The 612 integrated sequences have been regenerated with contact/damage on the original alternate frames. Their sequence hashes now include both actors' cached pre-physics sprite projection. [Frame timing research](FRAME_TIMING.md) explains the corrected main-loop composition and independent input-latch comparisons.
 
 The locomotion-only reference has no second actor in its lane. Its native integration check now parks the passive opponent at a different depth, so newly translated body collisions do not change that isolated test's purpose. Body collisions have their own original response and integrated sequence coverage above.
 

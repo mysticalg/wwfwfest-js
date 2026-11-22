@@ -36,7 +36,7 @@ Zero health does not itself set a permanent-down state in these original handler
 
 ## Projection and current scene
 
-Actor-coordinate conversion uses the reference origin captured with the earlier arena layout, x `$01cd` and y `$0241`. World positions remain independent of the now-moving camera. Rendering uses integer position words as `$00248c` does, then the sprite recipe's inverted projected-y convention. This preserves height and avoids rounding flight/depth fractions into invented pixel positions. [Camera research](CAMERA.md) covers the scrolling layers and camera logic.
+Actor-coordinate conversion uses the reference origin captured with the earlier arena layout, x `$01cd` and y `$0241`. World positions remain independent of the now-moving camera. Rendering uses integer position words as `$00248c` does, then the sprite recipe's inverted projected-y convention. It caches that result before physics, matching the original actor service order. This preserves height and avoids rounding flight/depth fractions into invented pixel positions. [Camera research](CAMERA.md) covers the scrolling layers and camera logic.
 
 Normal walking runs ring correction before movement, including the original boundary overshoot/correction timing. Both the fixed rectangular depth clamp and the former horizontal view limits have been removed. The standing punch's entry nudge also uses the recovered inside-ring routine. Recovery reads the moving camera when selecting roll direction, matching the original global-camera read.
 
@@ -53,7 +53,9 @@ Normal walking runs ring correction before movement, including the original boun
 
 Browser checks used a simulated standard gamepad. They observed flight height, bounce/down/roll/get-up states, recovery-button edges, original punch/landing command order, movement after recovery and no page errors. Physical controllers remain unverified.
 
-These checks cover the named normal inside-ring paths. They exclude outside-ring collision modes, rope animation, other throw/airborne handlers, special stagger follow-ups, full pin rules and complete match logic. Practice health initialization, AI and running remain provisional. Camera scrolling has separate original-program and pixel comparisons in [camera research](CAMERA.md). The browser contains translated functions and recovered tables. CPU execution is confined to offline fixture generation.
+The integrated fixtures now follow the original alternating contact/damage phase and compare each actor's cached pre-physics screen coordinates. [Frame timing research](FRAME_TIMING.md) covers this correction and the browser input latch.
+
+These checks cover the named normal inside-ring paths. They exclude outside-ring collision modes, rope animation, other throw/airborne handlers, special stagger follow-ups, full pin rules and complete match logic. Practice health initialization and AI remain provisional; ordinary running paths now have separate comparisons in [running research](RUNNING.md). Camera scrolling has separate original-program and pixel comparisons in [camera research](CAMERA.md). The browser contains translated functions and recovered tables. CPU execution is confined to offline fixture generation.
 
 ```sh
 python tools/extract_actors.py path/to/wwfwfest.zip

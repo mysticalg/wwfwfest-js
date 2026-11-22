@@ -14,7 +14,7 @@ export class WorldCamera {
     this.chunkY = y >>> 5;
   }
 
-  step(actors, {rumble = false, targetX = this.x, targetY = this.y} = {}) {
+  step(actors, {rumble = false, targetX = this.x, targetY = this.y, stream = true} = {}) {
     const centerX = u16(this.x + 160);
     const centerY = u16(this.y - 240);
     let count = 0;
@@ -58,6 +58,11 @@ export class WorldCamera {
       this.backgroundY = u16(this.backgroundY + dy);
     }
     this.clamp();
+    if (stream) this.stream();
+    return this;
+  }
+
+  stream() {
     // $025d00/$025d9c stream one 32-pixel boundary per layer per update,
     // prioritizing horizontal changes before vertical ones.
     const nextX = this.x >>> 5;

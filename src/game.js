@@ -5,11 +5,12 @@ import {StandingAction, StandingReaction, standingHitResponse} from './actors/st
 import {Knockdown} from './actors/knockdown.js';
 import {Running} from './actors/running.js';
 import {RunningAttack, runningMove, runningHitResponse} from './actors/running-attack.js';
-import {worldPosition, updateScreenPosition, spritePosition, healthSeverity} from './actors/projection.js';
+import {worldPosition, updateScreenPosition, spritePosition, projectedPosition, healthSeverity} from './actors/projection.js';
 import {insideRingCollision, addPositionWord} from './actors/ring-collision.js';
 import {actorTables} from './data/actor-tables.js';
 import {WorldCamera} from './camera.js';
 import {SceneryAnimator} from './scenery.js';
+import {videoFrameRate} from './timing.js';
 
 // Ordinary walking and its descriptor clock are translated from the arcade
 // routines. Standing punch/kick handlers and their ordinary contact/reaction paths
@@ -18,7 +19,7 @@ import {SceneryAnimator} from './scenery.js';
 // use their original handlers too. AI and match rules
 // remain provisional until their remaining handlers are recovered.
 export const rules = {
-  frameRate: 60,
+  frameRate: videoFrameRate,
   maximumHealth: 100,
   depthTolerance: 17,
   pinFrames: 180,
@@ -92,17 +93,23 @@ export class Match {
   step(input) {
     if (this.winner !== null) return;
     this.ticks++;
+    const phase = (this.ticks - 1) >>> 0;
+    this.contactPhase = !(phase & 1);
+    this.scenery.events = [];
     this.time = Math.max(0, 180 - Math.floor(this.ticks / rules.frameRate));
     if (!this.time) {
       this.winner = this.fighters[0].health >= this.fighters[1].health ? 0 : 1;
       return;
     }
+    if (!this.contactPhase) {
+      this.scenery.step(this.camera.chunkX, this.camera.chunkY);
+      this.camera.stream();
+    }
     this.camera.step(this.fighters.map(actor => {
       const world = worldPosition(actor);
       return {x: world.xFixed >>> 16, y: world.yFixed >>> 16, z: world.zFixed >>> 16,
         flags33: actor.cameraFlags ?? 1, priority: actor.cameraPriority || 0, active: true};
-    }));
-    this.scenery.step(this.camera.chunkX, this.camera.chunkY);
+    }), {stream: false});
     const opponentInput = this.ai ? this.computerInput(this.fighters[1], this.fighters[0]) : {};
     this.updateFighter(this.fighters[0], this.fighters[1], input, 0);
     this.updateFighter(this.fighters[1], this.fighters[0], opponentInput, 1);
@@ -123,9 +130,11 @@ export class Match {
         actor.lastPose = actor.animation.pose;
       }
     }
-    this.resolveStrike(this.fighters[0], this.fighters[1]);
-    this.resolveStrike(this.fighters[1], this.fighters[0]);
-    for (const actor of this.fighters) {
+    if (this.contactPhase) {
+      this.resolveStrike(this.fighters[0], this.fighters[1]);
+      this.resolveStrike(this.fighters[1], this.fighters[0]);
+    }
+    if (this.contactPhase) for (const actor of this.fighters) {
       if (actor.pendingDamage) {
         actor.health = Math.max(0, actor.health - actor.pendingDamage);
         actor.severity = healthSeverity(actor.health, actor.maximumHealth, actor.severity);
@@ -221,6 +230,9 @@ export class Match {
       actor.pendingIdle = actor.standingReaction.done;
     } else actor.movementMode = 0;
 
+    const body = actor.runningAttack || actor.knockdown || actor.running;
+    actor.projection = body?.projection || {...worldPosition(actor),
+      facing: actor.facing > 0 ? 0x8000 : 0, offsetX: actor.spriteOffsetX || 0, offsetY: actor.spriteOffsetY || 0};
     if (!actor.knockdown && actor.state === 'walk') {
       const delta = walkDelta(actor.type, actor.moveHorizontal, actor.moveVertical);
       const dx = delta.x / 65536;
@@ -302,7 +314,6 @@ export class Match {
       actor.animation = body.clock;
       return;
     }
-    this.faceTarget(actor, target);
     if (pressed) {
       // Single-button row-zero actions are punch 0 and kick $72.
       const button = pressed & 2 ? 1 : 0;
@@ -312,6 +323,7 @@ export class Match {
       actor.animation = actor.standingAction.clock;
       return;
     }
+    this.faceTarget(actor, target);
     actor.moveHorizontal = horizontal;
     actor.moveVertical = vertical;
     if (horizontal || vertical) {
@@ -417,6 +429,6 @@ export class Match {
   }
 
   drawPosition(actor) {
-    return spritePosition(actor, this.camera);
+    return actor.projection ? projectedPosition(actor.projection, this.camera) : spritePosition(actor, this.camera);
   }
 }

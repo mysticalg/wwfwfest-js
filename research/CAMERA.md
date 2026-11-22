@@ -35,6 +35,8 @@ The normal ring has 32 visibility entries and 96 original 64 by 64 pixel patches
 
 `StageRenderer` draws the world layers and recovered patches directly in Canvas. These are game-specific data and JavaScript functions. No CPU interpreter runs in the browser.
 
+In the actual match, crowd and chunk streaming run on odd frame phases before camera follow. Standalone camera/scenery fixture updates remain service-call comparisons. [Frame timing research](FRAME_TIMING.md) adds 24 original composed sequences covering their frame scheduling alongside input, actors and projection.
+
 ## Verification
 
 - 128 original camera scenarios, each 100 updates, compare both origins, all four scroll words and chunk streaming. Cases cover the seven clamp records, priorities, one/four/nine default subjects, inactive actors, mode-dependent height, word arithmetic and moving subjects.
@@ -44,7 +46,7 @@ The normal ring has 32 visibility entries and 96 original 64 by 64 pixel patches
 - Controlled-input match fixtures retain exact actor/contact/damage/knockdown results while comparing camera movement. Boundary walking now includes both axes for two character speeds.
 - Simulated gamepad browser checks traverse both sides of the ring, cross the old view limits, keep actors visible during scrolling, and retain pause/rematch/reconnect and recovery behavior.
 
-The pixel cases cover the stage layers, not the complete HUD/actor frame. Dynamic rope sprites, additional scenery handlers/moods, other world scenes, complete match presentation, grapples, native running and the remaining match rules are still unfinished. Physical controller acceptance is still unverified.
+The pixel cases cover the stage layers, not the complete HUD/actor frame. Dynamic rope sprites, additional scenery handlers/moods, other world scenes, complete match presentation, standing grapples and the remaining match rules are still unfinished. Ordinary native running has separate comparisons in [running research](RUNNING.md). Physical controller acceptance is still unverified.
 
 ## Reproduce
 

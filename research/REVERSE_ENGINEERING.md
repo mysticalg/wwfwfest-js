@@ -44,6 +44,8 @@ Each of the first twelve frame tables has 564 indexed entries followed by a term
 
 ## Native source and fidelity
 
+[Frame timing research](FRAME_TIMING.md) documents the alternating main-loop services, original action-button latch, pre-physics sprite projection and estimated browser video pace. Integrated actor/contact fixtures now follow the recovered phase scheduling.
+
 `src/renderer.js` reproduces the recovered tile-chain interpretation in Canvas. The legacy `arena.png` files preserve the earlier captured reference view. Normal match rendering now uses recovered scrolling world layers and crowd patches, with native camera/scenery functions documented in [camera research](CAMERA.md).
 
 `src/game.js` combines translated walking/running/rebounds, eight ordinary running actions/captures, standing combat, normal inside-ring knockdown/recovery and camera behavior with provisional match rules. [Actor research](ACTORS.md) covers locomotion, [combat research](COMBAT.md) standing attacks, [knockdown research](KNOCKDOWNS.md) ring collision/recovery, and [camera research](CAMERA.md) scrolling/scenery. [Running research](RUNNING.md) documents ordinary runs, braking and rope rebound physics. [Running action research](RUNNING_ATTACKS.md) covers the eight ordinary running actions, their contacts and paired releases. Other moves, outside-ring behavior, moving rope graphics, AI and pinning remain incomplete.

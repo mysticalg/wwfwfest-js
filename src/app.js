@@ -4,6 +4,7 @@ import {NativeAudio} from './audio/native-audio.js';
 import {decodeSample} from './audio/sample-codec.js';
 import {MusicSequencer} from './audio/music-sequencer.js';
 import {GamepadInput, neutralControls} from './gamepad.js';
+import {ArcadeInput} from './arcade-input.js';
 
 const element = id => document.getElementById(id);
 const canvas = element('screen');
@@ -11,6 +12,7 @@ export const renderer = new Renderer(canvas);
 export const audio = new NativeAudio();
 const held = new Set();
 const gamepads = new GamepadInput();
+const arcadeInput = new ArcadeInput();
 let padControls = neutralControls();
 let gamepadWasUsed = false;
 export const state = {view: 'play', match: null, paused: false, ready: false, pose: 0, actor: 0, cycling: false};
@@ -50,6 +52,7 @@ async function startMatch() {
     await Promise.all([prepareActor(player), prepareActor(opponent)]);
     if (request !== matchRequest) return;
     state.match = new Match(player, opponent);
+    arcadeInput.reset();
     state.match.ai = element('ai').checked;
     playSceneAudio(true);
     state.paused = false;
@@ -347,7 +350,7 @@ function frame(time) {
   if (state.ready) {
     while (accumulator >= 1000 / rules.frameRate) {
       if (state.view === 'play' && state.match && !state.paused) {
-        state.match.step(input());
+        state.match.step(arcadeInput.controls(input(), state.match.ticks));
         for (const command of state.match.takeSoundCommands()) audio.command(command);
       }
       if (state.view === 'frames' && state.cycling && ++cycleTicks % 8 === 0) {

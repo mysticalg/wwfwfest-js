@@ -2,6 +2,7 @@ import {ActorAnimation} from './animation.js';
 import {stepMovement} from './movement.js';
 import {insideRingCollision, addPositionWord} from './ring-collision.js';
 import {actorTables} from '../data/actor-tables.js';
+import {projectionSnapshot} from './projection.js';
 
 const u16 = value => value & 65535;
 
@@ -259,6 +260,7 @@ export class RunningAttack {
       }
     }
     this.clock.step(descriptor, this.facing);
+    this.projection = projectionSnapshot(this);
     stepMovement(this);
     if (this.clock.pose !== this.lastPose) {
       this.contact = 0;
