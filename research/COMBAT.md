@@ -1,6 +1,6 @@
 # Standing punch, kick and contact reconstruction
 
-The ordinary standing punch and kick now use handwritten JavaScript translations of the US rev 2 handlers. Their animation clocks, contact geometry, basic damage, ordinary hit reactions and sound-command output are connected to the match. This is a bounded part of combat. Grapples, airborne reactions, ring-boundary corrections and the remaining move selection are still open.
+The ordinary standing punch and kick use handwritten JavaScript translations of the US rev 2 handlers. Their animation clocks, contact geometry, basic damage, ordinary hit reactions and sound-command output are connected to the match. Normal inside-ring knockdowns and ring correction now have separate translations in [knockdown research](KNOCKDOWNS.md). Grapples, other airborne paths and the remaining move selection are still open.
 
 ## Original paths
 
@@ -37,7 +37,7 @@ Contact byte zero contains attack flag `$80`, hurt flag `$40`, and second-hurt-r
 
 The ground gate requires horizontal separation below 80 and depth separation below 12, using word coordinates. Target contact record 20 applies a depth offset of minus eight before that comparison. Horizontal mirroring uses bit 15 of the current pose word, while response remapping uses the current actor-facing field. The translation preserves the source's unsigned comparisons, signed byte offsets and endpoint tests, including unusual/reversed rectangles.
 
-Normal punch contact record 7 deals one point and emits sound commands `$2a,$32`. Kick contact record 17 deals two points and emits `$2b`. These requests go through the previously translated native audio sequencers. The response increments a target's combo counter when its ordinary reaction begins and starts a 64-update window. Further hits can select the original airborne reaction once the pre-hit counter reaches three. That selection is recovered, but its airborne handler is not yet translated.
+Normal punch contact record 7 deals one point and emits sound commands `$2a,$32`. Kick contact record 17 deals two points and emits `$2b`. These requests go through the translated native audio sequencers. The response increments a target's combo counter when its ordinary reaction begins and starts a 64-update window. Further hits can select the original airborne reaction once the pre-hit counter reaches three. The normal inside-ring airborne/down/get-up path is now translated and connected.
 
 Ordinary punch reaction 0 uses descriptor `$01a2c0`, handler `$01a2d0`, poses 15/16 and delays 6/6. Ordinary kick reaction `$0a` uses descriptor `$01a612`, handler `$01a61e`, pose 16 and delay 16. Their normal completion takes sixteen and nineteen updates respectively, including entry and the completion-handler update.
 
@@ -54,7 +54,7 @@ Ordinary punch reaction 0 uses descriptor `$01a2c0`, handler `$01a2d0`, poses 15
 
 Browser checks additionally exercised both actions through a simulated standard gamepad, verified the visible punch/kick poses, one/two-point damage and exact routed sound commands, and found no page errors. Physical controller testing is still pending.
 
-World-boundary correction is bypassed in the bounded original attack fixtures because it is a separate untranslated path. Normal standing attacks within the current practice arena use these translations. The alternate status-dependent punch descriptor, combined-button grapple selection, airborne/back-hit handlers, all other move rows, original actor health initialization, AI and match rules remain incomplete. The existing provisional down/recovery state handles responses that select an airborne handler, and health still uses the practice prototype's 100-point maximum. Full combat parity is not claimed.
+The bounded standing-attack fixtures bypass world-boundary correction to isolate those handlers. Inside-ring collision and the punch entry nudge now use the separate translated ring routine, with broader controlled-input integration runs described in [knockdown research](KNOCKDOWNS.md). The alternate status-dependent punch descriptor, combined-button grapple selection, other move rows, original actor health initialization, AI and match rules remain incomplete. Health still uses the practice prototype's 100-point maximum. Full combat parity is not claimed.
 
 Regenerate the fixture from a separately interleaved original program image:
 

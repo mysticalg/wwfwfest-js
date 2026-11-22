@@ -5,6 +5,7 @@ import test from 'node:test';
 import {contactOverlap, groundContact} from '../src/actors/contact.js';
 import {StandingAction, StandingReaction, standingHitResponse} from '../src/actors/standing-action.js';
 import {Match} from '../src/game.js';
+import {updateScreenPosition} from '../src/actors/projection.js';
 
 const fixtures = JSON.parse(readFileSync(new URL('./fixtures/combat-reference.json', import.meta.url)));
 function digest() {
@@ -78,10 +79,9 @@ for (const fixture of fixtures.matches) {
   test(`integrated button ${fixture.button} at distance ${fixture.distance} matches original actor/contact/damage loop`, () => {
     const match = new Match(0, 6);
     match.ai = false;
-    match.fighters[0].x = 0x280;
-    match.fighters[1].x = 0x280 + fixture.distance;
-    for (const actor of match.fighters) {
-      actor.y = 0x150;
+    for (const [index, actor] of match.fighters.entries()) {
+      updateScreenPosition(actor, {xFixed: (0x280 + index * fixture.distance) * 65536,
+        yFixed: 0x1500000, zFixed: 0x1400000});
       actor.animation.flags = 0x8000;
       actor.contact = 1;
     }

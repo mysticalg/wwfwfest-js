@@ -1,12 +1,17 @@
 import {ActorAnimation} from './actors/animation.js';
-import {walkAnimation, walkDelta} from './actors/movement.js';
+import {walkAnimation, walkDelta, walkSpeed} from './actors/movement.js';
 import {groundContact} from './actors/contact.js';
 import {StandingAction, StandingReaction, standingHitResponse} from './actors/standing-action.js';
+import {Knockdown} from './actors/knockdown.js';
+import {worldPosition, updateScreenPosition, spritePosition, healthSeverity, practiceCamera} from './actors/projection.js';
+import {insideRingCollision, addPositionWord} from './actors/ring-collision.js';
+import {actorTables} from './data/actor-tables.js';
 
 // Ordinary walking and its descriptor clock are translated from the arcade
 // routines. Standing punch/kick handlers and their ordinary contact/reaction paths
-// are translated too. Knockdowns, running, arena constraints, AI and match rules
-// remain provisional until their handlers are recovered.
+// are translated too. Normal inside-ring knockdown/recovery now uses its original
+// handlers and physics. Running, horizontal view constraints, AI and match rules
+// remain provisional until their remaining handlers are recovered.
 export const rules = {
   frameRate: 60,
   runMultiplier: 2.0,
@@ -27,9 +32,11 @@ export const animations = {
 };
 
 function fighter(type, x, y, facing) {
-  return {type, x, y, facing, health: rules.maximumHealth, state: 'idle',
-    stateTicks: 0, downTicks: 0, pinTicks: 0, hits: 0,
+  return {type, x, y, z: 0, facing, health: rules.maximumHealth,
+    maximumHealth: rules.maximumHealth, severity: 0, state: 'idle',
+    stateTicks: 0, pinTicks: 0, hits: 0,
     contact: 0, comboCount: 0, comboTimer: 0, previousButtons: 0,
+    movementMode: 0, moveHorizontal: 0, moveVertical: 0,
     lastPose: facing > 0 ? 0x8000 : 0, pendingIdle: false,
     animation: new ActorAnimation({pose: facing > 0 ? 0x8000 : 0})};
 }
@@ -52,6 +59,7 @@ export class Match {
     actor.animation.reset();
     actor.standingAction = null;
     actor.standingReaction = null;
+    actor.knockdown = null;
     actor.pendingIdle = false;
     if (state !== 'idle' && state !== 'walk' && state !== 'strike' && state !== 'heavy') actor.contact = 0;
   }
@@ -103,23 +111,69 @@ export class Match {
 
   advanceActor(actor) {
     const facing = actor.facing > 0 ? 0x8000 : 0;
-    if (actor.state === 'walk') {
+    let collision = {kind: 0, flags: 0};
+    if (!actor.knockdown && actor.movementMode) {
+      const world = worldPosition(actor);
+      collision = insideRingCollision({x: world.xFixed >>> 16, y: world.yFixed >>> 16,
+        z: world.zFixed >>> 16, facing});
+      world.xFixed = addPositionWord(world.xFixed, collision.x);
+      world.yFixed = addPositionWord(world.yFixed, collision.y);
+      world.zFixed = addPositionWord(world.zFixed, collision.z);
+      updateScreenPosition(actor, world);
+    }
+    if (actor.knockdown) {
+      const pinned = this.fighters.some(other => other !== actor && other.state === 'pin');
+      actor.knockdown.step({pressed: actor.pressedButtons, pinned});
+      updateScreenPosition(actor, actor.knockdown);
+      actor.facing = actor.knockdown.facing & 0x8000 ? 1 : -1;
+      actor.contact = 0;
+      actor.movementMode = actor.knockdown.movementMode;
+      if (actor.knockdown.comboReset) actor.comboCount = actor.comboTimer = 0;
+      actor.pendingIdle = actor.knockdown.done;
+      this.soundCommands.push(...actor.knockdown.sounds);
+    } else if (actor.state === 'walk') {
+      actor.movementMode = 1;
       actor.contact = 1;
       actor.animation.step(walkAnimation(), facing);
     } else if (actor.state === 'idle') {
+      actor.movementMode = 0;
       if (actor.animation.flags & 0x8000) actor.contact = 1;
       actor.animation.idle(facing);
     } else if (actor.standingAction) {
+      if (!(actor.animation.flags & 0x8000)) {
+        actor.movementMode = 0;
+        if (actor.standingAction.button === 0) {
+          const world = worldPosition(actor);
+          const correction = insideRingCollision({x: world.xFixed >>> 16, y: world.yFixed >>> 16,
+            z: world.zFixed >>> 16, facing, paddingX: 0xffe8,
+            kind: collision.kind, flags: collision.flags});
+          world.xFixed = addPositionWord(world.xFixed, correction.x);
+          updateScreenPosition(actor, world);
+        }
+      }
       actor.standingAction.step(facing);
       actor.contact = actor.standingAction.contact;
       actor.pendingIdle = actor.standingAction.done;
     } else if (actor.standingReaction) {
+      actor.movementMode = 0;
       if (!(actor.animation.flags & 0x8000)) {
         actor.comboCount = (actor.comboCount + 1) & 0xffff;
         actor.comboTimer = 64;
       }
       actor.standingReaction.step(facing);
       actor.pendingIdle = actor.standingReaction.done;
+    } else if (actor.state === 'run') actor.movementMode = 1;
+    else actor.movementMode = 0;
+
+    if (!actor.knockdown && (actor.state === 'walk' || actor.state === 'run')) {
+      const delta = walkDelta(actor.type, actor.moveHorizontal, actor.moveVertical);
+      const multiplier = actor.state === 'run' ? rules.runMultiplier : 1;
+      const dx = delta.x * multiplier / 65536;
+      // Horizontal view bounds remain while this practice scene has a fixed
+      // camera. Recovered positions outside that view return without snapping.
+      if (dx < 0) actor.x = Math.max(actor.x + dx, Math.min(actor.x, 35));
+      else if (dx > 0) actor.x = Math.min(actor.x + dx, Math.max(actor.x, 285));
+      actor.y += delta.y * multiplier / 65536;
     }
   }
 
@@ -131,19 +185,17 @@ export class Match {
     actor.stateTicks++;
     const buttons = (input.strike ? 1 : 0) | (input.heavy ? 2 : 0);
     const pressed = buttons & ~actor.previousButtons;
+    actor.pressedButtons = pressed;
     actor.previousButtons = buttons;
     if (actor.pendingIdle) {
       this.setState(actor, 'idle');
+      actor.facing = Math.floor(target.x) >= Math.floor(actor.x) ? 1 : -1;
       return;
     }
-    if (actor.state === 'down') {
-      actor.downTicks--;
-      if (actor.downTicks <= 0 && actor.health > 0) this.setState(actor, 'idle');
-      return;
-    }
+    if (actor.state === 'down') return;
     if (actor.standingReaction || actor.standingAction) return;
     const close = Math.abs(actor.x - target.x) < 39 && Math.abs(actor.y - target.y) < rules.depthTolerance;
-    if (input.pin && target.state === 'down' && close) {
+    if (input.pin && target.state === 'down' && (!target.knockdown || target.knockdown.canPin) && close) {
       this.setState(actor, 'pin');
       actor.pinTicks++;
       this.count = Math.min(3, Math.floor(actor.pinTicks / 60));
@@ -155,7 +207,7 @@ export class Match {
     }
     actor.pinTicks = 0;
     if (actor.state === 'pin') this.count = 0;
-    actor.facing = target.x >= actor.x ? 1 : -1;
+    actor.facing = Math.floor(target.x) >= Math.floor(actor.x) ? 1 : -1;
     if (pressed) {
       // Combined-button grapple selection is still open. Single-button row-zero
       // actions are the recovered punch 0 and kick $72.
@@ -168,11 +220,9 @@ export class Match {
     }
     const horizontal = input.horizontal || 0;
     const vertical = input.vertical || 0;
+    actor.moveHorizontal = horizontal;
+    actor.moveVertical = vertical;
     if (horizontal || vertical) {
-      const delta = walkDelta(actor.type, horizontal, vertical);
-      const multiplier = input.run ? rules.runMultiplier : 1;
-      actor.x = Math.max(35, Math.min(285, actor.x + delta.x * multiplier / 65536));
-      actor.y = Math.max(105, Math.min(179, actor.y + delta.y * multiplier / 65536));
       // Normal walking faces the linked opponent ($00fe28), including when
       // backing away. Running is still the prototype's authored action.
       if (input.run && horizontal) actor.facing = horizontal;
@@ -185,8 +235,11 @@ export class Match {
   resolveStrike(actor, target) {
     const action = actor.standingAction;
     if (!action || action.hits.has(target) || !actor.contact || !target.contact) return;
-    const body = fighter => ({x: Math.floor(fighter.x), y: Math.floor(fighter.y), z: 0,
-      pose: fighter.animation.pose, contact: fighter.contact});
+    const body = fighter => {
+      const world = worldPosition(fighter);
+      return {x: world.xFixed >>> 16, y: world.yFixed >>> 16, z: world.zFixed >>> 16,
+        pose: fighter.animation.pose, contact: fighter.contact};
+    };
     if (!groundContact(body(actor), body(target))) return;
     const response = standingHitResponse(action.button, actor.facing > 0 ? 0x8000 : 0,
       {contact: target.contact, flags33: 0, comboCount: target.comboCount,
@@ -195,13 +248,20 @@ export class Match {
     action.hits.add(target);
     action.contact = actor.contact = 0;
     this.soundCommands.push(...response.sounds);
+    const reaction = response.reaction | (target.severity === 2 ? 0x8000 : 0);
     target.health = Math.max(0, target.health - response.damage);
+    target.severity = healthSeverity(target.health, target.maximumHealth, target.severity);
     target.hits++;
-    if (!target.health || (response.reaction !== 0 && response.reaction !== 10)) {
-      // The original response selects an airborne/back-hit handler here. The
-      // prototype's down state remains until that handler and ring physics land.
+    if (response.reaction !== 0 && response.reaction !== 10) {
       this.setState(target, 'down');
-      target.downTicks = target.health > 0 ? 160 : 1000000;
+      target.knockdown = new Knockdown({...worldPosition(target), reaction,
+        facing: target.facing > 0 ? 0x8000 : 0, pose: target.animation.pose,
+        health: target.health, maximumHealth: target.maximumHealth, severity: target.severity,
+        flags56: target === this.fighters[1] && this.ai ? 128 : 0, cameraY: practiceCamera.y,
+        movementMode: target.movementMode, speed: walkSpeed(target.type),
+        direction: actorTables.inputDirections[(target.moveHorizontal > 0 ? 1 : target.moveHorizontal < 0 ? 2 : 0)
+          | (target.moveVertical > 0 ? 8 : target.moveVertical < 0 ? 4 : 0)]});
+      target.animation = target.knockdown.clock;
     } else {
       this.setState(target, 'hurt');
       target.standingReaction = new StandingReaction(response.reaction === 10 ? 1 : 0, target.animation.pose);
@@ -210,7 +270,7 @@ export class Match {
   }
 
   pose(actor, frames) {
-    if (actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction) {
+    if (actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown) {
       return actor.animation.pose & 0x7fff;
     }
     const animation = animations[actor.state];
@@ -219,9 +279,13 @@ export class Match {
   }
 
   mirrored(actor) {
-    if (actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction) {
+    if (actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown) {
       return Boolean(actor.animation.pose & 0x8000);
     }
     return actor.facing > 0;
+  }
+
+  drawPosition(actor) {
+    return spritePosition(actor);
   }
 }

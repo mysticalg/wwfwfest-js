@@ -31,9 +31,9 @@ Ordinary walking uses poses 1–4, each with delay 10. The ordinary idle handler
 
 The twelve ordinary speed bytes are 27, 29, 28, 25, 30, 27, 24, 30, 22, 27, 28, 27. The polar tables have maxima 5120 horizontally and 4096 in depth, in 16.16 units before multiplication by speed. Hogan's horizontal walk displacement is therefore 2.109375 pixels per logical update. Diagonal values come directly from the tables.
 
-The browser match currently stores screen-space y, which increases downwards. The original input byte uses bit 2 for Up and bit 3 for Down. World depth increases upwards, and the sprite recipe output inverts projected y. `walkDelta` converts physical input to that original mask, then converts the resulting depth increment to browser y. Integrated locomotion fixtures normalize original depth around the initial origin for that comparison. The lower-level `polarDelta` and `stepMovement` retain the original world-coordinate convention. Full world/camera integration remains pending.
+The browser match stores screen-space y, which increases downwards, and converts to world coordinates for ring collision, contact and knockdown physics. The original input byte uses bit 2 for Up and bit 3 for Down. World depth increases upwards, and the sprite recipe output inverts projected y. `walkDelta` converts physical input to that original mask, then converts the resulting depth increment to browser y. The lower-level `polarDelta` and `stepMovement` retain the original world-coordinate convention. The practice camera is fixed. Camera scrolling and other world modes remain pending.
 
-Movement mode 2 adds signed 8.8 velocity words to the position longs and subtracts gravity from the vertical velocity with word wrap. The source's apparent negative-velocity clamp is unreachable under its unsigned comparison. The translation preserves that behavior. This primitive is verified for future airborne-action work and is not yet connected to match jumps or throws.
+Movement mode 2 adds signed 8.8 velocity words to the position longs and subtracts gravity from the vertical velocity with word wrap. The source's apparent negative-velocity clamp is unreachable under its unsigned comparison. The translation preserves that behavior and now drives the normal [knockdown/recovery path](KNOCKDOWNS.md). Other jumps and throws still need their action handlers.
 
 ## Verification
 
@@ -46,7 +46,7 @@ Movement mode 2 adds signed 8.8 velocity words to the position longs and subtrac
 - Four idle-entry scenarios through the complete original actor dispatcher.
 - Twelve character locomotion runs through the original idle/walk update handlers, animation dispatcher and movement routine. Each runs 120 updates with starts, eight directions, reversals and stopping. The integrated JavaScript match produces the same positions and pose words in this bounded ordinary context.
 
-These checks establish the translated paths within the stated inputs. They do not establish full-match equivalence, ring collisions, tag rules, Royal Rumble, camera behavior or physical controller acceptance. Ordinary standing attacks and their contact/reaction paths now have separate comparisons in [combat research](COMBAT.md). Arena constraints, running, airborne reactions, other moves, AI and pinning remain provisional. Other animation descriptors in this fixture verify the generic clock, not their complete action handlers.
+These checks establish the translated paths within the stated inputs. They do not establish full-match equivalence, tag rules, Royal Rumble, camera behavior or physical controller acceptance. Standing attacks have separate comparisons in [combat research](COMBAT.md), while normal inside-ring collision and knockdowns are covered in [knockdown research](KNOCKDOWNS.md). Running, horizontal view constraints, other moves, AI and pinning remain provisional. Other animation descriptors in this fixture verify the generic clock, not their complete action handlers.
 
 Reproduce data extraction from the archive:
 

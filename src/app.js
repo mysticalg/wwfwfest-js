@@ -199,12 +199,13 @@ function drawMatch() {
   const match = state.match;
   const context = renderer.context;
   context.drawImage(renderer.arena, 0, 0);
-  // The photographed camera position is fixed during this first native slice.
+  // The captured camera position stays fixed in the current practice scene.
   // Characters are independent JS objects drawn between original stage layers.
   const sorted = [...match.fighters].sort((a, b) => a.y - b.y);
   for (const actor of sorted) {
     const frames = tables.get(actor.type);
-    renderer.drawPose(frames, match.pose(actor, frames), actor.x, actor.y - 8, match.mirrored(actor));
+    const position = match.drawPosition(actor);
+    renderer.drawPose(frames, match.pose(actor, frames), position.x, position.y, match.mirrored(actor));
   }
   context.drawImage(renderer.foreground, 0, 0);
   context.fillStyle = '#071323';

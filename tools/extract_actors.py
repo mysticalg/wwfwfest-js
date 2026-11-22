@@ -22,6 +22,8 @@ def main():
 
     def descriptor(address):
         update, mode, count = struct.unpack_from('>IHH', program, address)
+        if not mode:
+            count = 0
         return {'source': address, 'update': update, 'mode': mode,
                 'delays': words(address + 8, count),
                 'poses': words(address + 8 + count * 2, count)}
@@ -45,6 +47,17 @@ def main():
         'hurtRectangles': [list(struct.unpack_from('>4b', program, 0x24236 + index * 4))
                            for index in range(11)],
         'reactionFacingMap': list(program[0x23fde:0x23fde + 36]),
+        'motionProfiles': [list(struct.unpack_from('>3H', program, 0x25da + index * 6))
+                           for index in range(24)],
+        'recoveryMashCounts': list(program[0xff40:0xff44]),
+        'knockdownAnimations': {name: descriptor(address) for name, address in {
+            'flight': 0x1a354, 'flightSevere': 0x1a364,
+            'bounce': 0x1a3f8, 'bounceSevere': 0x1a404,
+            'fall': 0x1a4a8, 'fallBack': 0x1a4b8,
+            'down': 0x1a540, 'downBack': 0x1a54c,
+            'turn': 0x1a67a, 'getup': 0x11076,
+            'rollRecovery': 0x16d3e, 'backRecovery': 0x193c6,
+        }.items()},
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(

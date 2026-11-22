@@ -167,6 +167,7 @@ for (const button of [0, 1]) for (const distance of [40, 70, 80]) {
     putWord(base + 0x72, 100);
     putWord(base + 6, base === actor ? 0x280 : 0x280 + distance);
     putWord(base + 10, 0x150);
+    putWord(base + 14, 0x140);
     putLong(base + 0x7a, base === actor ? target : actor);
   }
   putWord(actor + 4, 0x8000);
