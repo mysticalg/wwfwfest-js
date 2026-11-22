@@ -80,6 +80,7 @@ for (const fixture of fixtures.matches) {
       updateScreenPosition(actor, {xFixed: (0x280 + index * 40) * 65536,
         yFixed: 0x14c0000, zFixed: 0x1400000});
       actor.health = fixture.initialHealth;
+      actor.maximumHealth=100; // The controlled original reference uses this maximum.
       actor.severity = fixture.initialHealth <= 24 ? 2 : 0;
       actor.animation.flags = 0x8000;
       actor.contact = 1;

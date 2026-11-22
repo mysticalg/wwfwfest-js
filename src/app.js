@@ -5,6 +5,7 @@ import {decodeSample} from './audio/sample-codec.js';
 import {MusicSequencer} from './audio/music-sequencer.js';
 import {GamepadInput, neutralControls} from './gamepad.js';
 import {ArcadeInput} from './arcade-input.js';
+import {actorTables} from './data/actor-tables.js';
 
 const element = id => document.getElementById(id);
 const canvas = element('screen');
@@ -29,8 +30,9 @@ let musicPreview = null;
 let muted = false;
 
 for (const id of ['player', 'opponent', 'actor', 'linked-actor']) {
-  const names = id === 'actor' ? roster : roster.slice(0, id === 'linked-actor' ? 12 : 10);
-  names.forEach((name, type) => element(id).add(new Option(name, String(type))));
+  const types=id==='actor'?roster.map((_,type)=>type):id==='linked-actor'?
+    roster.slice(0,12).map((_,type)=>type):[...actorTables.selectableTypes,4,5];
+  types.forEach(type=>element(id).add(new Option(roster[type], String(type))));
 }
 element('opponent').value = '6';
 element('linked-actor').value = '6';
@@ -51,9 +53,8 @@ async function startMatch() {
   try {
     await Promise.all([prepareActor(player), prepareActor(opponent)]);
     if (request !== matchRequest) return;
-    state.match = new Match(player, opponent);
+    state.match = new Match(player, opponent,{ai:element('ai').checked});
     arcadeInput.reset();
-    state.match.ai = element('ai').checked;
     playSceneAudio(true);
     state.paused = false;
     audio.pause(false);
@@ -192,8 +193,8 @@ function drawSelection() {
   renderer.text('SELECT WRESTLERS', 160, 49, '#ffe64a', 17, 'center');
   const player = Number(element('player').value);
   const opponent = Number(element('opponent').value);
-  renderer.context.drawImage(renderer.portraits, player * 160, 0, 160, 160, 8, 40, 160, 160);
-  renderer.context.drawImage(renderer.portraits, opponent * 160, 0, 160, 160, 155, 40, 160, 160);
+  renderer.drawActor(player,0,88,168);
+  renderer.drawActor(opponent,0,235,168);
   renderer.text('1P', 83, 77, '#5aff8f', 12, 'center');
   renderer.text('VS', 160, 125, '#ffe64a', 15, 'center');
   renderer.text('CPU', 230, 77, '#ffb1ae', 12, 'center');
@@ -223,7 +224,7 @@ function drawMatch() {
     context.fillStyle = '#5c2635';
     context.fillRect(x, 16, 130, 5);
     context.fillStyle = '#f8df33';
-    context.fillRect(x, 16, 130 * actor.health / rules.maximumHealth, 5);
+    context.fillRect(x, 16, 130 * actor.health / actor.maximumHealth, 5);
   });
   context.fillStyle = '#071323';
   context.fillRect(0, 222, 320, 18);

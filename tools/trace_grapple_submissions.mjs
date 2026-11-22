@@ -4,6 +4,8 @@ import {createHash} from 'node:crypto';
 import {readFileSync,writeFileSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 const [hardwarePath,programPath,outputPath]=process.argv.slice(2);
+const withDamage=Boolean(process.env.DAMAGE),composed=Boolean(process.env.COMPOSE);
+if(withDamage&&!composed)throw new Error('DAMAGE references require COMPOSE=1');
 const {default:MC68000}=await import(pathToFileURL(hardwarePath));
 const memory=new Uint8Array(0x200000);memory.set(readFileSync(programPath));
 const cpu=new MC68000(),sounds=[],entropy=[],textRequests=[];
@@ -23,16 +25,17 @@ function call(address,current=bases[0]){
  }
  assert(steps<100000,`Throw kernel stuck at ${cpu.pc.toString(16)}`);
 }
-const bytes={movementMode:1,flags32:0x32,flags33:0x33,flags34:0x34,flags35:0x35,flags56:0x56,hitCounter:0xc7};
+const bytes={movementMode:1,flags32:0x32,flags33:0x33,flags34:0x34,flags35:0x35,flags56:0x56,hitCounter:0xc7,
+ ...(withDamage?{flags57:0x57,flags104:0x104}:{})};
 const words={type:2,facing:0x2e,previousState:0x1e,speed:0x2a,direction:0x2c,holdFlags:0x44,timer:0x46,
  contact:0x4c,pendingDamage:0x68,velocityX:0x58,velocityY:0x5a,velocityZ:0x5c,gravity:0x5e,offsetX:0x18,offsetY:0x1a,
  forced:0xfe,action:0x60,reaction:0x64,severity:0x70,health:0x66,maximumHealth:0x72,paddingX:0x3e,paddingY:0x40,paddingZ:0x42,eliminations:0xc4,
- mash:0xaa,inputBlockA:0xb4,inputBlockB:0xb6,supportTimer:0xe6,healthAccumulator:0x6a,resultPose:0x4a,targetX:0xbe,targetY:0xc0};
+ mash:0xaa,inputBlockA:0xb4,inputBlockB:0xb6,supportTimer:0xe6,healthAccumulator:0x6a,resultPose:0x4a,targetX:0xbe,targetY:0xc0,
+ ...(withDamage?{comboCount:0x52,comboTimer:0x54,idleTimer:0xd0}:{})};
 const attemptOffsets=Array.from({length:11},(_,i)=>0xe8+i*2);
 const headActions=[26,37,54,59,137];
-const actions=process.env.ACTION_SET?JSON.parse(process.env.ACTION_SET):[...headActions,93,94,95,96,98,99,110,111,138,141];
-const supportedActions=[...actions,2,24,25,36,38,40,43,44,47,48,50,51,52,58,66,67,68,6,...Array.from({length:11},(_,i)=>125+i)];
-const composed=Boolean(process.env.COMPOSE);
+const actions=process.env.ACTION_SET?JSON.parse(process.env.ACTION_SET):withDamage?[26,37,54,59]:[...headActions,93,94,95,96,98,99,110,111,138,141];
+const supportedActions=[...headActions,93,94,95,96,98,99,110,111,138,141,2,24,25,36,38,40,43,44,47,48,50,51,52,58,66,67,68,6,...Array.from({length:11},(_,i)=>125+i)];
 const knockdowns=[1,2,3,4,5,6,7,8,9,11,12,13,14,16,18,19,21,22,23,24,25,27,29,33,34,35,36,37,38,41];
 const supported=(s,a,r)=>[11,12,255].includes(s)||(s===4&&r===1)||(s===5&&[21,22,23,41,80,123,124,...supportedActions].includes(a&255))
  ||(composed&&([0,2,3,6,7].includes(s)||(s===4&&knockdowns.includes(r&255))||(s===5&&[56,120].includes(a))));
@@ -51,11 +54,11 @@ function snapshot(index){
  return result;
 }
 const cases=[];
-for(const action of actions)for(const type of headActions.includes(action)?Array.from({length:12},(_,i)=>i):[0,1])for(const facing of [0,0x8000])for(const x of [475,640,790]){
+for(const action of actions)for(const type of headActions.includes(action)?Array.from({length:12},(_,i)=>i):[0,1])for(const facing of [0,0x8000])for(const x of withDamage?[640]:[475,640,790]){
  cases.push({action,type,facing,x,variant:'human',attackerIndex:type&1,both:false});
 }
-for(const action of actions)for(const type of headActions.includes(action)?[0,5,8,11]:[0,1])for(const facing of [0,0x8000]){
- for(const variant of ['ai','opponentAI','rumble','counterWrap','partner','linked','zeroHealth','forced','outsidePartner','humanPartner','mash',
+for(const action of actions)for(const type of withDamage?[0,1]:headActions.includes(action)?[0,5,8,11]:[0,1])for(const facing of [0,0x8000]){
+ for(const variant of withDamage?['ai','opponentAI','rumble','forced','humanPartner']:['ai','opponentAI','rumble','counterWrap','partner','linked','zeroHealth','forced','outsidePartner','humanPartner','mash',
   ...([54].includes(action)?['orphan','marked']:[]),...([59].includes(action)?['phase1','phase2']:[])]){
   cases.push({action,type,facing,x:640,variant,attackerIndex:type&1,both:variant==='linked'});
  }
@@ -101,6 +104,7 @@ for(const config of cases){
   flags33:variant==='humanPartner'?2:0,flags34:0,flags35:0,flags56:0,action:0,reaction:0,forced:0,movementMode:0,
   xFixed:0,yFixed:0,zFixed:0,facing:0,holdFlags:0,clock:{flags:0,remaining:0,index:0,pose:0},attempts:{},attempt26:0}));
  const allInitial=[...initial,...partnerInitial];
+ if(withDamage)for(const body of allInitial)Object.assign(body,{flags57:body.type,flags104:body.flags56&128?0:128,comboCount:0,comboTimer:0,idleTimer:0});
  for(const[index,body]of allInitial.entries()){
   const base=allBases[index];memory[base]=128;putWord(base+0x20,body.state);
   putLong(base+0x26,body.auxiliaryIndex===null?0:allBases[index^1]|(body.unlinkMarked?0x80000000:0));
@@ -112,10 +116,11 @@ for(const config of cases){
   putWord(base+0x90,body.clock.pose);for(const offset of attemptOffsets)putWord(base+offset,body.attempts[offset]||0);
   putWord(base+0xfc,body.attempt26||0);if(index>=2)memory[base+0xaf]=1;
  }
+ if(withDamage)for(const base of allBases)call(0xf9c2,base);
  const updateOrder=both||composed?[0,1]:[attackerIndex],hash=createHash('sha256'),rows=[],entropyFrames=[],runInputs={},buttonInputs={};
  textRequests.length=0;
  let boundary=null,count=0;
- for(let tick=0;tick<(composed?700:260);tick++){
+ for(let tick=0;tick<(withDamage?4000:composed?700:260);tick++){
   sounds.length=entropy.length=0;
   const presses=bases.map(base=>variant==='mash'&&tick%2===0&&(word(base+0x20)&255)===5
    &&[93,94,95,96,98,99].includes(word(base+0x60)&255)?3:0);
@@ -141,6 +146,7 @@ for(const config of cases){
    call(0x232b6);
    for(const base of bases)if((word(base+4)&0x7fff)!==0x7fff&&(memory[base+0x26]&128)&&!word(base+0xfe))putLong(base+0x26,0);
   }
+  if(withDamage&&!(tick&1)&&boundary===null)call(0x2407e);
   const row={actors:bases.map((_,i)=>snapshot(i)),sounds:[...sounds],world:{...world,message:word(0x1c15d2),shake:word(0x1c1800),
     rope:[word(0x1c1150),word(0x1c1180),word(0x1c11b0),word(0x1c11e0)],secondaryShake:word(0x1c1802)},
    partners:partners.map((_,i)=>snapshot(i+2))};
@@ -152,7 +158,7 @@ for(const config of cases){
   if(boundary!==null)break;
   if(composed&&bases.every(base=>word(base+0x20)===0x8000&&word(base+4)===word(base+0x2e)))break;
  }
- sequences.push({...config,composed,initial,world,partnerInitial,updateOrder,boundary,count,entropyFrames,
+ sequences.push({...config,composed,damageService:withDamage,initial,world,partnerInitial,updateOrder,boundary,count,entropyFrames,
   ...(composed?{runInputs}:{}),buttonInputs,sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
 }
 writeFileSync(outputPath,JSON.stringify({source:'wwfwfest US rev 2, original attacker kernels and linked handoffs',sequences},null,2)+'\n');

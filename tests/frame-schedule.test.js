@@ -19,6 +19,7 @@ for(const fixture of fixtures.scenarios){
   const match=new Match(fixture.type,6),input=new ArcadeInput(),hash=createHash('sha256');
   match.ai=false;match.ticks=fixture.startPhase;
   for(const[index,actor]of match.fighters.entries()){
+   actor.health=actor.maximumHealth=100; // Controlled initialization in this timing reference.
    updateScreenPosition(actor,{xFixed:640*65536+0x1234,yFixed:(index?500:336)*65536+0x5678,zFixed:320*65536});
    actor.animation.flags=0x8000;actor.contact=1;if(index)actor.cameraFlags=0;
   }

@@ -60,6 +60,7 @@ function referenceMatch(initial) {
   match.ai = initial.attackerIndex === 1;
   const actor = match.fighters[initial.attackerIndex], target = match.fighters[1-initial.attackerIndex];
   for (const fighter of match.fighters) {
+    fighter.health=fighter.maximumHealth=100; // Controlled original match fixture.
     updateScreenPosition(fighter,{xFixed:640*65536+0x1234,yFixed:336*65536+0x5678,zFixed:320*65536});
     fighter.animation.flags = 0x8000;
     fighter.contact = 1;
@@ -89,7 +90,7 @@ function matchSnapshot(match) {
   }),sounds:match.takeSoundCommands()};
 }
 test('holding the dedicated Run shortcut keeps punch/kick edges available', () => {
-  const held = new Match(0,6), tapped = new Match(0,6);
+  const held = new Match(0,6,{ai:false}), tapped = new Match(0,6,{ai:false});
   held.ai = tapped.ai = false;
   for (const match of [held,tapped]) {
     match.fighters[0].x = 120;

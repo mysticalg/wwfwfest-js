@@ -80,6 +80,8 @@ for (const fixture of fixtures.matches) {
     const match = new Match(0, 6);
     match.ai = false;
     for (const [index, actor] of match.fighters.entries()) {
+      // These original-program fixtures deliberately initialize both records at 100.
+      actor.health=actor.maximumHealth=100;
       updateScreenPosition(actor, {xFixed: (0x280 + index * fixture.distance) * 65536,
         yFixed: 0x1500000, zFixed: 0x1400000});
       actor.animation.flags = 0x8000;
@@ -97,7 +99,7 @@ for (const fixture of fixtures.matches) {
 }
 
 test('holding an attack button does not manufacture new original input edges', () => {
-  const match = new Match(0, 6);
+  const match = new Match(0, 6,{ai:false});
   match.ai = false;
   match.fighters[1].x = match.fighters[0].x + 40;
   for (let tick = 0; tick < 150; tick++) match.step({strike: true});

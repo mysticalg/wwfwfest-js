@@ -5,9 +5,10 @@ import {StandingAction, StandingReaction, standingHitResponse} from './actors/st
 import {Knockdown} from './actors/knockdown.js';
 import {Running} from './actors/running.js';
 import {RunningAttack, runningMove, runningHitResponse} from './actors/running-attack.js';
-import {worldPosition, updateScreenPosition, spritePosition, projectedPosition, healthSeverity} from './actors/projection.js';
+import {worldPosition, updateScreenPosition, spritePosition, projectedPosition} from './actors/projection.js';
 import {insideRingCollision, addPositionWord} from './actors/ring-collision.js';
 import {actorTables} from './data/actor-tables.js';
+import {initializeHealth,advanceDamageService,defaultMatchSettings} from './actors/match-services.js';
 import {WorldCamera} from './camera.js';
 import {SceneryAnimator} from './scenery.js';
 import {videoFrameRate} from './timing.js';
@@ -20,7 +21,6 @@ import {videoFrameRate} from './timing.js';
 // remain provisional until their remaining handlers are recovered.
 export const rules = {
   frameRate: videoFrameRate,
-  maximumHealth: 100,
   depthTolerance: 17,
   pinFrames: 180,
 };
@@ -35,24 +35,30 @@ export const animations = {
   victory: {poses: [89, 90, 91, 92], ticks: 12},
 };
 
-function fighter(type, x, y, facing) {
-  return {type, x, y, z: 0, facing, health: rules.maximumHealth,
-    maximumHealth: rules.maximumHealth, severity: 0, state: 'idle',
+function fighter(type, x, y, facing, world, {computer=false,slot=0}={}) {
+  const actor={type, x, y, z: 0, facing, health: 0,
+    maximumHealth: 0, severity: 0, state: 'idle',
+    active:true,slot,flags56:computer?128:0,flags57:type,flags104:computer?0:128,
+    flags32:0,forced:0,idleTimer:0,pendingDamage:0,healthAccumulator:0,world,
     stateTicks: 0, pinTicks: 0, hits: 0,
     contact: 0, comboCount: 0, comboTimer: 0, previousButtons: 0,
     hitTargets: new Set(),
     movementMode: 0, moveHorizontal: 0, moveVertical: 0,
     lastPose: facing > 0 ? 0x8000 : 0, pendingIdle: false,
     animation: new ActorAnimation({pose: facing > 0 ? 0x8000 : 0})};
+  initializeHealth(actor,world);return actor;
 }
 
 export class Match {
-  constructor(playerType, opponentType) {
-    this.fighters = [fighter(playerType, 103, 165, 1), fighter(opponentType, 219, 165, -1)];
+  constructor(playerType, opponentType, {ai=true,...settings}={}) {
+    this.world={...defaultMatchSettings,...settings,inGame:true};
+    this.fighters = [fighter(playerType, 103, 165, 1,this.world),
+      fighter(opponentType, 219, 165, -1,this.world,{computer:ai,slot:ai?4:2})];
+    this.world.actors=this.fighters;
     this.ticks = 0;
     this.time = 180;
     this.winner = null;
-    this.ai = true;
+    this.ai = ai;
     this.count = 0;
     this.soundCommands = [];
     this.camera = new WorldCamera();
@@ -134,14 +140,15 @@ export class Match {
       this.resolveStrike(this.fighters[0], this.fighters[1]);
       this.resolveStrike(this.fighters[1], this.fighters[0]);
     }
-    if (this.contactPhase) for (const actor of this.fighters) {
-      if (actor.pendingDamage) {
-        actor.health = Math.max(0, actor.health - actor.pendingDamage);
-        actor.severity = healthSeverity(actor.health, actor.maximumHealth, actor.severity);
-        actor.pendingDamage = 0;
+    if (this.contactPhase) {
+      advanceDamageService(this.fighters);
+      // The browser adapters share the actor's original health/status words.
+      // Contact may have created a new reaction before this service runs.
+      for(const actor of this.fighters){
+        const body=actor.knockdown||actor.runningAttack||actor.running;
+        if(body)Object.assign(body,{health:actor.health,maximumHealth:actor.maximumHealth,
+          severity:actor.severity,flags32:actor.flags32});
       }
-      if (actor.comboTimer > 0) actor.comboTimer--;
-      else actor.comboCount = 0;
     }
   }
 
@@ -149,7 +156,7 @@ export class Match {
     if (actor.runningAttack?.pendingTransition) {
       const prior = actor.runningAttack;
       const options = {...prior, pose: prior.clock.pose, clock: prior.clock,
-        health: actor.health, maximumHealth: actor.maximumHealth, severity: actor.severity,
+        health: actor.health, maximumHealth: actor.maximumHealth, severity: actor.severity,forced:actor.forced,
         flags56: actor === this.fighters[1] && this.ai ? 128 : 0, cameraY: this.camera.y};
       this.setState(actor, [3,6].includes(prior.state) ? 'run' : 'down');
       const body = [3,6].includes(prior.state) ? new Running(options) : new Knockdown(options);
@@ -172,11 +179,11 @@ export class Match {
     if (actor.runningAttack) {
       actor.runningAttack.step();
       actor.pendingIdle = actor.runningAttack.done;
-      actor.pendingDamage = (actor.pendingDamage || 0) + actor.runningAttack.selfDamage;
+      if(actor.runningAttack.selfDamage)actor.pendingDamage=actor.runningAttack.selfDamage&65535;
       this.soundCommands.push(...actor.runningAttack.sounds);
       this.syncBody(actor);
     } else if (actor.running) {
-      actor.running.step({mask: actor.inputMask});
+      actor.running.step({mask: actor.inputMask,forcedStop:Boolean(actor.forced&0x8000)});
       updateScreenPosition(actor, actor.running);
       actor.facing = actor.running.facing & 0x8000 ? 1 : -1;
       actor.movementMode = actor.running.movementMode;
@@ -187,6 +194,7 @@ export class Match {
       this.soundCommands.push(...actor.running.sounds);
     } else if (actor.knockdown) {
       const pinned = this.fighters.some(other => other !== actor && other.state === 'pin');
+      actor.knockdown.forced=actor.forced;
       actor.knockdown.cameraY = this.camera.y;
       actor.knockdown.step({pressed: actor.pressedButtons, pinned});
       updateScreenPosition(actor, actor.knockdown);
@@ -254,6 +262,7 @@ export class Match {
     actor.contact = body.contact || 0;
     actor.spriteOffsetX = body.offsetX || 0;
     actor.spriteOffsetY = body.offsetY || 0;
+    actor.flags32=body.flags32||0;
     actor.linkedActor = body.linked ? (body.target?.owner || body.attacker?.owner || null) : null;
   }
 
@@ -359,8 +368,9 @@ export class Match {
     action.contact = actor.contact = 0;
     this.soundCommands.push(...response.sounds);
     const reaction = response.reaction | (target.severity === 2 ? 0x8000 : 0);
-    target.health = Math.max(0, target.health - response.damage);
-    target.severity = healthSeverity(target.health, target.maximumHealth, target.severity);
+    // Primary contact handlers write the low damage byte. Both contacts finish
+    // before $02407e applies the pending word and recomputes health severity.
+    if(primary!==2)target.pendingDamage=((target.pendingDamage||0)&0xff00)|(response.damage&255);
     target.hits++;
     if (response.reaction !== 0 && response.reaction !== 10) {
       const options = {...worldPosition(target), reaction,
@@ -375,7 +385,8 @@ export class Match {
           | (target.moveVertical > 0 ? 8 : target.moveVertical < 0 ? 4 : 0)]};
       this.setState(target, 'down');
       target.knockdown = new Knockdown({...options,
-        health: target.health, maximumHealth: target.maximumHealth, severity: target.severity,
+        world:this.world,
+        health: target.health, maximumHealth: target.maximumHealth, severity: target.severity,forced:target.forced,
         flags56: target === this.fighters[1] && this.ai ? 128 : 0, cameraY: this.camera.y,
       });
       target.knockdown.owner = target;
@@ -393,7 +404,7 @@ export class Match {
       const options = {...action, ...worldPosition(actor), reaction: response.selfReaction,
         facing: actor.facing > 0 ? 0x8000 : 0, pose: actor.animation.pose, clock: actor.animation,
         state: 4, recoveryTimer: response.selfRecoveryTimer, health: actor.health,
-        maximumHealth: actor.maximumHealth, severity: actor.severity,
+        maximumHealth: actor.maximumHealth, severity: actor.severity,forced:actor.forced,
         flags56: actor === this.fighters[1] && this.ai ? 128 : 0, cameraY: this.camera.y};
       this.setState(actor, 'down');
       actor.knockdown = new Knockdown(options);

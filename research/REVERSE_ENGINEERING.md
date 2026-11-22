@@ -40,7 +40,7 @@ The renderer ports the recovered chain descriptor behavior. Flag bit 4 flips x, 
 
 The original expander supplies offline reference traces. The native JavaScript decoder reproduces 488,592 frame expansions, including paired types, mirroring and clipping. The animation explorer supplies the other wrestler type for compound artwork. Standalone JSON snapshots now distinguish missing table markers from paired records and support explicit edited-piece overrides. Gameplay action semantics remain a separate translation task.
 
-Each of the first twelve frame tables has 564 indexed entries followed by a terminal word. The referee table has eighteen indexed entries and a terminal word. Snapshot JSON retains those final markers for inspection. Types 10 and 11 contain alternate Legion of Doom graphics. The application exposes their frame records in the explorer.
+Each of the first twelve frame tables has 564 indexed entries followed by a terminal word. The referee table has eighteen indexed entries and a terminal word. Snapshot JSON retains those final markers for inspection. Types 10 and 11 contain Demolition Smash and Crush graphics; their earlier alternate-Legion labels were incorrect. Original text scripts and native recipe rendering confirm the corrected identities. The application exposes all twelve wrestlers in selection and their frame records in the explorer.
 
 ## Native source and fidelity
 
@@ -54,7 +54,9 @@ Next reverse engineering work must map object states and routines to each combat
 
 [Standing grapple research](GRAPPLES.md) now records translated pair arbitration, arena-dependent headlock move choice and linked clinch/hold/carry/whip/escape kernels. They are verified as components and remain separate from normal matches while their selected throws, counters and victim reactions are reconstructed.
 
-All twenty-two headlock-selected handlers, eleven reversals and eleven additional victim reactions now have component translations. The shared dispatcher follows those named paths through held participants, pursuit, submission completion requests, knockdown, recovery, get-up, forced running/rebounds, braking and idle, retaining explicit outside handoffs and pending contact/pin requests. General mash and partner helpers have separate original-program comparisons. Normal grapple entry is still awaiting game-wide contact, damage, pin, AI and scene integration; full matches remain unfinished.
+All twenty-two headlock-selected handlers, eleven reversals and eleven additional victim reactions now have component translations. The shared dispatcher follows those named paths through held participants, pursuit, submission completion requests, knockdown, recovery, get-up, forced running/rebounds, braking and idle, retaining explicit outside handoffs and pending contact/pin requests. General mash and partner helpers have separate original-program comparisons. Normal grapple entry is still awaiting unified actor/input handling, contact, pin, AI and scene integration; full matches remain unfinished.
+
+[Original health and damage services](MATCH_SERVICES.md) now supply character/AI initialization and the playable match's pending-damage phase. Additional paired comparisons combine initialization, actor handlers and damage through the selected submission completion requests. Contact/pin/AI/scene integration and full matches remain unfinished.
 
 The native sample-effect sequencer matches original-driver event traces across 100 scenarios. Its sample playback and verification scope are documented in [audio research](AUDIO.md). The native music interpreter matches 31 original-driver scenarios and drives the JavaScript FM renderer. The score data, synthesis checks and remaining audio work are described in [music research](MUSIC.md). Standing punch/kick hit sounds now use original response commands. Complete gameplay sound routing remains unfinished.
 

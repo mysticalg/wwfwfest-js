@@ -3797,6 +3797,54 @@ export const actorTables = {
     12,
     0
   ],
+  "initialHumanHealth": [
+    110,
+    106,
+    98,
+    102,
+    500,
+    500,
+    100,
+    104,
+    106,
+    96,
+    104,
+    96,
+    110,
+    135,
+    140,
+    140
+  ],
+  "initialComputerHealth": [
+    110,
+    135,
+    140,
+    140,
+    175,
+    150,
+    155,
+    155,
+    160,
+    200
+  ],
+  "difficultyHealth": [
+    0,
+    -15,
+    15,
+    30
+  ],
+  "selectableTypes": [
+    0,
+    1,
+    2,
+    3,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11
+  ],
   "knockdownAnimations": {
     "flight": {
       "source": 107348,

@@ -98,6 +98,10 @@ def main():
         'attackAssistTimers': words(0x20952, 3),
         'victimAssistTimers': words(0x20a1e, 3),
         'teamRecovery': words(0x8c24, 4),
+        'initialHumanHealth': words(0xfa70, 16),
+        'initialComputerHealth': words(0xfa88, 10),
+        'difficultyHealth': list(struct.unpack_from('>4h', program, 0xfa9c)),
+        'selectableTypes': words(0x8998, 10),
         'knockdownAnimations': {name: descriptor(address) for name, address in {
             'flight': 0x1a354, 'flightSevere': 0x1a364,
             'bounce': 0x1a3f8, 'bounceSevere': 0x1a404,

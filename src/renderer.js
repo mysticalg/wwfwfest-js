@@ -2,9 +2,9 @@ import {StageRenderer} from './stage-renderer.js';
 import {SpriteRecipes, recipePieces} from './sprite-recipes.js';
 
 export const roster = [
-  'Hulk Hogan', 'Ultimate Warrior', 'Mr. Perfect', 'Big Boss Man',
-  'Hawk', 'Animal', 'Sgt. Slaughter', 'Ted DiBiase', 'Earthquake', 'Jake Roberts',
-  'Hawk (alternate)', 'Animal (alternate)', 'Referee',
+  'Hulk Hogan', 'Ultimate Warrior', 'Jake Roberts', 'Big Boss Man',
+  'Hawk', 'Animal', 'Sgt. Slaughter', 'Mr. Perfect', 'Earthquake', 'Ted DiBiase',
+  'Demolition Smash', 'Demolition Crush', 'Referee',
 ];
 
 async function loadImage(path) {
@@ -34,16 +34,16 @@ export class Renderer {
   }
 
   async load() {
-    const [atlas, palettes, selection, portraits, recipes] = await Promise.all([
+    const [atlas, palettes, selection, recipes] = await Promise.all([
       loadImage('sprite-indices.png'), loadJSON('palettes.json'),
-      loadImage('selection.png'), loadImage('roster.png'),
+      loadImage('selection.png'),
       Promise.all([fetch(new URL('../assets/sprite-recipes.bin', import.meta.url)).then(response => {
         if (!response.ok) throw new Error(`Could not load sprite recipes (${response.status})`);
         return response.arrayBuffer();
       }), loadJSON('sprite-recipes.json')]).then(([data, metadata]) => new SpriteRecipes(data, metadata)),
       this.stage.load(),
     ]);
-    Object.assign(this, {palettes, selection, portraits, recipes});
+    Object.assign(this, {palettes, selection, recipes});
     const scratch = document.createElement('canvas');
     scratch.width = atlas.width;
     scratch.height = atlas.height;
