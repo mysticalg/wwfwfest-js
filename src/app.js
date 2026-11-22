@@ -209,10 +209,15 @@ element('fullscreen').addEventListener('click', async () => {
 
 const gameKeys = new Set(['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'KeyZ', 'KeyX', 'KeyC', 'Space']);
 window.addEventListener('keydown', event => {
-  if (['INPUT', 'SELECT', 'BUTTON'].includes(event.target.tagName)) return;
+  if (['INPUT', 'SELECT'].includes(event.target.tagName)) return;
+  if (event.code === 'KeyP' && !event.repeat) {
+    event.preventDefault();
+    togglePause();
+    return;
+  }
+  if (event.target.tagName === 'BUTTON') return;
   if (gameKeys.has(event.code)) { event.preventDefault(); held.add(event.code); }
   if (event.code === 'Enter' && !event.repeat && state.view === 'play') { event.preventDefault(); startMatch(); }
-  if (event.code === 'KeyP' && !event.repeat) togglePause();
 });
 window.addEventListener('keyup', event => held.delete(event.code));
 window.addEventListener('blur', () => held.clear());
