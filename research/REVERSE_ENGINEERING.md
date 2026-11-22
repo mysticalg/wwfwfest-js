@@ -52,6 +52,8 @@ Each of the first twelve frame tables has 564 indexed entries followed by a term
 
 Next reverse engineering work must map object states and routines to each combat action, recover actual hit regions and damage tables, implement dependent grapple poses, connect original action descriptors and test complete tag and Rumble matches against reference runs.
 
+[Standing grapple research](GRAPPLES.md) now records translated pair arbitration, arena-dependent headlock move choice and linked clinch/hold/carry/whip/escape kernels. They are verified as components and remain separate from normal matches while their selected throws, counters and victim reactions are reconstructed.
+
 The native sample-effect sequencer matches original-driver event traces across 100 scenarios. Its sample playback and verification scope are documented in [audio research](AUDIO.md). The native music interpreter matches 31 original-driver scenarios and drives the JavaScript FM renderer. The score data, synthesis checks and remaining audio work are described in [music research](MUSIC.md). Standing punch/kick hit sounds now use original response commands. Complete gameplay sound routing remains unfinished.
 
 ## Actor state work
