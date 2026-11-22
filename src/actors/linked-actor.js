@@ -14,7 +14,7 @@ const knockdowns=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,19,21,22,23,24,25,27,28,
 export class LinkedActor extends GrappleActor {
   get pendingTransition() {
     if([0,2,3,6,7].includes(this.state))return false;
-    if(this.state===1&&(this.walkMode&63)<12)return false;
+    if(this.state===1&&(this.walkMode&63)<13)return false;
     if([8,9,10].includes(this.state))return false;
     if(this.state===4&&knockdowns.includes(this.reaction&255))return false;
     if(this.state===5&&[56,120].includes(this.action))return false;

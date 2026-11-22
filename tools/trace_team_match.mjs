@@ -37,7 +37,8 @@ const words={grappleIndex:0x48,lastPose:0x90,type:2,facing:0x2e,state:0x20,actio
  walkMode:0xae,apronTimer:0xc8,supportTimer:0xe6,recoveryTimer:0x9a,mash:0xaa,healthAccumulator:0x6a,idleTimer:0xd0,
  forced:0xfe,comboCount:0x52,comboTimer:0x54,resultPose:0x4a,pinStatus:0x108};
 const bytes={moveToggle:0x62,movementMode:1,flags32:0x32,flags33:0x33,flags34:0x34,flags35:0x35,flags56:0x56,flags57:0x57,flags74:0x74,flags75:0x75,flagsC6:0xc6,hitCounter:0xc7,aiFlagsB9:0xb9,region:0x31};
-const rescue=Boolean(process.env.TEAM_RESCUE),attemptOffsets=[...Array.from({length:10},(_,i)=>0xd2+i*2),...Array.from({length:11},(_,i)=>0xe8+i*2)];
+const resultMode=Boolean(process.env.TEAM_RESULT),side=Boolean(process.env.TEAM_SIDE),rescue=Boolean(process.env.TEAM_RESCUE),attemptOffsets=[...Array.from({length:10},(_,i)=>0xd2+i*2),...Array.from({length:11},(_,i)=>0xe8+i*2)];
+if(resultMode)bytes.finishFlags=0xa0;
 if(expanded){words.hitMask=0x8e;words.cornerInput=0xac;words.targetX=0xbe;words.targetY=0xc0;}
 function actors(){return bases.map(base=>{
  const result={active:Boolean(memory[base]&128)};
@@ -46,7 +47,7 @@ function actors(){return bases.map(base=>{
  for(const[key,offset]of [['xFixed',6],['yFixed',10],['zFixed',14],['controlPort',0x8a]])result[key]=long(base+offset);
  for(const[key,offset]of [['auxiliaryIndex',0x26],['opponentIndex',0x7a],['partnerIndex',0x86]])result[key]=bases.indexOf(long(base+offset)&0x7fffffff);
  if(expanded)for(const[key,offset]of [['lastHitIndex',0x92],['secondaryPinnerIndex',0x9c],['secondaryOpponentIndex',0x82]])result[key]=bases.indexOf(long(base+offset)&0x7fffffff);
- if(rescue){result.assistanceTargetIndex=bases.indexOf(long(base+0x7e)&0x7fffffff);result.attempts=Object.fromEntries(attemptOffsets.map(offset=>[offset,word(base+offset)]));}
+ if(rescue||side){result.assistanceTargetIndex=bases.indexOf(long(base+0x7e)&0x7fffffff);result.attempts=Object.fromEntries(attemptOffsets.map(offset=>[offset,word(base+offset)]));}
  result.unlinkMarked=Boolean(memory[base+0x26]&128);
  result.clock={flags:word(base+0x1c),remaining:word(base+0x22),index:word(base+0x24),pose:word(base+4)};
  result.projection=[word(base+0x14)<<16>>16,232-(word(base+0x16)<<16>>16)];return result;
@@ -59,8 +60,8 @@ function snapshot(){
 }
 
 const sequences=[],filter=process.env.TEAM_FILTER?JSON.parse(process.env.TEAM_FILTER):{};
-const profiles=rescue?['rescue-prone-front','rescue-prone-back','rescue-pin-front','rescue-pin-back','rescue-pin-control','rescue-hold97','rescue-forced','rescue-null']:process.env.TEAM_LAUNCH?['launch46-hit','launch46-run','launch46-miss','launch46-cpu','launch46-clash']:process.env.TEAM_PRONE?['prone34','prone34-cpu','prone34-broken','prone34-escape','prone34-zero','apron57','apron57-cpu','apron57-hit','apron57-cpu-hit']:process.env.TEAM_CATCH?['catch39-hit','catch39-miss','catch39-run','catch39-cpu']:process.env.TEAM_TAUNT?['taunt-human','taunt-cpu','taunt-loop']:process.env.TEAM_HOLD?['hold29','hold29-cpu','hold29-broken','hold29-escape','held83-punch','held83-kick']:process.env.TEAM_GETUP?['getup','getup-broken','getup-back','getup-cpu-boost','getup-human-boost']:['neutral','advance','run','tag'];
-for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.env.TEAM_HOLD||process.env.TEAM_TAUNT||process.env.TEAM_CATCH||process.env.TEAM_PRONE||process.env.TEAM_LAUNCH||rescue?Array.from({length:12},(_,i)=>i):[0,7,10]){
+const profiles=resultMode?['result-pin-front','result-pin-back','result-pin-cpu-front','result-pin-cpu-back','result-countout-human','result-countout-cpu','result-draw']:side?['side28','side28-cpu','side28-broken','side28-standing','side82-impact','side82-escape','side28-zero','side28-forced','side88-apron']:rescue?['rescue-prone-front','rescue-prone-back','rescue-pin-front','rescue-pin-back','rescue-pin-control','rescue-hold97','rescue-forced','rescue-null']:process.env.TEAM_LAUNCH?['launch46-hit','launch46-run','launch46-miss','launch46-cpu','launch46-clash']:process.env.TEAM_PRONE?['prone34','prone34-cpu','prone34-broken','prone34-escape','prone34-zero','apron57','apron57-cpu','apron57-hit','apron57-cpu-hit']:process.env.TEAM_CATCH?['catch39-hit','catch39-miss','catch39-run','catch39-cpu']:process.env.TEAM_TAUNT?['taunt-human','taunt-cpu','taunt-loop']:process.env.TEAM_HOLD?['hold29','hold29-cpu','hold29-broken','hold29-escape','held83-punch','held83-kick']:process.env.TEAM_GETUP?['getup','getup-broken','getup-back','getup-cpu-boost','getup-human-boost']:['neutral','advance','run','tag'];
+for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.env.TEAM_HOLD||process.env.TEAM_TAUNT||process.env.TEAM_CATCH||process.env.TEAM_PRONE||process.env.TEAM_LAUNCH||rescue||side||resultMode?Array.from({length:12},(_,i)=>i):[0,7,10]){
  const config={profile,type};if(!Object.entries(filter).every(([k,v])=>config[k]===v))continue;
  memory.fill(0,0x1c0000,0x1c4000);memory.fill(0,0x180000,0x181000);memory.fill(0,0xc0000,0xc4000);cpu.d.fill(0);cpu.a.fill(0);
  put(0x1c007c,0x8000);put(0x1c0066,16);put(0x1c16a0,0x30);putLong(0x1c005c,0);
@@ -137,6 +138,43 @@ for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.
   if(hit){p.change(0);if(!cpu)p.flags56=0;}
   else p.change(5,121);
  }
+ if(resultMode){
+  world.cameraTargetX=480;world.cameraTargetY=560;put(0x1c1804,480);put(0x1c1806,560);
+  let a=seed.nativeActors.pool[0],p=seed.nativeActors.pool[4];
+  if(profile.includes('-cpu'))[a,p]=[p,a];
+  a.type=a.flags57=type;
+  if(profile.includes('-pin')){
+   a.change(5,0x8048);a.pendingState=false;a.flags35=1;a.flags33|=64;
+   p.change(5,0x804a);p.pendingState=false;p.flags33|=64;p.health=0;p.severity=2;p.mash=256;p.reaction=profile.endsWith('back')?9:8;
+   a.auxiliary=p;p.auxiliary=a;a.facing=p.facing=type&1?0:0x8000;
+   a.xFixed=(a.facing?576:704)*65536;p.xFixed=640*65536;a.yFixed=p.yFixed=337*65536;
+   Object.assign(a.clock,{flags:0x8005,index:0,remaining:0xff00,pose:0xffff});
+   Object.assign(p.clock,{flags:0x8005,index:0,remaining:0xff00,pose:18|p.facing});
+  }else{
+   for(const b of [a,a.partner,p,p.partner]){b.flags32&=~1;b.change(0);}
+   if(profile==='result-draw')for(const b of [a,a.partner,p,p.partner])b.forced=0x8005;
+   else{a.forced=a.partner.forced=0x8002;p.forced=p.partner.forced=0x8003;}
+  }
+ }
+ if(side){
+  let a=seed.nativeActors.pool[0],p=seed.nativeActors.pool[4];
+  if(['side28-cpu','side82-escape','side88-apron'].includes(profile))[a,p]=[p,a];
+  a.type=a.flags57=type;p.type=p.flags57=(type+3)%12;
+  a.change(5,28);a.auxiliary=p;p.auxiliary=profile==='side28-broken'?null:a;
+  a.facing=p.facing=type&1?0:0x8000;a.xFixed=640*65536+0x1234;p.xFixed=664*65536+0x4321;
+  a.yFixed=337*65536+0x2345;p.yFixed=337*65536+0x5432;a.zFixed=p.zFixed=320*65536;
+  p.change(profile==='side28-standing'?0:4);p.reaction=1;
+  if(['side82-impact','side82-escape','side28-zero','side28-forced','side88-apron'].includes(profile)){
+   a.action|=0xc000;a.pendingState=false;Object.assign(a.clock,{flags:0x8005,index:1,remaining:5,pose:word(0x148a8+8+word(0x148a8+6)*2+2)^a.facing});
+   a.flags33|=64;a.flags35|=2;a.inputBlockA|=16;p.flags33|=64;p.flags35|=4;
+   p.change(5,82);
+   if(profile==='side82-impact')p.holdFlags=1;
+   if(profile==='side82-escape'){p.mash=1;p.action|=0x8000;}
+   if(profile==='side28-zero'){p.health=0;p.severity=2;}
+   if(profile==='side28-forced')a.forced=0x8000;
+   if(profile==='side88-apron'){a.flags32|=1;p.change(5,88);}
+  }
+ }
  if(rescue){
   const [q,a,p,s]=slots.map(slot=>seed.nativeActors.pool[slot]);
   const face=type&1?0:0x8000;
@@ -159,12 +197,14 @@ for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.
   for(const[key,offset]of Object.entries(bytes))memory[base+offset]=body[key]||0;
   for(const[key,offset]of [['xFixed',6],['yFixed',10],['zFixed',14],['controlPort',0x8a]])putLong(base+offset,body[key]||0);
   for(const[key,offset]of [['auxiliary',0x26],['opponent',0x7a],['partner',0x86],['secondaryOpponent',0x82]])putLong(base+offset,body[key]?pool[body[key].slot]:0);
-  if(rescue){putLong(base+0x7e,body.assistanceTarget?pool[body.assistanceTarget.slot]:0);for(const offset of attemptOffsets)put(base+offset,body.attempts[offset]||0);}
+  if(rescue||side){putLong(base+0x7e,body.assistanceTarget?pool[body.assistanceTarget.slot]:0);for(const offset of attemptOffsets)put(base+offset,body.attempts[offset]||0);}
   for(const[key,offset]of [['flags',0x1c],['remaining',0x22],['index',0x24],['pose',4]])put(base+offset,body.clock[key]);
  }
  putLong(0x1c1684,bases[0]);putLong(0x1c1688,bases[2]);call(0xf958,ref);
- const initial=actors(),entropyFrames=[],inputs=[],rows=[],hash=createHash('sha256');let previousButtons=0,tagPressed=false,count=0,boundary=null,resultRequest=false,acceptedApronHit=false,acceptedLaunch=false,acceptedRescue=false;
- for(let tick=0;tick<400;tick++){
+ const refereeInitial=resultMode?(profile.includes('-pin')?{movementMode:1}:{state:5,pendingState:true,movementMode:1,clock:{flags:0,remaining:0,index:0,pose:0}}):null;
+ if(refereeInitial){memory[ref+1]=1;if(!profile.includes('-pin')){put(ref+0x20,0x8005);put(ref+0x1c,0);}}
+ const initial=actors(),entropyFrames=[],inputs=[],rows=[],hash=createHash('sha256');let previousButtons=0,tagPressed=false,count=0,boundary=null,resultRequest=false,acceptedApronHit=false,acceptedLaunch=false,acceptedRescue=false,acceptedSide=false,outcome=null;
+ for(let tick=0;tick<(resultMode?1200:400);tick++){
   sounds.length=entropy.length=effects.length=0;putLong(0x1c0080,tick);
   const input={};
   if(profile==='advance'){input.horizontal=tick<55?1:0;input.strike=tick%60>=50&&tick%60<54;input.heavy=tick%120>=90&&tick%120<94;}
@@ -175,6 +215,7 @@ for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.
   }
   if(profile==='hold29-escape')input.strike=tick>50&&(tick%4===0);
   if(profile==='prone34-escape')input.strike=tick>40&&(tick%4===0);
+  if(profile==='side82-escape')input.strike=tick>40&&(tick%4===0);
   const buttons=(input.strike?1:0)|(input.heavy?2:0),pressed=(buttons&~previousButtons)|((input.run&&!inputs.at(-1)?.run)?3:0);previousButtons=buttons;
   const mask=(input.horizontal>0?1:input.horizontal<0?2:0)|(input.vertical<0?4:input.vertical>0?8:0);
   for(const base of bases){memory[base+0xa3]=long(base+0x8a)===0x140020?pressed:0;put(base+0xa8,long(base+0x8a)===0x140020?mask:0);}
@@ -200,14 +241,18 @@ for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.
    if((row.actors[attacker].action&0x8000)&&row.actors[attacker].auxiliaryIndex===target)acceptedLaunch=true;
   }
   if(rescue){const [q,a,p]=row.actors;if(profile.startsWith('rescue-prone')&&p.attempts[0xe4]===((initial[2].attempts[0xe4]+1)&65535))acceptedRescue=true;else if(profile.startsWith('rescue-pin')&&(q.state&255)===7&&(p.state&255)===4&&p.reaction===15)acceptedRescue=true;else if(profile==='rescue-hold97'&&(p.state&255)===5&&(p.action&255)===119)acceptedRescue=true;}
+  if(side){const ai=['side28-cpu','side82-escape','side88-apron'].includes(profile),a=row.actors[ai?2:0],p=row.actors[ai?0:2];if(['side28','side28-cpu','side28-standing'].includes(profile)&&(a.action&0x8000)&&(p.state&255)===5&&(p.action&255)===82)acceptedSide=true;else if(profile==='side82-escape'&&(p.state&255)===5&&(p.action&255)===88)acceptedSide=true;}
   inputs.push(input);entropyFrames.push([...entropy]);count++;
-  resultRequest=profile==='prone34-zero'&&Boolean(word(ref+0x20)&0x8000)&&(word(ref+0x20)&255)===9;
-  if(boundary||resultRequest)break;
+  resultRequest=['prone34-zero','side28-zero'].includes(profile)&&Boolean(word(ref+0x20)&0x8000)&&(word(ref+0x20)&255)===9;
+  if(resultMode&&row.actors.every(a=>a.finishFlags&0xc0)){outcome=row.actors.some(a=>(a.flags33&128)&&(a.finishFlags&64))?1:row.actors.some(a=>!(a.flags33&128)&&(a.finishFlags&64))?0:'draw';}
+  if(boundary||resultRequest||outcome!==null)break;
  }
  if(profile.startsWith('apron57')&&profile.endsWith('-hit'))assert(acceptedApronHit,'Declared accepted apron strike must hit its target');
  if((profile==='launch46-hit'||profile==='launch46-cpu')&&!process.env.LAUNCH_DIAG)assert(acceptedLaunch,`Declared counter must capture its running target: ${profile}, type ${type}`);
  if(rescue&&!['rescue-forced','rescue-null'].includes(profile))assert(acceptedRescue,`Declared rescue must interrupt its target: ${profile}, type ${type}`);
- sequences.push({config,world,initial,inputs,entropyFrames,count,boundary,...(resultRequest?{resultRequest:true}:{}),...(acceptedApronHit?{acceptedApronHit:true}:{}),...(acceptedLaunch?{acceptedLaunch:true}:{}),...(acceptedRescue?{acceptedRescue:true}:{}),sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
+ if(side&&['side28','side28-cpu','side82-escape'].includes(profile))assert(acceptedSide,`Declared side hold/escape must occur: ${profile}, type ${type}`);
+ if(resultMode)assert(outcome!==null,`Original result must finish: ${profile}, type ${type}, ${JSON.stringify({boundary,count,ref:snapshot().referee,flags35:actors().map(a=>a.flags35),actors:actors().map(a=>({state:a.state,action:a.action,finish:a.finishFlags,forced:a.forced,walkMode:a.walkMode,x:a.xFixed>>>16,y:a.yFixed>>>16,clock:a.clock}))})}`);
+ sequences.push({config,world,initial,...(refereeInitial?{refereeInitial}:{}),...(outcome!==null?{outcome}:{}),inputs,entropyFrames,count,boundary,...(resultRequest?{resultRequest:true}:{}),...(acceptedApronHit?{acceptedApronHit:true}:{}),...(acceptedLaunch?{acceptedLaunch:true}:{}),...(acceptedRescue?{acceptedRescue:true}:{}),...(acceptedSide?{acceptedSide:true}:{}),sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
 }
 writeFileSync(output,JSON.stringify({source:'Composed normal tag playtest from explicit synthetic four-record starting states: original camera, targets, arbitration, tag timers, announcer, human input, AI, referee, actor/collision/projection/physics, alternating contacts/damage and original sprite-queue cleanup; omit title/round/scene/bookkeeping, VRAM stream and effect-object updates; stop before unsupported actor, at the 400-update cap, or at the first submission result request in the declared zero-health scenario. Original random observations replayed at native calls.',sequences},null,2)+'\n');
 console.log(JSON.stringify({sequences:sequences.length,updates:sequences.reduce((n,s)=>n+s.count,0),boundaries:sequences.map(s=>s.boundary)}));

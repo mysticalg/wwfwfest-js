@@ -18,13 +18,18 @@ test('pin eligibility matches 8,192 original prone-row and bounds cases',()=>{
 });
 function down(match,actor,reaction=8,health=0){
  actor.health=health;actor.state='down';
+ if(match.world.tagTeams){
+  Object.assign(actor.original,worldPosition(actor),{health,reaction,recoveryTimer:600,facing:actor.facing>0?0x8000:0});
+  actor.original.change(4);return;
+ }
  actor.knockdown=new Knockdown({...worldPosition(actor),reaction,health,maximumHealth:actor.maximumHealth,severity:health<=24?2:0,
   facing:actor.facing>0?0x8000:0,clock:{flags:0x8004,index:0,remaining:8,pose:(reaction===8?18:19)|(actor.facing>0?0x8000:0)},
   recoveryTimer:600,world:match.world});
  actor.knockdown.pendingState=false;actor.animation=actor.knockdown.clock;
 }
 for(let type=0;type<12;type++)for(const reaction of [8,9])test(`playable type ${type} pins original prone ${reaction} with referee timing`,()=>{
- const match=new Match(type,6,{ai:false}),[a,b]=match.fighters;b.x=a.x+30;b.y=a.y;b.facing=-1;down(match,b,reaction);
+ const match=new Match(type,6,{ai:false,tagTeams:true}),[a,b]=match.fighters;match.step({});match.takeSoundCommands();
+ b.x=a.x+30;b.y=a.y;b.facing=-1;down(match,b,reaction);
  const counts=[],sounds=[];let countStart=null;
  for(let tick=0;tick<900&&match.winner===null;tick++){
   match.step(tick===0?{pin:true}:{});sounds.push(...match.takeSoundCommands());
@@ -33,7 +38,8 @@ for(let type=0;type<12;type++)for(const reaction of [8,9])test(`playable type ${
  }
  assert.equal(match.winner,0);assert.deepEqual(counts,[{count:1,offset:52},{count:2,offset:140},{count:3,offset:228}]);
  assert.deepEqual(sounds.filter(c=>[98,99,100].includes(c)),[98,99,100]);
- assert.equal(match.world.actors.length,9);assert.equal(match.world.actors[0],a.original);assert.equal(match.world.actors[2],b.original);
+ assert.equal(match.world.actors.length,9);assert.equal(match.world.actors[0],a.original);assert.equal(match.world.actors[4],b.original);
+ assert.deepEqual(match.nativeActors.participants.map(f=>f.original.finishFlags),[64,64,128,128]);
 });
 test('the playable human escapes an AI cover through original mash and action 75',()=>{
  const match=new Match(0,6),[a,b]=match.fighters;b.x=a.x+30;b.y=a.y;down(match,a,8,78);

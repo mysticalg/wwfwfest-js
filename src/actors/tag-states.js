@@ -3,6 +3,7 @@ import {actorTables} from '../data/actor-tables.js';
 import {walkSpeed,walkAnimation,stepMovement} from './movement.js';
 import {addPositionWord} from './ring-collision.js';
 import {projectionSnapshot} from './projection.js';
+import {pursuePoint} from './grapple-services.js';
 
 const u16=value=>value&65535;
 const setWord=(actor,field,value)=>{actor[field]=addPositionWord(actor[field],value-(actor[field]>>>16));};
@@ -122,6 +123,27 @@ export function stepTagWalk(actor){
    if(actor.collision.flags&(team?1:2))actor.change(5,79);
   }
   descriptor=walkAnimation(actor.flags32,actor.flags74,actor.flags75);
+ }else if(mode===12){ // $010dac, forced return to the team result positions
+  if(!initialized){
+   actor.flags34=4;actor.flags35=0;actor.movementMode=1;
+   actor.speed=walkSpeed(actor.type,actor.flags32,actor.flags33,actor.flags56,actor.flags74);
+   actor.targetY=352;actor.targetX=actor.world.mode&1?704:actor.flags33&1?596:668;
+  }
+  if(!(actor.walkMode&0x8000)){
+   faceByte(actor,((actor.direction&255)&128)^128);
+   descriptor=walkAnimation(actor.flags32,actor.flags74,actor.flags75);
+   if(actor.flags74&128)actor.offsetY=(actor.offsetY&0xff00)|16;
+   if(pursuePoint(actor))return finish(actor,descriptor);
+   actor.walkMode|=0x8000;actor.movementMode=0;actor.clock.remaining=0xffff;
+   setWord(actor,'xFixed',actor.targetX);setWord(actor,'yFixed',actor.targetY);
+  }
+  if(actor.world.mode&1){actor.change(0);actor.clock.pose=actor.facing=0;actor.flags33&=~2;}
+  else{
+   const p=actor.partner;if(!p)throw new Error('Result return requires a team partner');
+   actor.facing|=0x8000;if((p.xFixed>>>16)<(actor.xFixed>>>16))actor.facing&=~0x8000;
+   actor.clock.pose=actor.facing;
+   if(p.state===1&&p.walkMode===0x800c){actor.change(5,139);p.change(5,139);}
+  }
  }else{ // $010906, also shared by walk modes 5-11
   if(!initialized){actor.movementMode=1;actor.flags33&=~64;}
   actor.speed=walkSpeed(actor.type,actor.flags32,actor.flags33,actor.flags56,actor.flags74);cleanLink(actor);actor.contact=1;

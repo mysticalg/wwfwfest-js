@@ -4,8 +4,10 @@ import {readFileSync} from 'node:fs';
 import test from 'node:test';
 import {initializeMash,mashHeldInput,beginAttackAssistance,beginVictimAssistance,
  clearPartnerMotion,finishAssistance,clearAssistanceLinks,submissionComplete,pursuitDirection} from '../src/actors/grapple-services.js';
-const data=JSON.parse(readFileSync(process.env.SERVICE_FIXTURE||new URL('./fixtures/grapple-services-reference.json',import.meta.url)));
-const helpers={attack:beginAttackAssistance,victim:beginVictimAssistance,motion:clearPartnerMotion,
+import {assistSideVictim} from '../src/actors/standing-holds.js';
+const files=process.env.SERVICE_FIXTURE?[process.env.SERVICE_FIXTURE]:['grapple-services-reference.json','side-hold-services-reference.json'].map(name=>new URL(`./fixtures/${name}`,import.meta.url));
+const parsed=files.map(file=>JSON.parse(readFileSync(file))),data={fixtures:parsed.flatMap(d=>d.fixtures),directions:parsed.flatMap(d=>d.directions)};
+const helpers={sideVictim:assistSideVictim,attack:beginAttackAssistance,victim:beginVictimAssistance,motion:clearPartnerMotion,
  finish:finishAssistance,clear:clearAssistanceLinks,complete:submissionComplete,mash:initializeMash,button:mashHeldInput};
 const pointerKeys=['partner','auxiliary','opponent','assistanceTarget'];
 for(const [index,fixture]of data.fixtures.entries())test(`original grapple ${fixture.service} service ${index}`,()=>{

@@ -84,7 +84,7 @@ program image and detailed research files are excluded from browser delivery.
 
 Action 8 now raises a front-prone opponent into the original standing clinch,
 including interrupted grabs, paired positions, camera priority and boosted CPU
-arbitration. Another **60 sequences / 23,599 updates** cover all twelve player
+arbitration. Another **60 sequences / 23,668 updates** cover all twelve player
 types, both facings, several ring positions, lost links, back-prone targets and
 CPU/human boost variations. They retain explicit later-action boundaries or a
 400-update cap.
@@ -92,7 +92,7 @@ CPU/human boost variations. They retain explicit later-action boundaries or a
 `actors/standing-holds.js` adds action 29's staggered hold, victim 83's normal
 and two impact loops, holder impact actions 115/116, elbow escape 87 and holder
 reaction 118. It preserves paired links, mash/AI escape clocks, combo timing,
-partner assistance and controller requests. Another **72 sequences / 27,960
+partner assistance and controller requests. Another **72 sequences / 28,760
 updates** compare both holder sides, all twelve type combinations, interrupted
 links, punch/kick reactions and repeated human escape input. The source trace
 executes the original whole four-record core around those seeded situations;
@@ -197,8 +197,8 @@ are seeded integration checks, not evidence that every seed is reachable from
 ordinary play. A forced unfinished continuation now reports a boundary in the
 four-record playtest, instead of using the older two-person winner shortcut.
 
-The combined four-record reference now covers **492 sequences / 187,415
-updates**; the separate tag component suite covers **192 / 95,569**. Older
+At release 0.1.28, the combined four-record reference covered **492 sequences /
+187,415 updates**; the separate tag component suite covers **192 / 95,569**. Older
 get-up, hold, apron and tag prefixes now continue past their newly supported
 10/46/119 boundaries. Remaining boundaries and 400/650-update caps are retained.
 A native default neutral diagnostic reaches 2,262 updates before action 28;
@@ -219,3 +219,58 @@ composed cohorts. `trace_rescue.mjs` generates the separate handler cohort;
 `RESCUE_FILTER` accepts profile/mode/type JSON, and `RESCUE_FIXTURE` selects a
 comparison file. External CPU research and detailed traces remain excluded
 from browser delivery. No runtime CPU emulator is introduced.
+
+## Side hold and native result continuation (0.1.29)
+
+Standing hold 28, side-held loop/impact 82, escape 88 and holder impact 109 now
+run on shared actors. The hold retains its distance, facing, mutual-link and
+state checks; damage remains in the original deferred phase. Victim assistance
+uses `$020264`, including the distinct apron timers. The side victim loop loads
+D0 for a cosmetic choice but does not call the effect service in this revision;
+the translation preserves that behavior. Descriptor, class/offset and timer
+data remain editable in `standing-hold-tables.js`.
+
+**336 handler sequences / 19,896 updates** compare both modes, all twelve types,
+standing/staggered targets, exact rejected bounds, facing/link failures, apron
+rejection, committed re-entry, both victim loops, escape and inside/apron impact
+recovery. One actor updates while three records capture linked writes; these
+mode-1 branches do not establish full Royal Rumble gameplay. A separate
+**320 original assistance-service cases** compare all nine records and global
+requests under varied roles, partner status, eligibility and mode.
+
+**108 composed sequences / 39,324 updates** then run the four-record core with
+both holder sides, missed/reoriented targets, impact loops, repeated human
+escape input, apron impact, zero-health requests and forced release. Positive
+hold/escape cases require the actual event. The standing-target full-core setup
+can turn away before capture; isolated handler checks cover accepted standing
+captures. Twelve zero-health cases stop at the first submission result request,
+not after the subsequent scene.
+
+The newly recovered result return and actions 139/140 are documented in
+[Result continuations](RESULTS.md). They remove the forced walk-mode-12 boundary
+that appeared after a three-count in 0.1.28. **84 composed result sequences /
+27,072 updates** reach the original final actor flags, covering front/back pins
+on either side and seeded countout/draw tails. Every case asserts its actual
+outcome. They do not cover complete outside-ring countout entry or subsequent
+round scenes.
+
+The full four-record reference is now **684 sequences / 257,560 updates**. Older
+get-up, standing, running-counter and rescue prefixes extend through recovered
+28/82/88/109 and forced result movement; all retain declared caps/boundaries.
+Tag component comparisons remain **192 / 95,569** in their reduced service loop.
+A native default neutral diagnostic now reaches 2,859 updates before action 16;
+this is progress evidence, not a source-matched whole match.
+
+A simulated-pad browser check selected the side hold with punch, observed the
+first damage loop, mashed free through escape 88 and checked its impact sound.
+The menu/tag/controller regression reached an actual source-flagged pin result,
+then started a new four-person match. A separately seeded draw tail displayed
+DRAW and accepted Menu for restart. Audio was enabled, CPU AI disabled in these
+controlled setups, and no page errors or unsupported handoffs occurred.
+Physical pad and listening acceptance remain unverified.
+
+Set `TEAM_SIDE=1` or `TEAM_RESULT=1` with `trace_team_match.mjs` for the new
+composed cohorts. `trace_side_hold.mjs` and `trace_result.mjs` generate handler
+cohorts; `SIDE_FILTER`/`RESULT_FILTER` accept profile/mode/type filters and
+`SIDE_FIXTURE`/`RESULT_FIXTURE` select comparison files. `SIDE_SERVICE=1` selects
+`$020264` in `trace_grapple_services.mjs`. External CPU research remains offline.

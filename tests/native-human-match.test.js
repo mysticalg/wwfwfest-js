@@ -42,7 +42,7 @@ test('native human input continues from an arbitrated clinch to a headlock throw
 });
 
 test('native human prone selection enters the original cover and referee finish',()=>{
- const match=create(),[player,target]=match.fighters;step(match);
+ const match=create({tagTeams:true}),[player,target]=match.fighters;step(match);
  Object.assign(player.original,{xFixed:610*65536,yFixed:337*65536,facing:32768});
  Object.assign(target.original,{xFixed:640*65536,yFixed:337*65536,facing:0,health:0,recoveryTimer:600});
  target.health=0;target.original.change(4);target.original.reaction=8;

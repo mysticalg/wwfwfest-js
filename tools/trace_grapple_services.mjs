@@ -37,7 +37,7 @@ function world(){
  result.assistCandidate=bases.includes(long(0x1c168c))?bases.indexOf(long(0x1c168c)):null;
  result.textRequests=[...textRequests];return result;
 }
-const helpers={attack:0x207dc,victim:0x20958,motion:0x10672,finish:0x204c6,clear:0x2057e,complete:0x10408,mash:0xfea0,button:0xff44};
+const helpers=process.env.SIDE_SERVICE?{sideVictim:0x20264}:{attack:0x207dc,victim:0x20958,motion:0x10672,finish:0x204c6,clear:0x2057e,complete:0x10408,mash:0xfea0,button:0xff44};
 const fixtures=[];
 let seed=0x719a50;
 const next=()=>{seed=(Math.imul(seed,1664525)+1013904223)>>>0;return seed;};
@@ -74,7 +74,7 @@ for(const [service,address]of Object.entries(helpers))for(let variant=0;variant<
 }
 // Exercise direction saturation, signed-word wrapping and all four quadrants.
 const directions=[];
-for(const x of [0,1,7,8,255,256,475,640,32767,32768,65535])for(const y of [0,7,336,32768,65535])
+for(const x of process.env.SIDE_SERVICE?[]:[0,1,7,8,255,256,475,640,32767,32768,65535])for(const y of [0,7,336,32768,65535])
  for(const targetX of [0,7,8,254,255,256,790,32768,65535])for(const targetY of [0,7,8,255,256,408,32767,65535]){
  putWord(bases[0]+6,x);putWord(bases[0]+10,y);putLong(0x1c15e4,bases[0]);putWord(0x1c15e8,targetX);putWord(0x1c15ea,targetY);
  call(0x20d8);directions.push({x,y,targetX,targetY,direction:memory[0x1c15e4]});

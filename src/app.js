@@ -255,7 +255,7 @@ function drawMatch() {
   if (state.paused || match.winner !== null || match.handoff) {
     context.fillStyle = '#061020df';
     context.fillRect(15, 80, 290, 65);
-    renderer.text(match.handoff?'MATCH CONTINUATION NOT READY':state.paused ? 'PAUSED' : `${match.winner === 0 ? 'PLAYER' : 'CPU'} WINS`, 160, 108, '#ffe64a', match.handoff?11:20, 'center');
+    renderer.text(match.handoff?'MATCH CONTINUATION NOT READY':state.paused ? 'PAUSED' : match.winner==='draw'?'DRAW':`${match.winner === 0 ? 'PLAYER' : 'CPU'} WINS`, 160, 108, '#ffe64a', match.handoff?11:20, 'center');
     renderer.text(match.handoff?'ENTER TO RESTART':state.paused ? 'P TO RESUME' : 'ENTER FOR REMATCH', 160, 130, '#fff', 9, 'center');
   }
 }

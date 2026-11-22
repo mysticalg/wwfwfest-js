@@ -59,6 +59,10 @@ for(const fixture of fixtures.sequences){
    if(fixture.composed)for(const[index,body]of bodies.entries())body.runInput(fixture.runInputs?.[tick]?.[index]||0);
    if(referee){referee.step();sounds.push(...referee.sounds);}
    for(const index of fixture.updateOrder){
+    // These component recordings end before the next handler in their
+    // original supported set. Keep comparing that exact captured prefix;
+    // the four-record result references verify the newly translated tail.
+    if(tick===fixture.count-1&&fixture.boundary===index){boundary=index;break;}
     const body=bodies[index];if(body.pendingTransition){boundary=index;break;}
     body.step();sounds.push(...body.sounds);
    }

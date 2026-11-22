@@ -58,6 +58,8 @@ export class Match {
   constructor(playerType, opponentType, {ai=true,tagTeams=false,playerPartnerType=9,opponentPartnerType=3,nativeHumanInput=false,nativeMovementAI=false,...settings}={}) {
     this.world={...defaultMatchSettings,...settings,inGame:true,tagTeams,nativeHumanInput:nativeHumanInput||tagTeams,nativeMovementAI:nativeMovementAI||nativeHumanInput||tagTeams};
     this.world.gameFlags??=0x8000;
+    // $00ee08 initializes normal-ring direct camera targets before play.
+    if(tagTeams){this.world.cameraTargetX??=480;this.world.cameraTargetY??=560;}
     if(tagTeams&&(this.world.mode&3))throw new RangeError('Tag-team playtest requires normal tag mode');
     this.fighters = [fighter(playerType, 103, 165, 1,this.world),
       fighter(opponentType, 219, 165, -1,this.world,{computer:ai,slot:ai?4:2})];
@@ -222,6 +224,13 @@ export class Match {
     }
     if(this.contactPhase){this.nativeActors.contacts();this.nativeActors.damage();}
     cleanupGrappleLinks(spriteDrawOrder(this.spriteEntries,this.camera).map(entry=>entry.body).filter(body=>body.owner));
+    // $00116e/$0011f0 wait for actor $a0's actual result flags. Forced words
+    // are only requests; the return/139/140 actors still have to finish.
+    const finished=this.nativeActors.participants.map(f=>f.original);
+    if(finished.every(a=>a.finishFlags&0xc0)){
+      const winner=finished.find(a=>a.finishFlags&64);
+      this.winner=winner?Number(Boolean(winner.flags33&128)):'draw';
+    }
   }
 
   get teamLeads(){
