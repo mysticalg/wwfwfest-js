@@ -461,7 +461,67 @@ export const actorTables = {
         166,
         378
       ]
+    },
+    "cornerCapture": {
+      "source": 73290,
+      "update": 73314,
+      "mode": 1,
+      "delays": [
+        4,
+        8,
+        65280,
+        32
+      ],
+      "poses": [
+        459,
+        460,
+        166,
+        378
+      ]
     }
+  },
+  "runningVictims": {
+    "16": {
+      "source": 108864,
+      "update": 108870,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
+    "18": {
+      "source": 108864,
+      "update": 108870,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
+    "20": {
+      "source": 109002,
+      "update": 109026,
+      "mode": 1,
+      "delays": [
+        12
+      ],
+      "poses": [
+        405
+      ]
+    },
+    "29": {
+      "source": 109002,
+      "update": 109026,
+      "mode": 1,
+      "delays": [
+        12
+      ],
+      "poses": [
+        405
+      ]
+    }
+  },
+  "absentAuxiliaryAimTarget": {
+    "xFixed": 26728,
+    "yFixed": -741110644,
+    "facing": 56797
   },
   "grappleWeights": [
     20,

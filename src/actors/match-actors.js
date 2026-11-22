@@ -150,7 +150,9 @@ export class MatchActors {
   for(const fighter of this.match.fighters){
    this.syncVisible(fighter);const body=fighter.nativeBody;
    const keepComputer=this.match.world.nativeMovementAI&&(body?.flags56&0xc0);
-   if(body?.state===0&&!body.pendingState&&!body.auxiliary&&!body.forced&&!keepComputer&&(!(body.flags56&128)||this.match.ai)){
+   // Idle's entry update retains the previous attack pose/contact. Keep that
+   // update in the shared service until the ordinary idle pose is actually set.
+   if(body?.state===0&&!body.pendingState&&body.clock.pose===body.facing&&!body.auxiliary&&!body.forced&&!keepComputer&&(!(body.flags56&128)||this.match.ai)){
     fighter.nativeBody=null;this.match.setState(fighter,'idle');fighter.animation=new ActorAnimation(body.clock);fighter.projection=body.projection;
    }else if(body&&[2,3,6].includes(body.state)&&!body.auxiliary&&!keepComputer){
     const clock=new ActorAnimation(body.clock);

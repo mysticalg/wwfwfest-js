@@ -43,7 +43,11 @@ def main():
                               struct.unpack_from('>12I', program, 0xd73e)],
         'runningAttacks': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854 + action * 4)[0])
                            for action in (1, 4, 5, 32, 42, 45, 64, 65)},
-        'runningPairedAnimations': {'runningCapture': descriptor(0x12168), 'airborneCapture': descriptor(0x11e32)},
+        'runningPairedAnimations': {'runningCapture': descriptor(0x12168), 'airborneCapture': descriptor(0x11e32), 'cornerCapture': descriptor(0x11e4a)},
+        'runningVictims': {str(reaction): descriptor(struct.unpack_from('>I', program, 0x1a214+reaction*4)[0]) for reaction in (16,18,20,29)},
+        'absentAuxiliaryAimTarget': {'xFixed': struct.unpack_from('>i', program, 0x7f006)[0],
+                                    'yFixed': struct.unpack_from('>i', program, 0x7f00a)[0],
+                                    'facing': words(0x7f02e, 1)[0]},
         'grappleWeights': words(0xeab8, 44),
         'grappleRumbleWeights': words(0xeb10, 4),
         'grappleFollowRows': list(program[0xd472:0xd4ba]),

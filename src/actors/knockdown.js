@@ -297,6 +297,7 @@ export class Knockdown {
           if (reaction === 23) {
             this.flags33 &= ~16;
             this.profile(13);
+            this.world.shake=14;
           } else if (reaction === 25) {
             this.profile(this.flags34 & 8 ? 36 : 19);
             this.flags34 &= ~8;
@@ -306,14 +307,17 @@ export class Knockdown {
             if (u16(y + 32) >= 0x198) this.velocityY = 0xffd0;
             else if (u16(y - 32) < 0x118) this.velocityY = 0x30;
           }
-        } else if (this.collision.flags & 16) {
-          this.sounds.push(0x29);
-          this.change(4, 5);
-          if (reaction === 27) { this.reaction = 5; this.paddingZ = 0; }
-          this.clock.pose = this.facing ^ (reaction === 25 && this.severity !== 2 ? 20 : 31);
-          if (reaction === 25 || reaction === 27) {
-            const distance = reaction === 25 ? -64 : -56;
-            this.xFixed = addPositionWord(this.xFixed, this.facing & 0x8000 ? -distance : distance);
+        } else {
+          if(reaction===25||reaction===27)collisionResponse(this);
+          if(this.collision.flags & 16){
+            this.sounds.push(this.flags33&4?45:41);
+            this.change(4, 5);
+            if (reaction === 27) { this.reaction = 5; this.paddingZ = 0; }
+            this.clock.pose = this.facing ^ (reaction === 25 && this.severity !== 2 ? 20 : 31);
+            if (reaction === 25 || reaction === 27) {
+              const distance = reaction === 25 ? -64 : -56;
+              this.xFixed = addPositionWord(this.xFixed, this.facing & 0x8000 ? -distance : distance);
+            }
           }
         }
         if (reaction === 27 && initialized && !(this.collision.flags & 16)) this.paddingZ = 0xfff0;

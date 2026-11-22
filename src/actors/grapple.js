@@ -10,6 +10,7 @@ import {isPinAction,stepPinAction} from './pin.js';
 import {isTagAction,stepTagAction,isCornerAttack,stepCornerAttack} from './tag.js';
 import {isStandingAction,stepStandingAction} from './standing-action.js';
 import {isGroundActorAction,stepGroundActorAction} from './ground-actor.js';
+import {isRunningAction,stepRunningAction,isRunningVictim,stepRunningVictim} from './running-action.js';
 
 const u16 = value => value & 65535;
 const stateWord=actor=>typeof actor.pendingState==='boolean'?actor.state|(actor.pendingState?0:0x8000):actor.state;
@@ -152,7 +153,7 @@ export class GrappleActor {
       paddingX:0,paddingY:0,paddingZ:0,velocityX:0,velocityY:0,
       velocityZ:0,gravity:0,auxiliary:null,unlinkMarked:false,sceneRefresh:0,
       attempts:{},partner:null,motionLink:null,eliminations:0,mash:0,supportTimer:0,targetX:0,targetY:0,
-      assistanceTarget:null,secondaryPinner:null,pinStatus:0,recoveryTimer:0,active:true,healthAccumulator:0,resultPose:0,pressedButtons:0,
+      assistanceTarget:null,secondaryPinner:null,lastHit:null,pinStatus:0,recoveryTimer:0,active:true,healthAccumulator:0,resultPose:0,pressedButtons:0,
       world:{mode:0,round:0,inGame:true,message:0,shake:0,scene:0,rope:[0,0,0,0]},entropy:null},initial);
     this.pendingState=!(this.state&0x8000);
     this.state&=255;
@@ -163,8 +164,8 @@ export class GrappleActor {
 
   get pendingTransition() {
     return ![11,12,255].includes(this.state)
-      && !(this.state===4&&this.reaction===1)
-      && !(this.state===5&&([21,22,23,41,80,123,124].includes(this.action&255)||isStandingAction(this.action)||isGroundActorAction(this.action)||isGrappleThrow(this.action)||isGrappleCounter(this.action)||isGrappleSubmission(this.action)||isPinAction(this.action)||isTagAction(this.action)||isCornerAttack(this.action)));
+      && !(this.state===4&&(this.reaction===1||isRunningVictim(this.reaction)))
+      && !(this.state===5&&([21,22,23,41,80,123,124].includes(this.action&255)||isStandingAction(this.action)||isGroundActorAction(this.action)||isRunningAction(this.action)||isGrappleThrow(this.action)||isGrappleCounter(this.action)||isGrappleSubmission(this.action)||isPinAction(this.action)||isTagAction(this.action)||isCornerAttack(this.action)));
   }
 
   // The byte tested at $b7 is the low half of the input-block word at $b6.
@@ -324,6 +325,8 @@ export class GrappleActor {
         this.flags32=0;this.flags33&=0x87;this.flags34&=3;this.flags35=0;
         this.inputBlockA=this.inputBlockB=0;
       }
+    }else if(this.state===4&&isRunningVictim(this.reaction)){
+      descriptor=stepRunningVictim(this,initialized);
     }else if(this.state===4){
       descriptor=data.stagger;
       if(!initialized){
@@ -339,6 +342,7 @@ export class GrappleActor {
       descriptor=data[({21:'hold',22:'carry',23:'whip',41:'clinchStrike',80:'break',123:'held',124:'escape'})[action]];
       if(isStandingAction(action))descriptor=stepStandingAction(this,initialized);
       else if(isGroundActorAction(action))descriptor=stepGroundActorAction(this,initialized);
+      else if(isRunningAction(action))descriptor=stepRunningAction(this,initialized);
       else if(isPinAction(action))descriptor=stepPinAction(this,peer,initialized);
       else if(isTagAction(action))descriptor=stepTagAction(this,peer,initialized);
       else if(isCornerAttack(action))descriptor=stepCornerAttack(this,peer,initialized);
