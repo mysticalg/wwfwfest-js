@@ -24,6 +24,9 @@ Open http://localhost:8765. GitHub Pages serves the same static files.
 - `assets/sprite-indices.png` stores the decoded original four-bit sprite pixels. Each grayscale value divided by 17 is a palette index.
 - `src/audio/` contains the native sample decoder, effect sequencer and AudioWorklet output.
 - `assets/audio/effects.json` contains recovered effect commands, priorities, source addresses and sample sequences.
+- `src/audio/music-sequencer.js` contains the translated score interpreter, pitch behavior, gates, repeats, levels and fades.
+- `assets/audio/music.json` contains editable music commands, score graphs and FM instruments.
+- `third_party/ymfm/` and `tools/fm_bridge.cpp` contain the synthesis library source used to build the generated JavaScript FM renderer.
 
 Controls use arrows to move, Z to strike, X for a heavy strike, C to run, Space to pin, Enter to start and P to pause. Touch controls are available on touch devices.
 
@@ -35,9 +38,9 @@ Native match animations skip unresolved or empty frame records. The explorer pre
 
 Recovered material includes 65,536 sprite tiles, 4,096 background tiles, 4,096 character tiles, original palette data, the wrestler frame lookup tables, standalone sprite chain recipes, and sampled arena and selection layouts.
 
-The playable prototype supports ten selectable wrestlers, movement, two provisional attacks, damage, knockdown, pinning, an optional computer opponent, pause, restart and touch input. Sound explorer plays the 97 recovered sample-effect commands through the native JavaScript sequencer. Ring camera movement and scenery animation are pending. Stage images currently preserve one captured layout.
+The playable prototype supports ten selectable wrestlers, movement, two provisional attacks, damage, knockdown, pinning, an optional computer opponent, pause, restart and touch input. Sound explorer plays the 97 recovered sample-effect commands and 18 populated music scores through their native JavaScript sequencers. Selection and match music play after enabling audio. FM synthesis uses the bundled JavaScript build of the BSD-licensed ymfm renderer. Ring camera movement and scenery animation are pending. Stage images currently preserve one captured layout.
 
-Still pending are faithful arcade state machines, exact move and grapple rules, hitboxes, character statistics, animation timing, tag-team and Royal Rumble rules, entrances, FM music, fade behavior, gameplay sound routing and full-match parity testing. Some compound poses require another object's context. Native match sounds remain unconnected while their original event routing is reconstructed.
+Still pending are faithful arcade state machines, exact move and grapple rules, hitboxes, character statistics, animation timing, tag-team and Royal Rumble rules, entrances, complete gameplay sound routing and full-match parity testing. Some compound poses require another object's context. Combat vocalizations and effects remain unconnected while their original event routing is reconstructed.
 
 Research notes and provenance are in `research/REVERSE_ENGINEERING.md`. Browser delivery contains recovered data and native source. Offline analysis used CPU tracing to observe original rendering routines. Those analysis dependencies are excluded from the browser project.
 
@@ -49,7 +52,7 @@ python tools/inspect_rom.py path/to/wwfwfest.zip --output rom-analysis
 
 The pose recipe JSON is a separate research export and is preserved by this tool.
 
-`tools/extract_audio.py` regenerates the editable effect scripts and sample data from the ZIP. [Audio research and verification details](research/AUDIO.md) document the original-driver comparisons and their limits. Run `npm run check` with Node.js 22 or newer to check syntax and the audio regression fixtures.
+`tools/extract_audio.py` regenerates the editable effect scripts and sample data from the ZIP. `tools/extract_music.py` regenerates the native score graph and instrument data. Run `npm run check` with Node.js 22 or newer to check syntax and the audio regression fixtures. [Effect research](research/AUDIO.md), [music research and verification](research/MUSIC.md)
 
 ## Rights
 

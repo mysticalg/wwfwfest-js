@@ -50,7 +50,13 @@ The supplied program uses 565 frame indices for each of the first 12 actor types
 
 Next reverse engineering work must map object states and routines to each action, recover actual hit regions and damage tables, implement dependent grapple poses, recover animation sequence timing, translate music sequencing and test complete tag and Rumble matches against reference runs.
 
-The native sample-effect sequencer now matches original-driver event traces across 100 scenarios. Its sample playback and verification scope are documented in [audio research](AUDIO.md). Music and gameplay sound routing remain unfinished.
+The native sample-effect sequencer matches original-driver event traces across 100 scenarios. Its sample playback and verification scope are documented in [audio research](AUDIO.md). The native music interpreter now matches 31 original-driver scenarios and drives the JavaScript FM renderer. The score data, synthesis checks and remaining audio work are described in [music research](MUSIC.md). Complete gameplay sound routing remains unfinished.
+
+## Actor state work still to translate
+
+The first observed player object starts at `$1c05b0`, with a stride of `$10c` bytes for subsequent actor records. Sprite preparation at `$00c43c` and the nearby frame lookup read the actor type at offset `$02`, pose word at `$04`, projected x/y at `$14/$16`, and an auxiliary recipe pointer at `$26`. The pose word's high bit participates in facing. Depth sorting at `$002958` compares the word at `$0a`.
+
+The original routines around `$00cf1e-$00d1d0` inspect the state byte at `$21`, action data near `$60`, input-related bytes near `$a3/$a9`, and linked actor pointers. The native prototype's authored state names have not been established as equivalent to these fields. Those dispatch routines and their callees are the next gameplay translation work.
 
 ## Research references
 

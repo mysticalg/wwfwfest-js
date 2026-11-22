@@ -23,7 +23,7 @@
       <div class="pickers"><label>Player <select id="player"></select></label><label>Opponent <select id="opponent"></select></label></div>
       <p class="instructions"><kbd>← ↑ ↓ →</kbd> move · <kbd>Z</kbd> strike · <kbd>X</kbd> heavy strike · <kbd>C</kbd> run · <kbd>Space</kbd> pin · <kbd>Enter</kbd> start · <kbd>P</kbd> pause</p>
       <div class="touch" aria-label="Touch controls"><div><button data-key="ArrowUp">↑</button><div><button data-key="ArrowLeft">←</button><button data-key="ArrowDown">↓</button><button data-key="ArrowRight">→</button></div></div><div><button data-key="KeyZ">Strike</button><button data-key="KeyX">Heavy</button><button data-key="Space">Pin</button></div></div>
-      <p class="note">Recovered original graphics and pose tables. Movement, combat, AI, and pinning currently use provisional JavaScript rules. Arcade match logic and audio are still being reconstructed.</p>
+      <p class="note">Recovered original graphics and pose tables. Movement, combat, AI, and pinning currently use provisional JavaScript rules. Arcade match logic and gameplay sound routing are still being reconstructed.</p>
     </section>
     <section id="frame-controls" hidden>
       <div class="pickers"><label>Wrestler <select id="actor"></select></label><label>Pose <input id="pose-number" type="number" value="0" min="0" max="564"></label><label><input id="mirror" type="checkbox"> Mirror</label></div>
@@ -34,10 +34,10 @@
     </section>
     <section id="sound-controls" hidden>
       <div class="pickers"><label>Original sound command <select id="sound-command"></select></label></div>
-      <div class="actions"><button id="play-sound">Play command</button><button id="stop-sound">Stop sounds</button></div>
+      <div class="actions"><button id="play-sound">Play command</button><button id="fade-music">Fade music</button><button id="stop-sound">Stop sounds</button></div>
       <p id="sound-info"></p>
-      <p id="audio-status" role="status">Enable audio to hear the recovered effects.</p>
-      <p class="note">The original sample commands, priorities, bank switching and effect sequences run in JavaScript. Music sequencing and gameplay event routing are still being reconstructed.</p>
+      <p id="audio-status" role="status">Enable audio to hear the recovered effects and FM music.</p>
+      <p class="note">The original music and effect sequences run in JavaScript. The FM renderer uses a JavaScript build of the BSD-licensed ymfm library. Gameplay sound routing is still being reconstructed.</p>
     </section>
   </main>
   <script type="module" src="src/app.js"></script>

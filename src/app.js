@@ -2,6 +2,7 @@ import {Renderer, roster} from './renderer.js';
 import {Match, rules} from './game.js';
 import {NativeAudio} from './audio/native-audio.js';
 import {decodeSample} from './audio/sample-codec.js';
+import {MusicSequencer} from './audio/music-sequencer.js';
 
 const element = id => document.getElementById(id);
 const canvas = element('screen');
@@ -16,6 +17,8 @@ let cycleTicks = 0;
 let actorRequest = 0;
 let soundEffect = null;
 let soundWaveform = null;
+let musicTrack = null;
+let musicPreview = null;
 let muted = false;
 
 for (const id of ['player', 'opponent', 'actor']) {
@@ -40,6 +43,7 @@ async function startMatch() {
     await Promise.all([prepareActor(player), prepareActor(opponent)]);
     state.match = new Match(player, opponent);
     state.match.ai = element('ai').checked;
+    playSceneAudio(true);
     state.paused = false;
     audio.pause(false);
     element('pause').textContent = 'Pause';
@@ -52,6 +56,16 @@ async function startMatch() {
   }
 }
 
+function playSceneAudio(opening = false) {
+  if (!audio.context) return;
+  // Original phase transitions send FM stop, effect reset, then the scene
+  // command through $002062. The reference run enters the ring with $2f/$04.
+  audio.command(0);
+  audio.command(0x20);
+  if (opening) audio.command(0x2f);
+  audio.command(state.match ? 4 : 3);
+}
+
 function togglePause() {
   if (!state.match) return;
   state.paused = !state.paused;
@@ -61,6 +75,7 @@ function togglePause() {
 }
 
 function setView(view) {
+  const previousView = state.view;
   held.clear();
   state.view = view;
   element('play-controls').hidden = view !== 'play';
@@ -70,10 +85,32 @@ function setView(view) {
   element('frames-tab').setAttribute('aria-pressed', String(view === 'frames'));
   element('sound-tab').setAttribute('aria-pressed', String(view === 'sound'));
   audio.pause(view === 'play' && state.paused);
+  if (view === 'play' && previousView !== 'play') playSceneAudio();
 }
 
 function chooseSound() {
-  soundEffect = audio.manifest.commands.find(effect => effect.command === Number(element('sound-command').value));
+  const command = Number(element('sound-command').value);
+  musicTrack = command < 0x20 ? audio.music.tracks.find(track => track.command === command) : null;
+  if (musicTrack) {
+    soundEffect = null;
+    soundWaveform = null;
+    musicPreview = Array.from({length: 8}, () => new Int16Array(256).fill(-1));
+    const notes = new Uint8Array(8);
+    const active = new Array(8).fill(false);
+    const sequence = new MusicSequencer(audio.music, event => {
+      if (event.op !== 'fm') return;
+      if (event.register === 8) active[event.value & 7] = Boolean(event.value & 0x78);
+      if (event.register >= 0x28 && event.register < 0x30) notes[event.register - 0x28] = event.value;
+    });
+    sequence.command(command);
+    for (let tick = 0; tick < 256; tick++) {
+      sequence.tick();
+      for (let channel = 0; channel < 8; channel++) if (active[channel]) musicPreview[channel][tick] = notes[channel];
+    }
+    element('sound-info').textContent = `Music command $${command.toString(16).toUpperCase()} · ROM $${musicTrack.source.toString(16)} · Eight FM channels and one sample channel`;
+    return;
+  }
+  soundEffect = audio.manifest.commands.find(effect => effect.command === command);
   const sample = soundEffect.steps.find(step => step.op === 'sample');
   const bank = soundEffect.bank === 2 ? 0 : soundEffect.bank;
   const entry = sample && audio.manifest.samples.find(entry => entry.bank === bank && entry.sample === sample.sample);
@@ -82,9 +119,12 @@ function chooseSound() {
 }
 
 async function enableAudio() {
+  const initializing = !audio.context;
   await audio.enable();
+  audio.mute(muted);
+  if (initializing && state.view === 'play') playSceneAudio();
   element('audio-toggle').textContent = muted ? 'Unmute' : 'Mute';
-  element('audio-status').textContent = 'Original sample effects enabled.';
+  element('audio-status').textContent = 'Original effects and FM music enabled.';
 }
 
 function setPose(value) {
@@ -189,6 +229,22 @@ function drawExplorer() {
 
 function drawSoundExplorer() {
   renderer.clear();
+  if (musicTrack) {
+    renderer.text(`MUSIC $${musicTrack.command.toString(16).toUpperCase()}`, 160, 40, '#ffe64a', 20, 'center');
+    renderer.text('FIRST 256 MUSIC TICKS', 160, 68, '#bdc9de', 8, 'center');
+    const context = renderer.context;
+    for (let channel = 0; channel < 8; channel++) {
+      renderer.text(String(channel + 1), 17, 94 + channel * 15, '#bdc9de', 8);
+      context.fillStyle = '#303b4d';
+      context.fillRect(32, 89 + channel * 15, 256, 1);
+      context.fillStyle = '#f2d13e';
+      for (let tick = 0; tick < 256; tick++) {
+        const note = musicPreview[channel][tick];
+        if (note >= 0) context.fillRect(32 + tick, 93 + channel * 15 - (note & 15) / 2, 1, 2);
+      }
+    }
+    return;
+  }
   if (!soundEffect) return;
   const context = renderer.context;
   renderer.text(`SOUND $${soundEffect.command.toString(16).toUpperCase()}`, 160, 40, '#ffe64a', 20, 'center');
@@ -246,7 +302,14 @@ function frame(time) {
 }
 
 element('start').addEventListener('click', startMatch);
-element('reset').addEventListener('click', () => { state.match = null; held.clear(); });
+element('reset').addEventListener('click', () => {
+  state.match = null;
+  state.paused = false;
+  element('pause').textContent = 'Pause';
+  audio.pause(false);
+  held.clear();
+  playSceneAudio();
+});
 element('pause').addEventListener('click', togglePause);
 element('play-tab').addEventListener('click', () => setView('play'));
 element('frames-tab').addEventListener('click', () => setView('frames'));
@@ -272,6 +335,7 @@ element('play-sound').addEventListener('click', async () => {
   } catch (error) { element('audio-status').textContent = error.message; }
 });
 element('stop-sound').addEventListener('click', () => audio.stop());
+element('fade-music').addEventListener('click', () => audio.command(0x1f));
 element('ai').addEventListener('change', () => { if (state.match) state.match.ai = element('ai').checked; });
 element('actor').addEventListener('change', chooseActor);
 element('pose-number').addEventListener('input', event => setPose(event.target.value));
@@ -317,9 +381,18 @@ try {
   state.ready = true;
   element('status').textContent = '';
   for (const id of ['start', 'reset', 'pause', 'audio-toggle']) element(id).disabled = false;
+  const effects = document.createElement('optgroup');
+  effects.label = 'Sample effects';
   for (const effect of audio.manifest.commands) {
-    element('sound-command').add(new Option(`$${effect.command.toString(16).toUpperCase()}${effect.command === 0x2a ? ' · Coin' : ''}`, String(effect.command)));
+    effects.append(new Option(`$${effect.command.toString(16).toUpperCase()}${effect.command === 0x2a ? ' · Coin' : ''}`, String(effect.command)));
   }
+  element('sound-command').append(effects);
+  const music = document.createElement('optgroup');
+  music.label = 'FM music';
+  for (const track of audio.music.tracks) {
+    music.append(new Option(`$${track.command.toString(16).toUpperCase()}${track.command >= 19 ? ' · Silent' : ''}`, String(track.command)));
+  }
+  element('sound-command').append(music);
   element('sound-command').value = String(0x2a);
   chooseSound();
   setPose(0);

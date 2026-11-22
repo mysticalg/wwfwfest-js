@@ -1,0 +1,6412 @@
+[
+  {
+    "name": "track-1",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 1
+      }
+    ],
+    "eventCount": 83719,
+    "sha256": "b209a8d28dd56f794ff116fa0ef2e3faa2998f0b855846841744cf34df7e715a",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 4,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 5,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 6,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 7,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 224,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 15,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 1,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-2",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 2
+      }
+    ],
+    "eventCount": 74645,
+    "sha256": "f579484b2cd37904c784522ec92a2b8a2176c394901e14b3cba65e68755bd7c9",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 4,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 5,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 6,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 7,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 8,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 208,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 0,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-3",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 3
+      }
+    ],
+    "eventCount": 73252,
+    "sha256": "0a14f88094e376f9d8cd862cad5518a8f19e755e8e49c2d9450de70a62272fc3",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 4,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 5,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 6,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 7,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 8,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 9,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 220,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 15,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 1,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-4",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 4
+      }
+    ],
+    "eventCount": 52332,
+    "sha256": "ae90d44c03d6a3c326041cd7fe5c310b2c6a9a8df996319ee9e9e275058f9e19",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 4,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 5,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 6,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 7,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 8,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 9,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 10,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 237,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 15,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 1,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-5",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 5
+      }
+    ],
+    "eventCount": 41223,
+    "sha256": "8ac87c0e87d93533e8baf030b23a0b66d4372fc1a4b38ea1f34aab75f7344f06",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 4,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 5,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 6,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 7,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 8,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 9,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 10,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 11,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 216,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 97,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 65,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-6",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 6
+      }
+    ],
+    "eventCount": 85162,
+    "sha256": "15cbfdd9bd37a9cda730e04a83bd3fdb6b908da8314c128229916b086ae1d305",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 5,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 6,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 7,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 8,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 9,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 10,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 11,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 12,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 228,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 0,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-7",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 7
+      }
+    ],
+    "eventCount": 82588,
+    "sha256": "2d6f25b5248781b13b86a153dd6a9b0561d94c2cbd057e79b8e1819d128c3c38",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 6,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 7,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 8,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 9,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 10,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 11,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 12,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 13,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 232,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 15,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 1,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-8",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 8
+      }
+    ],
+    "eventCount": 42036,
+    "sha256": "a510c083868b183ffd932e94613dbf32e7a7fb98110b567541d32c97a2cb79f6",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 7,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 8,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 9,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 10,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 11,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 12,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 13,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 14,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 224,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 97,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 65,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-9",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 9
+      }
+    ],
+    "eventCount": 45094,
+    "sha256": "91185a7352b47e8e466dbd49e7d83b7ef6495a84b87fd361af9e186dff28b576",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 8,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 9,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 10,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 11,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 12,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 13,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 14,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 15,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 216,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 97,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 65,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-10",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 10
+      }
+    ],
+    "eventCount": 72995,
+    "sha256": "f62d6b243704729bb68fa1d8df590c0165078c9d633ddff870afaf8e10ab5584",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 9,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 10,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 11,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 12,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 13,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 14,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 15,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 16,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 224,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 15,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 1,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-11",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 11
+      }
+    ],
+    "eventCount": 83895,
+    "sha256": "06a45e47ae345f1c3436f825226d65d970cfbb3da39063f318c97be181623e4c",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 10,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 11,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 12,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 13,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 14,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 15,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 16,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 17,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 220,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 15,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 1,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-12",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 12
+      }
+    ],
+    "eventCount": 73715,
+    "sha256": "b1bf7a5101666af622a120e6090c2eed40eff897286f811081387e69ee15fb77",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 11,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 12,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 13,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 14,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 15,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 16,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 17,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 18,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 212,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 15,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 1,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-13",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 13
+      }
+    ],
+    "eventCount": 82592,
+    "sha256": "f4eeab80274125cdae17f073233f3666890790d35fb5e62581548727fbf4e800",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 12,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 13,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 14,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 15,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 16,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 17,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 18,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 19,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 208,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 15,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 1,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-14",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 14
+      }
+    ],
+    "eventCount": 62819,
+    "sha256": "2a703c2d783b3cdc3bceacaa33cec0aaad7f5494ac403d66c0f4ef00bfc8a141",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 13,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 14,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 15,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 16,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 17,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 18,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 19,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 20,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 224,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 15,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 1,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-15",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 15
+      }
+    ],
+    "eventCount": 85004,
+    "sha256": "7a7a6195c1869d08adb9bb4a54999031723780e47fac62860e8a5b5cc1e26efc",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 14,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 15,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 16,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 17,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 18,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 19,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 20,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 21,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 213,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 15,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 1,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-16",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 16
+      }
+    ],
+    "eventCount": 54008,
+    "sha256": "56ad41d64bcd2b61dfd321babd3eb54e0df16c246c8cc7d514686cd3f7a0be8e",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 15,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 16,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 17,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 18,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 19,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 20,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 21,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 22,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 216,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 3,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-17",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 17
+      }
+    ],
+    "eventCount": 83024,
+    "sha256": "16b39318adf5174aa06d4d93d7f5c98bbc3238e61836047d99827deeca66088f",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 16,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 17,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 18,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 19,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 20,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 21,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 22,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 23,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 228,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 15,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 1,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-18",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 18
+      }
+    ],
+    "eventCount": 82539,
+    "sha256": "656bd85e4085ac6b91aeaf9d682b12c57af47a83b0ce819343fe38b76e9fefae",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 17,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 18,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 19,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 20,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 21,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 22,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 23,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 24,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 235,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 15,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 1,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-19",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 19
+      }
+    ],
+    "eventCount": 36,
+    "sha256": "39dae31302f8f019cad20dbf84c9e969c04b8a5249e7f587f65eef472a3ebc43",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 18,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 19,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 20,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 21,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 22,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 23,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 24,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 25,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-20",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 20
+      }
+    ],
+    "eventCount": 36,
+    "sha256": "8318c4b1b93f4c0046a4bf891b66b36c3d7b519305f523346726769198c5c77f",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 19,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 20,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 21,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 22,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 23,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 24,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 25,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 26,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-21",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 21
+      }
+    ],
+    "eventCount": 36,
+    "sha256": "89b0a9dba9d1fd3f9e5743e39109f08a5ee4773c7ee663e3e64aee381962c5f0",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 20,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 21,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 22,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 23,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 24,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 25,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 26,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 27,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-22",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 22
+      }
+    ],
+    "eventCount": 36,
+    "sha256": "911910c033b8e9faaca48fa933d38c9a60851036c05b6f104878c5171ac02ad1",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 21,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 22,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 23,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 24,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 25,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 26,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 27,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 28,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-23",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 23
+      }
+    ],
+    "eventCount": 36,
+    "sha256": "b4ad3d43c6e0bbd979ce6e2e98a55e6b08c27ddeaf440c7e8000930bfb29273e",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 22,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 23,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 24,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 25,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 26,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 27,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 28,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 29,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-24",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 24
+      }
+    ],
+    "eventCount": 36,
+    "sha256": "bf18e0ac1fa252637f6db39dd8eb27dd53d5f1f6fcefedd9c5a28ea93d6c6cd6",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 23,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 24,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 25,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 26,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 27,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 28,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 29,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 30,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-25",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 25
+      }
+    ],
+    "eventCount": 36,
+    "sha256": "4c257de2f4ce027f3189cd45d18afdbf90d0caa0a02575298d228b31af9c881c",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 24,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 25,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 26,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 27,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 28,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 29,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 30,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 31,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-26",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 26
+      }
+    ],
+    "eventCount": 36,
+    "sha256": "aedc3daf8cd65d7893108093e3f57e30d8c5c2799652e4e82b3dfac71b384207",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 25,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 26,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 27,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 28,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 29,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 30,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 31,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 32,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-27",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 27
+      }
+    ],
+    "eventCount": 36,
+    "sha256": "343ed18da5231c77b311d8d7272c6564a26b7dae1ff3e9e4088e89a635e34af6",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 26,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 27,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 28,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 29,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 30,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 31,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 32,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 33,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-28",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 28
+      }
+    ],
+    "eventCount": 36,
+    "sha256": "91b1dd63ef13420d059f4e651f5c111fa9ee3ae88497a307c8c2163c0fdc6c0c",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 27,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 28,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 29,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 30,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 31,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 32,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 33,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 34,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-29",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 29
+      }
+    ],
+    "eventCount": 36,
+    "sha256": "5c97f779fbcd19676df4cc9ca2ac647da4e6293ddd2926798e592f80dfbac42f",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 28,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 29,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 30,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 31,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 32,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 33,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 34,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 35,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "track-30",
+    "ticks": 5000,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 30
+      }
+    ],
+    "eventCount": 36,
+    "sha256": "7bdcf701edd2062f23dc4cd8687a16cbdeaeca90c03730286ba3c3db40432604",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 29,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 30,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 31,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 32,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 33,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 34,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 35,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 36,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 1,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 1
+      }
+    ]
+  },
+  {
+    "name": "fade-and-switch",
+    "ticks": 2500,
+    "requests": [
+      {
+        "tick": 0,
+        "command": 3
+      },
+      {
+        "tick": 150,
+        "command": 31
+      },
+      {
+        "tick": 550,
+        "command": 4
+      },
+      {
+        "tick": 820,
+        "command": 0
+      },
+      {
+        "tick": 900,
+        "command": 8
+      },
+      {
+        "tick": 1300,
+        "command": 14
+      },
+      {
+        "tick": 2000,
+        "command": 31
+      }
+    ],
+    "eventCount": 50759,
+    "sha256": "c4552074c6def26fa95448d9b4003e750bc30d0eef96f6ff9e0cf1206ade0977",
+    "prefix": [
+      {
+        "op": "fm",
+        "register": 24,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 25,
+        "value": 128,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 15,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 48,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 49,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 50,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 51,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 52,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 53,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 54,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 55,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 56,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 57,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 58,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 59,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 60,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 61,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 62,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 63,
+        "value": 0,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 2,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 3,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 4,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 5,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 6,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 7,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 8,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 9,
+        "tick": 0
+      },
+      {
+        "op": "fm",
+        "register": 8,
+        "value": 0,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 18,
+        "value": 220,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 64,
+        "value": 15,
+        "tick": 1
+      },
+      {
+        "op": "fm",
+        "register": 80,
+        "value": 1,
+        "tick": 1
+      }
+    ]
+  }
+]

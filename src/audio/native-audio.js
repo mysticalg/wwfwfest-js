@@ -1,12 +1,13 @@
 export class NativeAudio {
   async load() {
     const base = new URL('../../assets/audio/', import.meta.url);
-    const [manifest, samples] = await Promise.all([
-      fetch(new URL('effects.json', base)), fetch(new URL('samples.bin', base)),
+    const [manifest, samples, music] = await Promise.all([
+      fetch(new URL('effects.json', base)), fetch(new URL('samples.bin', base)), fetch(new URL('music.json', base)),
     ]);
-    if (!manifest.ok || !samples.ok) throw new Error('Original sound assets could not be loaded.');
+    if (!manifest.ok || !samples.ok || !music.ok) throw new Error('Original sound assets could not be loaded.');
     this.manifest = await manifest.json();
     this.samples = await samples.arrayBuffer();
+    this.music = await music.json();
   }
 
   async enable() {
@@ -23,7 +24,7 @@ export class NativeAudio {
       await context.audioWorklet.addModule(new URL('./effects-worklet.js', import.meta.url));
       this.node = new AudioWorkletNode(context, 'wwfwfest-effects', {
         numberOfInputs: 0, numberOfOutputs: 1, outputChannelCount: [1],
-        processorOptions: {manifest: this.manifest, samples: this.samples},
+        processorOptions: {manifest: this.manifest, samples: this.samples, music: this.music},
       });
       this.node.onprocessorerror = () => {
         this.node = null;

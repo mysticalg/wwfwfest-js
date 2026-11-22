@@ -61,4 +61,6 @@ The browser uses the native source in `src/audio`. The offline CPU is an externa
 
 ## Remaining audio work
 
-The FM music interpreter, FM instrument rendering, the music sample voice, fade command `$1f`, complete reset behavior, cycle-level timing, and gameplay command routing remain unfinished. The native match continues to use provisional rules. Sound explorer playback provides direct access to the recovered effect commands while those systems are translated.
+The FM music interpreter, FM rendering, music sample lane and fade command `$1f` now run in the native audio player. Their implementation and verification are described in [music research](MUSIC.md).
+
+Complete reset behavior, cycle-level timing, analogue calibration, combined-driver edge cases and combat sound routing remain unfinished. The native match continues to use provisional rules. Selection and match music use the observed original phase commands.
