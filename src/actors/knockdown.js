@@ -17,11 +17,11 @@ export class Knockdown {
     mash = 0, cameraY = 0x241, movementMode = 0, speed = 0, direction = 0,
     state = 4, clock, flags34 = 0, velocityX = 0, velocityY = 0, velocityZ = 0, gravity = 0,
     captureTimer = 0, attacker = null, holdFlags=0, forced=0,comboCount=0,comboTimer=0,
-    auxiliary=null,unlinkMarked=false,linkIdentity=null,motionLink=null,
+    auxiliary=null,unlinkMarked=false,linkIdentity=null,motionLink=null,idleTimer=0,
     world={mode:0,scene:0,rope:[0,0,0,0]}} = {}) {
     Object.assign(this, {xFixed, yFixed, zFixed, facing, health, maximumHealth, severity,
       flags32, flags33, flags56, flags34, recoveryTimer, mash, cameraY, captureTimer, attacker,holdFlags,world,forced,comboCount,comboTimer,
-      auxiliary,unlinkMarked,linkIdentity,motionLink});
+      auxiliary,unlinkMarked,linkIdentity,motionLink,idleTimer});
     this.world.rope??=[0,0,0,0];
     this.world.mode??=0;this.world.scene??=0;
     this.state = state;
@@ -233,6 +233,7 @@ export class Knockdown {
           this.action&=0x7fff;
           this.comboReset = true;
           this.comboCount=this.comboTimer=0;
+          this.idleTimer=0;
           if (!this.recoveryTimer) {
             this.recoveryTimer = (this.flags56 & 128) && (this.flags33 & 0x24) ? 48
               : this.severity === 2 ? 224 : this.severity === 1 ? 128 : 48;

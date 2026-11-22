@@ -34,7 +34,8 @@ for(const action of [21,22,23,24,26,37,54,59,75,80,86,110,111,137])for(const reg
  configs.push({state:0x8005,action:action|(sample&1?0x4000:0),region,type:sample%2?5:0,round:sample,
   controlCounter:sample&1?1:48,inputBlockA:sample&2?0x10:0,mode:sample&4?1:0,
   x:action===22&&(sample&1)?0x200:640,y:action===22&&(sample&1)?0x130:336});
-for(const variant of [{active:false},{flags56:0},{flags56:64},{flags32:128},{flags32:16},{forced:1},{matchFlags:1}])configs.push({state:0x800c,controlCounter:48,...variant});
+for(const variant of [{active:false},{flags56:0},{flags56:64},{flags32:128},{flags32:16},{forced:1},{matchFlags:1},
+ {flags56:192,flags32:128},{flags56:64,flags32:128}])configs.push({state:0x800c,controlCounter:48,...variant});
 for(const action of [54,72,75,24])configs.push({state:0x8005,action,aiFlagsB9:255});
 for(const reaction of [8,9])for(const severity of [0,1,2])for(const peerAction of [0,8,9,10,11,12,14,15,16,17,18,19,20,21,34,35,53,70])for(const round of [0,6])for(const sample of [0,1])
  configs.push({state:0x8004,reaction,severity,peerState:0x8005,peerAction,round,sample,mode:sample,

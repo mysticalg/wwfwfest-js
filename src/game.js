@@ -50,8 +50,9 @@ function fighter(type, x, y, facing, world, {computer=false,slot=0}={}) {
 }
 
 export class Match {
-  constructor(playerType, opponentType, {ai=true,...settings}={}) {
-    this.world={...defaultMatchSettings,...settings,inGame:true};
+  constructor(playerType, opponentType, {ai=true,nativeMovementAI=false,...settings}={}) {
+    this.world={...defaultMatchSettings,...settings,inGame:true,nativeMovementAI};
+    this.world.gameFlags??=0x8000;
     this.fighters = [fighter(playerType, 103, 165, 1,this.world),
       fighter(opponentType, 219, 165, -1,this.world,{computer:ai,slot:ai?4:2})];
     this.world.actors=this.fighters;

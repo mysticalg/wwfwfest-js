@@ -18,6 +18,7 @@ export class LinkedActor extends GrappleActor {
     if([8,9,10].includes(this.state))return false;
     if(this.state===4&&knockdowns.includes(this.reaction&255))return false;
     if(this.state===5&&[56,120].includes(this.action))return false;
+    if(this.state===5&&(this.action&255)===61)return false;
     return super.pendingTransition;
   }
 
@@ -54,7 +55,7 @@ export class LinkedActor extends GrappleActor {
   }
 
   step() {
-    if(this.state===0)return this.idleStep();
+    if(this.state===0||this.state===5&&(this.action&255)===61)return this.idleStep();
     if(this.state===1)return stepTagWalk(this);
     if([8,9,10].includes(this.state))return stepCornerState(this);
     if([2,3,6].includes(this.state)){
@@ -90,7 +91,7 @@ export class LinkedActor extends GrappleActor {
 
   idleStep() {
     this.sounds=[];
-    if(this.pendingState){this.previousState=this.clock.flags;this.clock.flags=0;this.pendingState=false;}
+    if(this.pendingState){this.previousState=this.clock.flags;this.clock.flags=this.state;this.pendingState=false;}
     this.collision={...this.collision,kind:0,flags:0};
     if(this.movementMode){
       this.collision=(this.flags33&4?outsideRingCollision:insideRingCollision)({x:this.xFixed>>>16,y:this.yFixed>>>16,
@@ -108,7 +109,7 @@ export class LinkedActor extends GrappleActor {
       if(this.flags34&64){this.flags34&=~64;if(this.opponent)this.opponent.flags34&=~128;this.sceneRefresh=1;this.world.controlsRefresh=1;}
     }else{
       this.contact=1;
-      if(!this.forced&&this.auxiliary&&(this.auxiliary.unlinkMarked||this.auxiliary.auxiliary!==this)){this.auxiliary=null;this.unlinkMarked=false;}
+      if(!this.forced&&this.auxiliary&&(this.auxiliary.unlinkMarked||this.auxiliary.auxiliary!==this)){this.auxiliary=null;this.unlinkMarked=false;this.secondaryPinner=null;}
     }
     if(this.flags74&128){
       this.contact=14;this.offsetY=(this.offsetY&0xff00)|16;this.clock.pose=(this.flags75&1?130:126)|this.facing;

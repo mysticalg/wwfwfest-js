@@ -3385,6 +3385,48 @@ export const actorTables = {
       147
     ]
   },
+  "groundAnimations": {
+    "60": {
+      "source": 94818,
+      "update": 94824,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
+    "62": {
+      "source": 95572,
+      "update": 95578,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
+    "117": {
+      "source": 103116,
+      "update": 103148,
+      "mode": 1,
+      "delays": [
+        40
+      ],
+      "poses": [
+        104
+      ]
+    },
+    "rushMoving": {
+      "source": 103128,
+      "update": 103148,
+      "mode": 1,
+      "delays": [
+        6,
+        6,
+        6
+      ],
+      "poses": [
+        392,
+        393,
+        394
+      ]
+    }
+  },
   "standingReactions": [
     {
       "source": 107200,

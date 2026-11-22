@@ -4,12 +4,14 @@ import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {LinkedActor} from '../src/actors/linked-actor.js';
 import {projectedPosition} from '../src/actors/projection.js';
-const fixture=JSON.parse(readFileSync(process.env.STANDING_FIXTURE||new URL('./fixtures/standing-native-reference.json',import.meta.url)));
+const files=process.env.STANDING_FIXTURE?[process.env.STANDING_FIXTURE]:['standing-native-reference.json','ground-actors-reference.json'].map(name=>new URL(`./fixtures/${name}`,import.meta.url));
+const fixture={sequences:files.flatMap(file=>JSON.parse(readFileSync(file)).sequences)};
 for(const config of fixture.sequences)test(`native standing ${config.kind}, face ${config.facing}, x ${config.x}, link ${config.link}, variant ${config.variant}`,()=>{
  const actor=new LinkedActor({...config.initial,world:{mode:0,inGame:true,gameFlags:0x8000,rope:[0,0,0,0]}}),peer=new LinkedActor();
  actor.auxiliary=config.link?peer:null;peer.auxiliary=config.link===1||config.link===3?actor:null;peer.unlinkMarked=config.link===3;
  actor.secondaryPinner=peer;actor.lastPose=actor.clock.pose;const bodies=[actor,peer],hash=createHash('sha256');
  for(let tick=0;tick<config.count;tick++){
+  if(config.groundActors&&tick===64)actor.forced=0x8000;
   assert.equal(actor.pendingTransition,false);actor.step();
   if(actor.clock.pose!==actor.lastPose){actor.contact=0;actor.lastPose=actor.clock.pose;}
   const result=Object.fromEntries(Object.keys(config.initial).map(key=>{

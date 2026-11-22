@@ -89,6 +89,7 @@ def main():
                            (0x10832, 0x1084a, 0x10862, 0x1087a)],
         'standingAttacks': [descriptor(address) for address in (0x11a90, 0x19206)],
         'standingPunchAssist': descriptor(0x11aac),
+        'groundAnimations': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854+action*4)[0]) for action in (60,62,117)},
         'standingReactions': [descriptor(address) for address in (0x1a2c0, 0x1a612)],
         'contacts': [list(program[0x2411c + index * 7:0x2411c + (index + 1) * 7])
                      for index in range(34)],
@@ -127,6 +128,7 @@ def main():
             'ropeStagger': 0x1acc2, 'bump': 0x1ad30, 'released': 0x1ad80, 'runReleased': 0x1ae62,
         }.items()},
     }
+    data['groundAnimations']['rushMoving'] = descriptor(0x192d8)
     for address in struct.unpack_from('>12I', program, 0xdaee):
         entries = []
         while program[address] != 255:

@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {readFileSync,writeFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
 import {pathToFileURL} from 'node:url';
+import {LinkedActor} from '../src/actors/linked-actor.js';
 const[hardware,program,output]=process.argv.slice(2),{default:CPU}=await import(pathToFileURL(hardware));
 const memory=new Uint8Array(0x200000),cpu=new CPU();memory.set(readFileSync(program));
 for(let page=0;page<0x2000;page++){cpu.memorymap[page].base=memory.subarray(page*256,(page+1)*256);cpu.memorymap[page].write=page<0x800?()=>{}:null;}
@@ -9,6 +10,7 @@ const pool=Array.from({length:9},(_,i)=>0x1c05b0+i*0x10c),slots=[0,1,4,5],bases=
 const word=a=>memory[a]*256+memory[a+1],long=a=>(word(a)*65536+word(a+2))|0;
 const put=(a,v)=>{memory[a]=v>>>8;memory[a+1]=v;},putLong=(a,v)=>{put(a,v>>>16);put(a+2,v);};
 const sounds=[],entropy=[],effects=[];
+const expanded=Boolean(process.env.TAG_EXPANDED);
 cpu.memorymap[0x1400].write16=(a,v)=>{if(a===0x14000c)sounds.push(v&255);};
 function call(address,actor=bases[0]){
  cpu.pc=address;cpu.a[0]=actor;cpu.sr=0x2700;cpu.a[7]=0x1c3a00;putLong(cpu.a[7],0x7ff00);let steps=0;
@@ -28,12 +30,14 @@ const words={type:2,facing:0x2e,state:0x20,action:0x60,reaction:0x64,previousSta
  walkMode:0xae,apronTimer:0xc8,supportTimer:0xe6,recoveryTimer:0x9a,mash:0xaa,healthAccumulator:0x6a,idleTimer:0xd0,
  forced:0xfe,comboCount:0x52,comboTimer:0x54,resultPose:0x4a,pinStatus:0x108};
 const bytes={movementMode:1,flags32:0x32,flags33:0x33,flags34:0x34,flags35:0x35,flags56:0x56,flags57:0x57,flags74:0x74,flags75:0x75,flagsC6:0xc6,hitCounter:0xc7,aiFlagsB9:0xb9,region:0x31};
+if(expanded){words.hitMask=0x8e;words.cornerInput=0xac;words.targetX=0xbe;words.targetY=0xc0;}
 function actors(){return bases.map(base=>{
  const result={active:Boolean(memory[base]&128)};
  for(const[key,offset]of Object.entries(words))result[key]=word(base+offset);
  for(const[key,offset]of Object.entries(bytes))result[key]=memory[base+offset];
  for(const[key,offset]of [['xFixed',6],['yFixed',10],['zFixed',14],['controlPort',0x8a]])result[key]=long(base+offset);
  for(const[key,offset]of [['auxiliaryIndex',0x26],['opponentIndex',0x7a],['partnerIndex',0x86]])result[key]=bases.indexOf(long(base+offset)&0x7fffffff);
+ if(expanded)for(const[key,offset]of [['lastHitIndex',0x92],['secondaryPinnerIndex',0x9c],['secondaryOpponentIndex',0x82]])result[key]=bases.indexOf(long(base+offset)&0x7fffffff);
  result.unlinkMarked=Boolean(memory[base+0x26]&128);
  result.clock={flags:word(base+0x1c),remaining:word(base+0x22),index:word(base+0x24),pose:word(base+4)};
  result.projection=[word(base+0x14)<<16>>16,232-(word(base+0x16)<<16>>16)];return result;
@@ -73,21 +77,28 @@ for(const config of configs){
   cornerOccupancy:0,switchTimer:0,activeA:0,activeB:2,paletteUpdates:{}};
  const entropyFrames=[],rows=[],hash=createHash('sha256');let count=0,boundary=null;
  for(let tick=0;tick<650;tick++){
-  if(!process.env.TAG_CONTINUE&&tick&&(word(a+0x20)===0x8000)){boundary='outgoing-idle-ai';break;}
+  if(!expanded&&!process.env.TAG_CONTINUE&&tick&&(word(a+0x20)===0x8000)){boundary='outgoing-idle-ai';break;}
   sounds.length=entropy.length=effects.length=0;putLong(0x1c0080,tick);
-  for(const base of bases){memory[base+0xa3]=0;put(base+0xa8,0);}call(0x1fab4);call(0xe3ca);call(0x1b390);
+  for(const base of bases){memory[base+0xa3]=0;put(base+0xa8,0);}call(0x1fab4);if(expanded)call(0x1fb7e);call(0xe3ca);call(0x1b390);
   const updateOrder=config.order?[...bases].reverse():bases;
+  if(expanded)for(const base of updateOrder){
+   const raw=word(base+0x20),check=new LinkedActor({state:raw,action:word(base+0x60),reaction:word(base+0x64),walkMode:word(base+0xae)});
+   if(check.pendingTransition){boundary={stage:'actor',tick,slot:pool.indexOf(base),state:raw,action:word(base+0x60),reaction:word(base+0x64)};break;}
+  }
   // Alternate order is a component stress fixture, not the original pool iterator.
-  for(const base of updateOrder){
+  if(!boundary)for(const base of updateOrder){
    const state=word(base+0x20);if(!(state&0x8000)){put(base+0x1e,word(base+0x1c));put(base+0x1c,state);put(base+0x20,state|0x8000);}
    put(base+0x36,0);if(memory[base+1]){call(0x27302,base);for(const[p,c]of [[6,0x38],[10,0x3a],[14,0x3c]])put(base+p,word(base+p)+word(base+c));}
    call(0x1b27e,base);call(0x248c,base);call(0x2218,base);
   }
-  call(0x232b6);for(const base of bases)if((word(base+4)&0x7fff)!==0x7fff&&(memory[base+0x26]&128)&&!word(base+0xfe))putLong(base+0x26,0);
-  if(!(tick&1)){call(0x23288);call(0x2407e);}
+  if(!boundary){
+   call(0x232b6);for(const base of bases)if((word(base+4)&0x7fff)!==0x7fff&&(memory[base+0x26]&128)&&!word(base+0xfe))putLong(base+0x26,0);
+   if(!(tick&1)){call(0x23288);call(0x2407e);}
+  }
   const row=snapshot();hash.update(JSON.stringify(row)+'\n');if(process.env.DETAIL)rows.push(row);entropyFrames.push([...entropy]);count++;
+  if(boundary)break;
  }
- sequences.push({...config,holder,victim,incoming,initial,world,count,boundary,entropyFrames,sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
+ sequences.push({...config,expanded,holder,victim,incoming,initial,world,count,boundary,entropyFrames,sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
 }
-writeFileSync(output,JSON.stringify({source:'Original four-participant corner tag: human input, active linked/apron/corner AI, actor handlers, contact and damage; stop before ordinary outgoing idle AI',sequences},null,2)+'\n');
+writeFileSync(output,JSON.stringify({source:expanded?'Original four-participant tag continuation: neutral human input, target service, ground/linked AI, native actor/contact/damage phase; no fresh grapple arbitration or referee, stop at declared unrecovered actor or 650-update cap':'Original four-participant corner tag: human input, active linked/apron/corner AI, actor handlers, contact and damage; stop before ordinary outgoing idle AI',sequences},null,2)+'\n');
 console.log(JSON.stringify({sequences:sequences.length,updates:sequences.reduce((n,s)=>n+s.count,0)}));

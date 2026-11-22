@@ -2,6 +2,7 @@ import {aiTables} from '../data/ai-tables.js';
 import {pursuePoint} from './grapple-services.js';
 import {addPositionWord} from './ring-collision.js';
 import {supportsComputerTag,stepComputerTag} from './computer-tag.js';
+import {GroundComputer,supportsComputerGround,supportsGroundAction,stepGroundAction} from './computer-ground.js';
 
 const u16=value=>value&65535;
 const flags=actor=>(actor.inputBlockA||0)&255;
@@ -140,12 +141,14 @@ function finishCarry(actor){
 const held={93:[2,103],95:[2,92],96:[3,91],98:[4,90],99:[4,85]};
 const noOpHandlers=new Set([0x1d47a]);
 export function supportsComputerGrapple(actor){
+ if(supportsComputerGround(actor))return true;
  if(supportsComputerTag(actor))return true;
  if([4,7,11,12].includes(actor.state))return true;
  if(actor.state!==5)return false;
  const action=actor.action&255,handler=aiTables.actionHandlers[action]&0x7fffffff;
  if(!actor.pendingState&&!(aiTables.actionHandlers[action]&0x80000000))return true;
  return noOpHandlers.has(handler)||handler===0x1d908||[21,22,23,74,75,80,86,93,94,95,96,98,99].includes(action)
+  ||supportsGroundAction(handler)
   ||(handler===0x1d9b8&&Boolean(flags(actor)&16));
 }
 
@@ -242,6 +245,7 @@ export function stepComputerAction(actor){ // $01d208 and the recovered handlers
  const action=actor.action&255,entry=aiTables.actionHandlers[action],handler=entry&0x7fffffff;
  if(!(entry&0x80000000)&&actor.state===5&&!actor.pendingState)return true;
  if(noOpHandlers.has(handler))return true;
+ if(supportsGroundAction(handler))return stepGroundAction(actor,handler,groundServices);
  if(handler===0x1d908){
   if(!(actor.action&0x4000)){actor.action|=0x4000;actor.auxiliary=actor.opponent;if(!actor.opponent.auxiliary)actor.opponent.auxiliary=actor;}
   return true;
@@ -278,14 +282,27 @@ export function stepComputerAction(actor){ // $01d208 and the recovered handlers
  return false;
 }
 
+const groundServices={choose:computerWeightedChoice,action:stepComputerAction,measure:updateComputerTarget,tag:tagDisposition};
+export function stepComputerGround(actor){const c=new GroundComputer(actor,groundServices);return actor.state===0?c.idle():[2,3,6].includes(actor.state)?c.running():c.walk();}
+
 // Recovered portion of $01b390, called after human input and before the referee.
 // Other AI states remain a separate translation task, not fabricated decisions.
-export function stepComputerGrapple(actor){
- if(!actor.active||!(actor.flags56&0xc0)||((actor.flags56&128)&&(actor.flags32&128))
+export function stepComputerGrapple(actor,{ground=true}={}){
+ if(!actor.active||!(actor.flags56&0xc0)||(!(actor.flags56&64)&&(actor.flags56&128)&&(actor.flags32&128))
   ||actor.state===255||actor.forced||(actor.flags32&16)||((actor.world.matchFlags||0)&1))return false;
  updateComputerTarget(actor);
  if(!gameFlags(actor.world))for(const[offset,value]of [[0xd2,3],[0xd4,2],[0xd6,3],[0xd8,2],[0xda,3],[0xde,3],[0xe4,4]])actor.attempts[offset]=value;
+ // The practice adapter still supplies provisional ordinary input. Its linked
+ // exchanges retain their prior scope until the native movement mode owns them.
+ if(!ground){
+  if(supportsComputerGround(actor))return false;
+  if(actor.state===5){
+   const handler=aiTables.actionHandlers[actor.action&255]&0x7fffffff;
+   if(supportsGroundAction(handler)&&!(handler===0x1d9b8&&(flags(actor)&16)))return false;
+  }
+ }
  if(!supportsComputerGrapple(actor))return false;
+ if(supportsComputerGround(actor))return stepComputerGround(actor);
  if(supportsComputerTag(actor))return stepComputerTag(actor,{choose:computerWeightedChoice,action:stepComputerAction});
  if(actor.state===4)return downed(actor);
  if(actor.state===7)return true;
