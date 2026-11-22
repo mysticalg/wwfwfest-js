@@ -1,0 +1,2111 @@
+{
+  "source": "Original CPU sprite descriptors and independently decoded ROM pixels",
+  "background": [
+    24,
+    35,
+    45,
+    255
+  ],
+  "frames": [
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 11,
+      "sha256": "592fff259942f24d1b0a92d38aab920b063d676046d503a389bfb5cccf1a7755"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 11,
+      "sha256": "db556852f1e240eeb6df2d3bddcfc10ae204992ec01dcafdf093573d27e16606"
+    },
+    {
+      "type": 0,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "0b746a1be320030b11578cc9b6d2bb2d10acefebdaf2bbce324e37de17dab058"
+    },
+    {
+      "type": 0,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "c402126769db2f2fc4c81277b0f6766656e443515315c7017881c54d2f289f6d"
+    },
+    {
+      "type": 0,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 11,
+      "sha256": "b3d7625671c42765c9a8958b2a234ece52698f230d199d7067eb07981a9ee6bb"
+    },
+    {
+      "type": 0,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 11,
+      "sha256": "df33a9e3cf8dc26d5caad8e815c01226ac00beea071e8cb18661fb939bedf178"
+    },
+    {
+      "type": 1,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 9,
+      "sha256": "711d5fb20ee45e6157463911da897f4e1d7fbf7071acd4fdd6bf2b7910a60bcc"
+    },
+    {
+      "type": 1,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 9,
+      "sha256": "c773777ad0ba42bfc74ffcc392896c6c1d8bf10cda07cd24863792acfe6e5fdd"
+    },
+    {
+      "type": 1,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 24,
+      "sha256": "03611d792fd2a12dcc47971873abef3556471555e6ead272ea6860af18964a36"
+    },
+    {
+      "type": 1,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 24,
+      "sha256": "50b6cce2ac62c4379aa2bc1bc4dc842a64e639acd727b93adbb4e7443d0e07fd"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 21,
+      "sha256": "6f859b51e29cac2c93546be345cf780e9ef4726ebdd9f68d1bf6a3d89f28158e"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 21,
+      "sha256": "3940357db3d56f80e1980bb0901d5d000d6b5268c58f903f5ec48cd8f7e2ccd3"
+    },
+    {
+      "type": 2,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "d6b247ecd4d97c43094089009159701e80a87be16f0d84db43d7d851e6c3d9bd"
+    },
+    {
+      "type": 2,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "ca452667c54086b32be04254d1698bd5cba12b51949bc7eff76bf22562f7debb"
+    },
+    {
+      "type": 2,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 21,
+      "sha256": "cc3123a88ed50ffa58b8df10a861495ac900dbc796839754617ddb1cba540021"
+    },
+    {
+      "type": 2,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 21,
+      "sha256": "492b8694b5ed5e762580032d365fb71a80199fa46044946f14f2768cf1600c8f"
+    },
+    {
+      "type": 2,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 16,
+      "sha256": "0c0fbf0f056326ac5d851bb7ea23a2a500e48f2d1e1bb6f7386923c3f5ab543d"
+    },
+    {
+      "type": 2,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 16,
+      "sha256": "e80532b814201384131eb51720419bb8083e2b395514d9c747a0214b9bc412a2"
+    },
+    {
+      "type": 3,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 8,
+      "sha256": "c9a9c99de946c41f7bd79fb0f55afb362362a95af5f62683bd764c73c911e1cd"
+    },
+    {
+      "type": 3,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 8,
+      "sha256": "72c1d15092c84bfe2bd03da3e4474a03c1a87528293b1cf468213e36bb52e7f3"
+    },
+    {
+      "type": 3,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 8,
+      "sha256": "be5477afa466ff05acdcd81ef76be7ecc137e940fe37a8c96707134a8977cd01"
+    },
+    {
+      "type": 3,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 8,
+      "sha256": "997c2e89853f3b94839dd1ceb58b82630ce112189a89947182eef50d50777530"
+    },
+    {
+      "type": 3,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "1fa110f67c720387858698e1d297ac8ad42aa3d82b602cb5a2089a0779ab330e"
+    },
+    {
+      "type": 3,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "aae5ef2f1ef577c3940bce1520572a2de2c856642ea9a70acc26c41dcfbaafc9"
+    },
+    {
+      "type": 4,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 16,
+      "sha256": "9005548cd7d37660c24fee92235335de72f86c180a1029acaa09ad20533a0777"
+    },
+    {
+      "type": 4,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 16,
+      "sha256": "de16c59031315646e825dd0afbdd239404f29c9377dbe26b23611a617225bd0d"
+    },
+    {
+      "type": 4,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 17,
+      "sha256": "965f153d8e299436a36d5ae6f9849da213ec79932adc4bcf1e811397935be060"
+    },
+    {
+      "type": 4,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 17,
+      "sha256": "1ed747ab3081e28491e7fba84732aee1423c4cbab592375a70847abcd66ab660"
+    },
+    {
+      "type": 4,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "d2f6353197fcf09a4ca8de8ea81d7ed3e37178ed2ef746fd403871484dcdb80b"
+    },
+    {
+      "type": 4,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "c06c34187f2fbf77558c0e6915803d74ba2795d046e5054858fae6a7b2ca4876"
+    },
+    {
+      "type": 5,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 17,
+      "sha256": "bbbc97e07711916470f3a122c9033856ea6c63f825abc7fdd05fb7eadb1a627d"
+    },
+    {
+      "type": 5,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 17,
+      "sha256": "3852ebeba061b931d43bae15e80a572b4783f47dd69c2e6c2f4da0dea64465cc"
+    },
+    {
+      "type": 5,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 15,
+      "sha256": "57659c2d261e5d7acf4026d2e1b5ea7477c8d151e9e428262e3ce768ac53a5ff"
+    },
+    {
+      "type": 5,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 15,
+      "sha256": "49cb7c803d8a155a15f04c7fac3b258dabbb61306c0c532e8274f226f8893298"
+    },
+    {
+      "type": 5,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 14,
+      "sha256": "4c4ccffcc16ef10cfd38a516fe563321c7040d6989a59a0ca9cbe927699c55cf"
+    },
+    {
+      "type": 5,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 14,
+      "sha256": "979dcbc209f9d784812f5817d5375ae6aa46f33cadaeddc713f24c353a436c36"
+    },
+    {
+      "type": 6,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 9,
+      "sha256": "77ba59642e454f2fc43601615b0ed9f39820d5005a36082795d1ad7791f5a36b"
+    },
+    {
+      "type": 6,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 9,
+      "sha256": "d4c650c4af28f742b21ad33569d8396a98b436059a630da6b0bfc10b7faa7ee0"
+    },
+    {
+      "type": 6,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 9,
+      "sha256": "4392c3241c8e70b47e69ad82fe0da92a475bf78514ae878ebd9eb1c33ed5c058"
+    },
+    {
+      "type": 6,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 9,
+      "sha256": "f7f0b0f9c16e4655304934fac920b6a1f96887f167e28ad142de794943438df0"
+    },
+    {
+      "type": 6,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 9,
+      "sha256": "7a7874e11d3a745c78d3dfad24522f60cfe45a9debb3838760a06e3be3d4eda3"
+    },
+    {
+      "type": 6,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 9,
+      "sha256": "55643f34f3e208d0b68f1c1f3176a49e12e71fc2d1bd0c3af8146d2ed9a2c0ca"
+    },
+    {
+      "type": 7,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 7,
+      "sha256": "05b804646f8a15b49a5e8e4fb741c531db9dcf0e2e9f21eca6e4ff28d4d88441"
+    },
+    {
+      "type": 7,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 7,
+      "sha256": "d5d9c669d3b0bd76db52733fb917ab98c8f241ab8b92f0de313777d27ec7a53b"
+    },
+    {
+      "type": 7,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "d15ea8b094c5716144110659010eecb4b49ba68b15f91ad5393419aa15b27fb7"
+    },
+    {
+      "type": 7,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "0228c19c1c3ceab168968ed776719dacab73fc7a706e2a0cd45670d9ed81f9d3"
+    },
+    {
+      "type": 7,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 7,
+      "sha256": "add037b24040bfae66fb8f7d4f30023d95f3fc59bc480ea0d59381f53e997854"
+    },
+    {
+      "type": 7,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 7,
+      "sha256": "d872357bc31f727e3d9f6fe7769755af1ca0a818b41923c0d9436666651e2b07"
+    },
+    {
+      "type": 8,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 8,
+      "sha256": "f6af0f764caee0e7fe525189f23e80620129d8263713c2291d7c9e72f048e730"
+    },
+    {
+      "type": 8,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 8,
+      "sha256": "0f7f424089f719231c9b276b32f20ce13d912ae9fb3d5782be8c627a76ac4f70"
+    },
+    {
+      "type": 8,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 8,
+      "sha256": "13e21d6822ef4dbe221a759da7c72a89eb1ba7bd58fc40ced8fffccd35d7678b"
+    },
+    {
+      "type": 8,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 8,
+      "sha256": "c582f1a49459fd1e001e8f2b8e05714a243048ea16d21db58892475d1595c41c"
+    },
+    {
+      "type": 8,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "b961139624e1b4e0bcc2a4de080b5978a1ee46c097e22694bc3bc6b365d87c75"
+    },
+    {
+      "type": 8,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "eeae67386afdeafff04c77b91d0cad8250ac5c7bdc23be80ed31ca3d7f1ee2a3"
+    },
+    {
+      "type": 9,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 6,
+      "sha256": "368d6712bac0842f95f5ccd756dea3672b74f244d05418c55365a77ecfc4dfe3"
+    },
+    {
+      "type": 9,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 6,
+      "sha256": "7bce2c1dae869e0e1b5743bc5ca8d6255ac95484a7f4148f9d50b6f3d862d552"
+    },
+    {
+      "type": 9,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 16,
+      "sha256": "eef72116effad3649df10ad22676a1a3edb307f487d53cd6e466e95a497b5865"
+    },
+    {
+      "type": 9,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 16,
+      "sha256": "d00b1d5af440d8493fb0e89f5c4016202c754d95a6193f18da9f041a4dca6792"
+    },
+    {
+      "type": 9,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 9,
+      "sha256": "1735372557bba10d5c87328bb0634aa3ee018f4f06a1cb173611f701204a7c66"
+    },
+    {
+      "type": 9,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 9,
+      "sha256": "6bccd24f598748f59e1d073f9faa96c3344d6ec21b2454d30ee62af925672a19"
+    },
+    {
+      "type": 10,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 10,
+      "sha256": "c81d74e6f4dab02d259c6740790031c3b268ff5378026f623c33d68ea807c8f7"
+    },
+    {
+      "type": 10,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 10,
+      "sha256": "129db81745aa153c9d2fee712ad3857db5c1ff89c104ad394cc18a80ff9ee4b0"
+    },
+    {
+      "type": 10,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 20,
+      "sha256": "91844ae6134f002cfc059211f2cff757ae35edf0afb4c3f421518bb945a6c6b6"
+    },
+    {
+      "type": 10,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 20,
+      "sha256": "4f6404eec09e9d0858e185fab4e4f049cf7d065d164eacdfa6077dc8379f6d47"
+    },
+    {
+      "type": 10,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 9,
+      "sha256": "e95703a41ab3be5afc680bf0d7ff67e3dbb4e084b5eca0ff22114b0e4a01c410"
+    },
+    {
+      "type": 10,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 9,
+      "sha256": "25cdc004ce255f802759191e36ae47febb883bf48479cb2df4fa3c1ee51ad208"
+    },
+    {
+      "type": 11,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "86c47851f2df13b0f0ef4229354933b7fe399dd9230e61e1d294206eea88752f"
+    },
+    {
+      "type": 11,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 12,
+      "sha256": "a5d3c296a5351ba6f28643eae84c60efbf459509fd02971680cb36cf14731179"
+    },
+    {
+      "type": 11,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 21,
+      "sha256": "f55ea90235df3838d4d14d1399f393240a04b0291e56838cc60299008e9b4ed9"
+    },
+    {
+      "type": 11,
+      "pose": 9,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 21,
+      "sha256": "5f3a4167445a54cb57f5791789be594e692353e7e74475f162a1d8b07181d3b0"
+    },
+    {
+      "type": 11,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 11,
+      "sha256": "00b03ff4c2db7eed66a6f6ed357ebda7a0826b4f0e501b376e9d484b4d7bc6d3"
+    },
+    {
+      "type": 11,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 11,
+      "sha256": "14cc15e6e96482dfab6a419ea6fae45bf136a5326651893e5cf4d25cc68d342a"
+    },
+    {
+      "type": 12,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 6,
+      "sha256": "32f71d51333a4f9cd9dccdb2534420e8223272823d36cf15121477695529ad51"
+    },
+    {
+      "type": 12,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 6,
+      "sha256": "b2ae6ccbc9e308edf79bd84defd28fc4f18cc6bb798d3a5cb926462f2a124996"
+    },
+    {
+      "type": 0,
+      "pose": 159,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 29,
+      "sha256": "d0d847183b1ed397462c22c4cf36484f6da2929997a2da7aa3af3583fce83cae"
+    },
+    {
+      "type": 0,
+      "pose": 159,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 29,
+      "sha256": "99933bdb0193cdafaa6d1aaf2abba0e8be891ec07f0b5efbc04b9c00605215be"
+    },
+    {
+      "type": 0,
+      "pose": 159,
+      "targetType": 3,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 26,
+      "sha256": "acafdf75362960024ecc053f6d559d371abdebc068aef5f6473c81685d570820"
+    },
+    {
+      "type": 0,
+      "pose": 159,
+      "targetType": 3,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 26,
+      "sha256": "1d93919cc45fb4e5a7341433b581e0fe151f5b8ef6cf01314cd9478d20866ed3"
+    },
+    {
+      "type": 0,
+      "pose": 159,
+      "targetType": 6,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 29,
+      "sha256": "e92c4af8f76f4f70ddbb5c508e54363c74f87da65ceda0e7de8f2ee21d034d4f"
+    },
+    {
+      "type": 0,
+      "pose": 159,
+      "targetType": 6,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 29,
+      "sha256": "8dcbcf84e2e6756a5dc5a0ff6c20d86a8023b1d1469ae2db316d613104784290"
+    },
+    {
+      "type": 0,
+      "pose": 159,
+      "targetType": 9,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 28,
+      "sha256": "e337443f1f12d4d968d6dbefa5d23c489242a2fd72a9c8d8a7648aa46f13aec3"
+    },
+    {
+      "type": 0,
+      "pose": 159,
+      "targetType": 9,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 28,
+      "sha256": "b80fc7eccd825e1848bf478783d782f7d4d86d962ede180505ddd948789592a0"
+    },
+    {
+      "type": 1,
+      "pose": 159,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 36,
+      "sha256": "e5b316c25b2ab742e895c195495cbb09d57673e3b0d9580c5ebfd89372b55558"
+    },
+    {
+      "type": 1,
+      "pose": 159,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 36,
+      "sha256": "20b8b1c9e543470a4baa83efcf77c10b03826b9dd5c241d3a5095f24a50cda95"
+    },
+    {
+      "type": 1,
+      "pose": 159,
+      "targetType": 3,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 33,
+      "sha256": "8e483fc2be508561fff988843a38de95954336240b5e29d9201d2003451ac07e"
+    },
+    {
+      "type": 1,
+      "pose": 159,
+      "targetType": 3,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 33,
+      "sha256": "3bf67025235a4b84c471769893644bb5322d5e35d827a6717114d742863fd782"
+    },
+    {
+      "type": 1,
+      "pose": 159,
+      "targetType": 6,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 36,
+      "sha256": "c38857be603b205fe126a386a773ec2d062061ac36cf28b519cc1d05cf02a33e"
+    },
+    {
+      "type": 1,
+      "pose": 159,
+      "targetType": 6,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 36,
+      "sha256": "e1696e8434683ac195e2fac4336d18942a3a285f9e911abb0608504a4cdabd23"
+    },
+    {
+      "type": 1,
+      "pose": 159,
+      "targetType": 9,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 35,
+      "sha256": "b918acf652e5ac6f1247cfdf1b859f95b3dd0558236e4baf76f9b402a0603769"
+    },
+    {
+      "type": 1,
+      "pose": 159,
+      "targetType": 9,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 35,
+      "sha256": "fbcbe114ee779505bf2add0581f5ed89c6cdbb0c9ad173cb7c820a7e2fb8f646"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 25,
+      "sha256": "788372988d3945a404b2600c4d6de8a105428883560a81c49b51115211c46022"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 25,
+      "sha256": "ac159a20a393b6c08008f16956388118072b5b9d5e099d8f0d70000d0837c069"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 3,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 22,
+      "sha256": "a0d49d9d5114eab8cf96e8e6cbc2fc84640df654396f62fd3e753099cdf360c6"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 3,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 22,
+      "sha256": "6e431a7da82bae0c242a2c93c2985825770e3993e2594ae32481350463488c4d"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 25,
+      "sha256": "208aedd80e98af39b9bf2c2023a9ce9e16216aa8a40c0847d37179db99980174"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 25,
+      "sha256": "8f8d058771d7b5aff8f399f24cae2bde6cf29575c62d44639bf7e30bb38ae3bd"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 9,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 24,
+      "sha256": "ab18131b2a8c40a5b5d24ec63b074d32241c9ab58ffef9b5207ec6fd05c1458b"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 9,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 24,
+      "sha256": "0aa1f53ec6d563f37358e7a11f4241039e7a0eae6d7d70b3ecc4a1ea61841e34"
+    },
+    {
+      "type": 5,
+      "pose": 159,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 32,
+      "sha256": "25e2c829c9c40868b14cf32c94e7210b026c8a7ae970e539f247d83aab0a8450"
+    },
+    {
+      "type": 5,
+      "pose": 159,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 32,
+      "sha256": "5515fd44faa163d2f7db30ea3e42e24f928bee58238302236951b3df87773c1b"
+    },
+    {
+      "type": 5,
+      "pose": 159,
+      "targetType": 3,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 29,
+      "sha256": "f2585eaae710ce97c6cf72904e68a1331e8c656be3c7c0c476a17a1d27524330"
+    },
+    {
+      "type": 5,
+      "pose": 159,
+      "targetType": 3,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 29,
+      "sha256": "c8692ca9fe06848be642cc56c214d6bbddf594b1f011e424173a0b17dcdd036e"
+    },
+    {
+      "type": 5,
+      "pose": 159,
+      "targetType": 6,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 32,
+      "sha256": "d3104d4070ac1a144fded64a3faf359772881e70cb9b7c7daa200555a6cd04f1"
+    },
+    {
+      "type": 5,
+      "pose": 159,
+      "targetType": 6,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 32,
+      "sha256": "7c0b524b59c8caf23d5b49ba0955d6bb3168f56afaa960436a024368054857b7"
+    },
+    {
+      "type": 5,
+      "pose": 159,
+      "targetType": 9,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 31,
+      "sha256": "81b4fc499ab3a45a3f57703efb056b96d9213a41e489198d7d1fbbf2e636dfab"
+    },
+    {
+      "type": 5,
+      "pose": 159,
+      "targetType": 9,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 31,
+      "sha256": "79512ffe24d6eff2e151013b6765d5d2ca5d93bacbf838fdfe453757db969a4d"
+    },
+    {
+      "type": 6,
+      "pose": 159,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 27,
+      "sha256": "e59f2c94eff790506e668b2be72d4519af9a8910005d38d2cad94dabeaf59978"
+    },
+    {
+      "type": 6,
+      "pose": 159,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 27,
+      "sha256": "96134c4e8c0ef92751abfab82a199703ad49cc3a230081a0f65deabd8e91842a"
+    },
+    {
+      "type": 6,
+      "pose": 159,
+      "targetType": 3,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 24,
+      "sha256": "d05736e7199e0435d392f3310d0846d008f683f31cec563311e18370cbf87889"
+    },
+    {
+      "type": 6,
+      "pose": 159,
+      "targetType": 3,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 24,
+      "sha256": "26b36f64db8c70d8114d8a67a160ab23391dae1dcd1a0031449f6a4093ce91c4"
+    },
+    {
+      "type": 6,
+      "pose": 159,
+      "targetType": 6,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 27,
+      "sha256": "15dc85550add1c53caeca6970eb9011f203b950a10dc310bbf8dfb7a74bc1105"
+    },
+    {
+      "type": 6,
+      "pose": 159,
+      "targetType": 6,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 27,
+      "sha256": "194540f815d18ff23cd5ca2f3e38e37fe848b57708ce6d6d861c75587fb72ce3"
+    },
+    {
+      "type": 6,
+      "pose": 159,
+      "targetType": 9,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 26,
+      "sha256": "0f7138c8ca913f930aa4127f7ef880857e56ad5d608588e922f2a2d31bdf328d"
+    },
+    {
+      "type": 6,
+      "pose": 159,
+      "targetType": 9,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 26,
+      "sha256": "6ae9e89310205293f1969d5cb810d59fa057950253b737286b2b1f5a1fdb439c"
+    },
+    {
+      "type": 7,
+      "pose": 159,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 27,
+      "sha256": "7b1d623b72e94b4bbbc75b3d5b2afdcaad83fde8ab7ec875b9cec246bb814b51"
+    },
+    {
+      "type": 7,
+      "pose": 159,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 27,
+      "sha256": "9a120e45df1407893a0924c5aca31b60db58644e10e437e0332070b763642b53"
+    },
+    {
+      "type": 7,
+      "pose": 159,
+      "targetType": 3,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 24,
+      "sha256": "7674125377fc99bbe20908da495c8a24a52559d47dd592dab59bc7887cdf0e37"
+    },
+    {
+      "type": 7,
+      "pose": 159,
+      "targetType": 3,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 24,
+      "sha256": "cfeaaf9adca2b2d1969ae63a3f4ad250c3d735322254b125725dc36a87bc30a8"
+    },
+    {
+      "type": 7,
+      "pose": 159,
+      "targetType": 6,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 27,
+      "sha256": "ce31388f58119a0ac8c1c2cd43d468f3063832a2c79e51bf41efd94d548dd55d"
+    },
+    {
+      "type": 7,
+      "pose": 159,
+      "targetType": 6,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 27,
+      "sha256": "186f44f03bce620c1b03cbc62583dfa7d15f94614354472ac1dcd19818684e87"
+    },
+    {
+      "type": 7,
+      "pose": 159,
+      "targetType": 9,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 26,
+      "sha256": "994702c0dd94c5ef13376d59872aec9edf0ab7373a2c8b8a6a0565f7a614a911"
+    },
+    {
+      "type": 7,
+      "pose": 159,
+      "targetType": 9,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 26,
+      "sha256": "6d33f2fda68d14b3e3ef11f7e5c46a7d27efdde88297426fbb935783d2e15c96"
+    },
+    {
+      "type": 8,
+      "pose": 159,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 27,
+      "sha256": "c3eab9456743627eef95e44299ad202731b9d12c95c04d34e402989960c6a31f"
+    },
+    {
+      "type": 8,
+      "pose": 159,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 27,
+      "sha256": "a09d490492eddcb43a324cb16f402eb061e526e51e6efdbd6511751ad4ca9438"
+    },
+    {
+      "type": 8,
+      "pose": 159,
+      "targetType": 3,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 24,
+      "sha256": "723fd0e7eacc0393491c0b4a758d24432e487469736208145b61c6f7c30223f4"
+    },
+    {
+      "type": 8,
+      "pose": 159,
+      "targetType": 3,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 24,
+      "sha256": "aebba1bb254d92191e71be17ba845e23eae498e1f619ca2aa9cada3a57228b43"
+    },
+    {
+      "type": 8,
+      "pose": 159,
+      "targetType": 6,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 27,
+      "sha256": "a12476e879edaa02cf8d1c26004b1cb41b959ea77b0208ca8670d500e988b371"
+    },
+    {
+      "type": 8,
+      "pose": 159,
+      "targetType": 6,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 27,
+      "sha256": "07ea1f98927a11cc37cfffbdb1324899fae025795e5939b0e3792be9c0db1290"
+    },
+    {
+      "type": 8,
+      "pose": 159,
+      "targetType": 9,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 26,
+      "sha256": "2d1d7a492871a1c3eb1001819870ca1ee6c8b7b3e4eedbd67d968db974abf944"
+    },
+    {
+      "type": 8,
+      "pose": 159,
+      "targetType": 9,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 26,
+      "sha256": "fbe970ce5ac7c8de28f7702a3bfb60540d8bae47b505732ebca8effe9ec219e0"
+    },
+    {
+      "type": 3,
+      "pose": 405,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 3,
+      "pose": 405,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 3,
+      "pose": 405,
+      "targetType": 3,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 3,
+      "pose": 405,
+      "targetType": 3,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 3,
+      "pose": 405,
+      "targetType": 6,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 22,
+      "sha256": "2c76f34d8cba0b99ebe50a5ee68cf68b06d2e4efc16f65de5d830fe95762a7d1"
+    },
+    {
+      "type": 3,
+      "pose": 405,
+      "targetType": 6,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 22,
+      "sha256": "9a04f316c157012674d6a29b62c1085953209cd133309fe8d66b5e6dd00067c5"
+    },
+    {
+      "type": 3,
+      "pose": 405,
+      "targetType": 9,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 3,
+      "pose": 405,
+      "targetType": 9,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 29,
+      "sha256": "e66c241567822f9b85d632073faa40d801989c245a0c9406e6c4702573b4adf4"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 29,
+      "sha256": "dfa2cf5365de292dfe3f47be9fc96b15459badff57548c6dd758b429b332e523"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 6,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 6,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 9,
+      "mirror": false,
+      "x": 128,
+      "y": 128,
+      "chains": 31,
+      "sha256": "8c4ba99467e7276bb34f4a22dd472891e827532e2ec3803405c65644795b9459"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 9,
+      "mirror": true,
+      "x": 128,
+      "y": 128,
+      "chains": 31,
+      "sha256": "5770306d7ea86d1fe719ea6754872882bc9d771e0533a2a7ba062d948eeadc6e"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": -32,
+      "y": -64,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": -32,
+      "y": -64,
+      "chains": 4,
+      "sha256": "897ce20f7477046525257d7d312fda6245b2fdada6203f6396785c5d2125b9ad"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": -32,
+      "y": -64,
+      "chains": 11,
+      "sha256": "0e7596379030d6a89aa01274ffc90df74f56a8b9bdf750073adfe62d474aa14f"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": -32,
+      "y": -64,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": false,
+      "x": -32,
+      "y": -64,
+      "chains": 7,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": true,
+      "x": -32,
+      "y": -64,
+      "chains": 9,
+      "sha256": "9b155fa418b0d50cb243d8ce39e781e10048736cecc4b05d40ad54f5eba23edd"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": false,
+      "x": -32,
+      "y": -64,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": true,
+      "x": -32,
+      "y": -64,
+      "chains": 23,
+      "sha256": "eb24368a168f1b03fa1ba2727f2afe2759fbd77ad6b1ce758c13ad61bf9b9c6a"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 0,
+      "y": 0,
+      "chains": 7,
+      "sha256": "d62d5720c9c4651816c7248556ca36f2c972927a5adef3c28e0dae956112610a"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 0,
+      "y": 0,
+      "chains": 11,
+      "sha256": "78c069d854048238e3b9a0f52bb4c3165a7e7e947d1a508f8fda1d2a93dd5a49"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 0,
+      "y": 0,
+      "chains": 21,
+      "sha256": "2c41a24c76a8f3715e627451c37a225a3b7d1bc3bd00bc5e7e855db2adeb174f"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 0,
+      "y": 0,
+      "chains": 10,
+      "sha256": "64b212ed02c6d85bad565d20329af0d5b9a35179c8d33bd686aea9d02425f911"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": false,
+      "x": 0,
+      "y": 0,
+      "chains": 16,
+      "sha256": "76bbe953b0d990662851199cea8abcebb99fe1399df989761cfa55d9b625366e"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": true,
+      "x": 0,
+      "y": 0,
+      "chains": 18,
+      "sha256": "cdee55f424f02fb26c0e548b58ff9341c5bdd3a728e404e92b27cf7c2ee13440"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": false,
+      "x": 0,
+      "y": 0,
+      "chains": 6,
+      "sha256": "9ebb0a925c31b22f4a443c26f7fff37d61f4094f5c861680d81ec8bb32f4e381"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": true,
+      "x": 0,
+      "y": 0,
+      "chains": 29,
+      "sha256": "7292ef4f2b9673d1273d10e495295de6af063be6aa463ee52d127f10f2fbf1b5"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 0,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 0,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 0,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 0,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": false,
+      "x": 0,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": true,
+      "x": 0,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": false,
+      "x": 0,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": true,
+      "x": 0,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 320,
+      "y": 0,
+      "chains": 11,
+      "sha256": "9431f11028bfc9d0b9c8d3ed332b32b6fb7656885b9fcac13d05ff203e28aee7"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 320,
+      "y": 0,
+      "chains": 7,
+      "sha256": "a6a4fdd3b8faa5919092e1c760fe92fd2156bc2b9271a59a7a2cd837ba0a02d4"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 320,
+      "y": 0,
+      "chains": 10,
+      "sha256": "b71b74eff1b75effc946cdafe26f373bca119d62fdd388a47de1e01214552d5f"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 320,
+      "y": 0,
+      "chains": 21,
+      "sha256": "c8167d9c3576df3ca336986cf5941fdd5b31ef78ed740c0c18b224eee47b39a2"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": false,
+      "x": 320,
+      "y": 0,
+      "chains": 18,
+      "sha256": "b290ee931d31163495d1f78f203186bc184d4cb69d4ecace0c00ba91a37c3ad0"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": true,
+      "x": 320,
+      "y": 0,
+      "chains": 16,
+      "sha256": "b02b9249dad18941b68b8a8b60c60369196756e02a8180acf0d4821b0f4d4d4f"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": false,
+      "x": 320,
+      "y": 0,
+      "chains": 29,
+      "sha256": "297f50ffd16806952c738cf9027de281d0902548927fa5a6e3f01bdb3fabe7ec"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": true,
+      "x": 320,
+      "y": 0,
+      "chains": 6,
+      "sha256": "67317164653909efc327cb3e00749d0eb0806b8e054c2840968146b60ec1adf8"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 320,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 320,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 320,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 320,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": false,
+      "x": 320,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": true,
+      "x": 320,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": false,
+      "x": 320,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": true,
+      "x": 320,
+      "y": 248,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 352,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 352,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 352,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 352,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": false,
+      "x": 352,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": true,
+      "x": 352,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": false,
+      "x": 352,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": true,
+      "x": 352,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": -64,
+      "chains": 11,
+      "sha256": "ef40b19d586b289cb9e13b15f607ba6e228b0456334f6e26b794b1e975fef4b3"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": -64,
+      "chains": 11,
+      "sha256": "0c531817caa05580c491742111edaffb24f4eee5489b1462f086539927e9bb98"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": -64,
+      "chains": 21,
+      "sha256": "46296ad8ae53987ee1108d9035afb10bf53898708c949c4c9a20fc07e72d694d"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": -64,
+      "chains": 21,
+      "sha256": "fa909ad561ac00969c6a3e020aac79a1939fa29e8fcc71fd7a2865553e08fda9"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": false,
+      "x": 128,
+      "y": -64,
+      "chains": 25,
+      "sha256": "2a1aca60001fad0109b8af316e0d523a9d8763468fb86b9dcdf7c8df31b2ef29"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": true,
+      "x": 128,
+      "y": -64,
+      "chains": 25,
+      "sha256": "64f4372bb79f99dd886bd0c9a2f5c66507ea803ad029336b7bc32e18d7e8fa83"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": false,
+      "x": 128,
+      "y": -64,
+      "chains": 29,
+      "sha256": "7abbef2cbf7a688997cac624f0f54fe965381b8eb371e78247a831fd20a0bfff"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": true,
+      "x": 128,
+      "y": -64,
+      "chains": 29,
+      "sha256": "76746f0a0cd1fa396e63627909786f2d014c8c9c59a9e3fc4707b3128943d73a"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 0,
+      "pose": 0,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": false,
+      "x": 128,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 1,
+      "pose": 105,
+      "targetType": 0,
+      "mirror": true,
+      "x": 128,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": false,
+      "x": 128,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 4,
+      "pose": 162,
+      "targetType": 6,
+      "mirror": true,
+      "x": 128,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": false,
+      "x": 128,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    },
+    {
+      "type": 9,
+      "pose": 406,
+      "targetType": 3,
+      "mirror": true,
+      "x": 128,
+      "y": 304,
+      "chains": 0,
+      "sha256": "b0bd1b033e80b3cb37bc4a175dc063ff63e539a01faf433cfaae0adc43733cd9"
+    }
+  ]
+}

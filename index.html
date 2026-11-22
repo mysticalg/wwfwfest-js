@@ -29,11 +29,11 @@
       <p class="note">Walking, running, rope rebound physics, standing attacks, normal knockdowns, recovery, ring scrolling and crowd animation use recovered rules and artwork. Grapples, running attacks, other moves, outside-ring behavior, AI and pinning remain unfinished. Full arcade match logic and audio routing are still being reconstructed.</p>
     </section>
     <section id="frame-controls" hidden>
-      <div class="pickers"><label>Wrestler <select id="actor"></select></label><label>Pose <input id="pose-number" type="number" value="0" min="0" max="564"></label><label><input id="mirror" type="checkbox"> Mirror</label></div>
+      <div class="pickers"><label>Wrestler <select id="actor"></select></label><label>Other wrestler <select id="linked-actor"></select></label><label>Pose <input id="pose-number" type="number" value="0" min="0" max="564"></label><label><input id="mirror" type="checkbox"> Mirror</label></div>
       <input id="pose-range" type="range" min="0" max="564" value="0" aria-label="Pose index">
       <div class="actions"><button id="previous">Previous pose</button><button id="next">Next pose</button><button id="animate">Cycle poses</button></div>
       <p id="pose-info"></p>
-      <p class="note">Pose indices expose the ROM's frame table. Some records require another object or animation context and remain unresolved.</p>
+      <p class="note">Paired poses use both selected wrestlers. Some poses exist only for specific matchups. Unused table entries have no artwork.</p>
     </section>
     <section id="sound-controls" hidden>
       <div class="pickers"><label>Original sound command <select id="sound-command"></select></label></div>

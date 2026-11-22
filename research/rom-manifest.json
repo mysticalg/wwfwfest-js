@@ -101,67 +101,93 @@
     {
       "type": 0,
       "entries": 565,
-      "requiresContext": 256
+      "drawable": 383,
+      "requiresContext": 74,
+      "missing": 182
     },
     {
       "type": 1,
       "entries": 565,
-      "requiresContext": 259
+      "drawable": 384,
+      "requiresContext": 78,
+      "missing": 181
     },
     {
       "type": 2,
       "entries": 565,
-      "requiresContext": 74
+      "drawable": 373,
+      "requiresContext": 74,
+      "missing": 192
     },
     {
       "type": 3,
       "entries": 565,
-      "requiresContext": 73
+      "drawable": 378,
+      "requiresContext": 73,
+      "missing": 187
     },
     {
       "type": 4,
       "entries": 565,
-      "requiresContext": 78
+      "drawable": 380,
+      "requiresContext": 78,
+      "missing": 185
     },
     {
       "type": 5,
       "entries": 565,
-      "requiresContext": 86
+      "drawable": 383,
+      "requiresContext": 86,
+      "missing": 182
     },
     {
       "type": 6,
       "entries": 565,
-      "requiresContext": 68
+      "drawable": 371,
+      "requiresContext": 68,
+      "missing": 194
     },
     {
       "type": 7,
       "entries": 565,
-      "requiresContext": 267
+      "drawable": 368,
+      "requiresContext": 71,
+      "missing": 197
     },
     {
       "type": 8,
       "entries": 565,
-      "requiresContext": 259
+      "drawable": 379,
+      "requiresContext": 73,
+      "missing": 186
     },
     {
       "type": 9,
       "entries": 565,
-      "requiresContext": 257
+      "drawable": 387,
+      "requiresContext": 79,
+      "missing": 178
     },
     {
       "type": 10,
       "entries": 565,
-      "requiresContext": 77
+      "drawable": 382,
+      "requiresContext": 76,
+      "missing": 183
     },
     {
       "type": 11,
       "entries": 565,
-      "requiresContext": 75
+      "drawable": 368,
+      "requiresContext": 74,
+      "missing": 197
     },
     {
       "type": 12,
       "entries": 19,
-      "requiresContext": 1
+      "drawable": 18,
+      "requiresContext": 0,
+      "missing": 1
     }
   ]
 }

@@ -1,0 +1,24 @@
+{
+  "set": "WWF WrestleFest US rev 2",
+  "origin": 229690,
+  "length": 294598,
+  "sha256": "8469d27538e0aa8e816cd13869381edecfc14b9b7ffbe3241794db91fa7cf621",
+  "frameIndexTable": 229690,
+  "recipeBaseTable": 229854,
+  "sharedColumns": 434902,
+  "frameCounts": [
+    564,
+    564,
+    564,
+    564,
+    564,
+    564,
+    564,
+    564,
+    564,
+    564,
+    564,
+    564,
+    18
+  ]
+}

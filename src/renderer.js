@@ -1,4 +1,5 @@
 import {StageRenderer} from './stage-renderer.js';
+import {SpriteRecipes, recipePieces} from './sprite-recipes.js';
 
 export const roster = [
   'Hulk Hogan', 'Ultimate Warrior', 'Mr. Perfect', 'Big Boss Man',
@@ -28,15 +29,21 @@ export class Renderer {
     this.context.imageSmoothingEnabled = false;
     this.tileCache = new Map();
     this.poseTables = new Map();
+    this.actorFrames = new Map();
     this.stage = new StageRenderer(this.context);
   }
 
   async load() {
-    const [atlas, palettes, selection, portraits] = await Promise.all([
+    const [atlas, palettes, selection, portraits, recipes] = await Promise.all([
       loadImage('sprite-indices.png'), loadJSON('palettes.json'),
-      loadImage('selection.png'), loadImage('roster.png'), this.stage.load(),
+      loadImage('selection.png'), loadImage('roster.png'),
+      Promise.all([fetch(new URL('../assets/sprite-recipes.bin', import.meta.url)).then(response => {
+        if (!response.ok) throw new Error(`Could not load sprite recipes (${response.status})`);
+        return response.arrayBuffer();
+      }), loadJSON('sprite-recipes.json')]).then(([data, metadata]) => new SpriteRecipes(data, metadata)),
+      this.stage.load(),
     ]);
-    Object.assign(this, {palettes, selection, portraits});
+    Object.assign(this, {palettes, selection, portraits, recipes});
     const scratch = document.createElement('canvas');
     scratch.width = atlas.width;
     scratch.height = atlas.height;
@@ -51,7 +58,10 @@ export class Renderer {
 
   async loadActor(type) {
     if (!this.poseTables.has(type)) {
-      this.poseTables.set(type, loadJSON(`poses-${type}.json`).then(table => table.frames));
+      this.poseTables.set(type, loadJSON(`poses-${type}.json`).then(table => {
+        this.actorFrames.set(type, table.frames);
+        return table.frames;
+      }));
     }
     return this.poseTables.get(type);
   }
@@ -77,14 +87,45 @@ export class Renderer {
     return canvas;
   }
 
-  drawPose(frames, index, x, y, mirror = false, scale = 1) {
-    const pose = frames[index];
-    if (!pose || pose.requiresContext) return;
+  drawActor(type, index, x, y, {mirror = false, targetType = null, scale = 1} = {}) {
+    const pose = this.actorFrames.get(type)?.[index];
+    if (pose?.override) {
+      this.drawPose(this.actorFrames.get(type), index, x, y, mirror, scale);
+      return {commands: pose.pieces, missing: false};
+    }
+    // Match rendering uses actual projected coordinates for original clipping.
+    // Scaled explorer previews normalize around the former export origin.
+    const result = this.recipes.expand(type, index | (mirror ? 0x8000 : 0), {
+      targetType, x: scale === 1 ? Math.round(x) : 128,
+      y: scale === 1 ? 232 - Math.round(y) : 128,
+    });
     const context = this.context;
     context.save();
-    context.translate(Math.round(x), Math.round(y));
+    if (scale !== 1) {
+      context.translate(Math.round(x), Math.round(y));
+      context.scale(scale, scale);
+      context.translate(-128, -104);
+    }
+    this.drawChains(recipePieces(result.commands));
+    context.restore();
+    return result;
+  }
+
+  drawPose(frames, index, x, y, mirror = false, scale = 1) {
+    const pose = frames[index];
+    if (!pose || (pose.requiresContext && !pose.override)) return;
+    const context = this.context;
+    context.save();
+    context.translate(Math.round(x) + (mirror ? 16 * scale : 0), Math.round(y));
     context.scale(mirror ? -scale : scale, scale);
-    for (const piece of pose.pieces) {
+    this.drawChains(pose.pieces);
+    context.restore();
+  }
+
+  drawChains(pieces) {
+    const context = this.context;
+    for (const piece of pieces) {
+      if (!(piece.flags & 1)) continue;
       const count = (piece.flags >> 5) + 1;
       const flipX = Boolean(piece.flags & 16);
       const flipY = Boolean(piece.flags & 8);
@@ -97,7 +138,6 @@ export class Renderer {
         context.restore();
       }
     }
-    context.restore();
   }
 
   clear(color = '#171e2a') {

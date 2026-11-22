@@ -22,9 +22,9 @@ Open http://localhost:8765. GitHub Pages serves the same static files.
 - `src/camera.js`, `src/scenery.js` and `src/stage-renderer.js` implement original camera rules, crowd clocks and scrolling stage layers.
 - `src/data/stage-tables.js` contains editable camera bounds, crowd visibility/sequence data and patch coordinates.
 - `assets/arena-palettes.json` preserves editable stage colors. `tools/extract_stage.py` regenerates the scrolling artwork and data from the archive.
-- `src/renderer.js` draws recovered sprite chain recipes and original palettes.
+- `src/sprite-recipes.js` expands original raw/compressed/paired/list recipes; `src/renderer.js` draws their tile chains and palettes.
 - `src/app.js` connects the controls, match screen and animation explorer.
-- `assets/poses-*.json` contains editable per-wrestler frame records. Each record carries its ROM source address.
+- `assets/poses-*.json` contains editable standalone frame snapshots. Set a frame's `override` property to `true` to draw its edited pieces. Available records carry their original source address.
 - `assets/palettes.json` contains editable original RGBA palettes.
 - `assets/sprite-indices.png` stores the decoded original four-bit sprite pixels. Each grayscale value divided by 17 is a palette index.
 - `src/audio/` contains the native sample decoder, effect sequencer and AudioWorklet output.
@@ -39,9 +39,9 @@ Standard gamepads use the left stick or D-pad for movement, bottom face button A
 
 The first connected controller is used for the current single-player prototype. A 25% stick dead zone suppresses drift. Losing the active pad pauses the match. Reconnection and background-tab recovery require neutral controls before input resumes. Pads without the browser's standard mapping use the default button order, which may differ by device.
 
-The animation explorer exposes all recovered frame table entries, including records marked as requiring additional animation context. The first 12 actor types each have 565 entries. The referee has 19 entries. Successful extraction of a frame does not establish the correct gameplay use or timing of that frame.
+The animation explorer exposes the original frame tables and paired artwork. Use Other wrestler to choose the linked type for holds and throws. The first twelve tables each contain 564 indexed entries and a final terminator; the referee has eighteen indexed entries and a terminator. Missing entries and unsupported pairs remain empty. Correct artwork does not establish the gameplay use or timing of a pose.
 
-Provisional action animations skip unresolved or empty frame records. Idle/walk use their original resolved pose sequences. The explorer preserves every frame record for continued research.
+Match rendering expands original sprite data at actual projected coordinates, including mirroring and hardware clipping. The explorer preserves standalone JSON snapshots, paired poses and unused markers for continued research.
 
 ## Current scope
 
@@ -51,7 +51,7 @@ The playable prototype supports ten selectable wrestlers, recovered walking/runn
 
 Gamepad mapping, menu selection, actions, start/pause, rematch and reconnect behavior are covered by unit checks and browser tests using simulated Gamepad API devices. Physical controller acceptance remains unverified.
 
-Still pending are running attacks, other move/grapple/airborne paths, outside-ring behavior, moving rope graphics, other scenery modes, original health initialization, tag-team and Royal Rumble rules, entrances, complete audio routing and full-match parity. Practice health remains 100 points. Some compound poses require another object's context. Further combat vocalizations and effects await their original event routing.
+Still pending are running attacks, other move/grapple/airborne paths, outside-ring behavior, moving rope graphics, other scenery modes, original health initialization, tag-team and Royal Rumble rules, entrances, complete audio routing and full-match parity. Practice health remains 100 points. Paired artwork now renders with the linked wrestler type; its corresponding gameplay actions still need integration. Further combat vocalizations and effects await their original event routing.
 
 Research notes and provenance are in `research/REVERSE_ENGINEERING.md`. Browser delivery contains recovered data and native source. Offline analysis used CPU tracing to observe original rendering routines. Those analysis dependencies are excluded from the browser project.
 
@@ -61,9 +61,9 @@ The independent `tools/inspect_rom.py` script regenerates ROM identity, vectors,
 python tools/inspect_rom.py path/to/wwfwfest.zip --output rom-analysis
 ```
 
-The pose recipe JSON is a separate research export and is preserved by this tool.
+This inspection tool preserves pose JSON. `tools/extract_sprite_recipes.py` extracts native recipe data; `tools/export_sprite_poses.mjs` regenerates the standalone snapshots and missing-entry labels without an analysis CPU.
 
-`tools/extract_audio.py` regenerates effect scripts/sample data, `tools/extract_music.py` the score graph/instruments, `tools/extract_actors.py` actor data, and `tools/extract_stage.py` the normal ring layers/crowd. Run `npm run check` with Node.js 22 or newer for syntax, original-program comparisons and controller checks. [Actors](research/ACTORS.md), [combat](research/COMBAT.md), [running and rope rebound physics](research/RUNNING.md), [knockdowns](research/KNOCKDOWNS.md), [camera and stage pixel verification](research/CAMERA.md), [effects](research/AUDIO.md), [music](research/MUSIC.md)
+`tools/extract_audio.py` regenerates effect scripts/sample data, `tools/extract_music.py` the score graph/instruments, `tools/extract_actors.py` actor data, and `tools/extract_stage.py` the normal ring layers/crowd. Run `npm run check` with Node.js 22 or newer for syntax, original-program comparisons and controller checks. [Sprite recipes and pixel comparisons](research/SPRITES.md), [actors](research/ACTORS.md), [combat](research/COMBAT.md), [running and rope rebound physics](research/RUNNING.md), [knockdowns](research/KNOCKDOWNS.md), [camera and stage pixel verification](research/CAMERA.md), [effects](research/AUDIO.md), [music](research/MUSIC.md)
 
 ## Rights
 

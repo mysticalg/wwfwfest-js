@@ -36,11 +36,11 @@ The selected assembly listing preserves instructions for boot, input accounting,
 
 Sprite data is assembled from IC9, IC8, IC11, IC10, IC12, IC13, IC15 and IC14 in that order. Four planes occupy offsets 0, `$1000000`, `$2000000`, `$3000000` in bits. Each 16 by 16 tile advances 256 bits within its plane. The x offsets are 0 through 7 and 128 through 135. Y offsets are 0 through 120 in steps of 8.
 
-The renderer ports the recovered chain descriptor behavior. Flag bit 4 flips x, bit 3 flips y, and bits 5 through 7 encode the vertical tile count minus one. Each JSON pose carries local x/y offsets, the flags, tile code and local palette index.
+The renderer ports the recovered chain descriptor behavior. Flag bit 4 flips x, bit 3 flips y, and bits 5 through 7 encode the vertical tile count minus one. The native recipe decoder now expands raw/compressed/paired/list formats into original hardware descriptor coordinates; [sprite research](SPRITES.md) documents its full-frame and pixel comparisons.
 
-The original recipe expander was exercised offline with each type and frame index at a fixed origin. It produced standalone recipes for the delivered JSON tables. Entries that exceeded the bounded evaluation are marked `requiresContext`. Context-dependent recipes need continued analysis before use. Extraction success alone does not verify composite pose semantics.
+The original expander supplies offline reference traces. The native JavaScript decoder reproduces 488,592 frame expansions, including paired types, mirroring and clipping. The animation explorer supplies the other wrestler type for compound artwork. Standalone JSON snapshots now distinguish missing table markers from paired records and support explicit edited-piece overrides. Gameplay action semantics remain a separate translation task.
 
-The supplied program uses 565 frame indices for each of the first 12 actor types, with a shared 19-entry referee table. Types 10 and 11 contain alternate Legion of Doom graphics. The application exposes their frame records in the explorer.
+Each of the first twelve frame tables has 564 indexed entries followed by a terminal word. The referee table has eighteen indexed entries and a terminal word. Snapshot JSON retains those final markers for inspection. Types 10 and 11 contain alternate Legion of Doom graphics. The application exposes their frame records in the explorer.
 
 ## Native source and fidelity
 

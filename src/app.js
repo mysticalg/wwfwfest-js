@@ -7,7 +7,7 @@ import {GamepadInput, neutralControls} from './gamepad.js';
 
 const element = id => document.getElementById(id);
 const canvas = element('screen');
-const renderer = new Renderer(canvas);
+export const renderer = new Renderer(canvas);
 export const audio = new NativeAudio();
 const held = new Set();
 const gamepads = new GamepadInput();
@@ -26,11 +26,12 @@ let musicTrack = null;
 let musicPreview = null;
 let muted = false;
 
-for (const id of ['player', 'opponent', 'actor']) {
-  const names = id === 'actor' ? roster : roster.slice(0, 10);
+for (const id of ['player', 'opponent', 'actor', 'linked-actor']) {
+  const names = id === 'actor' ? roster : roster.slice(0, id === 'linked-actor' ? 12 : 10);
   names.forEach((name, type) => element(id).add(new Option(name, String(type))));
 }
 element('opponent').value = '6';
+element('linked-actor').value = '6';
 
 async function prepareActor(type) {
   const frames = await renderer.loadActor(type);
@@ -152,7 +153,10 @@ function setPose(value) {
   element('pose-number').value = String(state.pose);
   element('pose-range').value = String(state.pose);
   const pose = tables.get(state.actor)[state.pose];
-  element('pose-info').textContent = `Pose ${state.pose} · ROM $${pose.source.toString(16).padStart(6, '0')} · ${pose.pieces.length} sprite chains${pose.requiresContext ? ' · Requires animation context' : ''}`;
+  const result = renderer.recipes.expand(state.actor, state.pose | (element('mirror').checked ? 0x8000 : 0),
+    {targetType: Number(element('linked-actor').value)});
+  element('pose-info').textContent = result.missing ? `Pose ${state.pose} · Unused table entry`
+    : `Pose ${state.pose} · ROM $${result.source.toString(16).padStart(6, '0')} · ${result.commands.length} sprite chains${pose.requiresContext ? ' · Paired pose' : ''}`;
 }
 
 async function chooseActor() {
@@ -204,7 +208,8 @@ function drawMatch() {
   for (const actor of sorted) {
     const frames = tables.get(actor.type);
     const position = match.drawPosition(actor);
-    renderer.drawPose(frames, match.pose(actor, frames), position.x, position.y, match.mirrored(actor));
+    renderer.drawActor(actor.type, match.pose(actor, frames), position.x, position.y,
+      {mirror: match.mirrored(actor), targetType: actor.linkedActor?.type ?? null});
   }
   renderer.stage.draw(match.camera, match.scenery, true);
   context.fillStyle = '#071323';
@@ -240,9 +245,9 @@ function drawExplorer() {
   context.lineTo(160, 220);
   context.stroke();
   renderer.text(roster[state.actor].toUpperCase(), 160, 21, '#ffe64a', 12, 'center');
-  renderer.drawPose(tables.get(state.actor), state.pose, 160, 190, element('mirror').checked, 1.5);
-  const pose = tables.get(state.actor)[state.pose];
-  if (!pose.pieces.length) renderer.text(pose.requiresContext ? 'CONTEXT REQUIRED' : 'EMPTY POSE', 160, 125, '#bdc9de', 11, 'center');
+  const result = renderer.drawActor(state.actor, state.pose, 160, 190,
+    {mirror: element('mirror').checked, targetType: Number(element('linked-actor').value), scale: 1.5});
+  if (!result.commands.length) renderer.text(result.missing ? 'UNUSED FRAME' : 'NO ARTWORK FOR THIS PAIR', 160, 125, '#bdc9de', 10, 'center');
   renderer.text(`FRAME ${state.pose}`, 160, 232, '#bdc9de', 10, 'center');
 }
 
@@ -388,6 +393,8 @@ element('stop-sound').addEventListener('click', () => audio.stop());
 element('fade-music').addEventListener('click', () => audio.command(0x1f));
 element('ai').addEventListener('change', () => { if (state.match) state.match.ai = element('ai').checked; });
 element('actor').addEventListener('change', chooseActor);
+element('linked-actor').addEventListener('change', () => setPose(state.pose));
+element('mirror').addEventListener('change', () => setPose(state.pose));
 element('pose-number').addEventListener('input', event => setPose(event.target.value));
 element('pose-range').addEventListener('input', event => setPose(event.target.value));
 element('previous').addEventListener('click', () => setPose(state.pose - 1));
