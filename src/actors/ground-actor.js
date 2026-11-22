@@ -3,7 +3,7 @@ import {walkAnimation,walkSpeed} from './movement.js';
 import {collisionResponse} from './grapple-victims.js';
 import {addPositionWord} from './ring-collision.js';
 
-export const isGroundActorAction=action=>[8,60,62,117,121].includes(action&255);
+export const isGroundActorAction=action=>[8,60,62,63,117,121].includes(action&255);
 export function stepGroundActorAction(actor,initialized){
  const action=actor.action&255;
  let descriptor=actorTables.groundAnimations[action];
@@ -45,6 +45,18 @@ export function stepGroundActorAction(actor,initialized){
    else{actor.change(0);actor.clock.pose=actor.facing;actor.flags34&=~16;return descriptor;}
   }
   descriptor=actorTables.tauntAnimations[actor.type];
+ }else if(action===63){ // $0175ae, crouching stop after the running reversal
+  if(!initialized){
+   actor.movementMode=1;actor.speed=18;actor.drawMode=2;actor.offsetX=(actor.offsetX&0xff00)|24;actor.flags33&=~16;
+   actor.world.rope[(actor.xFixed>>>16)<640?0:2]=3;
+  }else{
+   (actor.world.effectRequests??=[]).push({actor,kind:18});
+   if(!(actor.clock.index&255)){
+    actor.speed=(actor.speed-1)&65535;
+    if(actor.speed&0x8000){actor.movementMode=0;actor.speed=0;actor.clock.remaining=0;}
+   }
+   if((actor.clock.index&255)===0xfe){actor.change(0);actor.drawMode=0;actor.offsetX|=0x8000;}
+  }
  }else if(action===60){ // $017268, depth adjustment then a held waiting pose
   if(!(actor.action&0x8000)){
    if(!initialized){

@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import {Match} from '../src/game.js';
 import {projectedPosition} from '../src/actors/projection.js';
 
-const files=process.env.TEAM_FIXTURE?[process.env.TEAM_FIXTURE]:['team-match-reference.json','getup-match-reference.json','standing-hold-match-reference.json','taunt-match-reference.json','catch39-match-reference.json','prone34-apron57-reference.json','launch46-match-reference.json','rescue-match-reference.json','side-hold-match-reference.json','result-match-reference.json'].map(name=>new URL(`./fixtures/${name}`,import.meta.url));
+const files=process.env.TEAM_FIXTURE?[process.env.TEAM_FIXTURE]:['team-match-reference.json','getup-match-reference.json','standing-hold-match-reference.json','taunt-match-reference.json','catch39-match-reference.json','prone34-apron57-reference.json','launch46-match-reference.json','rescue-match-reference.json','side-hold-match-reference.json','result-match-reference.json','prone-air-match-reference.json','boost-match-reference.json','long-match-reference.json'].map(name=>new URL(`./fixtures/${name}`,import.meta.url));
 const fixture={sequences:files.flatMap(file=>JSON.parse(readFileSync(file)).sequences)};
 const pointerKeys=['auxiliaryIndex','opponentIndex','partnerIndex','lastHitIndex','secondaryPinnerIndex','secondaryOpponentIndex','assistanceTargetIndex'];
 for(const sequence of fixture.sequences)test(`composed native tag match ${JSON.stringify(sequence.config)}`,()=>{
@@ -26,7 +26,7 @@ for(const sequence of fixture.sequences)test(`composed native tag match ${JSON.s
  if(sequence.refereeInitial)for(const [key,value]of Object.entries(sequence.refereeInitial)){if(key==='clock')Object.assign(match.referee.clock,value);else match.referee[key]=value;}
  let entropy=[],cursor=0;
  world.entropy=kind=>{const item=entropy[cursor++];assert.equal(kind,item?.kind,`tick ${match.ticks-1}: entropy kind`);return item.value;};
- const hash=createHash('sha256');let acceptedApronHit=false,acceptedLaunch=false,acceptedRescue=false,acceptedSide=false;
+ const hash=createHash('sha256');let acceptedApronHit=false,acceptedLaunch=false,acceptedRescue=false,acceptedSide=false,acceptedAir=false;
  for(let tick=0;tick<sequence.count;tick++){
   entropy=sequence.entropyFrames[tick];cursor=0;match.step(sequence.inputs[tick]);
   assert.equal(cursor,entropy.length,`tick ${tick}: entropy consumption`);
@@ -49,6 +49,7 @@ for(const sequence of fixture.sequences)test(`composed native tag match ${JSON.s
   }
   if(sequence.acceptedRescue){const [q,a,p]=actors,profile=sequence.config.profile;if(profile.startsWith('rescue-prone')&&p.attempts[0xe4]===((sequence.initial[2].attempts[0xe4]+1)&65535))acceptedRescue=true;else if(profile.startsWith('rescue-pin')&&(q.state&255)===7&&(p.state&255)===4&&p.reaction===15)acceptedRescue=true;else if(profile==='rescue-hold97'&&(p.state&255)===5&&(p.action&255)===119)acceptedRescue=true;}
   if(sequence.acceptedSide){const profile=sequence.config.profile,ai=['side28-cpu','side82-escape','side88-apron'].includes(profile),a=actors[ai?2:0],p=actors[ai?0:2];if(['side28','side28-cpu','side28-standing'].includes(profile)&&(a.action&0x8000)&&(p.state&255)===5&&(p.action&255)===82)acceptedSide=true;else if(profile==='side82-escape'&&(p.state&255)===5&&(p.action&255)===88)acceptedSide=true;}
+  if(sequence.acceptedAir){const cpu=sequence.config.profile==='air-cpu',a=actors[cpu?2:0],p=actors[cpu?0:2];if((a.action&255)===sequence.config.action&&(a.action&0x8000)&&p.health<sequence.initial[cpu?0:2].health)acceptedAir=true;}
   const ref=match.referee,row={actors,sounds:match.takeSoundCommands(),effects:world.effectRequests.map(r=>({actor:bodies.indexOf(r.actor),kind:r.kind})),
    world:Object.fromEntries(['message','messagePending','messageIndex','messageTimer','controlsRefresh','cornerOccupancy','switchTimer','activeA','activeB','paletteUpdates'].map(key=>[key,['activeA','activeB'].includes(key)?bodies.indexOf(world[key]):world[key]??0])),
    camera:Object.fromEntries(['x','y','backgroundX','backgroundY'].map(key=>[key,match.camera[key]])),
@@ -66,6 +67,7 @@ for(const sequence of fixture.sequences)test(`composed native tag match ${JSON.s
  if(sequence.acceptedRescue)assert.equal(acceptedRescue,true,'original rescue interruption');
  if(sequence.acceptedSide)assert.equal(acceptedSide,true,'original side hold/escape');
  if(Object.hasOwn(sequence,'outcome'))assert.equal(match.winner,sequence.outcome,'original finish-byte outcome');
+ if(sequence.acceptedAir)assert.equal(acceptedAir,true,'original accepted prone air hit');
  if(sequence.boundary)assert.deepEqual({tick:match.ticks-1,slot:match.handoff.slot,state:match.handoff.state,action:match.handoff.action,reaction:match.handoff.reaction},sequence.boundary);
  else assert.equal(match.handoff,undefined);
 });

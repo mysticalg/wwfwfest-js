@@ -166,6 +166,19 @@ export const tagTables = {
         76
       ]
     },
+    "113": {
+      "source": 102734,
+      "update": 102750,
+      "mode": 1,
+      "delays": [
+        12,
+        12
+      ],
+      "poses": [
+        85,
+        86
+      ]
+    },
     "119": {
       "source": 103304,
       "update": 103316,

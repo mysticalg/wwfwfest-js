@@ -5,6 +5,7 @@ import {addPositionWord} from './ring-collision.js';
 import {aimAtParticipant} from './pin.js';
 import {computerWeightedChoice} from './probability.js';
 import {selectRumbleAssistant,initializeMash,mashHeldInput} from './grapple-services.js';
+import {expireTagAssistance} from './tag-states.js';
 
 const u16=value=>value&65535;
 const side=actor=>actor.flags33&128?1:0;
@@ -72,7 +73,7 @@ export function beginTagAssistExit(actor){
  actor.flags56&=~64;victimPartner.flags32|=4;victimPartner.flags56|=64;victimPartner.opponent=holder;
 }
 
-export const isTagAction=action=>[55,57,76,77,78,79,89,97,102,119].includes(action&255);
+export const isTagAction=action=>[55,57,76,77,78,79,89,97,102,113,119].includes(action&255);
 export const isCornerAttack=action=>[13,27].includes(action&255);
 
 // $01e986: the special normal-tag hold is selected by the downed opponent's
@@ -122,7 +123,20 @@ function finishProneVictimAssistance(actor){ // $0205cc
 export function stepTagAction(actor,peer,initialized){
  const action=actor.action&255,at=index=>actor.clock.index===index&&!actor.clock.remaining;
  let descriptor=tagTables.actions[action];
- if(action===119){ // $019394, interrupt/re-enter the near-prone tag hold
+ if(action===113){ // $01915e, apron boost loops before resuming apron movement
+  if(!initialized){actor.movementMode=0;actor.holdFlags=6;actor.clock.index=0;}
+  else{
+   if(expireTagAssistance(actor))return descriptor;
+   if((actor.clock.index&255)===0xfe){
+    actor.clock.flags&=~0x8000;actor.clock.index=0;actor.clock.remaining=8;
+    const prior=actor.holdFlags;actor.holdFlags=u16(prior-1);
+    if(prior===0){actor.change(1);actor.walkMode=1;actor.flagsC6=(actor.flagsC6||0)&~64;actor.flags33|=32;}
+   }
+  }
+  if(!actor.clock.index&&!actor.clock.remaining)actor.world.rope[side(actor)?2:0]=4;
+  const next=((actor.clock.index&255)+Number(!actor.clock.remaining))&255;actor.world.actorScratch1=next;
+  (actor.world.effectRequests??=[]).push({actor,kind:next===0?13:14});
+ }else if(action===119){ // $019394, interrupt/re-enter the near-prone tag hold
   if(!peer)throw new Error('Tag-hold interruption requires its paired holder');
   if(!initialized)peer.change(255);
   else if((actor.clock.index&255)===0xfe){actor.change(5,0x8061);peer.change(5,0x8037);}

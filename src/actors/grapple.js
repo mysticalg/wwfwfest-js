@@ -14,6 +14,7 @@ import {isRunningAction,stepRunningAction,isRunningVictim,stepRunningVictim} fro
 import {isStandingHold,stepStandingHold} from './standing-holds.js';
 import {isRescueAction,stepRescueAction} from './rescue.js';
 import {isResultAction,stepResultAction} from './result.js';
+import {isProneAirAction,stepProneAirAction} from './prone-air.js';
 
 const u16 = value => value & 65535;
 const stateWord=actor=>typeof actor.pendingState==='boolean'?actor.state|(actor.pendingState?0:0x8000):actor.state;
@@ -168,7 +169,7 @@ export class GrappleActor {
   get pendingTransition() {
     return ![11,12,255].includes(this.state)
       && !(this.state===4&&(this.reaction===1||isRunningVictim(this.reaction)))
-      && !(this.state===5&&([21,22,23,41,80,123,124].includes(this.action&255)||isResultAction(this.action)||isRescueAction(this.action)||isStandingHold(this.action)||isStandingAction(this.action)||isGroundActorAction(this.action)||isRunningAction(this.action)||isGrappleThrow(this.action)||isGrappleCounter(this.action)||isGrappleSubmission(this.action)||isPinAction(this.action)||isTagAction(this.action)||isCornerAttack(this.action)));
+      && !(this.state===5&&([21,22,23,41,80,123,124].includes(this.action&255)||isProneAirAction(this.action)||isResultAction(this.action)||isRescueAction(this.action)||isStandingHold(this.action)||isStandingAction(this.action)||isGroundActorAction(this.action)||isRunningAction(this.action)||isGrappleThrow(this.action)||isGrappleCounter(this.action)||isGrappleSubmission(this.action)||isPinAction(this.action)||isTagAction(this.action)||isCornerAttack(this.action)));
   }
 
   // The byte tested at $b7 is the low half of the input-block word at $b6.
@@ -344,6 +345,7 @@ export class GrappleActor {
       const action=this.action&255;
       descriptor=data[({21:'hold',22:'carry',23:'whip',41:'clinchStrike',80:'break',123:'held',124:'escape'})[action]];
       if(isStandingAction(action))descriptor=stepStandingAction(this,initialized);
+      else if(isProneAirAction(action))descriptor=stepProneAirAction(this,initialized);
       else if(isResultAction(action))descriptor=stepResultAction(this,initialized);
       else if(isStandingHold(action))descriptor=stepStandingHold(this,peer,initialized);
       else if(isRescueAction(action))descriptor=stepRescueAction(this,initialized);

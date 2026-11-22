@@ -55,7 +55,7 @@ export class Running {
     }
   }
 
-  step({mask = 0, stopRequested = false, forcedStop = false, sampleInput = true} = {}) {
+  step({mask = 0, stopRequested = false, forcedStop = false, sampleInput = true, poseCleanup = true} = {}) {
     this.sounds = [];
     this.ropeEvents = [];
     if (this.done) return this;
@@ -133,7 +133,7 @@ export class Running {
     this.clock.step(descriptor, this.facing);
     this.projection = projectionSnapshot(this);
     stepMovement(this);
-    if (this.clock.pose !== this.lastPose) {
+    if (poseCleanup && this.clock.pose !== this.lastPose) {
       this.contact = 0;
       this.hits.clear();
       this.lastPose = this.clock.pose;

@@ -112,8 +112,10 @@ export class Referee {
       if(!(this.focus.flags35&1)){clearCountTiles(world);this.change(5);}
     }else if(this.state===2||this.state===7){
       if(this.focus.forced){this.change(5);return;}
-      if(!this.scanHolds()&&((this.focus.flags32&1)||(this.focus.state===1&&(this.focus.walkMode&255)===4))
-        &&this.focus!==world.activeB){this.focus=world.activeB;this.change(2);}
+      if(!this.scanHolds()&&((this.focus.flags32&1)||(this.focus.state===1&&(this.focus.walkMode&255)===4))){
+        if(this.focus===world.activeB)this.change(5);
+        else{this.focus=world.activeB;this.change(2);}
+      }
     }else if(this.state===4||this.state===8){
       if(this.focus.forced||!(this.focus.flags35&2)){this.change(5);return;}
       for(const actor of world.actors.slice(0,9))if(actor&&(actor.flags35&1)){this.focus=actor;this.change(1);return;}

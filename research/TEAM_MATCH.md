@@ -169,7 +169,7 @@ landing, damage, pin and announcer services. The short mode-zero victim waits
 cover catches, misses, running targets and both physical contact priorities.
 The positive catch scenarios require an actual accepted linked capture. The
 all-type dispatch checks seed the handler directly: they do not establish that
-each character can select the move. Its original frames 182–188 are populated
+each character can select the move. Its original frames 182-188 are populated
 for types 1, 5 and 9; the browser check uses Ultimate Warrior.
 
 `actors/rescue.js` translates action 10's prone hit and interruptions of
@@ -274,3 +274,12 @@ composed cohorts. `trace_side_hold.mjs` and `trace_result.mjs` generate handler
 cohorts; `SIDE_FILTER`/`RESULT_FILTER` accept profile/mode/type filters and
 `SIDE_FIXTURE`/`RESULT_FIXTURE` select comparison files. `SIDE_SERVICE=1` selects
 `$020264` in `trace_grapple_services.mjs`. External CPU research remains offline.
+
+
+## Airborne and rope continuations (0.1.30)
+
+[Airborne and rope evidence](PRONE_AIR.md) records seven further handlers,
+longer comparisons through four original match outcomes, and current limits.
+The combined composed reference now covers **1,128 sequences / 458,524 updates**;
+the separate tag reference covers **192 / 98,535**. Original clock/scene
+bookkeeping, remaining moves and full-game fidelity remain unfinished.

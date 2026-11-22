@@ -62,8 +62,11 @@ export class LinkedActor extends GrappleActor {
       const previousState=this.pendingState?this.clock.flags:this.previousState;
       const body=new Running({...this,clock:this.clock,pose:this.clock.pose,bounceCount:this.holdFlags});
       body.projectionCamera=this.projectionCamera;
+      body.lastPose=this.lastPose;
       body.pendingState=this.pendingState;body.inputInitialized=Boolean(this.inputInitialized);body.collision=this.collision;
-      body.step({sampleInput:false,forcedStop:Boolean(this.forced&0x8000)});Object.assign(this,body);this.holdFlags=body.bounceCount;
+      // $0232b6 follows the entire actor loop. A later unsupported actor must
+      // leave earlier running records before that shared pose/contact cleanup.
+      body.step({sampleInput:false,forcedStop:Boolean(this.forced&0x8000),poseCleanup:false});Object.assign(this,body);this.holdFlags=body.bounceCount;
       this.previousState=previousState;
       for(const event of body.ropeEvents){
         const index=event.side==='left'?0:2;
