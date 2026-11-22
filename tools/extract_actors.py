@@ -42,7 +42,7 @@ def main():
         'runningMoveTables': [list(program[address:address + 9]) for address in
                               struct.unpack_from('>12I', program, 0xd73e)],
         'runningAttacks': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854 + action * 4)[0])
-                           for action in (1, 4, 5, 32, 42, 45, 64, 65)},
+                           for action in (1, 4, 5, 32, 39, 42, 45, 64, 65)},
         'runningPairedAnimations': {'runningCapture': descriptor(0x12168), 'airborneCapture': descriptor(0x11e32), 'cornerCapture': descriptor(0x11e4a)},
         'runningVictims': {str(reaction): descriptor(struct.unpack_from('>I', program, 0x1a214+reaction*4)[0]) for reaction in (16,18,20,29)},
         'absentAuxiliaryAimTarget': {'xFixed': struct.unpack_from('>i', program, 0x7f006)[0],
@@ -67,7 +67,7 @@ def main():
         'grappleCounters': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854 + action * 4)[0])
                             for action in (6, *range(125, 136))},
         'grappleSubmissions': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854 + action * 4)[0])
-                               for action in (26,37,54,59,137,93,94,95,96,98,99,110,111,138,141)},
+                               for action in (26,34,37,54,59,137,92,93,94,95,96,98,99,110,111,138,141)},
         'grappleSubmissionVariants': {'pursuitWait': descriptor(0x1100a)},
         'pinAnimations': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854 + action * 4)[0])
                           for action in (72,74,75,86)},
@@ -82,7 +82,7 @@ def main():
             ('largeTarget',0x1789c),('wallSlam',0x1421e),('alternateLift',0x15ebe))},
         'automaticPinThresholds': words(0x10308, 12),
         'grappleVictims': {str(reaction): descriptor(struct.unpack_from('>I', program, 0x1a214 + reaction * 4)[0])
-                           for reaction in (0, 10, 14, 15, 19, 21, 22, 28, 32, 33, 34, 35, 36, 37, 38, 41)},
+                           for reaction in (0, 10, 14, 15, 19, 21, 22, 28, 32, 33, 34, 35, 36, 37, 38, 39, 41)},
         'grappleAnimations': {name: descriptor(address) for name, address in {
             'contested': 0x11690, 'entry': 0x116a8, 'control': 0x11722,
             'hidden': 0x11800, 'hold': 0x13f20, 'carry': 0x13fca,

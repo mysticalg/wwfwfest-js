@@ -370,6 +370,21 @@ export const actorTables = {
         174
       ]
     },
+    "39": {
+      "source": 87496,
+      "update": 87516,
+      "mode": 1,
+      "delays": [
+        12,
+        12,
+        32
+      ],
+      "poses": [
+        189,
+        190,
+        0
+      ]
+    },
     "42": {
       "source": 88148,
       "update": 88172,
@@ -2305,6 +2320,27 @@ export const actorTables = {
         328
       ]
     },
+    "34": {
+      "source": 85420,
+      "update": 85452,
+      "mode": 1,
+      "delays": [
+        16,
+        16,
+        10,
+        10,
+        8,
+        32
+      ],
+      "poses": [
+        395,
+        206,
+        207,
+        208,
+        209,
+        210
+      ]
+    },
     "37": {
       "source": 86870,
       "update": 86894,
@@ -2375,6 +2411,21 @@ export const actorTables = {
         453,
         454,
         455
+      ]
+    },
+    "92": {
+      "source": 99958,
+      "update": 99978,
+      "mode": 1,
+      "delays": [
+        16,
+        8,
+        8
+      ],
+      "poses": [
+        376,
+        377,
+        378
       ]
     },
     "93": {
@@ -3183,6 +3234,13 @@ export const actorTables = {
         275,
         31
       ]
+    },
+    "39": {
+      "source": 111166,
+      "update": 111172,
+      "mode": 0,
+      "delays": [],
+      "poses": []
     },
     "41": {
       "source": 109884,

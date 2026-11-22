@@ -72,7 +72,7 @@ export function beginTagAssistExit(actor){
  actor.flags56&=~64;victimPartner.flags32|=4;victimPartner.flags56|=64;victimPartner.opponent=holder;
 }
 
-export const isTagAction=action=>[55,76,77,78,79,89,97,102].includes(action&255);
+export const isTagAction=action=>[55,57,76,77,78,79,89,97,102].includes(action&255);
 export const isCornerAttack=action=>[13,27].includes(action&255);
 
 // $01e986: the special normal-tag hold is selected by the downed opponent's
@@ -122,7 +122,14 @@ function finishProneVictimAssistance(actor){ // $0205cc
 export function stepTagAction(actor,peer,initialized){
  const action=actor.action&255,at=index=>actor.clock.index===index&&!actor.clock.remaining;
  let descriptor=tagTables.actions[action];
- if(action===76){ // $0179ca
+ if(action===57){ // $016db0, apron strike and return to apron movement
+  if(!initialized){actor.movementMode=0;return descriptor;}
+  actor.contact=actor.clock.index===2?25:0;
+  if((actor.clock.index&255)===0xfe){actor.change(1);actor.walkMode=1;actor.unlinkMarked=true;actor.clock.pose=actor.facing;return descriptor;}
+  const next=((actor.clock.index&255)+Number(!actor.clock.remaining))&255;
+  actor.world.actorScratch1=next;
+  (actor.world.effectRequests??=[]).push({actor,kind:next===0||next===3?21:next===1?22:23});
+ }else if(action===76){ // $0179ca
   const p=actor.partner;
   if(!initialized){
    actor.movementMode=0;position(actor,...tagTables.tagPositions[side(actor)],320);

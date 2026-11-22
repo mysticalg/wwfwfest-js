@@ -84,7 +84,7 @@ program image and detailed research files are excluded from browser delivery.
 
 Action 8 now raises a front-prone opponent into the original standing clinch,
 including interrupted grabs, paired positions, camera priority and boosted CPU
-arbitration. Another **60 sequences / 19,656 updates** cover all twelve player
+arbitration. Another **60 sequences / 21,374 updates** cover all twelve player
 types, both facings, several ring positions, lost links, back-prone targets and
 CPU/human boost variations. They retain explicit later-action boundaries or a
 400-update cap.
@@ -92,7 +92,7 @@ CPU/human boost variations. They retain explicit later-action boundaries or a
 `actors/standing-holds.js` adds action 29's staggered hold, victim 83's normal
 and two impact loops, holder impact actions 115/116, elbow escape 87 and holder
 reaction 118. It preserves paired links, mash/AI escape clocks, combo timing,
-partner assistance and controller requests. Another **72 sequences / 18,724
+partner assistance and controller requests. Another **72 sequences / 27,174
 updates** compare both holder sides, all twelve type combinations, interrupted
 links, punch/kick reactions and repeated human escape input. The source trace
 executes the original whole four-record core around those seeded situations;
@@ -111,9 +111,9 @@ and one-time sound request. Another **36 sequences / 14,400 updates** cover
 all twelve types in human, CPU and already-started-loop contexts; all reach
 the 400-update cap.
 
-The combined four-record comparison now covers **180 sequences / 57,580
+The combined four-record comparison now covers **336 sequences / 121,336
 updates**. An uncontrolled native neutral run with the default RNG now reaches
-1,257 updates before untranslated action 39, compared with the earlier
+2,031 updates before untranslated action 46, compared with the earlier
 standing-hold boundary around 388. That diagnostic is progress evidence, not a
 source-matched complete match. Outside/Rumble behavior, action 28's related hold,
 rescue actions, other remaining moves and complete rounds are unfinished.
@@ -124,3 +124,40 @@ Use the matching output filename under `tests/fixtures` and retain the stated
 caps/boundaries. `DEBUG_HOLD=1` logs the original live D1 history for the effect
 request gate; `DEBUG_SOUND=1` logs sound callers. Debug flags are cached outside
 the instruction loop so disabled diagnostics do not slow offline tracing.
+
+## Catch, prone submission and apron strike (0.1.27)
+
+Action 39 now follows its accepted-contact pointer into reaction 20, hiding
+the catcher while the paired victim artwork runs, then returning to idle.
+**48 sequences / 19,200 updates** cover all twelve acting types, both teams,
+misses, accepted catches and running targets. All reach the 400-update cap.
+This adds a shared catch to the eight primary running selections.
+
+Action 34 now captures the front-prone victim and loops the original submission
+with damage, protection, assistance and completion requests. Escape 92 and
+its short impact reaction 39 are also translated. Apron strike 57 sets its
+original contact window and visual requests, then resumes apron movement.
+**108 sequences / 34,388 updates** cover both sides, interrupted grabs, human
+escape input, zero-health completion requests, and apron misses/accepted hits.
+The 24 accepted-hit scenarios explicitly require damage through the bench
+wrestler's last-hit pointer. One controlled side uses an unassigned passive
+human role to keep its target stationary; this is a seeded comparison, not
+proof of an ordinary match with that role configuration.
+
+Twelve zero-health cases stop at the first original submission-result request.
+They establish the request and actor writes, not the subsequent victory scene
+or next round. Other cases stop at a declared remaining action or 400 updates.
+The older get-up and standing-hold references now continue past newly recovered
+34/57 boundaries; their counts above reflect the extended prefixes.
+
+The tag component comparisons also extend through these newly supported moves:
+48 extended corner cases now cover 31,130 updates, and 96 manual-tag cases cover
+43,185 updates. Together with the earlier 48 corner prefixes, the tag component
+suite has 192 cases / 82,547 updates. Its documented reduced service loop and
+reverse-order stress cases remain distinct from the full four-record core.
+
+A local simulated-controller check ran into the CPU's catch, selected the prone
+submission with simultaneous punch/kick, and mashed free through escape 92.
+It observed original impact/damage requests, preserved linked artwork and no
+page errors, with native audio enabled and CPU AI disabled for controlled
+setups. Physical-pad and listening acceptance remain unverified.

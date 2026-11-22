@@ -5,7 +5,7 @@ import {createHash} from 'node:crypto';
 import {Match} from '../src/game.js';
 import {projectedPosition} from '../src/actors/projection.js';
 
-const files=process.env.TEAM_FIXTURE?[process.env.TEAM_FIXTURE]:['team-match-reference.json','getup-match-reference.json','standing-hold-match-reference.json','taunt-match-reference.json'].map(name=>new URL(`./fixtures/${name}`,import.meta.url));
+const files=process.env.TEAM_FIXTURE?[process.env.TEAM_FIXTURE]:['team-match-reference.json','getup-match-reference.json','standing-hold-match-reference.json','taunt-match-reference.json','catch39-match-reference.json','prone34-apron57-reference.json'].map(name=>new URL(`./fixtures/${name}`,import.meta.url));
 const fixture={sequences:files.flatMap(file=>JSON.parse(readFileSync(file)).sequences)};
 const pointerKeys=['auxiliaryIndex','opponentIndex','partnerIndex','lastHitIndex','secondaryPinnerIndex','secondaryOpponentIndex'];
 for(const sequence of fixture.sequences)test(`composed native tag match ${JSON.stringify(sequence.config)}`,()=>{
@@ -22,7 +22,7 @@ for(const sequence of fixture.sequences)test(`composed native tag match ${JSON.s
  }
  let entropy=[],cursor=0;
  world.entropy=kind=>{const item=entropy[cursor++];assert.equal(kind,item?.kind,`tick ${match.ticks-1}: entropy kind`);return item.value;};
- const hash=createHash('sha256');
+ const hash=createHash('sha256');let acceptedApronHit=false;
  for(let tick=0;tick<sequence.count;tick++){
   entropy=sequence.entropyFrames[tick];cursor=0;match.step(sequence.inputs[tick]);
   assert.equal(cursor,entropy.length,`tick ${tick}: entropy consumption`);
@@ -34,6 +34,10 @@ for(const sequence of fixture.sequences)test(`composed native tag match ${JSON.s
    else if(key==='projection')value=body.projection?Object.values(projectedPosition(body.projection,match.camera)):[0,232];
    return [key,value];
   })));
+  if(sequence.acceptedApronHit){
+   const cpu=sequence.config.profile.includes('cpu'),target=cpu?0:2,attacker=cpu?3:1;
+   if(actors[target].health<sequence.initial[target].health&&actors[target].lastHitIndex===attacker)acceptedApronHit=true;
+  }
   const ref=match.referee,row={actors,sounds:match.takeSoundCommands(),effects:world.effectRequests.map(r=>({actor:bodies.indexOf(r.actor),kind:r.kind})),
    world:Object.fromEntries(['message','messagePending','messageIndex','messageTimer','controlsRefresh','cornerOccupancy','switchTimer','activeA','activeB','paletteUpdates'].map(key=>[key,['activeA','activeB'].includes(key)?bodies.indexOf(world[key]):world[key]??0])),
    camera:Object.fromEntries(['x','y','backgroundX','backgroundY'].map(key=>[key,match.camera[key]])),
@@ -45,6 +49,8 @@ for(const sequence of fixture.sequences)test(`composed native tag match ${JSON.s
   hash.update(JSON.stringify(row)+'\n');
  }
  assert.equal(hash.digest('hex'),sequence.sha256);
+ if(sequence.resultRequest)assert.equal(world.matchResult&0x80ff,0x8009,'declared submission result request');
+ if(sequence.acceptedApronHit)assert.equal(acceptedApronHit,true,'original accepted apron hit');
  if(sequence.boundary)assert.deepEqual({tick:match.ticks-1,slot:match.handoff.slot,state:match.handoff.state,action:match.handoff.action,reaction:match.handoff.reaction},sequence.boundary);
  else assert.equal(match.handoff,undefined);
 });

@@ -57,8 +57,8 @@ function snapshot(){
 }
 
 const sequences=[],filter=process.env.TEAM_FILTER?JSON.parse(process.env.TEAM_FILTER):{};
-const profiles=process.env.TEAM_TAUNT?['taunt-human','taunt-cpu','taunt-loop']:process.env.TEAM_HOLD?['hold29','hold29-cpu','hold29-broken','hold29-escape','held83-punch','held83-kick']:process.env.TEAM_GETUP?['getup','getup-broken','getup-back','getup-cpu-boost','getup-human-boost']:['neutral','advance','run','tag'];
-for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.env.TEAM_HOLD||process.env.TEAM_TAUNT?Array.from({length:12},(_,i)=>i):[0,7,10]){
+const profiles=process.env.TEAM_PRONE?['prone34','prone34-cpu','prone34-broken','prone34-escape','prone34-zero','apron57','apron57-cpu','apron57-hit','apron57-cpu-hit']:process.env.TEAM_CATCH?['catch39-hit','catch39-miss','catch39-run','catch39-cpu']:process.env.TEAM_TAUNT?['taunt-human','taunt-cpu','taunt-loop']:process.env.TEAM_HOLD?['hold29','hold29-cpu','hold29-broken','hold29-escape','held83-punch','held83-kick']:process.env.TEAM_GETUP?['getup','getup-broken','getup-back','getup-cpu-boost','getup-human-boost']:['neutral','advance','run','tag'];
+for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.env.TEAM_HOLD||process.env.TEAM_TAUNT||process.env.TEAM_CATCH||process.env.TEAM_PRONE?Array.from({length:12},(_,i)=>i):[0,7,10]){
  const config={profile,type};if(!Object.entries(filter).every(([k,v])=>config[k]===v))continue;
  memory.fill(0,0x1c0000,0x1c4000);memory.fill(0,0x180000,0x181000);memory.fill(0,0xc0000,0xc4000);cpu.d.fill(0);cpu.a.fill(0);
  put(0x1c007c,0x8000);put(0x1c0066,16);put(0x1c16a0,0x30);putLong(0x1c005c,0);
@@ -92,6 +92,36 @@ for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.
   a.type=a.flags57=type;a.change(5,profile==='taunt-loop'?0x8079:121);
   a.holdFlags=profile==='taunt-loop'?2:0;a.facing=type&1?0:0x8000;a.flags34|=16;
  }
+ if(profile.startsWith('catch39')){
+  let a=seed.fighters[0].original,p=seed.fighters[1].original;
+  if(profile==='catch39-cpu')[a,p]=[p,a];
+  a.type=a.flags57=type;a.change(5,39);a.auxiliary=null;
+  const face=type&1?0:0x8000;a.facing=face;p.facing=face^0x8000;
+  a.xFixed=640*65536+0x1234;p.xFixed=(640+(face?1:-1)*(profile==='catch39-miss'?180:48))*65536+0x4321;
+  a.yFixed=p.yFixed=337*65536;a.zFixed=p.zFixed=320*65536;
+  if(profile==='catch39-run'){p.change(2);p.direction=face?192:64;p.holdFlags=0;}
+ }
+ if(profile.startsWith('prone34')){
+  let a=seed.fighters[0].original,p=seed.fighters[1].original;
+  if(profile==='prone34-cpu'||profile==='prone34-escape')[a,p]=[p,a];
+  a.type=a.flags57=type;a.change(5,34);a.auxiliary=p;p.auxiliary=profile==='prone34-broken'?null:a;
+  a.facing=p.facing=type&1?0:0x8000;a.xFixed=p.xFixed=(type%3===0?520:type%3===1?640:760)*65536;
+  a.yFixed=p.yFixed=337*65536;p.change(4);p.reaction=8;p.recoveryTimer=600;
+  if(profile==='prone34-escape'||profile==='prone34-zero'){
+   a.action|=0x8000;a.pendingState=false;a.clock.flags=0x8005;a.clock.index=3;a.clock.remaining=5;
+   a.clock.pose=(word(0x14dac+8+word(0x14dac+6)*2+3*2)^a.facing)&65535;
+   a.flags35|=2;p.flags35|=4;a.flags33|=64;p.flags33|=64;p.change(5,95);
+   if(profile==='prone34-zero'){p.health=0;p.severity=2;}
+  }
+ }
+ if(profile.startsWith('apron57')){
+  const cpu=profile.includes('cpu'),hit=profile.endsWith('-hit'),a=seed.nativeActors.pool[cpu?5:1],p=seed.nativeActors.pool[cpu?0:4];
+  a.type=a.flags57=type;a.change(5,57);a.facing=cpu?0:0x8000;
+  a.xFixed=(cpu?828:438)*65536;a.yFixed=p.yFixed=343*65536;p.xFixed=(cpu?796:470)*65536;
+  p.facing=a.facing^0x8000;
+  if(hit){p.change(0);if(!cpu)p.flags56=0;}
+  else p.change(5,121);
+ }
  for(const[slot,base]of pool.entries()){putLong(base+0x86,pool[slot^1]||pool[8]);memory[base+0x56]=slot<4?64:128;memory[base+0x32]=1;}
  for(const[i,base]of bases.entries()){
   const body=seed.nativeActors.pool[slots[i]];put(base,0x8000);
@@ -102,7 +132,7 @@ for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.
   for(const[key,offset]of [['flags',0x1c],['remaining',0x22],['index',0x24],['pose',4]])put(base+offset,body.clock[key]);
  }
  putLong(0x1c1684,bases[0]);putLong(0x1c1688,bases[2]);call(0xf958,ref);
- const initial=actors(),entropyFrames=[],inputs=[],rows=[],hash=createHash('sha256');let previousButtons=0,tagPressed=false,count=0,boundary=null;
+ const initial=actors(),entropyFrames=[],inputs=[],rows=[],hash=createHash('sha256');let previousButtons=0,tagPressed=false,count=0,boundary=null,resultRequest=false,acceptedApronHit=false;
  for(let tick=0;tick<400;tick++){
   sounds.length=entropy.length=effects.length=0;putLong(0x1c0080,tick);
   const input={};
@@ -113,6 +143,7 @@ for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.
    if(!tagPressed&&word(bases[1]+0xae)===0x8002){input.strike=true;tagPressed=true;}
   }
   if(profile==='hold29-escape')input.strike=tick>50&&(tick%4===0);
+  if(profile==='prone34-escape')input.strike=tick>40&&(tick%4===0);
   const buttons=(input.strike?1:0)|(input.heavy?2:0),pressed=(buttons&~previousButtons)|((input.run&&!inputs.at(-1)?.run)?3:0);previousButtons=buttons;
   const mask=(input.horizontal>0?1:input.horizontal<0?2:0)|(input.vertical<0?4:input.vertical>0?8:0);
   for(const base of bases){memory[base+0xa3]=long(base+0x8a)===0x140020?pressed:0;put(base+0xa8,long(base+0x8a)===0x140020?mask:0);}
@@ -129,9 +160,16 @@ for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.
   }
   if(!boundary){call(0x232b6);if(!(tick&1)){call(0x23288);call(0x2407e);}call(0x2846);}
   const row=snapshot();hash.update(JSON.stringify(row)+'\n');if(process.env.DETAIL)rows.push(row);
-  inputs.push(input);entropyFrames.push([...entropy]);count++;if(boundary)break;
+  if(profile.startsWith('apron57')&&profile.endsWith('-hit')){
+   const cpu=profile.includes('cpu'),target=cpu?0:2,attacker=cpu?3:1;
+   if(row.actors[target].health<initial[target].health&&row.actors[target].lastHitIndex===attacker)acceptedApronHit=true;
+  }
+  inputs.push(input);entropyFrames.push([...entropy]);count++;
+  resultRequest=profile==='prone34-zero'&&Boolean(word(ref+0x20)&0x8000)&&(word(ref+0x20)&255)===9;
+  if(boundary||resultRequest)break;
  }
- sequences.push({config,world,initial,inputs,entropyFrames,count,boundary,sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
+ if(profile.startsWith('apron57')&&profile.endsWith('-hit'))assert(acceptedApronHit,'Declared accepted apron strike must hit its target');
+ sequences.push({config,world,initial,inputs,entropyFrames,count,boundary,...(resultRequest?{resultRequest:true}:{}),...(acceptedApronHit?{acceptedApronHit:true}:{}),sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
 }
-writeFileSync(output,JSON.stringify({source:'Composed normal tag playtest from explicit synthetic four-record starting states: original camera, targets, arbitration, tag timers, announcer, human input, AI, referee, actor/collision/projection/physics, alternating contacts/damage and original sprite-queue cleanup; omit title/round/scene/bookkeeping, VRAM stream and effect-object updates; stop before unsupported actor or 400-update cap. Original random observations replayed at native calls.',sequences},null,2)+'\n');
+writeFileSync(output,JSON.stringify({source:'Composed normal tag playtest from explicit synthetic four-record starting states: original camera, targets, arbitration, tag timers, announcer, human input, AI, referee, actor/collision/projection/physics, alternating contacts/damage and original sprite-queue cleanup; omit title/round/scene/bookkeeping, VRAM stream and effect-object updates; stop before unsupported actor, at the 400-update cap, or at the first submission result request in the declared zero-health scenario. Original random observations replayed at native calls.',sequences},null,2)+'\n');
 console.log(JSON.stringify({sequences:sequences.length,updates:sequences.reduce((n,s)=>n+s.count,0),boundaries:sequences.map(s=>s.boundary)}));

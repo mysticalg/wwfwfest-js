@@ -40,7 +40,19 @@ export function stepRunningVictim(a,initialized){
 export function stepRunningAction(a,initialized){
  const action=a.action&255,at=index=>a.clock.index===index&&!a.clock.remaining;
  let descriptor=actorTables.runningAttacks[action],peer=a.auxiliary;
- if(action===32||action===45){ // $015c56, including the entry update
+ if(action===39){ // $0155dc, catch through accepted-contact pointer $92
+  if(!initialized){a.movementMode=0;a.lastHit=null;}
+  else{
+   if(!(a.action&0x8000)){
+    a.contact=16;
+    if(a.lastHit?.state===4&&(a.lastHit.reaction&255)===20){
+     a.action|=0x8000;low(a.clock,'index',1);a.clock.pose=0xffff;a.clock.remaining=12;return descriptor;
+    }
+   }
+   const miss=(a.clock.index&255)===1&&!a.clock.remaining&&!(a.action&0x8000);
+   if(miss||(a.clock.index&255)===0xfe){a.change(0);a.unlinkMarked=true;}
+  }
+ }else if(action===32||action===45){ // $015c56, including the entry update
   if(collisionResponse(a))a.change(6);
   else{
    a.contact=11;a.speed=u16(a.speed-2);

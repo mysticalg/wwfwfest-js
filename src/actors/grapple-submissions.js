@@ -29,6 +29,41 @@ export function stepGrappleSubmission(actor,peer,initialized) {
   }else{
    clearPartnerMotion(actor);if(action!==94||actor.health)mashHeldInput(actor,actor.pressedButtons||0);
   }
+ }else if(action===92){ // $01868a, escape from the front-prone submission
+  if(!initialized){peer.change(255);actor.flags35&=~4;peer.flags35&=~2;}
+  else{
+   if((actor.clock.index&255)===1&&!actor.clock.remaining){
+    peer.change(4);peer.reaction=39;peer.pendingDamage=3;actor.placePeer(peer,16,-1);
+    actor.flags33&=~64;peer.flags33&=~64;
+   }
+   if((actor.clock.index&255)===0xfe){actor.change(7);finishAssistance(actor);actor.unlinkMarked=true;actor.clock.pose=104^(actor.facing&0xff00);}
+  }
+ }else if(action===34){ // $014dcc, front-prone hold and repeated submission loop
+  if(!initialized){actor.movementMode=0;peer.copyPeerPosition(actor);actor.facing=(actor.facing&255)|(peer.facing&0xff00);}
+  else if(!(actor.clock.index&255)&&!actor.clock.remaining){
+   if(peer.state===4&&(peer.reaction&255)===8&&peer.auxiliary===actor){
+    actor.flags33|=64;peer.flags33|=64;actor.flags35|=2;peer.flags35|=4;peer.change(255);actor.announce(10);
+   }else{actor.change(0);actor.clock.pose=actor.facing;actor.unlinkMarked=true;actor.clock.remaining=1;}
+  }else{
+   actor.contact=actor.action&0x8000?0x8014:0;
+   if((actor.clock.index&255)===0xfe){
+    let releaseHold=Boolean(actor.forced&0x8000);
+    if(!releaseHold){
+     actor.clock.index=3;actor.clock.remaining=0;peer.pendingDamage=3;
+     if(submissionComplete(actor)){
+      releaseHold=true;
+      if(actor.world.mode&1){peer.announce(41);peer.flags32|=16;actor.unlinkMarked=true;actor.clock.pose=104^(actor.facing&0xff00);}
+     }else{
+      const prior=actor.action&0x8000;actor.action|=0x8000;
+      if(!prior){peer.change(5,95);beginAttackAssistance(actor);actor.sounds.push(50);}
+     }
+    }
+    if(releaseHold){
+     actor.change(7);peer.change(4);peer.reaction&=255;
+     actor.flags35&=~2;peer.flags35&=~4;actor.flags33&=~64;peer.flags33&=~64;
+    }
+   }
+  }
  }else if(action===26){ // $014468
   let releaseHold=false;
   if(actor.action&0x8000){

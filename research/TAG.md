@@ -79,7 +79,7 @@ analysis CPU are excluded from browser delivery.
 
 ## Manual tag and default four-person integration
 
-A further **96 original-program sequences / 42,081 updates** exercise manual
+A further **96 original-program sequences / 43,185 updates** exercise manual
 76 tags and the nearby prone-opponent variation on both sides, all twelve
 incoming types and both actor orders. They stop at 650 updates or an explicit
 untranslated actor boundary. The total tag suite now has 192 sequences,

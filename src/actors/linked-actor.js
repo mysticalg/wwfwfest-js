@@ -7,7 +7,7 @@ import {actorTables} from '../data/actor-tables.js';
 import {pinEscapeInput} from './pin.js';
 import {stepTagWalk,stepCornerState} from './tag-states.js';
 
-const knockdowns=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,19,21,22,23,24,25,27,28,32,33,34,35,36,37,38,41];
+const knockdowns=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,19,21,22,23,24,25,27,28,32,33,34,35,36,37,38,39,41];
 
 // Stable linked identities across the translated grapple/knockdown/idle states.
 // Unsupported move, counter and outside-state handoffs remain observable.

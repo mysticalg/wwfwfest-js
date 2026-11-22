@@ -1,7 +1,7 @@
 import {actorTables} from '../data/actor-tables.js';
 import {addPositionWord} from './ring-collision.js';
 const u16=value=>value&65535;
-export const isGrappleVictim=reaction=>[0,10,14,15,19,21,22,28,32,33,34,35,36,37,38,41].includes(reaction&255);
+export const isGrappleVictim=reaction=>[0,10,14,15,19,21,22,28,32,33,34,35,36,37,38,39,41].includes(reaction&255);
 
 function depthVelocity(actor,amount=48) {
   const y=actor.yFixed>>>16;
@@ -30,6 +30,12 @@ function land(actor,{whole=false,shift=0}={}) {
 // handler writes the whole word. State-5 outside handoffs remain explicit.
 export function stepGrappleVictim(actor,initialized) {
   const reaction=actor.reaction&255,data=actorTables.grappleVictims;
+  if(reaction===39){ // $01b244, eight-call escape impact before falling
+    if(!initialized){actor.clock.flags|=0x8000;actor.clock.pose=0x17d|actor.facing;actor.clock.remaining=8;}
+    actor.clock.remaining=u16(actor.clock.remaining-1);
+    if(!actor.clock.remaining){actor.change(4);actor.reaction=2;actor.facing^=0x8000;}
+    return data[39];
+  }
   let descriptor=data[reaction];
   if([0,10,32].includes(reaction)){ // $01a2d0/$01a61e, ordinary standing impacts
     if(!initialized){actor.movementMode=0;actor.comboCount=u16(actor.comboCount+1);actor.comboTimer=64;}
