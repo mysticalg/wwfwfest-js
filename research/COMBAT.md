@@ -4,7 +4,7 @@ The ordinary standing punch and kick use handwritten JavaScript translations of 
 
 ## Original paths
 
-The standing fallback at `$00d6fa` selects move-table row zero. All twelve character tables selected through `$00d73e` have row `[0,114,255]`. The two individual buttons select action 0 and action `$72`. The combined-button entry leads to state 2, whose grapple logic still needs translation. The prototype currently gives the second button priority for combined input.
+The standing fallback at `$00d6fa` selects move-table row zero. All twelve character tables selected through `$00d73e` have row `[0,114,255]`. The two individual buttons select action 0 and action `$72`. The combined-button entry leads to running state 2. Its descriptor `$010ea2` uses poses 9–14 with delay 6, and handler `$010ec2` loads the character running speed from `$010f8a`. That running path still needs translation. The prototype currently gives the second button priority for combined input and exposes its authored run through a separate control. Close-contact paired-state arbitration is a separate path beginning at `$00e7b4`.
 
 Action 0 uses descriptor `$011a90` and handler `$011ac8`. It plays poses 0,146,147,148,147 with delay words 10,6,4,10,2. The handler chooses contact record 33, changing to record 7 while animation index 3 is active. Normal completion occurs on update 38 counting the entry as update zero.
 
@@ -54,7 +54,7 @@ Ordinary punch reaction 0 uses descriptor `$01a2c0`, handler `$01a2d0`, poses 15
 
 Browser checks additionally exercised both actions through a simulated standard gamepad, verified the visible punch/kick poses, one/two-point damage and exact routed sound commands, and found no page errors. Physical controller testing is still pending.
 
-The bounded standing-attack fixtures bypass world-boundary correction to isolate those handlers. Inside-ring collision and the punch entry nudge now use the separate translated ring routine, with broader controlled-input integration runs described in [knockdown research](KNOCKDOWNS.md). The alternate status-dependent punch descriptor, combined-button grapple selection, other move rows, original actor health initialization, AI and match rules remain incomplete. Health still uses the practice prototype's 100-point maximum. Full combat parity is not claimed.
+The bounded standing-attack fixtures bypass world-boundary correction to isolate those handlers. Inside-ring collision and the punch entry nudge now use the separate translated ring routine, with broader controlled-input integration runs described in [knockdown research](KNOCKDOWNS.md). The alternate status-dependent punch descriptor, combined-button running, paired-state arbitration, other move rows, original actor health initialization, AI and match rules remain incomplete. Health still uses the practice prototype's 100-point maximum. Full combat parity is not claimed.
 
 Regenerate the fixture from a separately interleaved original program image:
 

@@ -209,7 +209,7 @@ export class Match {
     if (actor.state === 'pin') this.count = 0;
     actor.facing = Math.floor(target.x) >= Math.floor(actor.x) ? 1 : -1;
     if (pressed) {
-      // Combined-button grapple selection is still open. Single-button row-zero
+      // Combined-button running is still open. Single-button row-zero
       // actions are the recovered punch 0 and kick $72.
       const button = pressed & 2 ? 1 : 0;
       const contact = actor.contact;
