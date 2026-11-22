@@ -77,7 +77,8 @@ test('standing damage, reaction selection and audio commands match 192 original 
 
 for (const fixture of fixtures.matches) {
   test(`integrated button ${fixture.button} at distance ${fixture.distance} matches original actor/contact/damage loop`, () => {
-    const match = new Match(0, 6);
+    // This controlled reference excludes the independent grapple arbiter.
+    const match = new Match(0, 6,{grapples:false});
     match.ai = false;
     for (const [index, actor] of match.fighters.entries()) {
       // These original-program fixtures deliberately initialize both records at 100.
@@ -99,7 +100,7 @@ for (const fixture of fixtures.matches) {
 }
 
 test('holding an attack button does not manufacture new original input edges', () => {
-  const match = new Match(0, 6,{ai:false});
+  const match = new Match(0, 6,{ai:false,grapples:false});
   match.ai = false;
   match.fighters[1].x = match.fighters[0].x + 40;
   for (let tick = 0; tick < 150; tick++) match.step({strike: true});

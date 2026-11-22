@@ -237,11 +237,11 @@ function drawMatch() {
   context.fillRect(0, 222, 320, 18);
   renderer.text(`${Math.floor(match.time / 60)}:${String(match.time % 60).padStart(2, '0')}`, 160, 235, '#f8df33', 11, 'center');
   renderer.drawCounts(match.world.countTiles);
-  if (state.paused || match.winner !== null) {
+  if (state.paused || match.winner !== null || match.handoff) {
     context.fillStyle = '#061020df';
     context.fillRect(15, 80, 290, 65);
-    renderer.text(state.paused ? 'PAUSED' : `${match.winner === 0 ? 'PLAYER' : 'CPU'} WINS`, 160, 108, '#ffe64a', 20, 'center');
-    renderer.text(state.paused ? 'P TO RESUME' : 'ENTER FOR REMATCH', 160, 130, '#fff', 9, 'center');
+    renderer.text(match.handoff?'THIS MOVE IS NOT READY':state.paused ? 'PAUSED' : `${match.winner === 0 ? 'PLAYER' : 'CPU'} WINS`, 160, 108, '#ffe64a', match.handoff?13:20, 'center');
+    renderer.text(match.handoff?'ENTER TO RESTART':state.paused ? 'P TO RESUME' : 'ENTER FOR REMATCH', 160, 130, '#fff', 9, 'center');
   }
 }
 
@@ -335,11 +335,11 @@ function pollGamepad() {
   if (!state.ready || element('start').disabled) return;
   if (pad.backPressed) {
     if (state.view !== 'play') setView('play');
-    else if (state.match && (state.paused || state.match.winner !== null)) resetMatch();
+    else if (state.match && (state.paused || state.match.winner !== null || state.match.handoff)) resetMatch();
   }
   if (pad.startPressed) {
     if (state.view !== 'play') setView('play');
-    else if (!state.match || state.match.winner !== null) startMatch();
+    else if (!state.match || state.match.winner !== null || state.match.handoff) startMatch();
     else togglePause();
     return;
   }

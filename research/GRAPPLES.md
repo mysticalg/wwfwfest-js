@@ -1,8 +1,8 @@
 # Standing grapple reconstruction
 
-`src/actors/grapple.js` translates standing grapple arbitration, arena-dependent move selection and the linked clinch/hold kernels. This is a research module. Normal `Match` gameplay does not yet invoke it. The playable release still lacks standing grapples; connecting an incomplete move graph would strand wrestlers in unsupported actions.
+`src/actors/grapple.js` translates standing grapple arbitration, arena-dependent move selection and the linked clinch/hold kernels. Normal `Match` gameplay now invokes automatic arbitration before input and updates linked participants through native JavaScript. Headlock choices, throws, reversals, held participants, submissions and pin/referee handoffs are connected in the two-wrestler practice match. Complete game rules remain unfinished.
 
-`src/actors/grapple-throws.js` translates seventeen selected attacker handlers. `src/actors/grapple-counters.js` translates eleven reversals and the linked counter pose. `src/actors/grapple-victims.js` supplies eleven additional victim reactions through the existing knockdown/recovery code. `src/actors/linked-actor.js` keeps actor identities stable while these paths pass through grapples, knockdowns, get-up, forced running/rebounds/braking and ordinary idle. The remaining selected moves and game-wide services still need translation before enabling automatic grapple entry in normal matches.
+`src/actors/grapple-throws.js` translates seventeen selected attacker handlers. `src/actors/grapple-counters.js` translates eleven reversals and the linked counter pose. `src/actors/grapple-victims.js` supplies eleven additional victim reactions through the existing knockdown/recovery code. `src/actors/linked-actor.js` keeps actor identities stable while these paths pass through grapples, knockdowns, get-up, forced running/rebounds/braking and ordinary idle. All twenty-two headlock-selected handlers now have translations. Additional game-wide contact, AI, tag/Rumble, outside and scene services remain unfinished.
 
 ## Recovered routines
 
@@ -131,7 +131,7 @@ Generate the separate reversal fixtures with `ACTION_SET` set to JSON `[125,126,
 
 ### Remaining headlock selections and held participants
 
-`grapple-submissions.js` translates the other five headlock-selected actions. Together with the seventeen throw paths above, this covers the handlers selected by all twenty-two headlock table entries. These are still component translations, separate from normal `Match` gameplay.
+`grapple-submissions.js` translates the other five headlock-selected actions. Together with the seventeen throw paths above, this covers the handlers selected by all twenty-two headlock table entries. These translations are now reachable through normal `Match` grapple input, with the limits below.
 
 | Action | Handler | Recovered behavior |
 | --- | --- | --- |
@@ -165,10 +165,32 @@ In PowerShell, set and remove `COMPOSE` as above. The submission tracer accepts 
 
 ### Work still required
 
-Next work must connect the arbiter before normal actor input and unify walking, standing/running combat and grapple participant updates. The research dispatcher already accepts the translated run, knockdown and idle handoffs. Global damage/combo timing, interrupt/contact responses, pin/escape service, AI decisions, tag/Rumble alternatives and complete sound/scene routing then need composed original-game comparisons and browser gamepad checks.
+Automatic arbitration now precedes normal actor input. Stable pool records update both participants, then release recovered idle/running handoffs into the existing movement adapters. Shared health/damage and the referee continue during holds. Next work must recover full interruption/contact responses, original AI decisions, tag/Rumble alternatives, outside behavior and complete sound/scene routing.
 
 The recovered headlock tables select action IDs `2,24,25,26,36,37,38,40,43,44,47,48,50,51,52,54,58,59,66,67,68,137`. Their descriptors are addressed through `$011854 + action * 4`. Translating these twenty-two attacker handlers and the participant states above does not by itself close the interaction graph. Pin/tag controls, hold interruption, full outside behavior and scene progression still need their owning services. [Original initialization and damage](MATCH_SERVICES.md) are now connected to the playable match and to additional paired submission comparisons. The older component fixtures retain their explicit controlled health values.
 
-[The native referee](REFEREE.md) adds eleven original state handlers and a further 176 composed hold sequences with health, damage, counts and results. All reach an explicit subsequent handoff; this closes the action-26 pin waits in the matching damage-only fixture. The apparent global result word `$1c1214` is actually the referee's state word, so late submission requests and next-frame referee initialization share the same native field. [Original covers and human escapes](PINS.md) now use the shared dispatcher and referee in normal practice input. Standing-grapple arbitration and selected moves still require normal-input integration.
+[The native referee](REFEREE.md) adds eleven original state handlers and a further 176 composed hold sequences with health, damage, counts and results. All reach an explicit subsequent handoff; this closes the action-26 pin waits in the matching damage-only fixture. The apparent global result word `$1c1214` is actually the referee's state word, so late submission requests and next-frame referee initialization share the same native field. [Original covers and human escapes](PINS.md) now use the shared dispatcher and referee in normal practice input. Standing-grapple arbitration and selected moves now use normal practice input.
 
 The browser still executes native JavaScript throughout. CPU execution remains confined to offline fixture generation, and the external CPU dependency is excluded from this repository.
+
+## Playable integration in 0.1.18
+
+`MatchActors` updates arena regions before original pair arbitration, attaches the two stable actor records, runs original human clinch/headlock input and retains the recovered actor order. The human idle input path also performs the original facing update before pending idle initialization. `participantFacing` translates `$00fe28`, including prone/ground-hold anchor offsets and unsigned word wrapping. Recovered forced-running releases return to the running adapter; unsupported outside/control/scene states remain explicit handoffs with a browser restart prompt.
+
+**432 composed practice sequences / 323,402 updates** compare all twelve actor types, both facings, three target health/severity bands, both headlock-table severity toggles and all three action-button combinations. They include original arbitration, region classification, input, both actor handlers, referee, projection, alternating full contact/damage services, health, sounds and count graphics. The references observe original entropy values and replay those at the corresponding native calls. AI decisions and full scene progression are excluded; sequences stop at a supported idle return, an explicit next-service boundary or the 1,800-update observation limit. These are bounded comparisons, not full-match parity.
+
+Of those sequences, 290 reach the initialized idle stop, 34 reach a next-service boundary and 108 reach the observation cap. Capped holds and the boss partner move still depend on excluded services or further participant input; their matching prefixes do not establish completion.
+
+`ArcadeRandom` translates `$0021c4` and matches **8,192 supplied D1-D7/frame/seed contexts**. Known probability/arbitration register writes are reconstructed, but ambient runtime register context remains incomplete. The practice match uses an explicit zero default for unknown context. The composed references do not establish whole-game RNG sequence parity. An additional **8,192 original facing cases** cover state/action anchors, preserved facing bits and coordinate wrapping.
+
+Browser checks with a simulated standard controller and enabled native audio walk into a grapple and complete a Hogan throw, DiBiase submission result and Mr. Perfect move into a counted pin. Additional checks carry both participants approximately forty world units before a throw, and whip the victim into a rope rebound through collision/recovery. The ordinary body collision correctly retains both health values. General pad menu/pause/reconnect, running actions and pin escape checks remain separate. Physical controller and listening acceptance remain unverified. Optional boss action 137 still waits for its separate partner/multi-actor contact service; it is not remapped to an invented move.
+
+Controlled standing-contact/running fixtures explicitly set `world.grapples=false` when their original reference excludes arbitration. Ordinary browser play leaves it enabled.
+
+```sh
+node tools/trace_match_grapples.mjs path/to/mc68000.js path/to/program.bin tests/fixtures/match-grapples-reference.json
+node tools/trace_random.mjs path/to/mc68000.js path/to/program.bin tests/fixtures/random-reference.json
+node tools/trace_facing.mjs path/to/mc68000.js path/to/program.bin tests/fixtures/facing-reference.json
+```
+
+The match tracer accepts `MATCH_GRAPPLE_FILTER` (JSON) and `DETAIL=1`; its tests accept `MATCH_GRAPPLE_FIXTURE` for private diagnostic rows. Original program execution is confined to offline generation.

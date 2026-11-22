@@ -74,7 +74,8 @@ test('airborne/world coordinates round-trip and render at original projected int
 
 for (const fixture of fixtures.matches) {
   test(`integrated four-hit knockdown and recovery parity: attacker ${fixture.attackerIndex}, health ${fixture.initialHealth}`, () => {
-    const match = new Match(0, 6);
+    // The four-hit source fixture isolates contact/recovery from arbitration.
+    const match = new Match(0, 6,{grapples:false});
     match.ai = fixture.attackerIndex === 1;
     for (const [index, actor] of match.fighters.entries()) {
       updateScreenPosition(actor, {xFixed: (0x280 + index * 40) * 65536,
@@ -111,7 +112,8 @@ for (const fixture of fixtures.matches) {
 
 for (const fixture of fixtures.boundaryWalks) {
   test(`native ${fixture.axis} walking reaches and stops at the original ring bounds for type ${fixture.type}`, () => {
-    const match = new Match(fixture.type, 6);
+    // This one-actor boundary fixture has no pair-arbitration service.
+    const match = new Match(fixture.type, 6,{grapples:false});
     match.ai = false;
     const actor = match.fighters[0];
     updateScreenPosition(actor, {xFixed: 0x2800000, yFixed: 0x14c0000, zFixed: 0x1400000});
@@ -149,7 +151,7 @@ test('native cover requires a fresh eligible press and keeps the victim held aft
   assert(ticks < 150);
   match.step({pin: true});
   assert.equal(player.state, 'pin');
-  const victim=target.pinBody,remaining=victim.recoveryTimer;
+  const victim=target.nativeBody,remaining=victim.recoveryTimer;
   for (let tick = 0; tick < 80; tick++) match.step({});
   assert.equal(victim.recoveryTimer,remaining);
   assert.equal(player.original.action&0x8000,0x8000);

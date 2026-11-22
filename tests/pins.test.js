@@ -41,10 +41,10 @@ test('the playable human escapes an AI cover through original mash and action 75
  for(let tick=0;tick<400;tick++){
   match.step({strike:tick%4===0});match.takeSoundCommands();
   actions.add(a.original.action&255);pinned||=a.state==='pinned';
-  if(pinned&&!a.pinBody&&!b.pinBody)break;
+  if(pinned&&!a.nativeBody&&!b.nativeBody)break;
  }
  assert(pinned);assert(actions.has(75));assert.equal(match.winner,null);
- assert.equal(a.pinBody,null);assert.equal(b.pinBody,null);assert.equal(match.count,0);
+ assert.equal(a.nativeBody,null);assert.equal(b.nativeBody,null);assert.equal(match.count,0);
  match.ai=false;
  for(let tick=0;tick<600;tick++){match.step({});match.takeSoundCommands();}
  assert.notEqual(match.referee.state,7);

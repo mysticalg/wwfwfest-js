@@ -13,6 +13,7 @@ import {WorldCamera} from './camera.js';
 import {SceneryAnimator} from './scenery.js';
 import {videoFrameRate} from './timing.js';
 import {MatchActors} from './actors/match-actors.js';
+import {participantFacing} from './actors/facing.js';
 
 // Ordinary walking and its descriptor clock are translated from the arcade
 // routines. Standing punch/kick handlers and their ordinary contact/reaction paths
@@ -77,7 +78,7 @@ export class Match {
     actor.knockdown = null;
     actor.running = null;
     actor.runningAttack = null;
-    actor.pinBody = null;
+    actor.nativeBody = null;
     actor.pendingIdle = false;
     if (state === 'idle') { actor.spriteOffsetX = actor.spriteOffsetY = 0; actor.linkedActor = null; }
     if (state !== 'idle' && state !== 'walk' && state !== 'strike' && state !== 'heavy') actor.contact = 0;
@@ -99,7 +100,7 @@ export class Match {
   }
 
   step(input) {
-    if (this.winner !== null) return;
+    if (this.winner !== null || this.handoff) return;
     this.ticks++;
     const phase = (this.ticks - 1) >>> 0;
     this.contactPhase = !(phase & 1);
@@ -119,7 +120,7 @@ export class Match {
         flags33: actor.cameraFlags ?? 1, priority: actor.cameraPriority || 0, active: true};
     }), {stream: false});
     const opponentInput = this.ai ? this.computerInput(this.fighters[1], this.fighters[0]) : {};
-    this.nativeActors.sync();
+    this.nativeActors.sync();this.nativeActors.arbitrate();
     this.updateFighter(this.fighters[0], this.fighters[1], input, 0);
     this.updateFighter(this.fighters[1], this.fighters[0], opponentInput, 1);
     this.nativeActors.sync();this.nativeActors.input();this.nativeActors.stepReferee();
@@ -134,7 +135,7 @@ export class Match {
     for (const actor of this.fighters) {
       if (actor.animation.pose !== actor.lastPose) {
         actor.contact = 0;
-        if(actor.pinBody)actor.pinBody.contact=0;
+        if(actor.nativeBody)actor.nativeBody.contact=0;
         actor.standingAction?.hits.clear();
         actor.runningAttack?.hits.clear();
         actor.running?.hits.clear();
@@ -288,7 +289,7 @@ export class Match {
     const vertical = input.vertical || 0;
     actor.inputMask = (horizontal > 0 ? 1 : horizontal < 0 ? 2 : 0)
       | (vertical > 0 ? 8 : vertical < 0 ? 4 : 0);
-    if(actor.pinBody)return;
+    if(actor.nativeBody)return;
     if (actor.pendingIdle) {
       this.setState(actor, 'idle');
       this.faceTarget(actor, target);
@@ -341,7 +342,7 @@ export class Match {
   }
 
   resolveStrike(actor, target) {
-    if(actor.pinBody||target.pinBody)return;
+    if(actor.nativeBody||target.nativeBody)return;
     const active = actor.standingAction || actor.runningAttack || actor.running;
     const action = active || actor.lastBody || actor;
     if (active?.pendingTransition || actor.hitTargets.has(target) || !actor.contact || !target.contact) return;
@@ -414,15 +415,14 @@ export class Match {
 
   // $fe28 adjusts the facing reference for downed opponents.
   faceTarget(actor, target) {
-    const body = target.knockdown;
-    const reaction = body?.reaction & 255;
-    const offset = body?.state === 4 ? reaction === 8 ? 64 : reaction === 9 ? 16 : 0 : 0;
-    const x = Math.floor(target.x) + (target.facing > 0 ? -offset : offset);
-    actor.facing = x >= Math.floor(actor.x) ? 1 : -1;
+    const body = target.nativeBody || target.knockdown;
+    const facing=participantFacing({...worldPosition(actor),facing:actor.facing>0?0x8000:0},
+      {...worldPosition(target),facing:target.facing>0?0x8000:0,state:body?.state,reaction:body?.reaction,action:body?.action});
+    actor.facing=facing&0x8000?1:-1;
   }
 
   pose(actor, frames) {
-    if (actor.pinBody || actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown || actor.running || actor.runningAttack) {
+    if (actor.nativeBody || actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown || actor.running || actor.runningAttack) {
       return actor.animation.pose & 0x7fff;
     }
     const animation = animations[actor.state];
@@ -431,7 +431,7 @@ export class Match {
   }
 
   mirrored(actor) {
-    if (actor.pinBody || actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown || actor.running || actor.runningAttack) {
+    if (actor.nativeBody || actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown || actor.running || actor.runningAttack) {
       return Boolean(actor.animation.pose & 0x8000);
     }
     return actor.facing > 0;

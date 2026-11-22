@@ -9,6 +9,7 @@ import {isGrappleSubmission,stepGrappleSubmission} from './grapple-submissions.j
 import {isPinAction,stepPinAction} from './pin.js';
 
 const u16 = value => value & 65535;
+const stateWord=actor=>typeof actor.pendingState==='boolean'?actor.state|(actor.pendingState?0:0x8000):actor.state;
 
 // $0104de dispatches four original probability gates used by move/counter
 // handlers. Entropy stays explicit until the complete original RNG is ported.
@@ -59,7 +60,7 @@ export function headlockMove(type,severity,toggle,pressed,{facing=0,region=0}={}
 // $00ea28. State is the original state word, including its initialized bit.
 export function canGrapple(actor, mode = 0) {
   if ((actor.flags74 & 128) || actor.forced || (actor.flags32 & 0x11)
-    || (actor.flagsB7 & 128) || !(actor.state & 0x8000)
+    || (actor.flagsB7 & 128) || !(stateWord(actor) & 0x8000)
     || ((mode & 2) && !(actor.flags33 & 4)) || actor.auxiliary) return false;
   const state = actor.state & 255;
   return state === 0 || state === 1
@@ -94,6 +95,7 @@ export function startGrapple(actor, target, {mode = 0, inGame = true,
     else if ((actor.state & 255) === 4 && (actor.reaction & 255) === 1) winner = target;
     else if ((target.state & 255) === 4 && (target.reaction & 255) === 1) winner = actor;
     else if (!actorAI && targetAI) {
+      if(typeof randomNibble==='function')randomNibble=randomNibble(actor,target);
       const weights = mode & 1 ? actorTables.grappleRumbleWeights : actorTables.grappleWeights;
       const offset = (mode & 1 ? 0 : round * 4) + actor.grappleIndex;
       if (weights[offset] === undefined || !Number.isInteger(randomNibble)) {
@@ -130,6 +132,7 @@ export function startGrapple(actor, target, {mode = 0, inGame = true,
     if (body.grappleIndex >= 4) body.grappleIndex = 0;
     body.auxiliary = body.opponent = other;
     body.flags33 |= 64;
+    if(typeof body.pendingState==='boolean'){body.pendingState=true;body.inputInitialized=false;}
   }
   return winner === actor ? 'actor' : winner === target ? 'target' : 'contested';
 }
@@ -141,7 +144,7 @@ export class GrappleActor {
     Object.assign(this,{type:0,state:11,action:0,reaction:0,previousState:0,
       xFixed:0,yFixed:0,zFixed:0x1400000,facing:0,movementMode:0,speed:0,direction:0,
       flags32:0,flags33:0,flags34:0,flags35:0,flags56:0,flags74:0,flagsB7:0,forced:0,
-      holdFlags:0,timer:0,controlCounter:0,inputBlockA:0,inputBlockB:0,comboCount:0,comboTimer:0,pendingDamage:0,
+      holdFlags:0,timer:0,grappleIndex:0,controlCounter:0,inputBlockA:0,inputBlockB:0,comboCount:0,comboTimer:0,pendingDamage:0,
       hitCounter:0,contact:0,health:100,maximumHealth:100,severity:0,moveToggle:0,region:0,offsetX:0,offsetY:0,
       paddingX:0,paddingY:0,paddingZ:0,velocityX:0,velocityY:0,
       velocityZ:0,gravity:0,auxiliary:null,unlinkMarked:false,sceneRefresh:0,
@@ -245,15 +248,15 @@ export class GrappleActor {
     const prior=this.attempts[offset]||0;this.attempts[offset]=u16(prior+1);return prior;
   }
 
-  random(kind) {
+  random(kind,context={}) {
     if(typeof this.entropy!=='function')throw new Error(`Original entropy required for ${kind}`);
-    return this.entropy(kind,this);
+    return this.entropy(kind,this,context);
   }
 
   contest(kind,counter=0) {
     const actorAI=Boolean(this.flags56&128),targetAI=Boolean(this.auxiliary?.flags56&128);
     return grappleContest({kind,counter,actorAI,targetAI,severity:this.severity,...this.world,
-      randomNibble:kind===1&&actorAI?undefined:this.random('contest')});
+      randomNibble:kind===1&&actorAI?undefined:this.random('contest',{kind,counter})});
   }
 
   announce(id) { this.world.message=((this.type&255)<<8)|(id&255); }

@@ -10,6 +10,10 @@ test('standing grapple eligibility matches the original state and status gates',
  for(const fixture of fixtures.eligibility)assert.equal(canGrapple(fixture.initial,fixture.mode),fixture.accepted,JSON.stringify(fixture));
 });
 
+test('stable actor records preserve the original grapple eligibility state word',()=>{
+ for(const fixture of fixtures.eligibility)assert.equal(canGrapple(new GrappleActor(fixture.initial),fixture.mode),fixture.accepted);
+});
+
 test('grapple probability gates match original comparisons given observed RNG entropy',()=>{
  for(const fixture of fixtures.contests){
   const hash=createHash('sha256');
@@ -89,6 +93,18 @@ test('standing pair arbitration matches original winner, status, links and word 
    const actual=Object.fromEntries(Object.keys(fixture.result[index]).map(key=>[key,
     ['auxiliary','opponent'].includes(key)&&typeof body[key]==='object'?body[key].id:body[key]]));
    assert.deepEqual(actual,fixture.result[index],JSON.stringify({initial:fixture.initial,options:fixture.options,index}));
+  }
+ }
+});
+
+test('standing arbitration writes pending states into stable actor identities',()=>{
+ for(const fixture of fixtures.pairs){
+  const bodies=fixture.initial.map((initial,index)=>new GrappleActor({...initial,id:index?'target':'actor'}));
+  for(const[index,body]of bodies.entries())body.opponent=bodies[1-index];startGrapple(...bodies,fixture.options);
+  for(const[index,body]of bodies.entries()){
+   const actual=Object.fromEntries(Object.keys(fixture.result[index]).map(key=>[key,key==='state'?body.state|(body.pendingState?0:0x8000):
+    ['auxiliary','opponent'].includes(key)&&typeof body[key]==='object'?body[key].id:body[key]]));
+   assert.deepEqual(actual,fixture.result[index]);
   }
  }
 });

@@ -56,7 +56,7 @@ function seededRun(actor, type, facing) {
 }
 function referenceMatch(initial) {
   const match = new Match(initial.attackerIndex === 0 ? initial.type : 6,
-    initial.attackerIndex === 1 ? initial.type : 6);
+    initial.attackerIndex === 1 ? initial.type : 6,{grapples:false});
   match.ai = initial.attackerIndex === 1;
   const actor = match.fighters[initial.attackerIndex], target = match.fighters[1-initial.attackerIndex];
   for (const fighter of match.fighters) {
