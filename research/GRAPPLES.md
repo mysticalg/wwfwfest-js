@@ -2,7 +2,7 @@
 
 `src/actors/grapple.js` translates standing grapple arbitration, arena-dependent move selection and the linked clinch/hold kernels. This is a research module. Normal `Match` gameplay does not yet invoke it. The playable release still lacks standing grapples; connecting an incomplete move graph would strand wrestlers in unsupported actions.
 
-`src/actors/grapple-throws.js` now translates ten selected attacker handlers. `src/actors/grapple-victims.js` supplies six additional victim reactions through the existing knockdown/recovery code. `src/actors/linked-actor.js` keeps actor identities stable while these paths pass through grapples, knockdowns, get-up and ordinary idle. The remaining selected moves and counters still need translation before enabling automatic grapple entry in normal matches.
+`src/actors/grapple-throws.js` translates seventeen selected attacker handlers. `src/actors/grapple-counters.js` translates eleven reversals and the linked counter pose. `src/actors/grapple-victims.js` supplies eleven additional victim reactions through the existing knockdown/recovery code. `src/actors/linked-actor.js` keeps actor identities stable while these paths pass through grapples, knockdowns, get-up, forced running/rebounds/braking and ordinary idle. The remaining selected moves and game-wide services still need translation before enabling automatic grapple entry in normal matches.
 
 ## Recovered routines
 
@@ -35,7 +35,7 @@ Control depends on status priorities, stagger state, actor order, frame phase an
 
 `startGrapple()` takes an explicit `randomNibble` for the weighted branch. The original RNG also mixes machine registers and the global frame count; the complete native RNG context is still unfinished. Fixtures observe the actual original RNG return without replacing that routine. These checks establish the arbiter given that entropy, not a complete deterministic game-wide RNG translation.
 
-`grappleContest()` translates the four gates dispatched by `$0104de`. Kind 1 includes the original AI-actor bypass, opponent/mode/round table choice and low-byte attempt index clamped to four. Kind 0 uses a strict random-value comparison; kinds 1–3 use inclusive comparisons. Entropy is explicit here too. Caller-owned attempt counters and the resulting success/counter action changes remain part of each move handler's remaining translation.
+`grappleContest()` translates the four gates dispatched by `$0104de`. Kind 1 includes the original AI-actor bypass, opponent/mode/round table choice and low-byte attempt index clamped to four. Kind 0 uses a strict random-value comparison; kinds 1–3 use inclusive comparisons. Entropy is explicit here too. The seventeen translated attackers preserve their caller-owned attempt counters, success/counter transitions and unsigned wraparound; other move callers remain separate work.
 
 ## Linked state behavior
 
@@ -78,24 +78,41 @@ For diagnosis, `SEQUENCE_FILTER` accepts a JSON object of sequence fields such a
 | --- | --- | --- |
 | 2 | `$011c48` | Reaction 41 short stagger followed by flight reaction 3 |
 | 24 | `$014148` | Reaction 34, preserving its distinct landing probe and whole-word reaction reset |
+| 25 | `$014246` | Normal/wall descriptors, reactions 33/37, or counter 131 |
 | 36 | `$015296` | Reaction 22, including the branch that leaves the ring |
+| 38 | `$015498` | Delayed airborne profile 18, heavy reaction 5, or counter 133 |
 | 40 | `$015676` | Airborne profile 29, heavy reaction 5, or counter action 125 |
+| 43 | `$0158da` | Follow-up entry, wall reaction 37, normal reaction 36, or counter 127 |
 | 44 | `$015b38` | Reaction 21, type-dependent automatic pin request |
+| 47 | `$015ede` | Repeated lift, character-specific descriptor/release, or counter 129 |
+| 48 | `$016088` | Follow-up entry, heavy reaction 19, or counter 126 |
 | 50 / 66 | `$0163d4` | Three repeated damage requests, different release timing and damage |
+| 51 | `$0164c2` | Suspended wall descriptor, heavy reaction 5/37, or counter 132 |
 | 52 | `$0166ea` | Airborne profile 25, reaction 35, or counter action 134 |
 | 58 | `$016e58` | Reaction 21 with heavy-status flags and automatic pin request |
+| 67 | `$01777c` | Persistent probe, airborne profile 9, reaction 6, or counter 128 |
 | 68 | `$0178a8` | Heavy reaction 5, large-target entry descriptor, or counter action 130 |
 
-The six newly translated victim reactions are 19,21,22,34,35,41. They preserve byte versus whole-word reaction writes, depth velocity, landing probes, position shifts, rope requests and the high status flag that can select a timed stagger after get-up. The normal scene's outside-ring collision plane at `$0274ae` is also translated; full outside-ring controls, presentation and rules remain unfinished. Reaction 22 can hand off to outside action 104, which remains an explicit dependency.
+The additional victim reactions are 14,19,21,22,33,34,35,36,37,38,41. They preserve byte versus whole-word reaction writes, depth velocity, landing probes, position shifts, rope requests and the high status flag that can select a timed stagger after get-up. Reaction 14 uses the distinct motion link at actor offset `$92`, copies only integer position words and delays physical flight until its descriptor requests it. The normal scene's outside-ring collision plane at `$0274ae` is also translated; full outside-ring controls, presentation and rules remain unfinished. Reactions 14/22 can hand off to outside action 104, which remains an explicit dependency.
+
+Reversals 125–135 preserve their original wait/descriptor loops. The first group swaps control back into paired hold actions, with different facing and hold flags. The second group selects victim reaction 14 and the peer's action `$c006`, retaining mutual motion links, damage requests, pose writes and depth adjustments. Action 6's contact/hold behavior is translated separately from ordinary standing attacks.
+
+Forced running reuses the native `Running` class with input explicitly sampled before either actor updates. A newly released participant can therefore initialize its run later in that same frame without consuming an input sample early. Comparisons retain the separate initialized/input bits in the state word and descriptor flags. The controlled references request braking only after the forced rebound count reaches zero.
+
+The Rumble input path also preserves `$00e61e`'s absolute byte read at ROM `$00a3` (value `$ff` in this set), rather than substituting the actor's action-button byte. Near an opponent, with one forced rebound remaining, it sets the one-time flag in the high byte of word `$46` and invokes probability gate 3 before selecting braking. Entropy for this input-phase request is compared separately from handler requests.
+
+Collision probes also preserve the source's mutable padding word. `$027302` can negate that stored horizontal probe before collision, while the nudge/probe wrappers clear it afterward. Action 67's persistent probe makes this distinction observable. Its completion retains both original automatic-pin requests and the later damage write that supersedes its earlier request.
 
 Automatic pin requests at `$0102cc` use the original per-type thresholds and observed RNG bytes in research comparisons. Partner assistance at `$010320` retains the target partner's status change. Neither establishes complete pin/tag rules. Message IDs, screen shake, sound commands and original motion profiles are retained by the attacker handlers.
 
 Additional original-program comparisons cover:
 
-- **1,680 attacker-kernel sequences, 138,322 sampled updates**, including every actor type, both facings, central/edge origins, human/AI gates, counter selection, attempt wraparound, high action flags, the large-target descriptor and partner flags.
-- **180 victim sequences, 39,582 sampled updates**, including health bands, heavy flags, near-depth boundaries, recovery mash input and reaction-22 outside/Rumble branches.
+- **2,928 attacker-kernel sequences, 264,758 sampled updates**, including every actor type, both facings, central/edge origins, human/AI gates, counter selection, attempt wraparound, high action flags, alternate descriptors, follow-up entries, lost/marked links and partner flags.
+- **290 victim sequences, 64,166 sampled updates**, including health bands, heavy flags, near-depth boundaries, recovery mash input and outside/Rumble branches.
 - **32,768 outside-plane collision cases**, including status flags, probes, facing and slanted barrier boundaries.
-- **1,680 composed paired sequences, 520,092 sampled updates**, using `LinkedActor` to update both participants in their original order. Of these, 1,602 return both actors to initialized idle, 60 stop at unsupported counter/outside handoffs, and 18 retain the original pending state through the 700-update observation limit. These compare the linked actor graph through its named boundaries, not complete matches.
+- **484 reversal-kernel sequences, 84,440 sampled updates**, covering all eleven reversals, both actor orders/facings, ring positions and status variants.
+- **2,928 composed throw sequences, 1,004,190 sampled updates**, using `LinkedActor` to update both participants in their original order. Of these, 2,840 reach initialized idle, 26 stop at outside handoffs, and 62 retain a pending state through the 700-update observation limit.
+- **484 composed reversal sequences, 166,578 sampled updates**, including hold swaps, escapes, counter flights, forced runs/rebounds and controlled braking. Of these, 464 reach initialized idle and 20 stop at outside handoffs. These compare actor paths, not complete matches.
 
 The composed references deliberately isolate actor handlers: global hit/damage service, AI action decisions and the main match-rule services are excluded. Pending damage, automatic pin requests and partner flags are compared as requests; practice health is not used to claim final original damage-service integration. The remaining pin-wait cases must be completed by their original AI/rule services.
 
@@ -110,10 +127,12 @@ npm run check
 
 In PowerShell, set `$env:COMPOSE='1'` before the second command and remove it afterward. `THROW_FILTER` and `VICTIM_FILTER` restrict diagnostic scenarios; `DETAIL=1` includes rows. The matching tests accept `THROW_FIXTURE` / `VICTIM_FIXTURE` paths for temporary detailed captures.
 
+Generate the separate reversal fixtures with `ACTION_SET` set to JSON `[125,126,127,128,129,130,131,132,133,134,135]`: first without `COMPOSE` for `grapple-counters-reference.json`, then with `COMPOSE=1` for `linked-counters-reference.json`. Remove both variables before regenerating the ordinary throw fixtures.
+
 ### Work still required
 
 Next work must translate the headlock-selected throw/submission handlers, their success/counter helpers and victim reactions, then connect the arbiter before normal actor input. Normal runs, knockdowns and idle cleanup must accept grapple handoffs with their full flags and links. Global damage/combo timing, AI decisions, tag/Rumble alternatives and complete sound/scene routing then need composed original-game comparisons and browser gamepad checks.
 
-The recovered headlock tables select action IDs `2,24,25,26,36,37,38,40,43,44,47,48,50,51,52,54,58,59,66,67,68,137`. Their descriptors are addressed through `$011854 + action * 4`. Some invoke additional counter actions and victim states, so translating only those twenty-two attacker handlers will not by itself close the interaction graph. Actions `25,26,37,38,43,47,48,51,54,59,67,137` and their dependent branches remain the next group. For example, action 25 uses its prior `$f4` attempt count and the kind-1 gate before choosing its ordinary path or action 131; action 38 similarly uses `$f8` and can select action 133. Submission completion at `$010408` also enters match/partner services and remains separate work.
+The recovered headlock tables select action IDs `2,24,25,26,36,37,38,40,43,44,47,48,50,51,52,54,58,59,66,67,68,137`. Their descriptors are addressed through `$011854 + action * 4`. Some invoke additional counter actions and victim states, so translating only those twenty-two attacker handlers will not by itself close the interaction graph. Actions `26,37,54,59,137` and their dependent submission, partner and pursuit branches remain the next group. Submission completion at `$010408` also enters match/partner services and remains separate work. The original mash initializer at `$00fea0` has additional held-state modes beyond the normal downed recovery counts; those must be connected with their specific victim handlers.
 
 The browser still executes native JavaScript throughout. CPU execution remains confined to offline fixture generation, and the external CPU dependency is excluded from this repository.

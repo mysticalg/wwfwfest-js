@@ -7,6 +7,330 @@
   "scenarios": [
     {
       "initial": {
+        "reaction": 14,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 57,
+      "done": false,
+      "handoff": true,
+      "sha256": "24f7f1e875836040584b4b59094acb6b57aeedddecb74b94c48bb62f58bbe895"
+    },
+    {
+      "initial": {
+        "reaction": 14,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 57,
+      "done": false,
+      "handoff": true,
+      "sha256": "24f7f1e875836040584b4b59094acb6b57aeedddecb74b94c48bb62f58bbe895"
+    },
+    {
+      "initial": {
+        "reaction": 8206,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 57,
+      "done": false,
+      "handoff": true,
+      "sha256": "925c6fe1e0f50e9b8943cc87d1cfcd4524d1524ac851d83688b962c7e093e377"
+    },
+    {
+      "initial": {
+        "reaction": 14,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 165,
+      "done": true,
+      "handoff": false,
+      "sha256": "b7d7ac4af33ed389785e46d154238d0fdabb159b1b6d456f9e89400abe85ee68"
+    },
+    {
+      "initial": {
+        "reaction": 14,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 245,
+      "done": true,
+      "handoff": false,
+      "sha256": "bb48ba8c43796c2391a7a41b5af890a15b1c105c443285cbf20bf1e7ac955921"
+    },
+    {
+      "initial": {
+        "reaction": 8206,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 470,
+      "done": true,
+      "handoff": false,
+      "sha256": "e1137e7d3c5b08dfdaeec87a49bd094dac14ef5dc0ae452e97739479d1f00a9d"
+    },
+    {
+      "initial": {
+        "reaction": 14,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 165,
+      "done": true,
+      "handoff": false,
+      "sha256": "9d60eb8ba08d5b57e01710bbc8e6ee58beb87fc1019cec4444dc990d0b86e40c"
+    },
+    {
+      "initial": {
+        "reaction": 14,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 245,
+      "done": true,
+      "handoff": false,
+      "sha256": "4338279da7d317af30d2c77f20c53a4ef291167651552ffad1e40fee8eef539f"
+    },
+    {
+      "initial": {
+        "reaction": 8206,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 470,
+      "done": true,
+      "handoff": false,
+      "sha256": "92621586fd9756e38796e299c20f455208395358d5b9106a4ace82f77f3017c3"
+    },
+    {
+      "initial": {
+        "reaction": 14,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 165,
+      "done": true,
+      "handoff": false,
+      "sha256": "55ffdec7e61bf6e932aa95d091b3836418c3dd24ddf72f932f44bc72fc3008e3"
+    },
+    {
+      "initial": {
+        "reaction": 14,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 245,
+      "done": true,
+      "handoff": false,
+      "sha256": "1d90cd0d884f7fb87c81d115f4c0a6b4aecc8851bc571e3707377f02dc17ee21"
+    },
+    {
+      "initial": {
+        "reaction": 8206,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 470,
+      "done": true,
+      "handoff": false,
+      "sha256": "0e585b215f3283f8ed449f2e5e7637ef766542b0d19bc377c5e974493619e89a"
+    },
+    {
+      "initial": {
+        "reaction": 14,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 165,
+      "done": true,
+      "handoff": false,
+      "sha256": "53ac58bafd60fae5ca631667726b5830278e65d4750a49a1dbb63bc20dbddfe7"
+    },
+    {
+      "initial": {
+        "reaction": 14,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 245,
+      "done": true,
+      "handoff": false,
+      "sha256": "305fe82119cd9dd8d3655b78529ac575388c4deb7851418ee3aacf5516a5775e"
+    },
+    {
+      "initial": {
+        "reaction": 8206,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 470,
+      "done": true,
+      "handoff": false,
+      "sha256": "bc68aab08688746d57a34f344e3f9f06a33522591f27455645132583fb6e5281"
+    },
+    {
+      "initial": {
+        "reaction": 14,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 55,
+      "done": false,
+      "handoff": true,
+      "sha256": "c4278d2489ca12e8e94d5196fa7651fb5a493dd34d9458d06ea3cd189259e0bc"
+    },
+    {
+      "initial": {
+        "reaction": 14,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 55,
+      "done": false,
+      "handoff": true,
+      "sha256": "c4278d2489ca12e8e94d5196fa7651fb5a493dd34d9458d06ea3cd189259e0bc"
+    },
+    {
+      "initial": {
+        "reaction": 8206,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 55,
+      "done": false,
+      "handoff": true,
+      "sha256": "62ccf833777b23d4792c0a34949bab6623e9576a4fb64dbc571dccccffe4ea62"
+    },
+    {
+      "initial": {
         "reaction": 19,
         "facing": 0,
         "severity": 0,
@@ -979,6 +1303,330 @@
     },
     {
       "initial": {
+        "reaction": 33,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 112,
+      "done": true,
+      "handoff": false,
+      "sha256": "234d99b640bca6c8e09a6eb7701837cc081e66c843e1dedad5cce638b799fdc8"
+    },
+    {
+      "initial": {
+        "reaction": 33,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 192,
+      "done": true,
+      "handoff": false,
+      "sha256": "25f505f0d9b0a787491857ffaa45f1de33a579de6419c602dca605c93382aebd"
+    },
+    {
+      "initial": {
+        "reaction": 8225,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 417,
+      "done": true,
+      "handoff": false,
+      "sha256": "e34de9cbdbb10bb2c4f5ff35cc284e55499ba0e5f199ed111d97d3638b9246bb"
+    },
+    {
+      "initial": {
+        "reaction": 33,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 112,
+      "done": true,
+      "handoff": false,
+      "sha256": "f1865f97f55c1e2bf4b1c5f8f3752c17d74cbced077ea44233f810d2d51bf7c5"
+    },
+    {
+      "initial": {
+        "reaction": 33,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 192,
+      "done": true,
+      "handoff": false,
+      "sha256": "e89cc494023025798a2d6e8ddb6a94308a748d6bda358692c50bfb087bc74a58"
+    },
+    {
+      "initial": {
+        "reaction": 8225,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 417,
+      "done": true,
+      "handoff": false,
+      "sha256": "2669be9c7a23edc2f0fdb2819db717f793fde2e8a3f3df6ecd0995f2adef9072"
+    },
+    {
+      "initial": {
+        "reaction": 33,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 112,
+      "done": true,
+      "handoff": false,
+      "sha256": "f7bdb6c0ffa51e0528c7e4ef9dd99817cff9538f3f0bd7ad1d9572fb4b894795"
+    },
+    {
+      "initial": {
+        "reaction": 33,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 192,
+      "done": true,
+      "handoff": false,
+      "sha256": "53144e6d2df82efc8e529652a1d6f5d5c147721da99c35dcb233247815d93966"
+    },
+    {
+      "initial": {
+        "reaction": 8225,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 417,
+      "done": true,
+      "handoff": false,
+      "sha256": "889db51976a42e9ee3913a9051a8819d4a3ca50c8de4d25a9df38956c240d328"
+    },
+    {
+      "initial": {
+        "reaction": 33,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 112,
+      "done": true,
+      "handoff": false,
+      "sha256": "f3c86304927ae7e1d698682d663e91f76ae95729e13afd55498348b534d9c0e1"
+    },
+    {
+      "initial": {
+        "reaction": 33,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 192,
+      "done": true,
+      "handoff": false,
+      "sha256": "0e79d73eff9ee1b1bbd165925d3037aacd448b73752b937ca1feaa2b1c2596b1"
+    },
+    {
+      "initial": {
+        "reaction": 8225,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 417,
+      "done": true,
+      "handoff": false,
+      "sha256": "8fa9eb5b4bc25d3e9bf5ccda8b4b659e35e1daf6358371c2a100ebf451647419"
+    },
+    {
+      "initial": {
+        "reaction": 33,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 112,
+      "done": true,
+      "handoff": false,
+      "sha256": "e7f749ef87b3b7cef835c4e7f5e66f74753dffe8ae7c7f3e5b66274bb66a292b"
+    },
+    {
+      "initial": {
+        "reaction": 33,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 192,
+      "done": true,
+      "handoff": false,
+      "sha256": "0d7e6f2f4975784c2241e24fbc4c367910ab36007bc497948750239db6949c3d"
+    },
+    {
+      "initial": {
+        "reaction": 8225,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 417,
+      "done": true,
+      "handoff": false,
+      "sha256": "f33f255a0bdc31dd37201f5c3716af5f175bce3a20c08275dfce6f8879c99440"
+    },
+    {
+      "initial": {
+        "reaction": 33,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 112,
+      "done": true,
+      "handoff": false,
+      "sha256": "eafc3c7b92812fd4b0bd9468453c89ee7fc8fea8a612c09378acaaf76510bd9f"
+    },
+    {
+      "initial": {
+        "reaction": 33,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 192,
+      "done": true,
+      "handoff": false,
+      "sha256": "b12d7e8587f1e8ad2f4254561f5092397de28743dd651e3ff36bed08fcae1f7e"
+    },
+    {
+      "initial": {
+        "reaction": 8225,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 417,
+      "done": true,
+      "handoff": false,
+      "sha256": "655dff1e9b4269c9f47aa5a8a3e4491834594395017363e5f4d8910ac10275f2"
+    },
+    {
+      "initial": {
         "reaction": 34,
         "facing": 0,
         "severity": 0,
@@ -1627,6 +2275,978 @@
     },
     {
       "initial": {
+        "reaction": 36,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 131,
+      "done": true,
+      "handoff": false,
+      "sha256": "502d5a58843e66540ecb05da684e268332fd8f68a257a109f4b451a6db04644f"
+    },
+    {
+      "initial": {
+        "reaction": 36,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 211,
+      "done": true,
+      "handoff": false,
+      "sha256": "b88e9190a01d257180e162c83ec53979e1e46858486bcd0cd577971f92bfd2d1"
+    },
+    {
+      "initial": {
+        "reaction": 8228,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 436,
+      "done": true,
+      "handoff": false,
+      "sha256": "9a31da90aca90df866ccece80c2096666e5b09bb217ea0b7f2fe5ac474da3b85"
+    },
+    {
+      "initial": {
+        "reaction": 36,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 131,
+      "done": true,
+      "handoff": false,
+      "sha256": "6ca34065735d96b1816de72e5b1c2219eaba6ae2af9254e2d6abf384ffa359a5"
+    },
+    {
+      "initial": {
+        "reaction": 36,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 211,
+      "done": true,
+      "handoff": false,
+      "sha256": "38192530d5e0c9fc96c8068598499903ea988c0aa7097a52cd07b0c8e3185d76"
+    },
+    {
+      "initial": {
+        "reaction": 8228,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 436,
+      "done": true,
+      "handoff": false,
+      "sha256": "0e6933874f199029abb9c97df33cdee7e44eaf78cfd39d9f1a400841a727c530"
+    },
+    {
+      "initial": {
+        "reaction": 36,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 131,
+      "done": true,
+      "handoff": false,
+      "sha256": "e419051c41e586f516e690fda9fcd8975b425bd4a7b99f076332bf39d71685db"
+    },
+    {
+      "initial": {
+        "reaction": 36,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 211,
+      "done": true,
+      "handoff": false,
+      "sha256": "36099656b679c6b7880cc772b4d80a2f7b3f50e2fe74f60d51f6126345b0aef0"
+    },
+    {
+      "initial": {
+        "reaction": 8228,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 436,
+      "done": true,
+      "handoff": false,
+      "sha256": "86ecf9380758f354149b4fa17dff4ae9285ee6f590d677ab1539d3c08faffbf4"
+    },
+    {
+      "initial": {
+        "reaction": 36,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 131,
+      "done": true,
+      "handoff": false,
+      "sha256": "579ff72ffd22472960282e5896b027cf7c2db3fc64e6a2f4472dc797c336fa2c"
+    },
+    {
+      "initial": {
+        "reaction": 36,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 211,
+      "done": true,
+      "handoff": false,
+      "sha256": "fc109f27cba8e5383fd3d3c811df0e2c31c8b47a2f72f984093efddb72d25fc1"
+    },
+    {
+      "initial": {
+        "reaction": 8228,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 436,
+      "done": true,
+      "handoff": false,
+      "sha256": "4d555b1928b17712482d07b7a41d0d293dcea7885b65ae421f3bf5ccdd86f756"
+    },
+    {
+      "initial": {
+        "reaction": 36,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 131,
+      "done": true,
+      "handoff": false,
+      "sha256": "8e57f70dda56963c66d050ed2c9004dff7622f86bac78194f4c7f0aeb8bb38bf"
+    },
+    {
+      "initial": {
+        "reaction": 36,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 211,
+      "done": true,
+      "handoff": false,
+      "sha256": "608e2e63cd2bcd38e70cdcbd96a013ac55c31f982dae885fb88e44b0f34203f5"
+    },
+    {
+      "initial": {
+        "reaction": 8228,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 436,
+      "done": true,
+      "handoff": false,
+      "sha256": "8e54c768df1c92b4f6dc887c2041c2b661afbdb8839d0c430580b598ac66e72e"
+    },
+    {
+      "initial": {
+        "reaction": 36,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 131,
+      "done": true,
+      "handoff": false,
+      "sha256": "ead87c3c93f29be45516206f7ddf14942f8bf457d557364e6186961c6bc9958e"
+    },
+    {
+      "initial": {
+        "reaction": 36,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 211,
+      "done": true,
+      "handoff": false,
+      "sha256": "85cf205492d78c1dc1b206d998131f015495a9ee2ad869b5b387f0b98bae70dd"
+    },
+    {
+      "initial": {
+        "reaction": 8228,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 436,
+      "done": true,
+      "handoff": false,
+      "sha256": "33361c7ac2461bd99b9c7f7ffe418dd108b6c7f40c6b05f0ce370bf66fa5c33e"
+    },
+    {
+      "initial": {
+        "reaction": 37,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 129,
+      "done": true,
+      "handoff": false,
+      "sha256": "8aea8ceeb80247175e1d99c4fb7a9f5c898cb9952dcd1d631730e9de080b9e24"
+    },
+    {
+      "initial": {
+        "reaction": 37,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 209,
+      "done": true,
+      "handoff": false,
+      "sha256": "dcedb97659e62e6f4119082501dd223f28e409c131e2dd6f354ace1186645453"
+    },
+    {
+      "initial": {
+        "reaction": 8229,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 305,
+      "done": true,
+      "handoff": false,
+      "sha256": "8f69ed84dbe904f4165bf0f4d805f7ce78caba23063213958c9a85a81777a539"
+    },
+    {
+      "initial": {
+        "reaction": 37,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 129,
+      "done": true,
+      "handoff": false,
+      "sha256": "e1830d8becffe543fc3761f8ba45d9a6271728aedfa6820d1a13416ab4117546"
+    },
+    {
+      "initial": {
+        "reaction": 37,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 209,
+      "done": true,
+      "handoff": false,
+      "sha256": "3d67c3b7e3af72272c111664f86eed2f044277f0a950f8d1e919eb26e3379957"
+    },
+    {
+      "initial": {
+        "reaction": 8229,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 305,
+      "done": true,
+      "handoff": false,
+      "sha256": "d2d5a4ce33f2c73629d868a509b05f84e3749ab849076b6affddcc35a1227e06"
+    },
+    {
+      "initial": {
+        "reaction": 37,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 129,
+      "done": true,
+      "handoff": false,
+      "sha256": "e8491ffbeb86cf76febc2ad3bf6663c0f54b86208d011768f116b43eff4d2b44"
+    },
+    {
+      "initial": {
+        "reaction": 37,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 209,
+      "done": true,
+      "handoff": false,
+      "sha256": "534cfd498bcedb039ac513cc15cdef6e0e4d47715969bfad4ba798ec7f8cf185"
+    },
+    {
+      "initial": {
+        "reaction": 8229,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 305,
+      "done": true,
+      "handoff": false,
+      "sha256": "a6ba59fb91de71c1575608703fdd04d9c95d22fad1bf66f6111e5b9a081e1484"
+    },
+    {
+      "initial": {
+        "reaction": 37,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 129,
+      "done": true,
+      "handoff": false,
+      "sha256": "8670e0c638fcc6b16fa1212c6393b3af225f5678ad376e59c2fc2ce7eed87e66"
+    },
+    {
+      "initial": {
+        "reaction": 37,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 209,
+      "done": true,
+      "handoff": false,
+      "sha256": "10ffe03190b4a081ad42f64968915999b83bacf1cd88cbfd75f9e265f7402d56"
+    },
+    {
+      "initial": {
+        "reaction": 8229,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 305,
+      "done": true,
+      "handoff": false,
+      "sha256": "cbbcec0aeb1b3fb4f3013a08abe9805d9847a8be86ac69059d1e0d9b119cc191"
+    },
+    {
+      "initial": {
+        "reaction": 37,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 129,
+      "done": true,
+      "handoff": false,
+      "sha256": "96adfe48bdc9a468f7d4b19e418931d3308aac73d4c8edc471faa86bc5cd4dd9"
+    },
+    {
+      "initial": {
+        "reaction": 37,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 209,
+      "done": true,
+      "handoff": false,
+      "sha256": "2159d4adf276671ac180436bbc9e1c3803a0db25508d63964d8de155d23bcd70"
+    },
+    {
+      "initial": {
+        "reaction": 8229,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 305,
+      "done": true,
+      "handoff": false,
+      "sha256": "66c4a2d00049b813603f183ba8236aef4fbbd10db718ed70c53b8945cd4c71a3"
+    },
+    {
+      "initial": {
+        "reaction": 37,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 129,
+      "done": true,
+      "handoff": false,
+      "sha256": "098bbf353c376fd395f9fc7455788af9175fea788418e088f99f8ec1d27ef585"
+    },
+    {
+      "initial": {
+        "reaction": 37,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 209,
+      "done": true,
+      "handoff": false,
+      "sha256": "d94e3e58d0a8f33963fe876d8c6d15b4189fe4834de1325cf48c14803d39b36d"
+    },
+    {
+      "initial": {
+        "reaction": 8229,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 305,
+      "done": true,
+      "handoff": false,
+      "sha256": "d917187aff1bdc50f8e52001d85f2784a61ab44fe040cd155596a43efebadd65"
+    },
+    {
+      "initial": {
+        "reaction": 38,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 139,
+      "done": true,
+      "handoff": false,
+      "sha256": "1e8ddb2c25b30c5980536c761cbaf339212392faa0b62a58b8c206a47b9c80b3"
+    },
+    {
+      "initial": {
+        "reaction": 38,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 219,
+      "done": true,
+      "handoff": false,
+      "sha256": "2cd37bf5f2e15542638fa5f0ee9839300926f9de87042742f022525529ec77f7"
+    },
+    {
+      "initial": {
+        "reaction": 8230,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 444,
+      "done": true,
+      "handoff": false,
+      "sha256": "b0f409007dd25b36cbaed28173d36718c738f46121992e6f7b93677b233b6106"
+    },
+    {
+      "initial": {
+        "reaction": 38,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 139,
+      "done": true,
+      "handoff": false,
+      "sha256": "1932e915ce7b7c22f5c95c76918cae6ee260f2abfe6506623dffab095fba2858"
+    },
+    {
+      "initial": {
+        "reaction": 38,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 219,
+      "done": true,
+      "handoff": false,
+      "sha256": "f90073db28b9b40f360ca82aa363f47b44debb1602cc8d2269c179557c3ccdd9"
+    },
+    {
+      "initial": {
+        "reaction": 8230,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 444,
+      "done": true,
+      "handoff": false,
+      "sha256": "c220d0237aad18ad9a938788994ce57cc254a3a498bb8bb9646553295874210d"
+    },
+    {
+      "initial": {
+        "reaction": 38,
+        "facing": 0,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 139,
+      "done": true,
+      "handoff": false,
+      "sha256": "a5d06ba5f28a30e766546f716b83548afd3c4874907a15f3a1f03a6466b2180a"
+    },
+    {
+      "initial": {
+        "reaction": 38,
+        "facing": 0,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 219,
+      "done": true,
+      "handoff": false,
+      "sha256": "b453fa6cf65e4f4719a382f0d1cd39d456e7c32b4df5feada38a323386817b15"
+    },
+    {
+      "initial": {
+        "reaction": 8230,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 32768,
+        "mode": 0
+      },
+      "count": 444,
+      "done": true,
+      "handoff": false,
+      "sha256": "3c779e82e58b317b566a23d4a443a0086ccaf66529e86bf5e7d8f48d9b4c347f"
+    },
+    {
+      "initial": {
+        "reaction": 38,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 139,
+      "done": true,
+      "handoff": false,
+      "sha256": "ef53e22356216f2645aecf8ec87e4ec96dfb01adaef1c1cb1d11ac4363b7ac97"
+    },
+    {
+      "initial": {
+        "reaction": 38,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 219,
+      "done": true,
+      "handoff": false,
+      "sha256": "b6f985d531973ec445959780b26142252bd3e8fe5020b1e9e206453c49430965"
+    },
+    {
+      "initial": {
+        "reaction": 8230,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 31134260,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 444,
+      "done": true,
+      "handoff": false,
+      "sha256": "6e59f3bceec3fa9d64890bb666891187b132e36f3f6b7112571e8ea64e47bdab"
+    },
+    {
+      "initial": {
+        "reaction": 38,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 139,
+      "done": true,
+      "handoff": false,
+      "sha256": "6e346336146098177ab1741edeb8ec12f0c306ecdb658021b8d7229664bf7fef"
+    },
+    {
+      "initial": {
+        "reaction": 38,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 219,
+      "done": true,
+      "handoff": false,
+      "sha256": "cbc64c0b321464d19a5f7f4429d6cedf63294f944ce264940f5a848b83f136a8"
+    },
+    {
+      "initial": {
+        "reaction": 8230,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 444,
+      "done": true,
+      "handoff": false,
+      "sha256": "dcc4498e09d0fba1165f9b37ca0b48aafd6418ce5fcabb91f3bedf9cc4a9eb3b"
+    },
+    {
+      "initial": {
+        "reaction": 38,
+        "facing": 32768,
+        "severity": 0,
+        "health": 90,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 139,
+      "done": true,
+      "handoff": false,
+      "sha256": "f9d881789f4c2d609ac93127c8fc3cb2bbfc006764bab241bf93ea4a46d3d3c1"
+    },
+    {
+      "initial": {
+        "reaction": 38,
+        "facing": 32768,
+        "severity": 1,
+        "health": 45,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 219,
+      "done": true,
+      "handoff": false,
+      "sha256": "7ddb41b3667116db6c461f4744586d768261573368e1103c459feaf53e34e638"
+    },
+    {
+      "initial": {
+        "reaction": 8230,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 51778100,
+        "yFixed": 22042232,
+        "zFixed": 25174853,
+        "attackerFacing": 0,
+        "mode": 0
+      },
+      "count": 444,
+      "done": true,
+      "handoff": false,
+      "sha256": "7f33fbd2c5e3aa008c12a645ff37fe7d0e55453d15a65207cdeed426ab533c11"
+    },
+    {
+      "initial": {
         "reaction": 41,
         "facing": 0,
         "severity": 0,
@@ -1951,6 +3571,82 @@
     },
     {
       "initial": {
+        "reaction": 8206,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 18634360,
+        "zFixed": 23077701,
+        "attackerFacing": 32768,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 190,
+      "done": true,
+      "handoff": false,
+      "sha256": "adc614d0e4f9b99f41a33cbb2bb1726b17429c52dd79f75ca56bb477f17bdbb4"
+    },
+    {
+      "initial": {
+        "reaction": 8206,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 26498680,
+        "zFixed": 23077701,
+        "attackerFacing": 32768,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 190,
+      "done": true,
+      "handoff": false,
+      "sha256": "a43c827296f4c25c88cc653df59a44bccdd7f4bc6e9ba6641b3d2fd8c1e081d8"
+    },
+    {
+      "initial": {
+        "reaction": 8206,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 18634360,
+        "zFixed": 23077701,
+        "attackerFacing": 0,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 190,
+      "done": true,
+      "handoff": false,
+      "sha256": "61cd19af9a65ee306e797c8cdeef0c7f1e1f3e5187df3c43faefccf62e92b0d6"
+    },
+    {
+      "initial": {
+        "reaction": 8206,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 26498680,
+        "zFixed": 23077701,
+        "attackerFacing": 0,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 190,
+      "done": true,
+      "handoff": false,
+      "sha256": "d8912d7a291298a799f6549eadff6e89a6400d25c2b2f43b3805554142b0ab63"
+    },
+    {
+      "initial": {
         "reaction": 8211,
         "facing": 0,
         "severity": 2,
@@ -2179,6 +3875,82 @@
     },
     {
       "initial": {
+        "reaction": 8225,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 18634360,
+        "zFixed": 23077701,
+        "attackerFacing": 32768,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 126,
+      "done": true,
+      "handoff": false,
+      "sha256": "0784952ac898886406620d77312f7a62f550b3be88c354977b0c84ce138d48e3"
+    },
+    {
+      "initial": {
+        "reaction": 8225,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 26498680,
+        "zFixed": 23077701,
+        "attackerFacing": 32768,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 126,
+      "done": true,
+      "handoff": false,
+      "sha256": "d572554ace7c417ce9f141c360143a26714c5dd847522e6de0d8965fa4020e84"
+    },
+    {
+      "initial": {
+        "reaction": 8225,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 18634360,
+        "zFixed": 23077701,
+        "attackerFacing": 0,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 126,
+      "done": true,
+      "handoff": false,
+      "sha256": "ee6f7c930ffa079ccdcf7e0bc7f17b6853f192a9f8b79173f7530991d9a1b9b7"
+    },
+    {
+      "initial": {
+        "reaction": 8225,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 26498680,
+        "zFixed": 23077701,
+        "attackerFacing": 0,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 126,
+      "done": true,
+      "handoff": false,
+      "sha256": "e48b88dd95c2f2de13f0a5c4e94ecd600b3dde156793da1a4249cd8480fc5298"
+    },
+    {
+      "initial": {
         "reaction": 8226,
         "facing": 0,
         "severity": 2,
@@ -2328,6 +4100,234 @@
       "done": true,
       "handoff": false,
       "sha256": "f11dee09400b198119bdca972f859b24889f831f402460b7321fd8ca22badc81"
+    },
+    {
+      "initial": {
+        "reaction": 8228,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 18634360,
+        "zFixed": 23077701,
+        "attackerFacing": 32768,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 142,
+      "done": true,
+      "handoff": false,
+      "sha256": "b36fd915537cb7db3958347da8184caed66d1cf89a7806489cf03a856edce747"
+    },
+    {
+      "initial": {
+        "reaction": 8228,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 26498680,
+        "zFixed": 23077701,
+        "attackerFacing": 32768,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 142,
+      "done": true,
+      "handoff": false,
+      "sha256": "6992b7172a1afefcc351a8fd4699a0f750b57dd3ae130fb99b01df5037d54c8b"
+    },
+    {
+      "initial": {
+        "reaction": 8228,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 18634360,
+        "zFixed": 23077701,
+        "attackerFacing": 0,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 142,
+      "done": true,
+      "handoff": false,
+      "sha256": "d5f4eb8d52e790ef55b647465a538199e03cc1dedce7432df0356efb86b2e089"
+    },
+    {
+      "initial": {
+        "reaction": 8228,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 26498680,
+        "zFixed": 23077701,
+        "attackerFacing": 0,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 142,
+      "done": true,
+      "handoff": false,
+      "sha256": "55a7f44b01bb717566e6efb7b4d88f968d30b8dc701a81ebfce04784df74f0fc"
+    },
+    {
+      "initial": {
+        "reaction": 8229,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 18634360,
+        "zFixed": 23077701,
+        "attackerFacing": 32768,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 150,
+      "done": true,
+      "handoff": false,
+      "sha256": "44a53efb213e1d3a3fdb1f4a1f3c72fcf84e78ab0669d6c4a71ebf6c528c69db"
+    },
+    {
+      "initial": {
+        "reaction": 8229,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 26498680,
+        "zFixed": 23077701,
+        "attackerFacing": 32768,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 150,
+      "done": true,
+      "handoff": false,
+      "sha256": "61245b86d0f8e6501595951821a9cb4559af7490cfbe25958086793eaef23be0"
+    },
+    {
+      "initial": {
+        "reaction": 8229,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 18634360,
+        "zFixed": 23077701,
+        "attackerFacing": 0,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 150,
+      "done": true,
+      "handoff": false,
+      "sha256": "085eba4291b3a56505b0048aaa130bffc8c13cf3630ea046b2cf28a49258f8ec"
+    },
+    {
+      "initial": {
+        "reaction": 8229,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 26498680,
+        "zFixed": 23077701,
+        "attackerFacing": 0,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 150,
+      "done": true,
+      "handoff": false,
+      "sha256": "402465363b546937cba5936bc5e27043a87e39bb2f743c7c72964abd8928dcb4"
+    },
+    {
+      "initial": {
+        "reaction": 8230,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 18634360,
+        "zFixed": 23077701,
+        "attackerFacing": 32768,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 158,
+      "done": true,
+      "handoff": false,
+      "sha256": "9314afd7b6476af345021e2e8890529f375966e72fd436c893f08db7265d5382"
+    },
+    {
+      "initial": {
+        "reaction": 8230,
+        "facing": 0,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 26498680,
+        "zFixed": 23077701,
+        "attackerFacing": 32768,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 158,
+      "done": true,
+      "handoff": false,
+      "sha256": "16313fea7af9a2558da324865d4d348573a8b8c0de240262bb037e3ace54150e"
+    },
+    {
+      "initial": {
+        "reaction": 8230,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 18634360,
+        "zFixed": 23077701,
+        "attackerFacing": 0,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 158,
+      "done": true,
+      "handoff": false,
+      "sha256": "60509c7f26b600a622ebcb4838b0a5d9773417b5e89581473a952460634ec048"
+    },
+    {
+      "initial": {
+        "reaction": 8230,
+        "facing": 32768,
+        "severity": 2,
+        "health": 20,
+        "maximumHealth": 100,
+        "xFixed": 41947700,
+        "yFixed": 26498680,
+        "zFixed": 23077701,
+        "attackerFacing": 0,
+        "mode": 0,
+        "mashEvery": 4
+      },
+      "count": 158,
+      "done": true,
+      "handoff": false,
+      "sha256": "e48dec49981c571c17d645aae56df247b550fdb5fa1834cf98af21cf8fd104ff"
     },
     {
       "initial": {

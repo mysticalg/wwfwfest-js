@@ -28,11 +28,11 @@ for(let index=0;index<32768;index++){
  collisionHash.update(JSON.stringify([memory[actor+0x36],memory[actor+0x37],word(actor+0x38),word(actor+0x3a),word(actor+0x3c)])+'\n');
 }
 const cases=[];
-for(const reaction of [19,21,22,34,35,41])for(const facing of [0,0x8000])for(const x of [475,640,790])for(const severity of [0,1,2]){
+for(const reaction of [14,19,21,22,33,34,35,36,37,38,41])for(const facing of [0,0x8000])for(const x of [475,640,790])for(const severity of [0,1,2]){
  cases.push({reaction:reaction|(severity===2?0x2000:0),facing,severity,health:[90,45,20][severity],maximumHealth:100,
   xFixed:x*65536+0x1234,yFixed:336*65536+0x5678,zFixed:384*65536+0x2345,attackerFacing:facing^0x8000,mode:0});
 }
-for(const reaction of [19,21,22,34,35,41])for(const facing of [0,0x8000])for(const y of [284,404]){
+for(const reaction of [14,19,21,22,33,34,35,36,37,38,41])for(const facing of [0,0x8000])for(const y of [284,404]){
  cases.push({reaction:reaction|0x2000,facing,severity:2,health:20,maximumHealth:100,xFixed:640*65536+0x1234,
   yFixed:y*65536+0x5678,zFixed:352*65536+0x2345,attackerFacing:facing^0x8000,mode:0,mashEvery:4});
 }
@@ -46,6 +46,9 @@ for(const initial of cases){
  memory.fill(0,0x1c0000,0x1c4000);memory[actor]=128;putWord(0x1c007c,1);memory[0x1c0161]=initial.mode;
  putWord(0x1c17e6,461);putWord(0x1c17ee,577);putLong(actor+0x26,attacker);putLong(actor+0x7a,attacker);
  putLong(attacker+0x26,actor);putWord(attacker+0x2e,initial.attackerFacing);
+ if((initial.reaction&255)===14){
+  putLong(actor+0x92,attacker);putLong(attacker+6,initial.xFixed);putLong(attacker+10,initial.yFixed);putLong(attacker+14,initial.zFixed-72*65536);
+ }
  putWord(actor+0x20,4);putWord(actor+0x1c,0x8005);putWord(actor+0x64,initial.reaction);putWord(actor+4,initial.facing);putWord(actor+0x90,initial.facing);
  for(const[key,offset]of [['xFixed',6],['yFixed',10],['zFixed',14]])putLong(actor+offset,initial[key]);
  for(const[key,offset]of [['facing',0x2e],['severity',0x70],['health',0x66],['maximumHealth',0x72]])putWord(actor+offset,initial[key]);

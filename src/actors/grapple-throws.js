@@ -122,6 +122,172 @@ export function stepGrappleThrow(actor,peer,initialized) {
       }
       if(complete()){clearOffset(actor);actor.change(0);actor.clock.pose=actor.facing;actor.requestPin();actor.unlinkMarked=true;}
     }
+  }else if(action===25){ // $014246
+    if(!initialized){
+      actor.movementMode=0;peer.change(255);offset(actor,'x',46);offset(actor,'y',78);
+      if(!actor.contest(1,actor.attempt(0xf4)))actor.change(5,131);
+      else{actor.placePeer(peer,240);actor.announce(7);}
+    }else{
+      if(at(3))offset(actor,'x',127);
+      if(at(2))actor.profile(22);
+      if(at(3)&&!(actor.world.mode&2)){
+        actor.probe(128);
+        if(actor.collision.kind&3){
+          actor.action|=0x8000;actor.clock.pose=509|actor.facing;release(peer,0x2025);peer.holdFlags=0;peer.facing^=0x8000;
+          actor.placePeer(peer,128,1,57);actor.ropeImpact();unpair(actor,peer);
+        }
+      }
+      if(actor.collision.flags&16){actor.landingSound();actor.movementMode=0;actor.clock.remaining=0;actor.world.shake=14;}
+      if(at(5)){
+        if(!(actor.action&0x8000)){
+          release(peer,0x2021);opposite(actor,peer);actor.placePeer(peer,240,1);unpair(actor,peer);
+        }
+        peer.hitCounter=(peer.hitCounter+5)&255;peer.flags32|=8;actor.partnerSupport(peer);actor.requestPin();
+        peer.pendingDamage=20;actor.sounds.push(50);
+      }else{
+        if(at(6)){clearOffset(actor);move(actor,48);}
+        if(complete()){
+          actor.change(7);actor.requestPin();actor.clock.pose=104^actor.facing;actor.unlinkMarked=true;return descriptor;
+        }
+      }
+      if(actor.action&0x8000)descriptor=actorTables.grappleThrowVariants.wallSlam;
+    }
+  }else if(action===38){ // $015498
+    if(!initialized){
+      actor.movementMode=0;peer.change(255);
+      if(!actor.contest(1,actor.attempt(0xf8)))actor.change(5,133);
+      else{actor.profile(18);actor.movementMode=0;actor.announce(20);}
+    }else if(at(1)){actor.movementMode=2;actor.flags33|=8;}
+    else if(actor.clock.index===3&&(actor.collision.flags&16)){
+      actor.landingSound();actor.world.shake=14;actor.movementMode=0;actor.clock.remaining=0;
+    }else{
+      if(at(4)){
+        release(peer,0x2005);actor.partnerSupport(peer);peer.pendingDamage=22;actor.sounds.push(50);peer.flags32|=8;
+        peer.hitCounter=(peer.hitCounter+5)&255;actor.placePeer(peer,112,-1,32);unpair(actor,peer);actor.clock.pose=31^actor.facing;
+      }
+      if(complete()){actor.change(7);actor.requestPin();actor.unlinkMarked=true;actor.clock.pose=104^actor.facing;}
+    }
+  }else if(action===43){ // $0158da
+    if(!initialized){
+      actor.movementMode=0;
+      if(!peer||peer.unlinkMarked||peer.auxiliary!==actor){actor.unlinkMarked=true;actor.change(0);return actorTables.grappleAnimations.hidden;}
+      peer.change(255);offset(actor,'x',176);offset(actor,'y',80);
+      if(!actor.contest(1,actor.attempt(0xec))){actor.change(5,127);return descriptor;}
+      if(actor.timer){
+        actor.clock.flags|=0x8000;actor.clock.index=actor.clock.remaining=0;actor.facing^=0x8000;actor.placePeer(peer,-160);
+        actor.flags33|=64;peer.flags33|=64;offset(actor,'x',240);
+      }
+      actor.announce(8);
+    }else{
+      if(at(3))actor.profile(30);
+      if(actor.clock.index===4&&!(actor.world.mode&2)){
+        actor.probe(-80);
+        if((actor.collision.flags&3)&&!(actor.action&0x8000)){
+          actor.action|=0x8000;actor.clock.pose=288|actor.facing;release(peer,0x2025);peer.flags32|=8;peer.holdFlags=1;
+          peer.pendingDamage=24;peer.facing^=0x8000;actor.placePeer(peer,actor.timer?-64:-112,1,64);actor.ropeImpact();unpair(actor,peer);
+        }
+      }
+      if(actor.clock.index===4&&(actor.collision.flags&16)){
+        actor.landingSound();actor.movementMode=0;actor.clock.remaining=0;actor.requestPin();actor.partnerSupport(peer);actor.world.shake=14;
+        if(!(actor.action&0x8000)){
+          release(peer,0x2024);peer.flags32|=8;peer.hitCounter=(peer.hitCounter+5)&255;peer.pendingDamage=24;actor.sounds.push(50);
+          actor.placePeer(peer,actor.timer?-128:-176,1,32);unpair(actor,peer);return descriptor;
+        }
+      }
+      if(complete()){
+        clearOffset(actor);actor.change(7);move(actor,-112);actor.unlinkMarked=true;actor.clock.pose=104^actor.facing;
+      }
+    }
+  }else if(action===47){ // $015ede
+    if(!initialized){
+      actor.movementMode=0;peer.change(255);actor.nudge(48);
+      if(!actor.contest(1,actor.attempt(0xf0))){actor.change(5,129);return descriptor;}
+      actor.announce(38);actor.holdFlags=2;actor.nudge(64);
+    }else{
+      if(at(1))offset(actor,'y',48);
+      if(at(3)){
+        actor.holdFlags=(actor.holdFlags-1)&65535;
+        if(actor.holdFlags){actor.clock.index=1;actor.clock.remaining=0;}
+        else if(actor.type===5){
+          clearOffset(actor);release(peer,0x2016);peer.flags32|=8;peer.hitCounter=(peer.hitCounter+1)&255;
+          peer.yFixed=addPositionWord(peer.yFixed,-1);peer.pendingDamage=22;actor.sounds.push(50);actor.requestPin();
+          peer.facing^=0x8000;actor.placePeer(peer,-16,0,64);
+        }else{
+          unpair(actor,peer);actor.partnerSupport(peer);release(peer,0x2026);peer.facing^=0x8000;peer.flags32|=8;
+          peer.pendingDamage=22;peer.hitCounter=(peer.hitCounter+5)&255;actor.placePeer(peer,32,1,80);
+        }
+      }
+      if(at(4)){clearOffset(actor);move(actor,32);}
+      if(complete()){actor.change(0);actor.unlinkMarked=true;return descriptor;}
+    }
+    if(actor.type!==1)descriptor=actorTables.grappleThrowVariants.alternateLift;
+  }else if(action===48){ // $016088
+    if(!initialized){
+      actor.movementMode=0;offset(actor,'y',32);
+      if(!peer||peer.unlinkMarked||peer.auxiliary!==actor){actor.unlinkMarked=true;actor.change(0);return actorTables.grappleAnimations.hidden;}
+      peer.change(255);
+      if(!actor.contest(1,actor.attempt(0xea))){actor.change(5,126);return descriptor;}
+      if(actor.timer){
+        actor.clock.flags|=0x8000;actor.clock.index=actor.clock.remaining=0;
+        peer.facing=(peer.facing&255)|(actor.facing&0xff00);actor.facing^=0x8000;
+        actor.xFixed=addPositionWord(actor.xFixed,(peer.xFixed>>>16)-(actor.xFixed>>>16));move(actor,-24);actor.nudge(-56);
+      }
+      actor.announce(4);
+    }else{
+      if(at(2))offset(actor,'x',224);
+      if(at(3))actor.sounds.push(43);
+      if(at(4)){
+        offset(actor,'x',0);release(peer,0x2013);peer.hitCounter=(peer.hitCounter+5)&255;actor.partnerSupport(peer);
+        peer.pendingDamage=actor.type===0||actor.type===5?19:17;actor.sounds.push(50);peer.flags32|=8;
+        actor.placePeer(peer,80,0,16);unpair(actor,peer);
+      }
+      if(complete()){
+        actor.change(0);move(actor,-56);actor.requestPin();actor.facing^=0x8000;actor.clock.pose=actor.facing;clearOffset(actor);actor.unlinkMarked=true;
+      }
+    }
+  }else if(action===51){ // $0164c2
+    if(!initialized){
+      actor.movementMode=0;peer.change(255);offset(actor,'x',64);offset(actor,'y',64);
+      if(!actor.contest(1,actor.attempt(0xf6)))actor.change(5,132);
+      else{actor.placePeer(peer,256,0,16);actor.announce(7);}
+    }else{
+      if(at(0))offset(actor,'x',76);
+      if(at(2))actor.profile(22);
+      if(actor.clock.index===3&&!(actor.world.mode&2)){
+        actor.probe(128);
+        if((actor.collision.flags&3)&&!(actor.action&0x8000)){
+          actor.action|=0x8000;actor.clock.pose=309|actor.facing;actor.clock.index=3;actor.clock.remaining=0xff00;
+          release(peer,0x2025);peer.flags32|=8;peer.holdFlags=0;peer.pendingDamage=18;peer.facing^=0x8000;
+          actor.placePeer(peer,128,1,64);actor.ropeImpact();unpair(actor,peer);
+        }
+      }
+      if(actor.clock.index===3&&(actor.collision.flags&16)){
+        actor.landingSound();actor.movementMode=0;actor.clock.remaining=0;actor.partnerSupport(peer);actor.requestPin();actor.sounds.push(50);actor.world.shake=14;
+        if(!(actor.action&0x8000)){
+          release(peer,0x2005);peer.flags32|=8;peer.hitCounter=(peer.hitCounter+5)&255;peer.pendingDamage=18;
+          actor.placePeer(peer,176,0,16);unpair(actor,peer);actor.clock.pose=31^actor.facing;
+        }
+      }
+      if(complete()){clearOffset(actor);actor.change(7);move(actor,32);actor.unlinkMarked=true;actor.clock.pose=104^actor.facing;}
+    }
+  }else if(action===67){ // $01777c, ending through $015e22
+    if(!initialized){
+      actor.movementMode=0;peer.change(255);offset(actor,'x',48);offset(actor,'y',80);
+      if(!actor.contest(1,actor.attempt(0xee)))actor.change(5,128);else{actor.announce(34);actor.placePeer(peer,192);}
+    }else{
+      if(at(1))offset(actor,'x',64);
+      if(at(2)){actor.profile(9);actor.paddingX=80;}
+      if(actor.clock.index===5&&(actor.collision.flags&16)){
+        actor.movementMode=0;actor.clock.remaining=0;actor.paddingX=0;actor.landingSound();actor.world.shake=14;
+      }
+      if(complete()){
+        peer.pendingDamage=24;peer.facing^=0x8000;actor.placePeer(peer,128,-1);move(actor,96);actor.requestPin();
+        clearOffset(actor);actor.change(7);actor.requestPin();actor.clock.pose=104^actor.facing;
+        release(peer,0x2006);peer.pendingDamage=16;actor.partnerSupport(peer);peer.hitCounter=(peer.hitCounter+5)&255;
+        peer.clock.pose=(peer.clock.pose&255)|(actor.facing&0xff00);peer.facing^=0x8000;peer.flags32|=8;
+        actor.sounds.push(50);actor.unlinkMarked=true;unpair(actor,peer);
+      }
+    }
   }
   return descriptor;
 }

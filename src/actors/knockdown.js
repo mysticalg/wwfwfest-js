@@ -16,11 +16,11 @@ export class Knockdown {
     mash = 0, cameraY = 0x241, movementMode = 0, speed = 0, direction = 0,
     state = 4, clock, flags34 = 0, velocityX = 0, velocityY = 0, velocityZ = 0, gravity = 0,
     captureTimer = 0, attacker = null, holdFlags=0, forced=0,comboCount=0,comboTimer=0,
-    auxiliary=null,unlinkMarked=false,linkIdentity=null,
+    auxiliary=null,unlinkMarked=false,linkIdentity=null,motionLink=null,
     world={mode:0,scene:0,rope:[0,0,0,0]}} = {}) {
     Object.assign(this, {xFixed, yFixed, zFixed, facing, health, maximumHealth, severity,
       flags32, flags33, flags56, flags34, recoveryTimer, mash, cameraY, captureTimer, attacker,holdFlags,world,forced,comboCount,comboTimer,
-      auxiliary,unlinkMarked,linkIdentity});
+      auxiliary,unlinkMarked,linkIdentity,motionLink});
     this.world.rope??=[0,0,0,0];
     this.world.mode??=0;this.world.scene??=0;
     this.state = state;
@@ -58,9 +58,11 @@ export class Knockdown {
   }
 
   collisionAt(paddingX = this.paddingX, paddingY = this.paddingY) {
-    return (this.flags33&4?outsideRingCollision:insideRingCollision)({x: this.xFixed >>> 16, y: this.yFixed >>> 16, z: this.zFixed >>> 16,
+    const result=(this.flags33&4?outsideRingCollision:insideRingCollision)({x: this.xFixed >>> 16, y: this.yFixed >>> 16, z: this.zFixed >>> 16,
       facing: this.facing, flags32: this.flags32, paddingX, paddingY, paddingZ: this.paddingZ,
       kind: this.collision.kind, flags: this.collision.flags});
+    if(!arguments.length&&!(this.flags32&32)&&(this.facing&0x8000))this.paddingX=u16(-paddingX);
+    return result;
   }
 
   profile(index) {
@@ -73,6 +75,7 @@ export class Knockdown {
   nudgeX(padding) {
     const correction = this.collisionAt(padding);
     this.collision={...correction,kind:this.collision.kind,flags:this.collision.flags};
+    this.paddingX=0;
     if (correction.flags & 3) this.velocityX = 0;
     this.xFixed = addPositionWord(this.xFixed, correction.x);
   }
@@ -100,6 +103,7 @@ export class Knockdown {
   }
 
   step({pressed = 0, pinned = false, linkedFlags34 = 0} = {}) {
+    this.pressedButtons=pressed;
     this.sounds = [];
     this.ropeEvents=[];
     if(this.pendingTransition)return this;
@@ -231,6 +235,7 @@ export class Knockdown {
         if (!initialized) {
           this.movementMode = 0;
           this.flags33 &= ~0x58;
+          this.action&=0x7fff;
           this.comboReset = true;
           this.comboCount=this.comboTimer=0;
           if (!this.recoveryTimer) {

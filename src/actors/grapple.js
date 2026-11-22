@@ -1,9 +1,10 @@
 import {actorTables} from '../data/actor-tables.js';
-import {addPositionWord,insideRingCollision} from './ring-collision.js';
+import {addPositionWord,insideRingCollision,outsideRingCollision} from './ring-collision.js';
 import {ActorAnimation} from './animation.js';
 import {stepMovement,walkSpeed} from './movement.js';
 import {projectionSnapshot} from './projection.js';
 import {isGrappleThrow,stepGrappleThrow} from './grapple-throws.js';
+import {isGrappleCounter,stepGrappleCounter} from './grapple-counters.js';
 
 const u16 = value => value & 65535;
 
@@ -139,9 +140,11 @@ export class GrappleActor {
       xFixed:0,yFixed:0,zFixed:0x1400000,facing:0,movementMode:0,speed:0,direction:0,
       flags32:0,flags33:0,flags34:0,flags35:0,flags56:0,flags74:0,flagsB7:0,forced:0,
       holdFlags:0,timer:0,controlCounter:0,inputBlockA:0,inputBlockB:0,comboCount:0,comboTimer:0,pendingDamage:0,
-      hitCounter:0,contact:0,health:100,maximumHealth:100,severity:0,moveToggle:0,region:0,offsetX:0,offsetY:0,velocityX:0,velocityY:0,
+      hitCounter:0,contact:0,health:100,maximumHealth:100,severity:0,moveToggle:0,region:0,offsetX:0,offsetY:0,
+      paddingX:0,paddingY:0,paddingZ:0,velocityX:0,velocityY:0,
       velocityZ:0,gravity:0,auxiliary:null,unlinkMarked:false,sceneRefresh:0,
-      attempts:{},partner:null,world:{mode:0,round:0,inGame:true,message:0,shake:0},entropy:null},initial);
+      attempts:{},partner:null,motionLink:null,eliminations:0,
+      world:{mode:0,round:0,inGame:true,message:0,shake:0,scene:0,rope:[0,0,0,0]},entropy:null},initial);
     this.pendingState=!(this.state&0x8000);
     this.state&=255;
     this.clock=new ActorAnimation(initial.clock||{pose:initial.pose||0});
@@ -152,7 +155,7 @@ export class GrappleActor {
   get pendingTransition() {
     return ![11,12,255].includes(this.state)
       && !(this.state===4&&this.reaction===1)
-      && !(this.state===5&&([21,22,23,41,80,123,124].includes(this.action&255)||isGrappleThrow(this.action)));
+      && !(this.state===5&&([21,22,23,41,80,123,124].includes(this.action&255)||isGrappleThrow(this.action)||isGrappleCounter(this.action)));
   }
 
   // The byte tested at $b7 is the low half of the input-block word at $b6.
@@ -188,12 +191,29 @@ export class GrappleActor {
 
   nudge(paddingX) {
     const previous={kind:this.collision.kind,flags:this.collision.flags};
-    const correction=insideRingCollision({x:this.xFixed>>>16,y:this.yFixed>>>16,z:this.zFixed>>>16,
-      facing:this.facing,flags32:this.flags32,paddingX,...previous});
+    this.paddingX=u16(paddingX);
+    const correction=this.collisionAt();this.paddingX=0;
     // $00fda2 retains the pre-probe collision word but uses the probe corrections.
     if (correction.flags&3) this.velocityX=0;
     this.xFixed=addPositionWord(this.xFixed,correction.x);
     this.collision={...correction,...previous};
+  }
+
+  collisionAt() {
+    const result=(this.flags33&4?outsideRingCollision:insideRingCollision)({x:this.xFixed>>>16,y:this.yFixed>>>16,z:this.zFixed>>>16,
+      facing:this.facing,flags32:this.flags32,paddingX:this.paddingX,paddingY:this.paddingY,paddingZ:this.paddingZ,
+      kind:this.collision.kind,flags:this.collision.flags});
+    if(!(this.flags32&32)&&(this.facing&0x8000))this.paddingX=u16(-this.paddingX);
+    return result;
+  }
+
+  probe(paddingX) {
+    this.paddingX=u16(paddingX);this.collision=this.collisionAt();this.paddingX=0;return this.collision;
+  }
+
+  ropeImpact() {
+    const flags=this.collision.flags;
+    if(flags&3){const index=flags&2?0:2;this.world.rope[index]=this.world.rope[index+1]=1;}
   }
 
   placePeer(peer,x=0,y=0,z=0) {
@@ -254,8 +274,7 @@ export class GrappleActor {
     }
     this.collision={...this.collision,kind:0,flags:0};
     if(this.movementMode){
-      this.collision=insideRingCollision({x:this.xFixed>>>16,y:this.yFixed>>>16,z:this.zFixed>>>16,
-        facing:this.facing,flags32:this.flags32});
+      this.collision=this.collisionAt();
       for(const[key,delta]of [['xFixed','x'],['yFixed','y'],['zFixed','z']])this[key]=addPositionWord(this[key],this.collision[delta]);
     }
     const data=actorTables.grappleAnimations,peer=this.auxiliary;
@@ -307,7 +326,8 @@ export class GrappleActor {
     }else{
       const action=this.action&255;
       descriptor=data[({21:'hold',22:'carry',23:'whip',41:'clinchStrike',80:'break',123:'held',124:'escape'})[action]];
-      if(isGrappleThrow(action))descriptor=stepGrappleThrow(this,peer,initialized);
+      if(isGrappleCounter(action))descriptor=stepGrappleCounter(this,peer,initialized);
+      else if(isGrappleThrow(action))descriptor=stepGrappleThrow(this,peer,initialized);
       else if(action===41){
         if(!initialized){
           this.movementMode=0;this.holdFlags&=~0x8000;peer.holdFlags|=0x8000;peer.change(255);

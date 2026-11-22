@@ -55,17 +55,17 @@ export class Running {
     }
   }
 
-  step({mask = 0, stopRequested = false, forcedStop = false} = {}) {
+  step({mask = 0, stopRequested = false, forcedStop = false, sampleInput = true} = {}) {
     this.sounds = [];
     this.ropeEvents = [];
     if (this.done) return this;
-    this.input(mask, stopRequested);
+    if(sampleInput)this.input(mask, stopRequested);
     if (this.pendingState) {
       this.previousState = this.clock.flags & 255;
       this.clock.flags = this.state | (this.inputInitialized ? 0x4000 : 0);
       this.pendingState = false;
     }
-    this.collision = {kind: 0, flags: 0, x: 0, y: 0, z: 0};
+    this.collision = {...this.collision,kind: 0, flags: 0};
     if (this.movementMode) {
       this.collision = insideRingCollision({x: this.xFixed >>> 16, y: this.yFixed >>> 16,
         z: this.zFixed >>> 16, facing: this.facing, flags32: this.flags32});

@@ -24,13 +24,14 @@ function call(address,current=bases[0]){
 const bytes={movementMode:1,flags32:0x32,flags33:0x33,flags34:0x34,flags35:0x35,flags56:0x56,hitCounter:0xc7};
 const words={type:2,facing:0x2e,previousState:0x1e,speed:0x2a,direction:0x2c,holdFlags:0x44,timer:0x46,
  contact:0x4c,pendingDamage:0x68,velocityX:0x58,velocityY:0x5a,velocityZ:0x5c,gravity:0x5e,offsetX:0x18,offsetY:0x1a,
- forced:0xfe,action:0x60,reaction:0x64,severity:0x70,health:0x66,maximumHealth:0x72};
-const attemptOffsets=[0xe8,0xf2,0xfa];
-const actions=[2,24,36,40,44,50,52,58,66,68];
+ forced:0xfe,action:0x60,reaction:0x64,severity:0x70,health:0x66,maximumHealth:0x72,paddingX:0x3e,paddingY:0x40,paddingZ:0x42,eliminations:0xc4};
+const attemptOffsets=Array.from({length:11},(_,i)=>0xe8+i*2);
+const actions=process.env.ACTION_SET?JSON.parse(process.env.ACTION_SET):[2,24,25,36,38,40,43,44,47,48,50,51,52,58,66,67,68];
+const supportedActions=[2,24,25,36,38,40,43,44,47,48,50,51,52,58,66,67,68,6,...Array.from({length:11},(_,i)=>125+i)];
 const composed=Boolean(process.env.COMPOSE);
-const knockdowns=[1,2,3,4,5,6,7,8,9,11,12,13,16,18,19,21,22,23,24,25,27,29,34,35,41];
-const supported=(s,a,r)=>[11,12,255].includes(s)||(s===4&&r===1)||(s===5&&[21,22,23,41,80,123,124,...actions].includes(a&255))
- ||(composed&&(s===0||s===7||(s===4&&knockdowns.includes(r&255))||(s===5&&[56,120].includes(a))));
+const knockdowns=[1,2,3,4,5,6,7,8,9,11,12,13,14,16,18,19,21,22,23,24,25,27,29,33,34,35,36,37,38,41];
+const supported=(s,a,r)=>[11,12,255].includes(s)||(s===4&&r===1)||(s===5&&[21,22,23,41,80,123,124,...supportedActions].includes(a&255))
+ ||(composed&&([0,2,3,6,7].includes(s)||(s===4&&knockdowns.includes(r&255))||(s===5&&[56,120].includes(a))));
 function snapshot(index){
  const base=bases[index],result={state:word(base+0x20),clock:{flags:word(base+0x1c),remaining:word(base+0x22),index:word(base+0x24),pose:word(base+4)},
   xFixed:long(base+6),yFixed:long(base+10),zFixed:long(base+14),
@@ -38,16 +39,18 @@ function snapshot(index){
   projection:[word(base+0x14)<<16>>16,232-(word(base+0x16)<<16>>16)],
   collision:[memory[base+0x36],memory[base+0x37],word(base+0x38),word(base+0x3a),word(base+0x3c)],
   attempts:attemptOffsets.map(offset=>word(base+offset))};
+ result.motionLink=bases.includes(long(base+0x92))?bases.indexOf(long(base+0x92)):null;
  for(const[name,offset]of Object.entries(bytes))result[name]=memory[base+offset];
  for(const[name,offset]of Object.entries(words))result[name]=word(base+offset)&(composed&&name==='previousState'?255:65535);
  return result;
 }
 const cases=[];
-for(const action of actions)for(let type=0;type<12;type++)for(const facing of [0,0x8000])for(const x of [475,640,790]){
+for(const action of actions)for(const type of process.env.ACTION_SET?[0,1]:Array.from({length:12},(_,i)=>i))for(const facing of [0,0x8000])for(const x of [475,640,790]){
  cases.push({action,type,facing,x,variant:'human',attackerIndex:type&1,both:false});
 }
-for(const action of actions)for(const type of [0,5,7,8,9,11])for(const facing of [0,0x8000]){
- for(const variant of ['ai','opponentAI','rumble','large','counterWrap','highAction','partner','linked']){
+for(const action of actions)for(const type of process.env.ACTION_SET?[0,1]:[0,5,7,8,9,11])for(const facing of [0,0x8000]){
+ for(const variant of ['ai','opponentAI','rumble','large','counterWrap','highAction','partner','linked',
+  ...([43,48].includes(action)?['followUp','orphan','marked']:[])]){
   cases.push({action,type,facing,x:640,variant,attackerIndex:type&1,both:variant==='linked'});
  }
 }
@@ -59,24 +62,29 @@ for(const config of cases){
  const attackerAI=variant==='ai',targetAI=variant==='opponentAI'||variant==='rumble';
  const initial=[{type,state:5,action:action|(variant==='highAction'?0x8000:0),reaction:0,facing,
    xFixed:x*65536+0x1234,yFixed:336*65536+0x5678,zFixed:320*65536+0x2345,
-   movementMode:1,speed:47,direction:facing?64:192,flags32:0,flags33:attackerAI?65:67,flags34:0,flags35:0,
-   flags56:attackerAI?128:0,hitCounter:0,previousState:0,holdFlags:3,timer:0,contact:0,pendingDamage:0,
-   velocityX:0,velocityY:0,velocityZ:0,gravity:0,offsetX:0,offsetY:0,forced:0,severity:1,health:100,maximumHealth:100,
+   movementMode:action>=125?0:1,speed:47,direction:facing?64:192,flags32:0,flags33:attackerAI?65:67,flags34:0,flags35:0,
+   flags56:attackerAI?128:0,hitCounter:0,previousState:0,holdFlags:3,timer:variant==='followUp'?1:0,contact:0,pendingDamage:0,
+   velocityX:0,velocityY:0,velocityZ:0,gravity:0,offsetX:0,offsetY:0,forced:0,severity:1,health:100,maximumHealth:100,paddingX:0,paddingY:0,paddingZ:0,eliminations:0,
    clock:{flags:0x8005,remaining:7,index:1,pose:facing^249},attempts:Object.fromEntries(attemptOffsets.map(offset=>[offset,variant==='counterWrap'?65535:0]))},
   {type:variant==='large'?8:6,state:0x8005,action:123,reaction:0,facing:facing^0x8000,
    xFixed:x*65536+0xabcd,yFixed:336*65536+0x9876,zFixed:320*65536+0x4567,
    movementMode:0,speed:0,direction:0,flags32:0,flags33:targetAI?65:67,flags34:0,flags35:0,flags56:targetAI?128:0,
    hitCounter:0,previousState:0,holdFlags:100,timer:0,contact:0,pendingDamage:0,
-   velocityX:0,velocityY:0,velocityZ:0,gravity:0,offsetX:0,offsetY:0,forced:0,severity:1,health:100,maximumHealth:100,
+   velocityX:0,velocityY:0,velocityZ:0,gravity:0,offsetX:0,offsetY:0,forced:0,severity:1,health:100,maximumHealth:100,paddingX:0,paddingY:0,paddingZ:0,eliminations:0,
    clock:{flags:0x8005,remaining:0,index:0,pose:0xffff},attempts:Object.fromEntries(attemptOffsets.map(offset=>[offset,0]))}];
+ if(variant==='orphan'||variant==='marked'){
+  Object.assign(initial[1],{state:0x8000,action:0,clock:{flags:0x8000,remaining:0,index:0,pose:facing^0x8000},
+   ...(variant==='orphan'?{auxiliaryIndex:null}:{unlinkMarked:true})});
+ }
  if(attackerIndex)initial.reverse();
  memory.fill(0,0x1c0000,0x1c4000);cpu.d.fill(0);cpu.a.fill(0);
- const world={mode:variant==='rumble'?1:0,round:variant==='opponentAI'?4:0,inGame:true,message:0,shake:0,modeValue:1,scene:0,rope:[0,0,0,0]};
+ const world={mode:variant==='rumble'?1:0,round:variant==='opponentAI'?4:0,inGame:true,message:0,shake:0,modeValue:1,scene:0,rope:[0,0,0,0],secondaryShake:0};
  putWord(0x1c007c,1);memory[0x1c0161]=world.mode;putWord(0x1c0162,world.round);
  putWord(0x1c17e6,461);putWord(0x1c17ee,577);putLong(0x1c005c,type*0x12345+action*17+facing);
  const partnerInitial=[0,1].map(()=>({state:variant==='partner'?1:0,walkMode:1,flags34:0}));
  for(const[index,body]of initial.entries()){
-  const base=bases[index];memory[base]=128;putWord(base+0x20,body.state);putLong(base+0x26,bases[1-index]);
+  const base=bases[index];memory[base]=128;putWord(base+0x20,body.state);
+  putLong(base+0x26,body.auxiliaryIndex===null?0:bases[1-index]|(body.unlinkMarked?0x80000000:0));
   putLong(base+0x7a,bases[1-index]);putLong(base+0x86,partners[index]);
   for(const[name,offset]of Object.entries(bytes))memory[base+offset]=body[name];
   for(const[name,offset]of Object.entries(words))putWord(base+offset,body[name]);
@@ -85,10 +93,18 @@ for(const config of cases){
   putWord(base+0x90,body.clock.pose);for(const offset of attemptOffsets)putWord(base+offset,body.attempts[offset]);
   putWord(partners[index]+0x20,partnerInitial[index].state);memory[partners[index]+0xaf]=1;
  }
- const updateOrder=both||composed?[0,1]:[attackerIndex],hash=createHash('sha256'),rows=[],entropyFrames=[];
+ const updateOrder=both||composed?[0,1]:[attackerIndex],hash=createHash('sha256'),rows=[],entropyFrames=[],runInputs={};
  let boundary=null,count=0;
  for(let tick=0;tick<(composed?700:260);tick++){
   sounds.length=entropy.length=0;
+  if(composed){
+   const masks=[0,0];let sampled=false;
+   for(const[index,base]of bases.entries())if((word(base+0x20)&255)===2){
+    sampled=true;masks[index]=!word(base+0x44)&&(word(base+0x20)&0x8000)?word(base+0x2e)&0x8000?2:1:0;
+    putWord(base+0xa8,masks[index]);call(0xe58c,base);
+   }
+   if(sampled)runInputs[tick]=masks;
+  }
   for(const index of updateOrder){
    const base=bases[index],state=word(base+0x20);
    if(!supported(state&255,word(base+0x60),word(base+0x64))){boundary=index;break;}
@@ -102,14 +118,15 @@ for(const config of cases){
    for(const base of bases)if((word(base+4)&0x7fff)!==0x7fff&&(memory[base+0x26]&128)&&!word(base+0xfe))putLong(base+0x26,0);
   }
   const row={actors:bases.map((_,i)=>snapshot(i)),sounds:[...sounds],world:{...world,message:word(0x1c15d2),shake:word(0x1c1800),
-    rope:[word(0x1c1150),word(0x1c1180),word(0x1c11b0),word(0x1c11e0)]},
+    rope:[word(0x1c1150),word(0x1c1180),word(0x1c11b0),word(0x1c11e0)],secondaryShake:word(0x1c1802)},
    partners:partners.map(base=>memory[base+0x34])};
   entropyFrames.push([...entropy]);hash.update(JSON.stringify(row)+'\n');count++;
   if(process.env.DETAIL)rows.push(row);
   if(boundary!==null)break;
   if(composed&&bases.every(base=>word(base+0x20)===0x8000&&word(base+4)===word(base+0x2e)))break;
  }
- sequences.push({...config,composed,initial,world,partnerInitial,updateOrder,boundary,count,entropyFrames,sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
+ sequences.push({...config,composed,initial,world,partnerInitial,updateOrder,boundary,count,entropyFrames,
+  ...(composed?{runInputs}:{}),sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
 }
 writeFileSync(outputPath,JSON.stringify({source:'wwfwfest US rev 2, original attacker kernels and linked handoffs',sequences},null,2)+'\n');
 console.log(JSON.stringify({sequences:sequences.length,updates:sequences.reduce((sum,s)=>sum+s.count,0)}));

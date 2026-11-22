@@ -17,8 +17,10 @@ test('normal outside-ring collision matches 32,768 original probe and status cas
 });
 for(const fixture of fixtures.scenarios){
  test(`original grapple victim ${JSON.stringify(fixture.initial)}`,()=>{
-  const initial=fixture.initial,world={mode:initial.mode,scene:0,rope:[0,0,0,0]},attacker={facing:initial.attackerFacing,eliminations:0};
-  const body=new Knockdown({...initial,pose:initial.facing,clock:{flags:0x8005},world,attacker});
+  const initial=fixture.initial,world={mode:initial.mode,scene:0,rope:[0,0,0,0]},attacker={facing:initial.attackerFacing,eliminations:0,
+   xFixed:initial.xFixed,yFixed:initial.yFixed,zFixed:initial.zFixed-72*65536};
+  const body=new Knockdown({...initial,pose:initial.facing,clock:{flags:0x8005},world,attacker,motionLink:attacker});
+  attacker.auxiliary=body;
   const hash=createHash('sha256');let comboTimer=0;
   for(let tick=0;tick<fixture.count;tick++){
    body.step({pressed:initial.mashEvery&&tick%initial.mashEvery===0?1:0});

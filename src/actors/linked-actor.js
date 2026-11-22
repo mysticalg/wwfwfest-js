@@ -1,22 +1,50 @@
 import {GrappleActor} from './grapple.js';
 import {Knockdown} from './knockdown.js';
+import {Running} from './running.js';
 import {insideRingCollision,outsideRingCollision,addPositionWord} from './ring-collision.js';
 import {projectionSnapshot} from './projection.js';
+import {actorTables} from '../data/actor-tables.js';
 
-const knockdowns=[1,2,3,4,5,6,7,8,9,11,12,13,16,18,19,21,22,23,24,25,27,29,34,35,41];
+const knockdowns=[1,2,3,4,5,6,7,8,9,11,12,13,14,16,18,19,21,22,23,24,25,27,29,33,34,35,36,37,38,41];
 
 // Stable linked identities across the translated grapple/knockdown/idle states.
 // Unsupported move, counter and outside-state handoffs remain observable.
 export class LinkedActor extends GrappleActor {
   get pendingTransition() {
-    if(this.state===0||this.state===7)return false;
+    if([0,2,3,6,7].includes(this.state))return false;
     if(this.state===4&&knockdowns.includes(this.reaction&255))return false;
     if(this.state===5&&[56,120].includes(this.action))return false;
     return super.pendingTransition;
   }
 
+  change(state,action=this.action) { super.change(state,action);this.inputInitialized=false; }
+
+  // $00e58c belongs to the input phase, before either participant updates.
+  runInput(mask=0) {
+    if(this.state===2){
+      const initialized=Boolean(this.inputInitialized);
+      this.bounceCount=this.holdFlags;Running.prototype.input.call(this,mask,Boolean(this.flags34&2));
+      // $00e61e reads absolute $00a3, not the actor's sampled button byte.
+      if(initialized&&this.state===2&&(actorTables.runProximityInput&3)&&(this.world.mode&1)
+        &&(this.holdFlags&255)===1&&this.opponent
+        &&Math.abs((this.xFixed>>>16)-(this.opponent.xFixed>>>16))<96&&!(this.timer&0x100)){
+        this.timer|=0x100;if(this.contest(3))this.change(3);
+      }
+    }
+  }
+
   step() {
     if(this.state===0)return this.idleStep();
+    if([2,3,6].includes(this.state)){
+      const body=new Running({...this,clock:this.clock,pose:this.clock.pose,bounceCount:this.holdFlags});
+      body.pendingState=this.pendingState;body.inputInitialized=Boolean(this.inputInitialized);body.collision=this.collision;
+      body.step({sampleInput:false});Object.assign(this,body);this.holdFlags=body.bounceCount;
+      for(const event of body.ropeEvents){
+        const index=event.side==='left'?0:2;
+        if(event.strength===2||!(this.world.rope[index]&255))this.world.rope[index]=this.world.rope[index+1]=event.strength;
+      }
+      return this;
+    }
     if((this.state===4&&knockdowns.includes(this.reaction&255))||this.state===7
       ||(this.state===5&&[56,120].includes(this.action))){
       const body=new Knockdown({...this,clock:this.clock,pose:this.clock.pose,

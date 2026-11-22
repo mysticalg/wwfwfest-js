@@ -34,6 +34,7 @@ def main():
         'walkSpeeds': list(program[0x108ee:0x108ee + 12]),
         'alternateWalkSpeeds': list(program[0x108fa:0x108fa + 12]),
         'runSpeeds': list(program[0x10f8a:0x10f8a + 12]),
+        'runProximityInput': program[0xa3],
         'runAnimations': {name: descriptor(address) for name, address in {
             'run': 0x10ea2, 'brake': 0x10fc2, 'rebound': 0x11010,
         }.items()},
@@ -58,11 +59,14 @@ def main():
             ('kind2Human', 0x1064c, 3), ('kind3', 0x1064f, 3),
         )},
         'grappleThrows': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854 + action * 4)[0])
-                          for action in (2, 24, 36, 40, 44, 50, 52, 58, 66, 68)},
-        'grappleThrowVariants': {'largeTarget': descriptor(0x1789c)},
+                          for action in (2, 24, 25, 36, 38, 40, 43, 44, 47, 48, 50, 51, 52, 58, 66, 67, 68)},
+        'grappleCounters': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854 + action * 4)[0])
+                            for action in (6, *range(125, 136))},
+        'grappleThrowVariants': {name: descriptor(address) for name,address in (
+            ('largeTarget',0x1789c),('wallSlam',0x1421e),('alternateLift',0x15ebe))},
         'automaticPinThresholds': words(0x10308, 12),
         'grappleVictims': {str(reaction): descriptor(struct.unpack_from('>I', program, 0x1a214 + reaction * 4)[0])
-                           for reaction in (19, 21, 22, 34, 35, 41)},
+                           for reaction in (14, 19, 21, 22, 33, 34, 35, 36, 37, 38, 41)},
         'grappleAnimations': {name: descriptor(address) for name, address in {
             'contested': 0x11690, 'entry': 0x116a8, 'control': 0x11722,
             'hidden': 0x11800, 'hold': 0x13f20, 'carry': 0x13fca,
