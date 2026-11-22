@@ -28,6 +28,10 @@ export class LinkedActor extends GrappleActor {
         const blocked=reaction===9&&peer?.state===5&&[53,14,15,35].includes(peer.action&255)&&!(peer.action&0x1000);
         if([8,9].includes(reaction)&&!blocked){this.change(5,reaction===8?56:120);this.mash=0;}
       }
+      // $00dc82/$00ddce: one attempt to reverse a headlock on a button edge.
+      if(pressed&&!(this.flags74&128)&&this.state===5&&(this.action&255)===123&&!(this.action&0x8000)){
+        this.action|=0x8000;if(this.contest(0))this.change(5,124);
+      }
     }
     return super.input({pressed,mask});
   }

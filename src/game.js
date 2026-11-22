@@ -85,6 +85,7 @@ export class Match {
   }
 
   computerInput(actor, target) {
+    if(actor.nativeBody)return {};
     const dx = target.x - actor.x;
     const dy = target.y - actor.y;
     const attacking = this.ticks % 49 < 2;
@@ -123,7 +124,7 @@ export class Match {
     this.nativeActors.sync();this.nativeActors.arbitrate();
     this.updateFighter(this.fighters[0], this.fighters[1], input, 0);
     this.updateFighter(this.fighters[1], this.fighters[0], opponentInput, 1);
-    this.nativeActors.sync();this.nativeActors.input();this.nativeActors.stepReferee();
+    this.nativeActors.sync();this.nativeActors.input();this.nativeActors.computer();this.nativeActors.stepReferee();
     for (const actor of this.fighters) {
       this.advanceActor(actor);
     }

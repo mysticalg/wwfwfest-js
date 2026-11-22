@@ -7,6 +7,7 @@ import {ArcadeRandom} from './random.js';
 import {Running} from './running.js';
 import {actorTables} from '../data/actor-tables.js';
 import {participantFacing} from './facing.js';
+import {stepComputerGrapple} from './computer-grapple.js';
 import {initializeHealth,advanceDamageService} from './match-services.js';
 import {worldPosition,updateScreenPosition} from './projection.js';
 
@@ -71,6 +72,7 @@ export class MatchActors {
   const frame=(this.match.ticks-1)>>>0;
   if(kind==='contest')return this.random.contest(actor,context.kind,context.counter,frame);
   const registers=[...this.random.registers];
+  if(kind==='ai'&&context.weighted)registers[0]=context.attempt;
   if(kind==='arbitration'){
    registers[1]=world.mode&1?actorTables.grappleRumbleWeights[actor.grappleIndex]:actorTables.grappleWeights[world.round*4+actor.grappleIndex];
    registers[2]=Math.abs((actor.yFixed>>>16)-(context.target.yFixed>>>16));registers[3]=world.mode&1?registers[3]:world.round*8;
@@ -90,12 +92,14 @@ export class MatchActors {
  }
  input(){for(const fighter of this.match.fighters)if(fighter.nativeBody){
   const body=fighter.original;if(!(body.flags56&0xc0))body.inputBlockA=body.inputBlockB=0;
-  body.input({pressed:fighter.pressedButtons,mask:fighter.inputMask});body.runInput(fighter.inputMask);
+  if(!(body.flags56&0xc0))body.input({pressed:fighter.pressedButtons,mask:fighter.inputMask});else body.pressedButtons=0;
+  body.runInput(fighter.inputMask);
   if(!(body.flags56&0xc0)&&body.state===0){
    if(body.flags34&2){if(body.flags33&1)body.flags34&=~2;else{body.change(1);body.walkMode=4;}}
    else body.facing=participantFacing(body,body.opponent);
   }
  }}
+ computer(){if(this.match.ai)for(const fighter of this.match.fighters)if(fighter.nativeBody)stepComputerGrapple(fighter.original);}
  stepReferee(){this.referee.step();this.match.soundCommands.push(...this.referee.sounds);}
  advance(fighter){
   const body=fighter.nativeBody;if(!body)return false;
@@ -125,8 +129,9 @@ export class MatchActors {
    if(body?.state===0&&!body.pendingState&&!body.auxiliary&&!body.forced&&(!(body.flags56&128)||this.match.ai)){
     fighter.nativeBody=null;this.match.setState(fighter,'idle');fighter.animation=new ActorAnimation(body.clock);fighter.projection=body.projection;
    }else if(body&&[2,3,6].includes(body.state)&&!body.auxiliary){
+    const clock=new ActorAnimation(body.clock);
     this.match.setState(fighter,'run');
-    const running=new Running({...body,clock:body.clock,pose:body.clock.pose,bounceCount:body.holdFlags});
+    const running=new Running({...body,clock,pose:clock.pose,bounceCount:body.holdFlags});
     running.pendingState=body.pendingState;running.inputInitialized=body.inputInitialized;running.collision=body.collision;running.projection=body.projection;running.owner=fighter;
     fighter.running=running;fighter.animation=running.clock;
    }

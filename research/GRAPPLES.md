@@ -194,3 +194,7 @@ node tools/trace_facing.mjs path/to/mc68000.js path/to/program.bin tests/fixture
 ```
 
 The match tracer accepts `MATCH_GRAPPLE_FILTER` (JSON) and `DETAIL=1`; its tests accept `MATCH_GRAPPLE_FIXTURE` for private diagnostic rows. Original program execution is confined to offline generation.
+
+## Original computer decisions in 0.1.19
+
+[Computer research](COMPUTER.md) documents the newly connected clinch/headlock choices, carrying, pin/held escape timers and downed recovery decisions. An additional 456 composed exchanges/pins compare 87,271 updates with active original AI. The human held participant now gets the original one-attempt button reversal, and releasing a native participant into running preserves the descriptor clock before changing adapters. The older 432 practice references retain their explicitly passive AI and still pass separately. General AI and complete matches remain unfinished.

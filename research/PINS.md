@@ -48,3 +48,5 @@ npm run check
 ```
 
 In PowerShell, set and remove the four environment variables around the first command. `DETAIL` / `THROW_FILTER` support diagnostic rows. The original CPU and program image are used only offline and are excluded from delivery.
+
+Original AI pin escape decisions are now connected during native linked updates. [Computer research](COMPUTER.md) includes 168 additional composed pin sequences with active computer decisions, seven health bands and original referee timing. General pin approach/selection AI remains provisional; these checks do not establish complete computer matches.

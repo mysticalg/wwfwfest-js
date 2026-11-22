@@ -73,3 +73,5 @@ The original routines around `$00cf1e-$00d1d0` inspect the state byte at `$21`, 
 - [FinalBurn Neo hardware driver](https://github.com/finalburnneo/FBNeo/blob/master/src/burn/drv/pst90s/d_wwfwfest.cpp) supplied hardware memory and bitplane descriptions. Its driver source is not included in the browser bundle.
 - [iapx86 JavaScript hardware project](https://github.com/iapx86/JavaScript) supplied a temporary offline 68000 trace tool. Its CPU implementation is excluded from the delivered project.
 - [Capstone](https://www.capstone-engine.org/) decoded the 68000 instructions for inspection.
+
+[Computer research](COMPUTER.md) now records original linked-state decisions in normal practice play: clinch/headlock move weights, carrying, pin/held escapes and downed recovery. General locomotion/standing/running decisions, original match-clock cadence, attract scripts and full tag/Rumble/control services remain unfinished.
