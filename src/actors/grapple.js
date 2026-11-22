@@ -5,6 +5,7 @@ import {stepMovement,walkSpeed} from './movement.js';
 import {projectionSnapshot} from './projection.js';
 import {isGrappleThrow,stepGrappleThrow} from './grapple-throws.js';
 import {isGrappleCounter,stepGrappleCounter} from './grapple-counters.js';
+import {isGrappleSubmission,stepGrappleSubmission} from './grapple-submissions.js';
 
 const u16 = value => value & 65535;
 
@@ -143,7 +144,8 @@ export class GrappleActor {
       hitCounter:0,contact:0,health:100,maximumHealth:100,severity:0,moveToggle:0,region:0,offsetX:0,offsetY:0,
       paddingX:0,paddingY:0,paddingZ:0,velocityX:0,velocityY:0,
       velocityZ:0,gravity:0,auxiliary:null,unlinkMarked:false,sceneRefresh:0,
-      attempts:{},partner:null,motionLink:null,eliminations:0,
+      attempts:{},partner:null,motionLink:null,eliminations:0,mash:0,supportTimer:0,targetX:0,targetY:0,
+      assistanceTarget:null,active:true,healthAccumulator:0,resultPose:0,pressedButtons:0,
       world:{mode:0,round:0,inGame:true,message:0,shake:0,scene:0,rope:[0,0,0,0]},entropy:null},initial);
     this.pendingState=!(this.state&0x8000);
     this.state&=255;
@@ -155,7 +157,7 @@ export class GrappleActor {
   get pendingTransition() {
     return ![11,12,255].includes(this.state)
       && !(this.state===4&&this.reaction===1)
-      && !(this.state===5&&([21,22,23,41,80,123,124].includes(this.action&255)||isGrappleThrow(this.action)||isGrappleCounter(this.action)));
+      && !(this.state===5&&([21,22,23,41,80,123,124].includes(this.action&255)||isGrappleThrow(this.action)||isGrappleCounter(this.action)||isGrappleSubmission(this.action)));
   }
 
   // The byte tested at $b7 is the low half of the input-block word at $b6.
@@ -167,6 +169,7 @@ export class GrappleActor {
   }
 
   input({pressed=0,mask=0}={}) {
+    this.pressedButtons=pressed;
     const peer=this.auxiliary;
     if (!this.pendingState&&!this.forced&&peer) {
       if (pressed&&this.state===11&&!(this.holdFlags&0x6000)) {
@@ -266,6 +269,7 @@ export class GrappleActor {
 
   step() {
     this.sounds=[];
+    this.ropeEvents=[];
     if(this.pendingTransition)return this;
     if(this.pendingState){
       this.previousState=this.clock.flags;
@@ -321,12 +325,13 @@ export class GrappleActor {
       }else{
         if(!this.forced&&peer&&(peer.unlinkMarked||peer.auxiliary!==this)){this.auxiliary=null;this.unlinkMarked=false;}
         this.contact=1;this.timer=u16(this.timer-1);
-        if(!this.timer){this.change(0);this.sceneRefresh=1;}
+        if(!this.timer){this.change(0);this.sceneRefresh=1;this.world.controlsRefresh=1;}
       }
     }else{
       const action=this.action&255;
       descriptor=data[({21:'hold',22:'carry',23:'whip',41:'clinchStrike',80:'break',123:'held',124:'escape'})[action]];
       if(isGrappleCounter(action))descriptor=stepGrappleCounter(this,peer,initialized);
+      else if(isGrappleSubmission(action))descriptor=stepGrappleSubmission(this,peer,initialized);
       else if(isGrappleThrow(action))descriptor=stepGrappleThrow(this,peer,initialized);
       else if(action===41){
         if(!initialized){

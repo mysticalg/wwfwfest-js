@@ -4,7 +4,7 @@ The ordinary standing punch and kick use handwritten JavaScript translations of 
 
 ## Original paths
 
-The standing fallback at `$00d6fa` selects move-table row zero. All twelve character tables selected through `$00d73e` have row `[0,114,255]`. The two individual buttons select action 0 and action `$72`. The combined-button entry leads to running state 2. Its descriptor `$010ea2` uses poses 9–14 with delay 6, and handler `$010ec2` loads the character running speed from `$010f8a`. That running path still needs translation. The prototype currently gives the second button priority for combined input and exposes its authored run through a separate control. Close-contact paired-state arbitration is a separate path beginning at `$00e7b4`.
+The standing fallback at `$00d6fa` selects move-table row zero. All twelve character tables selected through `$00d73e` have row `[0,114,255]`. The two individual buttons select action 0 and action `$72`. The combined-button entry leads to running state 2. Its descriptor `$010ea2` uses poses 9–14 with delay 6, and handler `$010ec2` loads the character running speed from `$010f8a`. That running path is now translated and connected, including simultaneous action-button entry and a dedicated browser Run control. Close-contact paired-state arbitration is a separate path beginning at `$00e7b4` and remains outside normal matches while its global services are integrated.
 
 Action 0 uses descriptor `$011a90` and handler `$011ac8`. It plays poses 0,146,147,148,147 with delay words 10,6,4,10,2. The handler chooses contact record 33, changing to record 7 while animation index 3 is active. Normal completion occurs on update 38 counting the entry as update zero.
 

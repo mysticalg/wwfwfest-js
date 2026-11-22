@@ -48,7 +48,10 @@ for(const fixture of fixtures.sequences){
     for(const body of bodies)if(body.clock.pose!==body.lastPose){body.contact=0;body.lastPose=body.clock.pose;}
     cleanupGrappleLinks(bodies);
    }
-   const row={actors:bodies.map(body=>snapshot(body,bodies,fixture.composed)),sounds,world,partners:partners.map(p=>p.flags34)};
+   // Compare every recorded global; later services have additional fields that
+   // are independently covered by the submission/service reference fixtures.
+   const worldSnapshot=Object.fromEntries(Object.keys(fixture.world).map(key=>[key,world[key]]));
+   const row={actors:bodies.map(body=>snapshot(body,bodies,fixture.composed)),sounds,world:worldSnapshot,partners:partners.map(p=>p.flags34)};
    if(fixture.rows){
     for(const[index,actor]of row.actors.entries())for(const key of Object.keys(actor))
       assert.deepEqual(actor[key],fixture.rows[tick].actors[index][key],`frame ${tick}, actor ${index}, ${key}`);

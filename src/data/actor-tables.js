@@ -2225,6 +2225,194 @@ export const actorTables = {
       ]
     }
   },
+  "grappleSubmissions": {
+    "26": {
+      "source": 83020,
+      "update": 83048,
+      "mode": 1,
+      "delays": [
+        12,
+        8,
+        10,
+        10,
+        12
+      ],
+      "poses": [
+        324,
+        325,
+        326,
+        327,
+        328
+      ]
+    },
+    "37": {
+      "source": 86870,
+      "update": 86894,
+      "mode": 1,
+      "delays": [
+        12,
+        12,
+        16,
+        24
+      ],
+      "poses": [
+        248,
+        292,
+        293,
+        294
+      ]
+    },
+    "54": {
+      "source": 93010,
+      "update": 93034,
+      "mode": 1,
+      "delays": [
+        8,
+        16,
+        20,
+        20
+      ],
+      "poses": [
+        248,
+        299,
+        300,
+        301
+      ]
+    },
+    "59": {
+      "source": 94006,
+      "update": 94034,
+      "mode": 1,
+      "delays": [
+        8,
+        12,
+        32,
+        24,
+        24
+      ],
+      "poses": [
+        411,
+        412,
+        413,
+        414,
+        415
+      ]
+    },
+    "137": {
+      "source": 105956,
+      "update": 105984,
+      "mode": 1,
+      "delays": [
+        24,
+        16,
+        16,
+        12,
+        12
+      ],
+      "poses": [
+        269,
+        452,
+        453,
+        454,
+        455
+      ]
+    },
+    "93": {
+      "source": 100208,
+      "update": 100214,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
+    "94": {
+      "source": 100208,
+      "update": 100214,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
+    "95": {
+      "source": 100208,
+      "update": 100214,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
+    "96": {
+      "source": 100208,
+      "update": 100214,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
+    "98": {
+      "source": 100208,
+      "update": 100214,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
+    "99": {
+      "source": 100208,
+      "update": 100214,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
+    "110": {
+      "source": 102332,
+      "update": 102338,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
+    "111": {
+      "source": 102478,
+      "update": 102484,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
+    "138": {
+      "source": 106146,
+      "update": 106162,
+      "mode": 1,
+      "delays": [
+        32,
+        48
+      ],
+      "poses": [
+        295,
+        0
+      ]
+    },
+    "141": {
+      "source": 94682,
+      "update": 94706,
+      "mode": 1,
+      "delays": [
+        6,
+        65280,
+        65280,
+        65280
+      ],
+      "poses": [
+        178,
+        179,
+        31,
+        18
+      ]
+    }
+  },
+  "grappleSubmissionVariants": {
+    "pursuitWait": {
+      "source": 69642,
+      "update": 71762,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    }
+  },
   "grappleThrowVariants": {
     "largeTarget": {
       "source": 96412,
@@ -3562,6 +3750,52 @@ export const actorTables = {
     3,
     7,
     21
+  ],
+  "heldMashCounts": [
+    1,
+    1,
+    1,
+    24,
+    28,
+    32,
+    8,
+    10,
+    12,
+    10,
+    13,
+    16,
+    24,
+    28,
+    32,
+    4,
+    12,
+    24,
+    4,
+    12,
+    24,
+    255
+  ],
+  "directionQuadrants": [
+    0,
+    192,
+    64,
+    128
+  ],
+  "attackAssistTimers": [
+    93,
+    125,
+    187
+  ],
+  "victimAssistTimers": [
+    62,
+    93,
+    125
+  ],
+  "teamRecovery": [
+    24,
+    32,
+    12,
+    0
   ],
   "knockdownAnimations": {
     "flight": {

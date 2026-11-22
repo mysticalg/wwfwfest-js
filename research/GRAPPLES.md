@@ -129,10 +129,44 @@ In PowerShell, set `$env:COMPOSE='1'` before the second command and remove it af
 
 Generate the separate reversal fixtures with `ACTION_SET` set to JSON `[125,126,127,128,129,130,131,132,133,134,135]`: first without `COMPOSE` for `grapple-counters-reference.json`, then with `COMPOSE=1` for `linked-counters-reference.json`. Remove both variables before regenerating the ordinary throw fixtures.
 
+### Remaining headlock selections and held participants
+
+`grapple-submissions.js` translates the other five headlock-selected actions. Together with the seventeen throw paths above, this covers the handlers selected by all twenty-two headlock table entries. These are still component translations, separate from normal `Match` gameplay.
+
+| Action | Handler | Recovered behavior |
+| --- | --- | --- |
+| 26 | `$014468` | Counter 135, landing, pin-hold victim 94, forced/elimination release |
+| 37 | `$01536e` | Repeated hold damage, victim 96, contact request `$801e`, completion 138 |
+| 54 | `$016b6a` | Mutual-link guard, victim 99, contact request `$8015`, paired completion 110/111 |
+| 59 | `$016f52` | Throw into victim 141, wait for landing, pursue an integer target, victim 98 hold and completion 110/111 |
+| 137 | `$019e00` | Facing from team status, hidden peer, loop/contact request `$401a`, one-time position shift |
+
+The held participant actions `93,94,95,96,98,99` share `$018776`. They initialize their distinct mash modes, preserve the hidden clock, request partner assistance, and process human mash input after initialization. Action 94 suppresses mashing at zero health. Completion actions 110/111 retain their separate mode-zero timers, pose and depth writes, outside/control handoffs and status cleanup. Action 138 releases a participant with the original facing and position writes; action 141 retains its two landings and the high action flag that releases action 59's pursuit phase.
+
+`grapple-services.js` translates the general mash initializer `$00fea0`, held input `$00ff44`, partner entry `$0207dc/$020958`, partner motion cleanup `$010672`, completion cleanup `$0204c6/$02057e` and submission gate `$010408` for these paths. Submission completion requires two eligible zero-health visits. The second visit retains the match result, forced winner/loser status, team health recovery `$008bd0`, control/assistance changes and the winner text request. Rendering that text and advancing the complete scene remain separate services.
+
+The Rumble victim helper searches eligible actor slots 4–8 by the original wrapped Manhattan distance. Pursuit uses the integer direction service `$0020d8`, including signed word differences, saturation and quadrant offsets, rather than trigonometry. The separate weighted Rumble pin entries 72/74 and the invalid action-83 assistance re-entry remain explicit dependencies; these are not exercised by the five headlock selections above.
+
+Additional original-program comparisons cover **2,560 helper cases** and **3,960 direction cases**. Helper fixtures include actor and partner status, assistance pointers, controller flags, health/recovery words, global requests, sounds and the submission gate's carry result. The headlock/held-state fixtures compare both primary participants and their partner records: **1,392 kernel sequences / 324,566 updates** and **1,392 composed sequences / 691,451 updates**. They exercise every actor type for the five selected moves, both facings, edge/center origins, AI/mode variants, forced release, zero-health completion, partner control, pursuit phase entries, invalid links and held-state mash input.
+
+Of the composed sequences, 540 reach initialized idle, 100 stop at an explicit handoff and 752 remain pending at the 700-update observation limit. The references continue to exclude global damage, contact, AI and complete match-rule processing. Ordinary holds can therefore remain pending at that limit. In particular, action 137 exposes its contact request for the separate multi-actor contact service, and action 26 waits for the pin/elimination services. Those waits do not establish complete move or match parity.
+
+The expanded global comparisons also verify the original refresh byte at `$1c1697` during ordinary flight entry, get-up completion, stagger completion and forced-run idle cleanup. These writes share the same world field as partner control restoration. Held and normal downed mash processing use the same `$00ff44` translation, including its global prompt request.
+
+Forced participants released into running also pass their high forced flag through the shared dispatcher. The original `$010eee` handler selects braking after initialization even while a forced rebound count remains; this is distinct from an ordinary directional brake request in the input phase.
+
+```sh
+node tools/trace_grapple_services.mjs path/to/mc68000.js path/to/program.bin tests/fixtures/grapple-services-reference.json
+node tools/trace_grapple_submissions.mjs path/to/mc68000.js path/to/program.bin tests/fixtures/grapple-submissions-reference.json
+COMPOSE=1 node tools/trace_grapple_submissions.mjs path/to/mc68000.js path/to/program.bin tests/fixtures/linked-submissions-reference.json
+```
+
+In PowerShell, set and remove `COMPOSE` as above. The submission tracer accepts `THROW_FILTER` / `DETAIL`; its tests accept `THROW_FIXTURE`. Helper tests accept `SERVICE_FIXTURE` for diagnostic captures.
+
 ### Work still required
 
-Next work must translate the headlock-selected throw/submission handlers, their success/counter helpers and victim reactions, then connect the arbiter before normal actor input. Normal runs, knockdowns and idle cleanup must accept grapple handoffs with their full flags and links. Global damage/combo timing, AI decisions, tag/Rumble alternatives and complete sound/scene routing then need composed original-game comparisons and browser gamepad checks.
+Next work must connect the arbiter before normal actor input and unify walking, standing/running combat and grapple participant updates. The research dispatcher already accepts the translated run, knockdown and idle handoffs. Global damage/combo timing, interrupt/contact responses, pin/escape service, AI decisions, tag/Rumble alternatives and complete sound/scene routing then need composed original-game comparisons and browser gamepad checks.
 
-The recovered headlock tables select action IDs `2,24,25,26,36,37,38,40,43,44,47,48,50,51,52,54,58,59,66,67,68,137`. Their descriptors are addressed through `$011854 + action * 4`. Some invoke additional counter actions and victim states, so translating only those twenty-two attacker handlers will not by itself close the interaction graph. Actions `26,37,54,59,137` and their dependent submission, partner and pursuit branches remain the next group. Submission completion at `$010408` also enters match/partner services and remains separate work. The original mash initializer at `$00fea0` has additional held-state modes beyond the normal downed recovery counts; those must be connected with their specific victim handlers.
+The recovered headlock tables select action IDs `2,24,25,26,36,37,38,40,43,44,47,48,50,51,52,54,58,59,66,67,68,137`. Their descriptors are addressed through `$011854 + action * 4`. Translating these twenty-two attacker handlers and the participant states above does not by itself close the interaction graph. Pin/tag controls, hold interruption, full outside behavior, original initialization and scene progression still need their owning services. Practice health remains 100; original initialization at `$00f9c2` is not yet connected.
 
 The browser still executes native JavaScript throughout. CPU execution remains confined to offline fixture generation, and the external CPU dependency is excluded from this repository.

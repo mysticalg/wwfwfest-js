@@ -17,7 +17,7 @@ export function collisionResponse(actor) {
   const {kind,flags}=actor.collision;
   if(!(actor.world.mode&2)&&(kind===1||kind===5)){
     if(flags&2)rope(actor,true);else if(flags&1)rope(actor,false);
-  }else if(kind===3){actor.change(4,23);actor.reaction=23;actor.sounds.push(40,50);}
+  }else if(kind===3){actor.change(4);actor.reaction=23;actor.sounds.push(40,50);}
 }
 const landingSound=actor=>actor.sounds.push(actor.flags33&4?45:41);
 function land(actor,{whole=false,shift=0}={}) {

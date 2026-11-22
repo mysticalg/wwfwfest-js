@@ -38,7 +38,7 @@ export class LinkedActor extends GrappleActor {
     if([2,3,6].includes(this.state)){
       const body=new Running({...this,clock:this.clock,pose:this.clock.pose,bounceCount:this.holdFlags});
       body.pendingState=this.pendingState;body.inputInitialized=Boolean(this.inputInitialized);body.collision=this.collision;
-      body.step({sampleInput:false});Object.assign(this,body);this.holdFlags=body.bounceCount;
+      body.step({sampleInput:false,forcedStop:Boolean(this.forced&0x8000)});Object.assign(this,body);this.holdFlags=body.bounceCount;
       for(const event of body.ropeEvents){
         const index=event.side==='left'?0:2;
         if(event.strength===2||!(this.world.rope[index]&255))this.world.rope[index]=this.world.rope[index+1]=event.strength;
@@ -76,7 +76,7 @@ export class LinkedActor extends GrappleActor {
       this.flags32&=~8;
       if(!this.idleTimer)this.idleTimer=208;
       if(this.flags32&16)this.change(5,122);
-      if(this.flags34&64){this.flags34&=~64;if(this.opponent)this.opponent.flags34&=~128;this.sceneRefresh=1;}
+      if(this.flags34&64){this.flags34&=~64;if(this.opponent)this.opponent.flags34&=~128;this.sceneRefresh=1;this.world.controlsRefresh=1;}
     }else{
       this.contact=1;
       if(!this.forced&&this.auxiliary&&(this.auxiliary.unlinkMarked||this.auxiliary.auxiliary!==this)){this.auxiliary=null;this.unlinkMarked=false;}

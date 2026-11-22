@@ -62,6 +62,9 @@ def main():
                           for action in (2, 24, 25, 36, 38, 40, 43, 44, 47, 48, 50, 51, 52, 58, 66, 67, 68)},
         'grappleCounters': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854 + action * 4)[0])
                             for action in (6, *range(125, 136))},
+        'grappleSubmissions': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854 + action * 4)[0])
+                               for action in (26,37,54,59,137,93,94,95,96,98,99,110,111,138,141)},
+        'grappleSubmissionVariants': {'pursuitWait': descriptor(0x1100a)},
         'grappleThrowVariants': {name: descriptor(address) for name,address in (
             ('largeTarget',0x1789c),('wallSlam',0x1421e),('alternateLift',0x15ebe))},
         'automaticPinThresholds': words(0x10308, 12),
@@ -90,6 +93,11 @@ def main():
         'motionProfiles': [list(struct.unpack_from('>3H', program, 0x25da + index * 6))
                            for index in range(38)],
         'recoveryMashCounts': list(program[0xff40:0xff44]),
+        'heldMashCounts': list(program[0xff2a:0xff40]),
+        'directionQuadrants': list(program[0x2194:0x2198]),
+        'attackAssistTimers': words(0x20952, 3),
+        'victimAssistTimers': words(0x20a1e, 3),
+        'teamRecovery': words(0x8c24, 4),
         'knockdownAnimations': {name: descriptor(address) for name, address in {
             'flight': 0x1a354, 'flightSevere': 0x1a364,
             'bounce': 0x1a3f8, 'bounceSevere': 0x1a404,

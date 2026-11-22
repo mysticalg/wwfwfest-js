@@ -4,6 +4,7 @@ import {insideRingCollision, outsideRingCollision, addPositionWord} from './ring
 import {actorTables} from '../data/actor-tables.js';
 import {worldPosition, projectionSnapshot} from './projection.js';
 import {isGrappleVictim,stepGrappleVictim,collisionResponse} from './grapple-victims.js';
+import {initializeMash,mashHeldInput} from './grapple-services.js';
 
 const u16 = value => value & 0xffff;
 
@@ -81,19 +82,11 @@ export class Knockdown {
   }
 
   initializeMash() {
-    if (this.mash && this.mash < 0x8000) return;
-    const quarter = this.maximumHealth >>> 2;
-    let threshold = quarter;
-    let index = 3;
-    while (threshold < this.health && index > 0) { threshold += quarter; index--; }
-    this.mash = actorTables.recoveryMashCounts[index];
+    initializeMash(this);
   }
 
   mashButton(pressed) {
-    if (!(this.flags56 & 0xc0) && pressed && this.mash !== 0x4000) {
-      this.mash = u16(this.mash - 1);
-      if (!this.mash) this.mash = 0x4000;
-    }
+    mashHeldInput(this,pressed);
   }
 
   cleanupLink() {
@@ -142,7 +135,7 @@ export class Knockdown {
         this.flags33 &= ~0x58;
         this.mash = this.recoveryTimer = 0;
       } else if (this.clock.index === 0xfe) {
-        this.sceneRefresh=1;
+        this.sceneRefresh=1;this.world.controlsRefresh=1;
         if(!this.forced&&(this.previousState&255)!==5&&(this.reaction&0x2000)){
           this.change(4,1);this.reaction=1;
         }else this.change(0);
@@ -169,7 +162,7 @@ export class Knockdown {
         }else{
           this.cleanupLink();
           this.contact=1;this.captureTimer=u16(this.captureTimer-1);
-          if(!this.captureTimer){this.change(0);this.sceneRefresh=1;}
+          if(!this.captureTimer){this.change(0);this.sceneRefresh=1;this.world.controlsRefresh=1;}
         }
       }else if(isGrappleVictim(reaction))descriptor=stepGrappleVictim(this,initialized);
       else if (reaction >= 11 && reaction <= 13) {
@@ -180,6 +173,7 @@ export class Knockdown {
       } else if (reaction >= 2 && reaction <= 4) {
         descriptor = this.reaction & 0x8000 ? data.flightSevere : data.flight;
         if (!initialized) {
+          this.world.controlsRefresh=1;
           this.profile(reaction - 2);
           const y = this.yFixed >>> 16;
           if (u16(y + 32) >= 0x198) this.velocityY = 0xffc0;
