@@ -31,6 +31,8 @@ Ordinary walking uses poses 1–4, each with delay 10. The ordinary idle handler
 
 The twelve ordinary speed bytes are 27, 29, 28, 25, 30, 27, 24, 30, 22, 27, 28, 27. The polar tables have maxima 5120 horizontally and 4096 in depth, in 16.16 units before multiplication by speed. Hogan's horizontal walk displacement is therefore 2.109375 pixels per logical update. Diagonal values come directly from the tables.
 
+The browser match currently stores screen-space y, which increases downwards. The original input byte uses bit 2 for Up and bit 3 for Down. World depth increases upwards, and the sprite recipe output inverts projected y. `walkDelta` converts physical input to that original mask, then converts the resulting depth increment to browser y. Integrated locomotion fixtures normalize original depth around the initial origin for that comparison. The lower-level `polarDelta` and `stepMovement` retain the original world-coordinate convention. Full world/camera integration remains pending.
+
 Movement mode 2 adds signed 8.8 velocity words to the position longs and subtracts gravity from the vertical velocity with word wrap. The source's apparent negative-velocity clamp is unreachable under its unsigned comparison. The translation preserves that behavior. This primitive is verified for future airborne-action work and is not yet connected to match jumps or throws.
 
 ## Verification

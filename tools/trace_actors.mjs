@@ -183,12 +183,14 @@ for (let type = 0; type < 12; type++) {
       previousState = state;
     }
     const mask = (horizontal > 0 ? 1 : horizontal < 0 ? 2 : 0)
-      | (vertical > 0 ? 4 : vertical < 0 ? 8 : 0);
+      | (vertical > 0 ? 8 : vertical < 0 ? 4 : 0);
     putWord(actor + 0x2c, word(0xe516 + mask * 2));
     call(0xfe28);
     call(0x1b27e);
     call(0x2218);
-    hash.add([long(actor + 6), long(actor + 10), word(actor + 4)]);
+    // Match coordinates are in browser space. Normalize original world depth
+    // around the same initial origin before comparing movement trajectories.
+    hash.add([long(actor + 6), 280 * 65536 - long(actor + 10), word(actor + 4)]);
   }
   locomotion.push({type, ticks: 120, requests, ...hash.finish()});
 }

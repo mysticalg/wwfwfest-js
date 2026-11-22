@@ -50,7 +50,12 @@ export function walkAnimation(flags32 = 0, flags74 = 0, flags75 = 0) {
 }
 
 export function walkDelta(type, horizontal, vertical) {
+  // Browser y increases downwards. The original input byte uses bit 2 for Up
+  // and bit 3 for Down, with world depth increasing upwards. Its sprite output
+  // inverts projected y. Apply that conversion explicitly at this boundary.
   const mask = (horizontal > 0 ? 1 : horizontal < 0 ? 2 : 0)
-    | (vertical > 0 ? 4 : vertical < 0 ? 8 : 0);
-  return mask ? polarDelta(actorTables.inputDirections[mask], walkSpeed(type)) : {x: 0, y: 0};
+    | (vertical > 0 ? 8 : vertical < 0 ? 4 : 0);
+  if (!mask) return {x: 0, y: 0};
+  const delta = polarDelta(actorTables.inputDirections[mask], walkSpeed(type));
+  return {x: delta.x, y: -delta.y || 0};
 }

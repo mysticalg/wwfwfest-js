@@ -94,7 +94,8 @@ test('ordinary idle entry and facing match original actor dispatcher', () => {
 test('diagonal movement uses the original direction table and every wrestler speed', () => {
   for (let type = 0; type < 12; type++) {
     const downRight = walkDelta(type, 1, 1);
-    const expected = polarDelta(32, walkSpeed(type));
+    const original = polarDelta(96, walkSpeed(type));
+    const expected = {x: original.x, y: -original.y};
     assert.deepEqual(downRight, expected);
     assert.equal(walkDelta(type, -1, -1).x, -expected.x);
     assert.equal(walkDelta(type, -1, -1).y, -expected.y);
