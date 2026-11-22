@@ -48,7 +48,9 @@ The supplied program uses 565 frame indices for each of the first 12 actor types
 
 `src/game.js` is an editable provisional match implementation. Its numerical rules and animation timing have not been translated from the arcade's move and state tables. No arcade-fidelity claim is made for those rules. They provide a playable development surface while the state machines are reconstructed.
 
-Next reverse engineering work must map object states and routines to each action, recover actual hit regions and damage tables, implement dependent grapple poses, recover animation sequence timing, translate sound sequencing and test complete tag and Rumble matches against reference runs.
+Next reverse engineering work must map object states and routines to each action, recover actual hit regions and damage tables, implement dependent grapple poses, recover animation sequence timing, translate music sequencing and test complete tag and Rumble matches against reference runs.
+
+The native sample-effect sequencer now matches original-driver event traces across 100 scenarios. Its sample playback and verification scope are documented in [audio research](AUDIO.md). Music and gameplay sound routing remain unfinished.
 
 ## Research references
 

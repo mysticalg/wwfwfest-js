@@ -1,9 +1,12 @@
 import {Renderer, roster} from './renderer.js';
 import {Match, rules} from './game.js';
+import {NativeAudio} from './audio/native-audio.js';
+import {decodeSample} from './audio/sample-codec.js';
 
 const element = id => document.getElementById(id);
 const canvas = element('screen');
 const renderer = new Renderer(canvas);
+export const audio = new NativeAudio();
 const held = new Set();
 export const state = {view: 'play', match: null, paused: false, ready: false, pose: 0, actor: 0, cycling: false};
 const tables = new Map();
@@ -11,6 +14,9 @@ let accumulator = 0;
 let previousTime = performance.now();
 let cycleTicks = 0;
 let actorRequest = 0;
+let soundEffect = null;
+let soundWaveform = null;
+let muted = false;
 
 for (const id of ['player', 'opponent', 'actor']) {
   const names = id === 'actor' ? roster : roster.slice(0, 10);
@@ -35,6 +41,7 @@ async function startMatch() {
     state.match = new Match(player, opponent);
     state.match.ai = element('ai').checked;
     state.paused = false;
+    audio.pause(false);
     element('pause').textContent = 'Pause';
     element('status').textContent = '';
     canvas.focus();
@@ -50,6 +57,7 @@ function togglePause() {
   state.paused = !state.paused;
   held.clear();
   element('pause').textContent = state.paused ? 'Resume' : 'Pause';
+  audio.pause(state.paused);
 }
 
 function setView(view) {
@@ -57,8 +65,26 @@ function setView(view) {
   state.view = view;
   element('play-controls').hidden = view !== 'play';
   element('frame-controls').hidden = view !== 'frames';
+  element('sound-controls').hidden = view !== 'sound';
   element('play-tab').setAttribute('aria-pressed', String(view === 'play'));
   element('frames-tab').setAttribute('aria-pressed', String(view === 'frames'));
+  element('sound-tab').setAttribute('aria-pressed', String(view === 'sound'));
+  audio.pause(view === 'play' && state.paused);
+}
+
+function chooseSound() {
+  soundEffect = audio.manifest.commands.find(effect => effect.command === Number(element('sound-command').value));
+  const sample = soundEffect.steps.find(step => step.op === 'sample');
+  const bank = soundEffect.bank === 2 ? 0 : soundEffect.bank;
+  const entry = sample && audio.manifest.samples.find(entry => entry.bank === bank && entry.sample === sample.sample);
+  soundWaveform = entry ? decodeSample(new Uint8Array(audio.samples), bank * 0x40000 + entry.start, bank * 0x40000 + entry.end) : null;
+  element('sound-info').textContent = `Command $${soundEffect.command.toString(16).toUpperCase()} · ROM $${soundEffect.source.toString(16)} · Priority ${soundEffect.priority} · ${soundEffect.bank === 2 ? 'Shared samples' : `Bank ${soundEffect.bank}`}`;
+}
+
+async function enableAudio() {
+  await audio.enable();
+  element('audio-toggle').textContent = muted ? 'Unmute' : 'Mute';
+  element('audio-status').textContent = 'Original sample effects enabled.';
 }
 
 function setPose(value) {
@@ -161,6 +187,37 @@ function drawExplorer() {
   renderer.text(`FRAME ${state.pose}`, 160, 232, '#bdc9de', 10, 'center');
 }
 
+function drawSoundExplorer() {
+  renderer.clear();
+  if (!soundEffect) return;
+  const context = renderer.context;
+  renderer.text(`SOUND $${soundEffect.command.toString(16).toUpperCase()}`, 160, 40, '#ffe64a', 20, 'center');
+  renderer.text('FIRST SAMPLE WAVEFORM', 160, 73, '#bdc9de', 8, 'center');
+  context.strokeStyle = '#46516a';
+  context.beginPath();
+  context.moveTo(20, 137);
+  context.lineTo(300, 137);
+  context.stroke();
+  if (!soundWaveform) return;
+  context.strokeStyle = '#f2d13e';
+  context.beginPath();
+  for (let x = 0; x < 280; x++) {
+    const start = Math.floor(x * soundWaveform.length / 280);
+    const end = Math.max(start + 1, Math.floor((x + 1) * soundWaveform.length / 280));
+    let low = 0;
+    let high = 0;
+    for (let index = start; index < end; index++) {
+      low = Math.min(low, soundWaveform[index]);
+      high = Math.max(high, soundWaveform[index]);
+    }
+    context.moveTo(x + 20, 137 + low / 2048 * 46);
+    context.lineTo(x + 20, 137 + high / 2048 * 46);
+  }
+  context.stroke();
+  const seconds = soundWaveform.length * audio.manifest.sampleDivisor / audio.manifest.chipClock;
+  renderer.text(`${seconds.toFixed(3)} SECONDS`, 160, 214, '#bdc9de', 9, 'center');
+}
+
 function input() {
   return {
     horizontal: Number(held.has('ArrowRight')) - Number(held.has('ArrowLeft')),
@@ -180,7 +237,8 @@ function frame(time) {
       }
       accumulator -= 1000 / rules.frameRate;
     }
-    if (state.view === 'frames') drawExplorer();
+    if (state.view === 'sound') drawSoundExplorer();
+    else if (state.view === 'frames') drawExplorer();
     else if (state.match) drawMatch();
     else drawSelection();
   } else accumulator = 0;
@@ -192,6 +250,28 @@ element('reset').addEventListener('click', () => { state.match = null; held.clea
 element('pause').addEventListener('click', togglePause);
 element('play-tab').addEventListener('click', () => setView('play'));
 element('frames-tab').addEventListener('click', () => setView('frames'));
+element('sound-tab').addEventListener('click', () => setView('sound'));
+element('sound-command').addEventListener('change', chooseSound);
+audio.onError = message => { element('audio-status').textContent = message; };
+element('audio-toggle').addEventListener('click', async () => {
+  element('audio-toggle').disabled = true;
+  try {
+    if (!audio.context) await enableAudio();
+    else {
+      muted = !muted;
+      audio.mute(muted);
+      element('audio-toggle').textContent = muted ? 'Unmute' : 'Mute';
+    }
+  } catch (error) { element('audio-status').textContent = error.message; }
+  finally { element('audio-toggle').disabled = false; }
+});
+element('play-sound').addEventListener('click', async () => {
+  try {
+    await enableAudio();
+    audio.command(Number(element('sound-command').value));
+  } catch (error) { element('audio-status').textContent = error.message; }
+});
+element('stop-sound').addEventListener('click', () => audio.stop());
 element('ai').addEventListener('change', () => { if (state.match) state.match.ai = element('ai').checked; });
 element('actor').addEventListener('change', chooseActor);
 element('pose-number').addEventListener('input', event => setPose(event.target.value));
@@ -232,11 +312,16 @@ for (const button of document.querySelectorAll('[data-key]')) {
 }
 
 try {
-  await renderer.load();
+  await Promise.all([renderer.load(), audio.load()]);
   await Promise.all([prepareActor(0), prepareActor(6), prepareActor(12)]);
   state.ready = true;
   element('status').textContent = '';
-  for (const id of ['start', 'reset', 'pause']) element(id).disabled = false;
+  for (const id of ['start', 'reset', 'pause', 'audio-toggle']) element(id).disabled = false;
+  for (const effect of audio.manifest.commands) {
+    element('sound-command').add(new Option(`$${effect.command.toString(16).toUpperCase()}${effect.command === 0x2a ? ' · Coin' : ''}`, String(effect.command)));
+  }
+  element('sound-command').value = String(0x2a);
+  chooseSound();
   setPose(0);
 } catch (error) {
   element('status').textContent = `Asset loading failed. ${error.message}`;

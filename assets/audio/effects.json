@@ -1,0 +1,3769 @@
+{
+  "version": 1,
+  "chipClock": 1056000,
+  "sampleDivisor": 132,
+  "sampleClockSource": "https://github.com/mamedev/mame/blob/master/src/mame/technos/ddragon3.cpp",
+  "timerClock": 3579545,
+  "timerADivisor": 16192,
+  "priorityTableSource": 8415,
+  "bankTableSource": 8513,
+  "scriptTableSource": 8611,
+  "commands": [
+    {
+      "command": 33,
+      "priority": 1,
+      "bank": 2,
+      "source": 8808,
+      "steps": [
+        {
+          "source": 8808,
+          "op": "volume",
+          "value": 1
+        },
+        {
+          "source": 8810,
+          "op": "sample",
+          "sample": 1,
+          "ticks": 59,
+          "holdAfter": false
+        },
+        {
+          "source": 8812,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 34,
+      "priority": 1,
+      "bank": 2,
+      "source": 8813,
+      "steps": [
+        {
+          "source": 8813,
+          "op": "volume",
+          "value": 1
+        },
+        {
+          "source": 8815,
+          "op": "sample",
+          "sample": 2,
+          "ticks": 118,
+          "holdAfter": false
+        },
+        {
+          "source": 8817,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 35,
+      "priority": 1,
+      "bank": 2,
+      "source": 8818,
+      "steps": [
+        {
+          "source": 8818,
+          "op": "volume",
+          "value": 1
+        },
+        {
+          "source": 8820,
+          "op": "sample",
+          "sample": 3,
+          "ticks": 27,
+          "holdAfter": false
+        },
+        {
+          "source": 8822,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 36,
+      "priority": 1,
+      "bank": 2,
+      "source": 8823,
+      "steps": [
+        {
+          "source": 8823,
+          "op": "volume",
+          "value": 1
+        },
+        {
+          "source": 8825,
+          "op": "sample",
+          "sample": 4,
+          "ticks": 223,
+          "holdAfter": false
+        },
+        {
+          "source": 8827,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 37,
+      "priority": 1,
+      "bank": 2,
+      "source": 8828,
+      "steps": [
+        {
+          "source": 8828,
+          "op": "volume",
+          "value": 1
+        },
+        {
+          "source": 8830,
+          "op": "sample",
+          "sample": 5,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 8832,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 38,
+      "priority": 1,
+      "bank": 2,
+      "source": 8833,
+      "steps": [
+        {
+          "source": 8833,
+          "op": "volume",
+          "value": 1
+        },
+        {
+          "source": 8835,
+          "op": "sample",
+          "sample": 6,
+          "ticks": 123,
+          "holdAfter": false
+        },
+        {
+          "source": 8837,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 39,
+      "priority": 1,
+      "bank": 2,
+      "source": 8838,
+      "steps": [
+        {
+          "source": 8838,
+          "op": "volume",
+          "value": 1
+        },
+        {
+          "source": 8840,
+          "op": "sample",
+          "sample": 7,
+          "ticks": 164,
+          "holdAfter": false
+        },
+        {
+          "source": 8842,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 40,
+      "priority": 4,
+      "bank": 2,
+      "source": 8843,
+      "steps": [
+        {
+          "source": 8843,
+          "op": "volume",
+          "value": 4
+        },
+        {
+          "source": 8845,
+          "op": "sample",
+          "sample": 8,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 8848,
+          "op": "sample",
+          "sample": 8,
+          "ticks": 44,
+          "holdAfter": false
+        },
+        {
+          "source": 8850,
+          "op": "release"
+        },
+        {
+          "source": 8851,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 41,
+      "priority": 3,
+      "bank": 2,
+      "source": 8852,
+      "steps": [
+        {
+          "source": 8852,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 8854,
+          "op": "sample",
+          "sample": 9,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 8857,
+          "op": "sample",
+          "sample": 9,
+          "ticks": 159,
+          "holdAfter": false
+        },
+        {
+          "source": 8859,
+          "op": "release"
+        },
+        {
+          "source": 8860,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 42,
+      "priority": 3,
+      "bank": 2,
+      "source": 8861,
+      "steps": [
+        {
+          "source": 8861,
+          "op": "volume",
+          "value": 5
+        },
+        {
+          "source": 8863,
+          "op": "sample",
+          "sample": 10,
+          "ticks": 62,
+          "holdAfter": false
+        },
+        {
+          "source": 8865,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 43,
+      "priority": 3,
+      "bank": 2,
+      "source": 8866,
+      "steps": [
+        {
+          "source": 8866,
+          "op": "volume",
+          "value": 0
+        },
+        {
+          "source": 8868,
+          "op": "sample",
+          "sample": 11,
+          "ticks": 167,
+          "holdAfter": false
+        },
+        {
+          "source": 8870,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 44,
+      "priority": 2,
+      "bank": 2,
+      "source": 8871,
+      "steps": [
+        {
+          "source": 8871,
+          "op": "volume",
+          "value": 7
+        },
+        {
+          "source": 8873,
+          "op": "sample",
+          "sample": 12,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 8875,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 45,
+      "priority": 3,
+      "bank": 2,
+      "source": 8876,
+      "steps": [
+        {
+          "source": 8876,
+          "op": "volume",
+          "value": 6
+        },
+        {
+          "source": 8878,
+          "op": "sample",
+          "sample": 13,
+          "ticks": 152,
+          "holdAfter": false
+        },
+        {
+          "source": 8880,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 46,
+      "priority": 3,
+      "bank": 2,
+      "source": 8881,
+      "steps": [
+        {
+          "source": 8881,
+          "op": "volume",
+          "value": 6
+        },
+        {
+          "source": 8883,
+          "op": "sample",
+          "sample": 14,
+          "ticks": 144,
+          "holdAfter": false
+        },
+        {
+          "source": 8885,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 47,
+      "priority": 11,
+      "bank": 2,
+      "source": 8886,
+      "steps": [
+        {
+          "source": 8886,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 8888,
+          "op": "sample",
+          "sample": 15,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 8891,
+          "op": "sample",
+          "sample": 15,
+          "ticks": 134,
+          "holdAfter": false
+        },
+        {
+          "source": 8893,
+          "op": "release"
+        },
+        {
+          "source": 8894,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 48,
+      "priority": 3,
+      "bank": 2,
+      "source": 8895,
+      "steps": [
+        {
+          "source": 8895,
+          "op": "volume",
+          "value": 4
+        },
+        {
+          "source": 8897,
+          "op": "sample",
+          "sample": 16,
+          "ticks": 36,
+          "holdAfter": false
+        },
+        {
+          "source": 8899,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 49,
+      "priority": 6,
+      "bank": 2,
+      "source": 8900,
+      "steps": [
+        {
+          "source": 8900,
+          "op": "volume",
+          "value": 5
+        },
+        {
+          "source": 8902,
+          "op": "sample",
+          "sample": 17,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 8905,
+          "op": "sample",
+          "sample": 17,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 8907,
+          "op": "sample",
+          "sample": 17,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 8909,
+          "op": "sample",
+          "sample": 17,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 8911,
+          "op": "release"
+        },
+        {
+          "source": 8912,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 50,
+      "priority": 6,
+      "bank": 2,
+      "source": 8913,
+      "steps": [
+        {
+          "source": 8913,
+          "op": "volume",
+          "value": 1
+        },
+        {
+          "source": 8915,
+          "op": "sample",
+          "sample": 18,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 8918,
+          "op": "sample",
+          "sample": 18,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 8920,
+          "op": "sample",
+          "sample": 18,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 8922,
+          "op": "sample",
+          "sample": 18,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 8924,
+          "op": "release"
+        },
+        {
+          "source": 8925,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 51,
+      "priority": 2,
+      "bank": 2,
+      "source": 8926,
+      "steps": [
+        {
+          "source": 8926,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 8928,
+          "op": "sample",
+          "sample": 19,
+          "ticks": 98,
+          "holdAfter": false
+        },
+        {
+          "source": 8930,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 52,
+      "priority": 11,
+      "bank": 0,
+      "source": 8931,
+      "steps": [
+        {
+          "source": 8931,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 8933,
+          "op": "sample",
+          "sample": 20,
+          "ticks": 228,
+          "holdAfter": false
+        },
+        {
+          "source": 8935,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 53,
+      "priority": 11,
+      "bank": 0,
+      "source": 8936,
+      "steps": [
+        {
+          "source": 8936,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 8938,
+          "op": "sample",
+          "sample": 21,
+          "ticks": 144,
+          "holdAfter": false
+        },
+        {
+          "source": 8940,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 54,
+      "priority": 11,
+      "bank": 0,
+      "source": 8941,
+      "steps": [
+        {
+          "source": 8941,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 8943,
+          "op": "sample",
+          "sample": 22,
+          "ticks": 144,
+          "holdAfter": false
+        },
+        {
+          "source": 8945,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 55,
+      "priority": 11,
+      "bank": 0,
+      "source": 8946,
+      "steps": [
+        {
+          "source": 8946,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 8948,
+          "op": "sample",
+          "sample": 23,
+          "ticks": 210,
+          "holdAfter": false
+        },
+        {
+          "source": 8950,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 56,
+      "priority": 11,
+      "bank": 0,
+      "source": 8951,
+      "steps": [
+        {
+          "source": 8951,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 8953,
+          "op": "sample",
+          "sample": 24,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 8956,
+          "op": "sample",
+          "sample": 24,
+          "ticks": 30,
+          "holdAfter": false
+        },
+        {
+          "source": 8958,
+          "op": "release"
+        },
+        {
+          "source": 8959,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 57,
+      "priority": 11,
+      "bank": 0,
+      "source": 8960,
+      "steps": [
+        {
+          "source": 8960,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 8962,
+          "op": "sample",
+          "sample": 25,
+          "ticks": 213,
+          "holdAfter": false
+        },
+        {
+          "source": 8964,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 58,
+      "priority": 11,
+      "bank": 0,
+      "source": 8965,
+      "steps": [
+        {
+          "source": 8965,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 8967,
+          "op": "sample",
+          "sample": 26,
+          "ticks": 177,
+          "holdAfter": false
+        },
+        {
+          "source": 8969,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 59,
+      "priority": 11,
+      "bank": 0,
+      "source": 8970,
+      "steps": [
+        {
+          "source": 8970,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 8972,
+          "op": "sample",
+          "sample": 27,
+          "ticks": 187,
+          "holdAfter": false
+        },
+        {
+          "source": 8974,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 60,
+      "priority": 11,
+      "bank": 0,
+      "source": 8975,
+      "steps": [
+        {
+          "source": 8975,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 8977,
+          "op": "sample",
+          "sample": 28,
+          "ticks": 131,
+          "holdAfter": false
+        },
+        {
+          "source": 8979,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 61,
+      "priority": 11,
+      "bank": 0,
+      "source": 8980,
+      "steps": [
+        {
+          "source": 8980,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 8982,
+          "op": "sample",
+          "sample": 29,
+          "ticks": 121,
+          "holdAfter": false
+        },
+        {
+          "source": 8984,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 62,
+      "priority": 11,
+      "bank": 0,
+      "source": 8985,
+      "steps": [
+        {
+          "source": 8985,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 8987,
+          "op": "sample",
+          "sample": 30,
+          "ticks": 218,
+          "holdAfter": false
+        },
+        {
+          "source": 8989,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 63,
+      "priority": 11,
+      "bank": 0,
+      "source": 8990,
+      "steps": [
+        {
+          "source": 8990,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 8992,
+          "op": "sample",
+          "sample": 31,
+          "ticks": 223,
+          "holdAfter": false
+        },
+        {
+          "source": 8994,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 64,
+      "priority": 11,
+      "bank": 0,
+      "source": 8995,
+      "steps": [
+        {
+          "source": 8995,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 8997,
+          "op": "sample",
+          "sample": 32,
+          "ticks": 249,
+          "holdAfter": false
+        },
+        {
+          "source": 8999,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 65,
+      "priority": 11,
+      "bank": 0,
+      "source": 9000,
+      "steps": [
+        {
+          "source": 9000,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9002,
+          "op": "sample",
+          "sample": 33,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9005,
+          "op": "sample",
+          "sample": 33,
+          "ticks": 12,
+          "holdAfter": false
+        },
+        {
+          "source": 9007,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 66,
+      "priority": 11,
+      "bank": 0,
+      "source": 9008,
+      "steps": [
+        {
+          "source": 9008,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9010,
+          "op": "sample",
+          "sample": 34,
+          "ticks": 228,
+          "holdAfter": false
+        },
+        {
+          "source": 9012,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 67,
+      "priority": 11,
+      "bank": 0,
+      "source": 9013,
+      "steps": [
+        {
+          "source": 9013,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9015,
+          "op": "sample",
+          "sample": 35,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9018,
+          "op": "sample",
+          "sample": 35,
+          "ticks": 7,
+          "holdAfter": false
+        },
+        {
+          "source": 9020,
+          "op": "release"
+        },
+        {
+          "source": 9021,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 68,
+      "priority": 11,
+      "bank": 0,
+      "source": 9022,
+      "steps": [
+        {
+          "source": 9022,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9024,
+          "op": "sample",
+          "sample": 36,
+          "ticks": 231,
+          "holdAfter": false
+        },
+        {
+          "source": 9026,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 69,
+      "priority": 11,
+      "bank": 0,
+      "source": 9027,
+      "steps": [
+        {
+          "source": 9027,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9029,
+          "op": "sample",
+          "sample": 37,
+          "ticks": 167,
+          "holdAfter": false
+        },
+        {
+          "source": 9031,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 70,
+      "priority": 11,
+      "bank": 0,
+      "source": 9032,
+      "steps": [
+        {
+          "source": 9032,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9034,
+          "op": "sample",
+          "sample": 38,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9037,
+          "op": "sample",
+          "sample": 38,
+          "ticks": 37,
+          "holdAfter": false
+        },
+        {
+          "source": 9039,
+          "op": "release"
+        },
+        {
+          "source": 9040,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 71,
+      "priority": 11,
+      "bank": 0,
+      "source": 9041,
+      "steps": [
+        {
+          "source": 9041,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9043,
+          "op": "sample",
+          "sample": 39,
+          "ticks": 246,
+          "holdAfter": false
+        },
+        {
+          "source": 9045,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 72,
+      "priority": 11,
+      "bank": 0,
+      "source": 9046,
+      "steps": [
+        {
+          "source": 9046,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9048,
+          "op": "sample",
+          "sample": 40,
+          "ticks": 231,
+          "holdAfter": false
+        },
+        {
+          "source": 9050,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 73,
+      "priority": 11,
+      "bank": 0,
+      "source": 9051,
+      "steps": [
+        {
+          "source": 9051,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9053,
+          "op": "sample",
+          "sample": 41,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9056,
+          "op": "sample",
+          "sample": 41,
+          "ticks": 30,
+          "holdAfter": false
+        },
+        {
+          "source": 9058,
+          "op": "release"
+        },
+        {
+          "source": 9059,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 74,
+      "priority": 11,
+      "bank": 0,
+      "source": 9060,
+      "steps": [
+        {
+          "source": 9060,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9062,
+          "op": "sample",
+          "sample": 42,
+          "ticks": 136,
+          "holdAfter": false
+        },
+        {
+          "source": 9064,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 75,
+      "priority": 11,
+      "bank": 0,
+      "source": 9065,
+      "steps": [
+        {
+          "source": 9065,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9067,
+          "op": "sample",
+          "sample": 43,
+          "ticks": 239,
+          "holdAfter": false
+        },
+        {
+          "source": 9069,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 76,
+      "priority": 11,
+      "bank": 0,
+      "source": 9070,
+      "steps": [
+        {
+          "source": 9070,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9072,
+          "op": "sample",
+          "sample": 44,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9075,
+          "op": "sample",
+          "sample": 44,
+          "ticks": 19,
+          "holdAfter": false
+        },
+        {
+          "source": 9077,
+          "op": "release"
+        },
+        {
+          "source": 9078,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 77,
+      "priority": 11,
+      "bank": 0,
+      "source": 9079,
+      "steps": [
+        {
+          "source": 9079,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9081,
+          "op": "sample",
+          "sample": 45,
+          "ticks": 249,
+          "holdAfter": false
+        },
+        {
+          "source": 9083,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 78,
+      "priority": 11,
+      "bank": 0,
+      "source": 9084,
+      "steps": [
+        {
+          "source": 9084,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9086,
+          "op": "sample",
+          "sample": 46,
+          "ticks": 239,
+          "holdAfter": false
+        },
+        {
+          "source": 9088,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 79,
+      "priority": 11,
+      "bank": 0,
+      "source": 9089,
+      "steps": [
+        {
+          "source": 9089,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9091,
+          "op": "sample",
+          "sample": 47,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9094,
+          "op": "sample",
+          "sample": 47,
+          "ticks": 81,
+          "holdAfter": false
+        },
+        {
+          "source": 9096,
+          "op": "release"
+        },
+        {
+          "source": 9097,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 80,
+      "priority": 11,
+      "bank": 0,
+      "source": 9098,
+      "steps": [
+        {
+          "source": 9098,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9100,
+          "op": "sample",
+          "sample": 48,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9103,
+          "op": "sample",
+          "sample": 48,
+          "ticks": 114,
+          "holdAfter": false
+        },
+        {
+          "source": 9105,
+          "op": "release"
+        },
+        {
+          "source": 9106,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 81,
+      "priority": 11,
+      "bank": 0,
+      "source": 9107,
+      "steps": [
+        {
+          "source": 9107,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9109,
+          "op": "sample",
+          "sample": 49,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9112,
+          "op": "sample",
+          "sample": 49,
+          "ticks": 9,
+          "holdAfter": false
+        },
+        {
+          "source": 9114,
+          "op": "release"
+        },
+        {
+          "source": 9115,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 82,
+      "priority": 11,
+      "bank": 0,
+      "source": 9116,
+      "steps": [
+        {
+          "source": 9116,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9118,
+          "op": "sample",
+          "sample": 51,
+          "ticks": 164,
+          "holdAfter": false
+        },
+        {
+          "source": 9120,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 83,
+      "priority": 11,
+      "bank": 0,
+      "source": 9121,
+      "steps": [
+        {
+          "source": 9121,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9123,
+          "op": "sample",
+          "sample": 50,
+          "ticks": 88,
+          "holdAfter": false
+        },
+        {
+          "source": 9125,
+          "op": "sample",
+          "sample": 51,
+          "ticks": 164,
+          "holdAfter": false
+        },
+        {
+          "source": 9127,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 84,
+      "priority": 11,
+      "bank": 0,
+      "source": 9128,
+      "steps": [
+        {
+          "source": 9128,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9130,
+          "op": "sample",
+          "sample": 52,
+          "ticks": 182,
+          "holdAfter": false
+        },
+        {
+          "source": 9132,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 85,
+      "priority": 11,
+      "bank": 0,
+      "source": 9133,
+      "steps": [
+        {
+          "source": 9133,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9135,
+          "op": "sample",
+          "sample": 53,
+          "ticks": 182,
+          "holdAfter": false
+        },
+        {
+          "source": 9137,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 86,
+      "priority": 11,
+      "bank": 0,
+      "source": 9138,
+      "steps": [
+        {
+          "source": 9138,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9140,
+          "op": "sample",
+          "sample": 54,
+          "ticks": 216,
+          "holdAfter": false
+        },
+        {
+          "source": 9142,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 87,
+      "priority": 11,
+      "bank": 0,
+      "source": 9143,
+      "steps": [
+        {
+          "source": 9143,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9145,
+          "op": "sample",
+          "sample": 55,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9148,
+          "op": "sample",
+          "sample": 55,
+          "ticks": 40,
+          "holdAfter": false
+        },
+        {
+          "source": 9150,
+          "op": "release"
+        },
+        {
+          "source": 9151,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 88,
+      "priority": 11,
+      "bank": 0,
+      "source": 9152,
+      "steps": [
+        {
+          "source": 9152,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9154,
+          "op": "sample",
+          "sample": 56,
+          "ticks": 203,
+          "holdAfter": false
+        },
+        {
+          "source": 9156,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 89,
+      "priority": 11,
+      "bank": 0,
+      "source": 9157,
+      "steps": [
+        {
+          "source": 9157,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9159,
+          "op": "sample",
+          "sample": 57,
+          "ticks": 180,
+          "holdAfter": false
+        },
+        {
+          "source": 9161,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 90,
+      "priority": 11,
+      "bank": 0,
+      "source": 9162,
+      "steps": [
+        {
+          "source": 9162,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9164,
+          "op": "sample",
+          "sample": 58,
+          "ticks": 210,
+          "holdAfter": false
+        },
+        {
+          "source": 9166,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 91,
+      "priority": 11,
+      "bank": 0,
+      "source": 9167,
+      "steps": [
+        {
+          "source": 9167,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9169,
+          "op": "sample",
+          "sample": 59,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9172,
+          "op": "sample",
+          "sample": 59,
+          "ticks": 91,
+          "holdAfter": false
+        },
+        {
+          "source": 9174,
+          "op": "release"
+        },
+        {
+          "source": 9175,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 92,
+      "priority": 11,
+      "bank": 0,
+      "source": 9176,
+      "steps": [
+        {
+          "source": 9176,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9178,
+          "op": "sample",
+          "sample": 60,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9181,
+          "op": "sample",
+          "sample": 60,
+          "ticks": 7,
+          "holdAfter": false
+        },
+        {
+          "source": 9183,
+          "op": "release"
+        },
+        {
+          "source": 9184,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 93,
+      "priority": 11,
+      "bank": 0,
+      "source": 9185,
+      "steps": [
+        {
+          "source": 9185,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9187,
+          "op": "sample",
+          "sample": 61,
+          "ticks": 192,
+          "holdAfter": false
+        },
+        {
+          "source": 9189,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 94,
+      "priority": 11,
+      "bank": 0,
+      "source": 9190,
+      "steps": [
+        {
+          "source": 9190,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9192,
+          "op": "sample",
+          "sample": 62,
+          "ticks": 244,
+          "holdAfter": false
+        },
+        {
+          "source": 9194,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 95,
+      "priority": 11,
+      "bank": 0,
+      "source": 9195,
+      "steps": [
+        {
+          "source": 9195,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9197,
+          "op": "sample",
+          "sample": 63,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9200,
+          "op": "sample",
+          "sample": 63,
+          "ticks": 53,
+          "holdAfter": false
+        },
+        {
+          "source": 9202,
+          "op": "release"
+        },
+        {
+          "source": 9203,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 96,
+      "priority": 11,
+      "bank": 0,
+      "source": 9204,
+      "steps": [
+        {
+          "source": 9204,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9206,
+          "op": "sample",
+          "sample": 64,
+          "ticks": 223,
+          "holdAfter": false
+        },
+        {
+          "source": 9208,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 97,
+      "priority": 11,
+      "bank": 0,
+      "source": 9209,
+      "steps": [
+        {
+          "source": 9209,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9211,
+          "op": "sample",
+          "sample": 65,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9214,
+          "op": "sample",
+          "sample": 65,
+          "ticks": 30,
+          "holdAfter": false
+        },
+        {
+          "source": 9216,
+          "op": "release"
+        },
+        {
+          "source": 9217,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 98,
+      "priority": 8,
+      "bank": 0,
+      "source": 9218,
+      "steps": [
+        {
+          "source": 9218,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9220,
+          "op": "sample",
+          "sample": 66,
+          "ticks": 90,
+          "holdAfter": false
+        },
+        {
+          "source": 9222,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 99,
+      "priority": 8,
+      "bank": 0,
+      "source": 9223,
+      "steps": [
+        {
+          "source": 9223,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9225,
+          "op": "sample",
+          "sample": 67,
+          "ticks": 80,
+          "holdAfter": false
+        },
+        {
+          "source": 9227,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 100,
+      "priority": 8,
+      "bank": 0,
+      "source": 9228,
+      "steps": [
+        {
+          "source": 9228,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9230,
+          "op": "sample",
+          "sample": 68,
+          "ticks": 100,
+          "holdAfter": false
+        },
+        {
+          "source": 9232,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 101,
+      "priority": 8,
+      "bank": 0,
+      "source": 9233,
+      "steps": [
+        {
+          "source": 9233,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9235,
+          "op": "sample",
+          "sample": 69,
+          "ticks": 146,
+          "holdAfter": false
+        },
+        {
+          "source": 9237,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 102,
+      "priority": 8,
+      "bank": 0,
+      "source": 9238,
+      "steps": [
+        {
+          "source": 9238,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9240,
+          "op": "sample",
+          "sample": 70,
+          "ticks": 149,
+          "holdAfter": false
+        },
+        {
+          "source": 9242,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 103,
+      "priority": 8,
+      "bank": 0,
+      "source": 9243,
+      "steps": [
+        {
+          "source": 9243,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9245,
+          "op": "sample",
+          "sample": 71,
+          "ticks": 167,
+          "holdAfter": false
+        },
+        {
+          "source": 9247,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 104,
+      "priority": 8,
+      "bank": 0,
+      "source": 9248,
+      "steps": [
+        {
+          "source": 9248,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9250,
+          "op": "sample",
+          "sample": 72,
+          "ticks": 100,
+          "holdAfter": false
+        },
+        {
+          "source": 9252,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 105,
+      "priority": 11,
+      "bank": 0,
+      "source": 9253,
+      "steps": [
+        {
+          "source": 9253,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9255,
+          "op": "sample",
+          "sample": 73,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9258,
+          "op": "sample",
+          "sample": 73,
+          "ticks": 27,
+          "holdAfter": false
+        },
+        {
+          "source": 9260,
+          "op": "release"
+        },
+        {
+          "source": 9261,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 106,
+      "priority": 11,
+      "bank": 1,
+      "source": 9262,
+      "steps": [
+        {
+          "source": 9262,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9264,
+          "op": "sample",
+          "sample": 20,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9267,
+          "op": "sample",
+          "sample": 20,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9269,
+          "op": "sample",
+          "sample": 20,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9271,
+          "op": "sample",
+          "sample": 20,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9273,
+          "op": "sample",
+          "sample": 20,
+          "ticks": 139,
+          "holdAfter": false
+        },
+        {
+          "source": 9275,
+          "op": "release"
+        },
+        {
+          "source": 9276,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 107,
+      "priority": 11,
+      "bank": 1,
+      "source": 9277,
+      "steps": [
+        {
+          "source": 9277,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9279,
+          "op": "sample",
+          "sample": 21,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9282,
+          "op": "sample",
+          "sample": 21,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9284,
+          "op": "sample",
+          "sample": 21,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9286,
+          "op": "sample",
+          "sample": 21,
+          "ticks": 113,
+          "holdAfter": false
+        },
+        {
+          "source": 9288,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 108,
+      "priority": 11,
+      "bank": 1,
+      "source": 9289,
+      "steps": [
+        {
+          "source": 9289,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9291,
+          "op": "sample",
+          "sample": 22,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9294,
+          "op": "sample",
+          "sample": 22,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9296,
+          "op": "sample",
+          "sample": 22,
+          "ticks": 233,
+          "holdAfter": false
+        },
+        {
+          "source": 9298,
+          "op": "release"
+        },
+        {
+          "source": 9299,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 109,
+      "priority": 11,
+      "bank": 1,
+      "source": 9300,
+      "steps": [
+        {
+          "source": 9300,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9302,
+          "op": "sample",
+          "sample": 23,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9305,
+          "op": "sample",
+          "sample": 23,
+          "ticks": 89,
+          "holdAfter": false
+        },
+        {
+          "source": 9307,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 110,
+      "priority": 11,
+      "bank": 1,
+      "source": 9308,
+      "steps": [
+        {
+          "source": 9308,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9310,
+          "op": "sample",
+          "sample": 24,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9313,
+          "op": "sample",
+          "sample": 24,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9315,
+          "op": "sample",
+          "sample": 24,
+          "ticks": 13,
+          "holdAfter": false
+        },
+        {
+          "source": 9317,
+          "op": "release"
+        },
+        {
+          "source": 9318,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 111,
+      "priority": 11,
+      "bank": 1,
+      "source": 9319,
+      "steps": [
+        {
+          "source": 9319,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9321,
+          "op": "sample",
+          "sample": 25,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9324,
+          "op": "sample",
+          "sample": 25,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9326,
+          "op": "sample",
+          "sample": 25,
+          "ticks": 16,
+          "holdAfter": false
+        },
+        {
+          "source": 9328,
+          "op": "release"
+        },
+        {
+          "source": 9329,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 112,
+      "priority": 11,
+      "bank": 1,
+      "source": 9330,
+      "steps": [
+        {
+          "source": 9330,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9332,
+          "op": "sample",
+          "sample": 26,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9335,
+          "op": "sample",
+          "sample": 26,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9337,
+          "op": "sample",
+          "sample": 26,
+          "ticks": 26,
+          "holdAfter": false
+        },
+        {
+          "source": 9339,
+          "op": "release"
+        },
+        {
+          "source": 9340,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 113,
+      "priority": 11,
+      "bank": 1,
+      "source": 9341,
+      "steps": [
+        {
+          "source": 9341,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9343,
+          "op": "sample",
+          "sample": 27,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9346,
+          "op": "sample",
+          "sample": 27,
+          "ticks": 204,
+          "holdAfter": false
+        },
+        {
+          "source": 9348,
+          "op": "release"
+        },
+        {
+          "source": 9349,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 114,
+      "priority": 11,
+      "bank": 1,
+      "source": 9350,
+      "steps": [
+        {
+          "source": 9350,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9352,
+          "op": "sample",
+          "sample": 28,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9355,
+          "op": "sample",
+          "sample": 28,
+          "ticks": 89,
+          "holdAfter": false
+        },
+        {
+          "source": 9357,
+          "op": "release"
+        },
+        {
+          "source": 9358,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 115,
+      "priority": 11,
+      "bank": 1,
+      "source": 9359,
+      "steps": [
+        {
+          "source": 9359,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9361,
+          "op": "sample",
+          "sample": 29,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9364,
+          "op": "sample",
+          "sample": 29,
+          "ticks": 173,
+          "holdAfter": false
+        },
+        {
+          "source": 9366,
+          "op": "release"
+        },
+        {
+          "source": 9367,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 116,
+      "priority": 11,
+      "bank": 1,
+      "source": 9368,
+      "steps": [
+        {
+          "source": 9368,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9370,
+          "op": "sample",
+          "sample": 30,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9373,
+          "op": "sample",
+          "sample": 30,
+          "ticks": 201,
+          "holdAfter": false
+        },
+        {
+          "source": 9375,
+          "op": "release"
+        },
+        {
+          "source": 9376,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 117,
+      "priority": 11,
+      "bank": 1,
+      "source": 9377,
+      "steps": [
+        {
+          "source": 9377,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9379,
+          "op": "sample",
+          "sample": 31,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9382,
+          "op": "sample",
+          "sample": 31,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9384,
+          "op": "sample",
+          "sample": 31,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9386,
+          "op": "sample",
+          "sample": 31,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9388,
+          "op": "sample",
+          "sample": 31,
+          "ticks": 31,
+          "holdAfter": false
+        },
+        {
+          "source": 9390,
+          "op": "release"
+        },
+        {
+          "source": 9391,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 118,
+      "priority": 11,
+      "bank": 1,
+      "source": 9392,
+      "steps": [
+        {
+          "source": 9392,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9394,
+          "op": "sample",
+          "sample": 32,
+          "ticks": 169,
+          "holdAfter": false
+        },
+        {
+          "source": 9396,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 119,
+      "priority": 11,
+      "bank": 1,
+      "source": 9397,
+      "steps": [
+        {
+          "source": 9397,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9399,
+          "op": "sample",
+          "sample": 33,
+          "ticks": 159,
+          "holdAfter": false
+        },
+        {
+          "source": 9401,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 120,
+      "priority": 11,
+      "bank": 1,
+      "source": 9402,
+      "steps": [
+        {
+          "source": 9402,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9404,
+          "op": "sample",
+          "sample": 34,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9407,
+          "op": "sample",
+          "sample": 34,
+          "ticks": 65,
+          "holdAfter": false
+        },
+        {
+          "source": 9409,
+          "op": "release"
+        },
+        {
+          "source": 9410,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 121,
+      "priority": 11,
+      "bank": 1,
+      "source": 9411,
+      "steps": [
+        {
+          "source": 9411,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9413,
+          "op": "sample",
+          "sample": 35,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9416,
+          "op": "sample",
+          "sample": 35,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9418,
+          "op": "sample",
+          "sample": 35,
+          "ticks": 172,
+          "holdAfter": false
+        },
+        {
+          "source": 9420,
+          "op": "release"
+        },
+        {
+          "source": 9421,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 122,
+      "priority": 11,
+      "bank": 1,
+      "source": 9422,
+      "steps": [
+        {
+          "source": 9422,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9424,
+          "op": "sample",
+          "sample": 36,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9427,
+          "op": "sample",
+          "sample": 36,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9429,
+          "op": "sample",
+          "sample": 36,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9431,
+          "op": "sample",
+          "sample": 36,
+          "ticks": 193,
+          "holdAfter": false
+        },
+        {
+          "source": 9433,
+          "op": "release"
+        },
+        {
+          "source": 9434,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 123,
+      "priority": 11,
+      "bank": 1,
+      "source": 9435,
+      "steps": [
+        {
+          "source": 9435,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9437,
+          "op": "sample",
+          "sample": 37,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9440,
+          "op": "sample",
+          "sample": 37,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9442,
+          "op": "sample",
+          "sample": 37,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9444,
+          "op": "sample",
+          "sample": 37,
+          "ticks": 29,
+          "holdAfter": false
+        },
+        {
+          "source": 9446,
+          "op": "release"
+        },
+        {
+          "source": 9447,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 124,
+      "priority": 11,
+      "bank": 1,
+      "source": 9448,
+      "steps": [
+        {
+          "source": 9448,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9450,
+          "op": "sample",
+          "sample": 38,
+          "ticks": 90,
+          "holdAfter": false
+        },
+        {
+          "source": 9452,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 125,
+      "priority": 11,
+      "bank": 1,
+      "source": 9453,
+      "steps": [
+        {
+          "source": 9453,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9455,
+          "op": "sample",
+          "sample": 39,
+          "ticks": 203,
+          "holdAfter": false
+        },
+        {
+          "source": 9457,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 126,
+      "priority": 11,
+      "bank": 1,
+      "source": 9458,
+      "steps": [
+        {
+          "source": 9458,
+          "op": "volume",
+          "value": 3
+        },
+        {
+          "source": 9460,
+          "op": "sample",
+          "sample": 40,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9463,
+          "op": "sample",
+          "sample": 40,
+          "ticks": 109,
+          "holdAfter": false
+        },
+        {
+          "source": 9465,
+          "op": "release"
+        },
+        {
+          "source": 9466,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 127,
+      "priority": 11,
+      "bank": 1,
+      "source": 9467,
+      "steps": [
+        {
+          "source": 9467,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9469,
+          "op": "sample",
+          "sample": 41,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9472,
+          "op": "sample",
+          "sample": 41,
+          "ticks": 48,
+          "holdAfter": false
+        },
+        {
+          "source": 9474,
+          "op": "release"
+        },
+        {
+          "source": 9475,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 128,
+      "priority": 6,
+      "bank": 2,
+      "source": 9476,
+      "steps": [
+        {
+          "source": 9476,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9478,
+          "op": "sample",
+          "sample": 18,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9481,
+          "op": "sample",
+          "sample": 18,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9483,
+          "op": "sample",
+          "sample": 18,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9485,
+          "op": "release"
+        },
+        {
+          "source": 9486,
+          "op": "sample",
+          "sample": 18,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9489,
+          "op": "sample",
+          "sample": 18,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9491,
+          "op": "sample",
+          "sample": 18,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9493,
+          "op": "release"
+        },
+        {
+          "source": 9494,
+          "op": "sample",
+          "sample": 18,
+          "ticks": 255,
+          "holdAfter": true
+        },
+        {
+          "source": 9497,
+          "op": "sample",
+          "sample": 18,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9499,
+          "op": "sample",
+          "sample": 18,
+          "ticks": 255,
+          "holdAfter": false
+        },
+        {
+          "source": 9501,
+          "op": "release"
+        },
+        {
+          "source": 9502,
+          "op": "end"
+        }
+      ]
+    },
+    {
+      "command": 129,
+      "priority": 11,
+      "bank": 0,
+      "source": 9503,
+      "steps": [
+        {
+          "source": 9503,
+          "op": "volume",
+          "value": 2
+        },
+        {
+          "source": 9505,
+          "op": "sample",
+          "sample": 61,
+          "ticks": 94,
+          "holdAfter": false
+        },
+        {
+          "source": 9507,
+          "op": "end"
+        }
+      ]
+    }
+  ],
+  "samples": [
+    {
+      "bank": 0,
+      "sample": 1,
+      "start": 1024,
+      "end": 1924,
+      "frames": 1802
+    },
+    {
+      "bank": 0,
+      "sample": 2,
+      "start": 1925,
+      "end": 3774,
+      "frames": 3700
+    },
+    {
+      "bank": 0,
+      "sample": 3,
+      "start": 3775,
+      "end": 4155,
+      "frames": 762
+    },
+    {
+      "bank": 0,
+      "sample": 4,
+      "start": 4156,
+      "end": 7621,
+      "frames": 6932
+    },
+    {
+      "bank": 0,
+      "sample": 5,
+      "start": 7622,
+      "end": 11620,
+      "frames": 7998
+    },
+    {
+      "bank": 0,
+      "sample": 6,
+      "start": 11621,
+      "end": 13542,
+      "frames": 3844
+    },
+    {
+      "bank": 0,
+      "sample": 7,
+      "start": 13543,
+      "end": 16106,
+      "frames": 5128
+    },
+    {
+      "bank": 0,
+      "sample": 8,
+      "start": 16107,
+      "end": 20805,
+      "frames": 9398
+    },
+    {
+      "bank": 0,
+      "sample": 9,
+      "start": 20806,
+      "end": 27304,
+      "frames": 12998
+    },
+    {
+      "bank": 0,
+      "sample": 10,
+      "start": 27305,
+      "end": 28253,
+      "frames": 1898
+    },
+    {
+      "bank": 0,
+      "sample": 11,
+      "start": 28254,
+      "end": 30842,
+      "frames": 5178
+    },
+    {
+      "bank": 0,
+      "sample": 12,
+      "start": 30843,
+      "end": 34941,
+      "frames": 8198
+    },
+    {
+      "bank": 0,
+      "sample": 13,
+      "start": 34942,
+      "end": 37300,
+      "frames": 4718
+    },
+    {
+      "bank": 0,
+      "sample": 14,
+      "start": 37301,
+      "end": 39529,
+      "frames": 4458
+    },
+    {
+      "bank": 0,
+      "sample": 15,
+      "start": 39530,
+      "end": 45558,
+      "frames": 12058
+    },
+    {
+      "bank": 0,
+      "sample": 16,
+      "start": 45559,
+      "end": 46135,
+      "frames": 1154
+    },
+    {
+      "bank": 0,
+      "sample": 17,
+      "start": 46136,
+      "end": 62124,
+      "frames": 31978
+    },
+    {
+      "bank": 0,
+      "sample": 18,
+      "start": 62125,
+      "end": 78133,
+      "frames": 32018
+    },
+    {
+      "bank": 0,
+      "sample": 19,
+      "start": 78134,
+      "end": 79635,
+      "frames": 3004
+    },
+    {
+      "bank": 0,
+      "sample": 20,
+      "start": 79636,
+      "end": 83196,
+      "frames": 7122
+    },
+    {
+      "bank": 0,
+      "sample": 21,
+      "start": 83197,
+      "end": 85450,
+      "frames": 4508
+    },
+    {
+      "bank": 0,
+      "sample": 22,
+      "start": 85451,
+      "end": 87709,
+      "frames": 4518
+    },
+    {
+      "bank": 0,
+      "sample": 23,
+      "start": 87710,
+      "end": 90976,
+      "frames": 6534
+    },
+    {
+      "bank": 0,
+      "sample": 24,
+      "start": 90977,
+      "end": 95404,
+      "frames": 8856
+    },
+    {
+      "bank": 0,
+      "sample": 25,
+      "start": 95405,
+      "end": 98709,
+      "frames": 6610
+    },
+    {
+      "bank": 0,
+      "sample": 26,
+      "start": 98710,
+      "end": 101468,
+      "frames": 5518
+    },
+    {
+      "bank": 0,
+      "sample": 27,
+      "start": 101469,
+      "end": 104387,
+      "frames": 5838
+    },
+    {
+      "bank": 0,
+      "sample": 28,
+      "start": 104388,
+      "end": 106426,
+      "frames": 4078
+    },
+    {
+      "bank": 0,
+      "sample": 29,
+      "start": 106427,
+      "end": 108286,
+      "frames": 3720
+    },
+    {
+      "bank": 0,
+      "sample": 30,
+      "start": 108287,
+      "end": 111700,
+      "frames": 6828
+    },
+    {
+      "bank": 0,
+      "sample": 31,
+      "start": 111701,
+      "end": 115190,
+      "frames": 6980
+    },
+    {
+      "bank": 0,
+      "sample": 32,
+      "start": 115191,
+      "end": 119087,
+      "frames": 7794
+    },
+    {
+      "bank": 0,
+      "sample": 33,
+      "start": 119088,
+      "end": 123258,
+      "frames": 8342
+    },
+    {
+      "bank": 0,
+      "sample": 34,
+      "start": 123259,
+      "end": 126802,
+      "frames": 7088
+    },
+    {
+      "bank": 0,
+      "sample": 35,
+      "start": 126803,
+      "end": 130872,
+      "frames": 8140
+    },
+    {
+      "bank": 0,
+      "sample": 36,
+      "start": 130873,
+      "end": 134454,
+      "frames": 7164
+    },
+    {
+      "bank": 0,
+      "sample": 37,
+      "start": 134455,
+      "end": 137041,
+      "frames": 5174
+    },
+    {
+      "bank": 0,
+      "sample": 38,
+      "start": 137042,
+      "end": 141583,
+      "frames": 9084
+    },
+    {
+      "bank": 0,
+      "sample": 39,
+      "start": 141584,
+      "end": 145443,
+      "frames": 7720
+    },
+    {
+      "bank": 0,
+      "sample": 40,
+      "start": 145444,
+      "end": 149060,
+      "frames": 7234
+    },
+    {
+      "bank": 0,
+      "sample": 41,
+      "start": 149061,
+      "end": 153485,
+      "frames": 8850
+    },
+    {
+      "bank": 0,
+      "sample": 42,
+      "start": 153486,
+      "end": 155606,
+      "frames": 4242
+    },
+    {
+      "bank": 0,
+      "sample": 43,
+      "start": 155607,
+      "end": 159311,
+      "frames": 7410
+    },
+    {
+      "bank": 0,
+      "sample": 44,
+      "start": 159312,
+      "end": 163596,
+      "frames": 8570
+    },
+    {
+      "bank": 0,
+      "sample": 45,
+      "start": 163597,
+      "end": 167460,
+      "frames": 7728
+    },
+    {
+      "bank": 0,
+      "sample": 46,
+      "start": 167461,
+      "end": 171180,
+      "frames": 7440
+    },
+    {
+      "bank": 0,
+      "sample": 47,
+      "start": 171181,
+      "end": 176427,
+      "frames": 10494
+    },
+    {
+      "bank": 0,
+      "sample": 48,
+      "start": 176428,
+      "end": 182070,
+      "frames": 11286
+    },
+    {
+      "bank": 0,
+      "sample": 49,
+      "start": 182071,
+      "end": 186187,
+      "frames": 8234
+    },
+    {
+      "bank": 0,
+      "sample": 50,
+      "start": 186188,
+      "end": 187544,
+      "frames": 2714
+    },
+    {
+      "bank": 0,
+      "sample": 51,
+      "start": 187545,
+      "end": 190090,
+      "frames": 5092
+    },
+    {
+      "bank": 0,
+      "sample": 52,
+      "start": 190091,
+      "end": 192949,
+      "frames": 5718
+    },
+    {
+      "bank": 0,
+      "sample": 53,
+      "start": 192950,
+      "end": 195777,
+      "frames": 5656
+    },
+    {
+      "bank": 0,
+      "sample": 54,
+      "start": 195778,
+      "end": 199143,
+      "frames": 6732
+    },
+    {
+      "bank": 0,
+      "sample": 55,
+      "start": 199144,
+      "end": 203759,
+      "frames": 9232
+    },
+    {
+      "bank": 0,
+      "sample": 56,
+      "start": 203760,
+      "end": 206936,
+      "frames": 6354
+    },
+    {
+      "bank": 0,
+      "sample": 57,
+      "start": 206937,
+      "end": 209729,
+      "frames": 5586
+    },
+    {
+      "bank": 0,
+      "sample": 58,
+      "start": 209730,
+      "end": 213029,
+      "frames": 6600
+    },
+    {
+      "bank": 0,
+      "sample": 59,
+      "start": 213030,
+      "end": 218440,
+      "frames": 10822
+    },
+    {
+      "bank": 0,
+      "sample": 60,
+      "start": 218441,
+      "end": 222517,
+      "frames": 8154
+    },
+    {
+      "bank": 0,
+      "sample": 61,
+      "start": 222518,
+      "end": 225534,
+      "frames": 6034
+    },
+    {
+      "bank": 0,
+      "sample": 62,
+      "start": 225535,
+      "end": 229320,
+      "frames": 7572
+    },
+    {
+      "bank": 0,
+      "sample": 63,
+      "start": 229321,
+      "end": 234131,
+      "frames": 9622
+    },
+    {
+      "bank": 0,
+      "sample": 64,
+      "start": 234132,
+      "end": 237592,
+      "frames": 6922
+    },
+    {
+      "bank": 0,
+      "sample": 65,
+      "start": 237593,
+      "end": 242035,
+      "frames": 8886
+    },
+    {
+      "bank": 0,
+      "sample": 66,
+      "start": 242036,
+      "end": 243431,
+      "frames": 2792
+    },
+    {
+      "bank": 0,
+      "sample": 67,
+      "start": 243432,
+      "end": 244690,
+      "frames": 2518
+    },
+    {
+      "bank": 0,
+      "sample": 68,
+      "start": 244691,
+      "end": 246233,
+      "frames": 3086
+    },
+    {
+      "bank": 0,
+      "sample": 69,
+      "start": 246234,
+      "end": 248526,
+      "frames": 4586
+    },
+    {
+      "bank": 0,
+      "sample": 70,
+      "start": 248527,
+      "end": 250829,
+      "frames": 4606
+    },
+    {
+      "bank": 0,
+      "sample": 71,
+      "start": 250830,
+      "end": 253431,
+      "frames": 5204
+    },
+    {
+      "bank": 0,
+      "sample": 72,
+      "start": 253432,
+      "end": 254994,
+      "frames": 3126
+    },
+    {
+      "bank": 0,
+      "sample": 73,
+      "start": 254995,
+      "end": 259411,
+      "frames": 8834
+    },
+    {
+      "bank": 1,
+      "sample": 1,
+      "start": 1024,
+      "end": 1924,
+      "frames": 1802
+    },
+    {
+      "bank": 1,
+      "sample": 2,
+      "start": 1925,
+      "end": 3774,
+      "frames": 3700
+    },
+    {
+      "bank": 1,
+      "sample": 3,
+      "start": 3775,
+      "end": 4155,
+      "frames": 762
+    },
+    {
+      "bank": 1,
+      "sample": 4,
+      "start": 4156,
+      "end": 7621,
+      "frames": 6932
+    },
+    {
+      "bank": 1,
+      "sample": 5,
+      "start": 7622,
+      "end": 11620,
+      "frames": 7998
+    },
+    {
+      "bank": 1,
+      "sample": 6,
+      "start": 11621,
+      "end": 13542,
+      "frames": 3844
+    },
+    {
+      "bank": 1,
+      "sample": 7,
+      "start": 13543,
+      "end": 16106,
+      "frames": 5128
+    },
+    {
+      "bank": 1,
+      "sample": 8,
+      "start": 16107,
+      "end": 20805,
+      "frames": 9398
+    },
+    {
+      "bank": 1,
+      "sample": 9,
+      "start": 20806,
+      "end": 27304,
+      "frames": 12998
+    },
+    {
+      "bank": 1,
+      "sample": 10,
+      "start": 27305,
+      "end": 28253,
+      "frames": 1898
+    },
+    {
+      "bank": 1,
+      "sample": 11,
+      "start": 28254,
+      "end": 30842,
+      "frames": 5178
+    },
+    {
+      "bank": 1,
+      "sample": 12,
+      "start": 30843,
+      "end": 34941,
+      "frames": 8198
+    },
+    {
+      "bank": 1,
+      "sample": 13,
+      "start": 34942,
+      "end": 37300,
+      "frames": 4718
+    },
+    {
+      "bank": 1,
+      "sample": 14,
+      "start": 37301,
+      "end": 39529,
+      "frames": 4458
+    },
+    {
+      "bank": 1,
+      "sample": 15,
+      "start": 39530,
+      "end": 45558,
+      "frames": 12058
+    },
+    {
+      "bank": 1,
+      "sample": 16,
+      "start": 45559,
+      "end": 46135,
+      "frames": 1154
+    },
+    {
+      "bank": 1,
+      "sample": 17,
+      "start": 46136,
+      "end": 62124,
+      "frames": 31978
+    },
+    {
+      "bank": 1,
+      "sample": 18,
+      "start": 62125,
+      "end": 78133,
+      "frames": 32018
+    },
+    {
+      "bank": 1,
+      "sample": 19,
+      "start": 78134,
+      "end": 79635,
+      "frames": 3004
+    },
+    {
+      "bank": 1,
+      "sample": 20,
+      "start": 79636,
+      "end": 97785,
+      "frames": 36300
+    },
+    {
+      "bank": 1,
+      "sample": 21,
+      "start": 97786,
+      "end": 111525,
+      "frames": 27480
+    },
+    {
+      "bank": 1,
+      "sample": 22,
+      "start": 111526,
+      "end": 123173,
+      "frames": 23296
+    },
+    {
+      "bank": 1,
+      "sample": 23,
+      "start": 123174,
+      "end": 128514,
+      "frames": 10682
+    },
+    {
+      "bank": 1,
+      "sample": 24,
+      "start": 128515,
+      "end": 136723,
+      "frames": 16418
+    },
+    {
+      "bank": 1,
+      "sample": 25,
+      "start": 136724,
+      "end": 144962,
+      "frames": 16478
+    },
+    {
+      "bank": 1,
+      "sample": 26,
+      "start": 144963,
+      "end": 153361,
+      "frames": 16798
+    },
+    {
+      "bank": 1,
+      "sample": 27,
+      "start": 153362,
+      "end": 160531,
+      "frames": 14340
+    },
+    {
+      "bank": 1,
+      "sample": 28,
+      "start": 160532,
+      "end": 165903,
+      "frames": 10744
+    },
+    {
+      "bank": 1,
+      "sample": 29,
+      "start": 165904,
+      "end": 172593,
+      "frames": 13380
+    },
+    {
+      "bank": 1,
+      "sample": 30,
+      "start": 172594,
+      "end": 179871,
+      "frames": 14556
+    },
+    {
+      "bank": 1,
+      "sample": 31,
+      "start": 179872,
+      "end": 196331,
+      "frames": 32920
+    },
+    {
+      "bank": 1,
+      "sample": 32,
+      "start": 196332,
+      "end": 198989,
+      "frames": 5316
+    },
+    {
+      "bank": 1,
+      "sample": 33,
+      "start": 198990,
+      "end": 201469,
+      "frames": 4960
+    },
+    {
+      "bank": 1,
+      "sample": 34,
+      "start": 201470,
+      "end": 206465,
+      "frames": 9992
+    },
+    {
+      "bank": 1,
+      "sample": 35,
+      "start": 206466,
+      "end": 217142,
+      "frames": 21354
+    },
+    {
+      "bank": 1,
+      "sample": 36,
+      "start": 217143,
+      "end": 232319,
+      "frames": 30354
+    },
+    {
+      "bank": 1,
+      "sample": 37,
+      "start": 232320,
+      "end": 244771,
+      "frames": 24904
+    },
+    {
+      "bank": 1,
+      "sample": 38,
+      "start": 244772,
+      "end": 246183,
+      "frames": 2824
+    },
+    {
+      "bank": 1,
+      "sample": 39,
+      "start": 246184,
+      "end": 249361,
+      "frames": 6356
+    },
+    {
+      "bank": 1,
+      "sample": 40,
+      "start": 249362,
+      "end": 255026,
+      "frames": 11330
+    },
+    {
+      "bank": 1,
+      "sample": 41,
+      "start": 255027,
+      "end": 259748,
+      "frames": 9444
+    }
+  ]
+}

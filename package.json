@@ -1,10 +1,10 @@
 {
   "name": "wwfwfest-js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "type": "module",
   "scripts": {
     "serve": "python -m http.server 8765",
-    "check": "node --check src/app.js && node --check src/game.js && node --check src/renderer.js"
+    "check": "node --check src/app.js && node --check src/game.js && node --check src/renderer.js && node --check src/audio/effects-worklet.js && node --test --test-reporter=dot tests/audio.test.js"
   }
 }
