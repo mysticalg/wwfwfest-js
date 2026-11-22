@@ -73,7 +73,10 @@ def main():
                           for action in (72,74,75,86)},
         'pinVariants': {'victimBack': descriptor(0x172f8), 'escapeBack': descriptor(0x1743c)},
         'targetOffsets': [list(struct.unpack_from('>2h', program, 0x276c + index * 4)) for index in range(4)],
-        'moveBounds': [list(struct.unpack_from('>4h', program, 0xdbfa + index * 8)) for index in range(13)],
+        'moveBounds': [list(struct.unpack_from('>4h', program, 0xdbfa + index * 8)) for index in range(17)],
+        'humanPressBounds': list(program[0xe2b0:0xe2b0+74]),
+        'humanRescueFallbacks': list(program[0xe23e:0xe23e+12]),
+        'humanChargeRows': list(program[0xd57a:0xd57a+72]),
         'moveBoundKinds': list(program[0xe2b0:0xe2fa]),
         'grappleThrowVariants': {name: descriptor(address) for name,address in (
             ('largeTarget',0x1789c),('wallSlam',0x1421e),('alternateLift',0x15ebe))},

@@ -11,6 +11,7 @@ import {stepComputerGrapple} from './computer-grapple.js';
 import {initializeHealth,advanceDamageService} from './match-services.js';
 import {worldPosition,updateScreenPosition} from './projection.js';
 import {advanceNativeContacts} from './native-contact.js';
+import {stepHumanInput} from './human-input.js';
 
 // Stable original pool records for the practice match. Legacy movement/contact
 // adapters synchronize into these records; grapple and pin participants stay in
@@ -36,6 +37,7 @@ export class MatchActors {
   world.activeA=a;world.activeB=b;
   this.referee=initializeReferee(new Referee({world}));this.sync();
   if(world.nativeMovementAI)this.attach(match.fighters.filter(f=>f.flags56&128));
+  if(world.nativeHumanInput)this.attach(match.fighters.filter(f=>!(f.flags56&0xc0)));
  }
  get active(){return this.match.fighters.some(f=>f.nativeBody);}
  sync(){
@@ -93,6 +95,7 @@ export class MatchActors {
   }
  }
  input(){for(const fighter of this.match.fighters)if(fighter.nativeBody){
+  if(this.match.world.nativeHumanInput){stepHumanInput(fighter.original,{pressed:fighter.pressedButtons,mask:fighter.inputMask});continue;}
   const body=fighter.original;if(!(body.flags56&0xc0))body.inputBlockA=body.inputBlockB=0;
   if(!(body.flags56&0xc0))body.input({pressed:fighter.pressedButtons,mask:fighter.inputMask});else body.pressedButtons=0;
   if(!(body.flags56&0xc0)||!this.match.world.nativeMovementAI)body.runInput(fighter.inputMask);
@@ -149,12 +152,12 @@ export class MatchActors {
   cleanupGrappleLinks(this.pool);
   for(const fighter of this.match.fighters){
    this.syncVisible(fighter);const body=fighter.nativeBody;
-   const keepComputer=this.match.world.nativeMovementAI&&(body?.flags56&0xc0);
+   const keepNative=this.match.world.nativeHumanInput||this.match.world.nativeMovementAI&&(body?.flags56&0xc0);
    // Idle's entry update retains the previous attack pose/contact. Keep that
    // update in the shared service until the ordinary idle pose is actually set.
-   if(body?.state===0&&!body.pendingState&&body.clock.pose===body.facing&&!body.auxiliary&&!body.forced&&!keepComputer&&(!(body.flags56&128)||this.match.ai)){
+   if(body?.state===0&&!body.pendingState&&body.clock.pose===body.facing&&!body.auxiliary&&!body.forced&&!keepNative&&(!(body.flags56&128)||this.match.ai)){
     fighter.nativeBody=null;this.match.setState(fighter,'idle');fighter.animation=new ActorAnimation(body.clock);fighter.projection=body.projection;
-   }else if(body&&[2,3,6].includes(body.state)&&!body.auxiliary&&!keepComputer){
+   }else if(body&&[2,3,6].includes(body.state)&&!body.auxiliary&&!keepNative){
     const clock=new ActorAnimation(body.clock);
     this.match.setState(fighter,'run');
     const running=new Running({...body,clock,pose:clock.pose,bounceCount:body.holdFlags});

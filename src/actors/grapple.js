@@ -258,7 +258,7 @@ export class GrappleActor {
   }
 
   contest(kind,counter=0) {
-    const actorAI=Boolean(this.flags56&128),targetAI=Boolean(this.auxiliary?.flags56&128);
+    const actorAI=Boolean(this.flags56&128),targetAI=Boolean((kind===1?this.auxiliary:this.opponent)?.flags56&128);
     return grappleContest({kind,counter,actorAI,targetAI,severity:this.severity,...this.world,
       randomNibble:kind===1&&actorAI?undefined:this.random('contest',{kind,counter})});
   }
