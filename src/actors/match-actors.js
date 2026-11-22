@@ -10,6 +10,7 @@ import {participantFacing} from './facing.js';
 import {stepComputerGrapple} from './computer-grapple.js';
 import {initializeHealth,advanceDamageService} from './match-services.js';
 import {worldPosition,updateScreenPosition} from './projection.js';
+import {advanceNativeContacts} from './native-contact.js';
 
 // Stable original pool records for the practice match. Legacy movement/contact
 // adapters synchronize into these records; grapple and pin participants stay in
@@ -45,10 +46,10 @@ export class MatchActors {
     'offsetX','offsetY','paddingX','paddingY','paddingZ','velocityX','velocityY','velocityZ','gravity',
     'flags34','flags35','flags74','flags75','unlinkMarked'])if(Object.hasOwn(body,key))record[key]=body[key];
    Object.assign(record,worldPosition(fighter),{type:fighter.type,state,pendingState:body?.pendingState??!(fighter.animation.flags&0x8000),
-    clock:new ActorAnimation(fighter.animation),facing:fighter.facing>0?0x8000:0,health:fighter.health,maximumHealth:fighter.maximumHealth,
+    clock:new ActorAnimation({...fighter.animation,flags:(fighter.animation.flags&0xff00)|state}),facing:fighter.facing>0?0x8000:0,health:fighter.health,maximumHealth:fighter.maximumHealth,
     severity:fighter.severity,forced:fighter.forced,flags56:fighter.flags56,flags33:(body?.flags33||0)|(fighter.slot?0x81:3),
     pendingDamage:fighter.pendingDamage,healthAccumulator:fighter.healthAccumulator,comboCount:fighter.comboCount,comboTimer:fighter.comboTimer,
-    flags32:fighter.flags32,active:true,world:this.match.world,owner:fighter,movementMode:fighter.movementMode,
+    flags32:fighter.flags32,active:true,world:this.match.world,owner:fighter,movementMode:fighter.movementMode,contact:fighter.contact,projection:fighter.projection,
     auxiliary:body?.linked?(body.target?.owner||body.attacker?.owner)?.original||null:null});
    if(!body){if(fighter.standingAction)record.action=fighter.standingAction.button?114:0;if(fighter.standingReaction)record.reaction=fighter.standingReaction.kind?10:0;}
   }
@@ -101,6 +102,23 @@ export class MatchActors {
  }}
  computer(){if(this.match.ai)for(const fighter of this.match.fighters)if(fighter.nativeBody)stepComputerGrapple(fighter.original);}
  stepReferee(){this.referee.step();this.match.soundCommands.push(...this.referee.sounds);}
+ contacts(){
+  if(!this.active)return;
+  this.sync();
+  const signature=body=>[body.state,body.pendingState,body.action,body.reaction].join(','),before=new Map(this.pool.map(body=>[body,signature(body)])),touched=new Set();
+  // Existing running adapters still own their capture graph. Standing impacts
+  // involving a shared native record use the recovered whole-pool service.
+  advanceNativeContacts(this.match.world,{
+   acceptPair:(actor,target,record)=>[1,8].includes(record[5])&&Boolean(actor.owner?.nativeBody||target.owner?.nativeBody),
+   onHit:(actor,target)=>{touched.add(actor);touched.add(target);},
+  });
+  for(const body of this.pool)if(body.active&&signature(body)!==before.get(body))touched.add(body);
+  for(const body of touched)if(body.owner){
+   if(!body.owner.nativeBody)this.attach([body.owner]);
+   this.syncVisible(body.owner);
+  }
+  this.match.soundCommands.push(...this.match.world.contactSounds);
+ }
  advance(fighter){
   const body=fighter.nativeBody;if(!body)return false;
   body.cameraY=this.match.camera.y;

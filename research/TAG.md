@@ -56,8 +56,10 @@ their full effect-pool and palette ownership rendering remain pending.
   is separate and not covered.
 
 An extended original trace confirms that after this landing both assisting
-partners may enter the ring and fight. General idle/walk AI, standing attack
-dispatch and multi-actor contact therefore remain integration dependencies.
+partners may enter the ring and fight. Ordinary shared standing handlers and the
+physical contact service are now recovered in [contact research](CONTACTS.md).
+General idle/walk AI, original input, remaining move handlers and complete
+four-participant browser integration remain dependencies.
 The browser's action-102 dependency prompt is still expected. Ordinary tag
 action 76, other airborne attacks, outside/Rumble paths and complete team-match
 rules remain unfinished. Table extraction alone does not establish those paths.

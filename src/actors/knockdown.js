@@ -91,7 +91,7 @@ export class Knockdown {
 
   cleanupLink() {
     if(!this.forced&&this.auxiliary&&(this.auxiliary.unlinkMarked||this.auxiliary.auxiliary!==(this.linkIdentity||this))){
-      this.auxiliary=null;this.unlinkMarked=false;
+      this.auxiliary=null;this.unlinkMarked=false;this.secondaryPinner=null;
     }
   }
 

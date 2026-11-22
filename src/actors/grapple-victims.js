@@ -1,7 +1,7 @@
 import {actorTables} from '../data/actor-tables.js';
 import {addPositionWord} from './ring-collision.js';
 const u16=value=>value&65535;
-export const isGrappleVictim=reaction=>[14,15,19,21,22,28,33,34,35,36,37,38,41].includes(reaction&255);
+export const isGrappleVictim=reaction=>[0,10,14,15,19,21,22,28,32,33,34,35,36,37,38,41].includes(reaction&255);
 
 function depthVelocity(actor,amount=48) {
   const y=actor.yFixed>>>16;
@@ -30,7 +30,17 @@ function land(actor,{whole=false,shift=0}={}) {
 export function stepGrappleVictim(actor,initialized) {
   const reaction=actor.reaction&255,data=actorTables.grappleVictims;
   let descriptor=data[reaction];
-  if(reaction===28){ // $01aeea, partner's corner attack releases the holder
+  if([0,10,32].includes(reaction)){ // $01a2d0/$01a61e, ordinary standing impacts
+    if(!initialized){actor.movementMode=0;actor.comboCount=u16(actor.comboCount+1);actor.comboTimer=64;}
+    else{
+      if(reaction!==0)actor.cleanupLink();
+      if(actor.clock.index===0xfe){
+        if(reaction===32){actor.change(4,2);actor.reaction=2;}
+        else if(reaction===10&&(actor.flags32&1)){actor.change(1);actor.walkMode=1;}
+        else actor.change(0);
+      }
+    }
+  }else if(reaction===28){ // $01aeea, partner's corner attack releases the holder
     const peer=actor.auxiliary;
     if(!initialized)peer.change(255);
     else if(actor.clock.index===0xfe){

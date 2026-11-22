@@ -1,6 +1,23 @@
 import {ActorAnimation} from './animation.js';
 import {actorTables} from '../data/actor-tables.js';
 
+export const isStandingAction=action=>[0,114].includes(action&255);
+
+// Shared-record form of $011ac8/$01921a. The actor dispatcher owns collision,
+// clock advancement, projection and the delayed initialization of the next state.
+export function stepStandingAction(actor,initialized){
+  const punch=(actor.action&255)===0;
+  let descriptor=actorTables.standingAttacks[punch?0:1];
+  if(!initialized){
+    actor.movementMode=0;if(punch)actor.nudge(-24);
+  }else{
+    actor.contact=punch?(actor.clock.index===3?7:33):(actor.clock.index===2?17:1);
+    if(actor.clock.index===0xfe){actor.change(0);actor.unlinkMarked=true;}
+  }
+  if(punch&&(actor.flags56&128)&&(actor.flags33&32))descriptor=actorTables.standingPunchAssist;
+  return descriptor;
+}
+
 // Normal standing action 0 ($011ac8) and action $72 ($01921a). Entry nudges
 // against ring boundaries are handled by the translated world collision path.
 export class StandingAction {

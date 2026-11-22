@@ -2745,6 +2745,30 @@ export const actorTables = {
     64
   ],
   "grappleVictims": {
+    "0": {
+      "source": 107200,
+      "update": 107216,
+      "mode": 1,
+      "delays": [
+        6,
+        6
+      ],
+      "poses": [
+        15,
+        16
+      ]
+    },
+    "10": {
+      "source": 108050,
+      "update": 108062,
+      "mode": 1,
+      "delays": [
+        16
+      ],
+      "poses": [
+        16
+      ]
+    },
     "14": {
       "source": 108192,
       "update": 108216,
@@ -2827,6 +2851,17 @@ export const actorTables = {
       ],
       "poses": [
         419
+      ]
+    },
+    "32": {
+      "source": 108050,
+      "update": 108062,
+      "mode": 1,
+      "delays": [
+        16
+      ],
+      "poses": [
+        16
       ]
     },
     "33": {
@@ -3331,6 +3366,25 @@ export const actorTables = {
       ]
     }
   ],
+  "standingPunchAssist": {
+    "source": 72364,
+    "update": 72392,
+    "mode": 1,
+    "delays": [
+      5,
+      5,
+      5,
+      9,
+      2
+    ],
+    "poses": [
+      0,
+      146,
+      147,
+      148,
+      147
+    ]
+  },
   "standingReactions": [
     {
       "source": 107200,

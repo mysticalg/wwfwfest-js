@@ -136,6 +136,7 @@ export class Match {
     for (const actor of this.fighters) {
       if (actor.animation.pose !== actor.lastPose) {
         actor.contact = 0;
+        actor.original.hitMask=0;
         if(actor.nativeBody)actor.nativeBody.contact=0;
         actor.standingAction?.hits.clear();
         actor.runningAttack?.hits.clear();
@@ -145,6 +146,7 @@ export class Match {
       }
     }
     if (this.contactPhase) {
+      this.nativeActors.contacts();
       this.resolveStrike(this.fighters[0], this.fighters[1]);
       this.resolveStrike(this.fighters[1], this.fighters[0]);
     }
