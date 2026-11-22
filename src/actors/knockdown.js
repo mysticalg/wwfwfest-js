@@ -95,7 +95,7 @@ export class Knockdown {
     }
   }
 
-  step({pressed = 0, pinned = false, linkedFlags34 = 0} = {}) {
+  step({pressed = 0, pinned = false, linkedFlags34 = 0, sampleRecoveryInput = true} = {}) {
     this.pressedButtons=pressed;
     this.sounds = [];
     this.ropeEvents=[];
@@ -105,7 +105,7 @@ export class Knockdown {
     // $00de04 is an input-phase transition. It initializes the selected recovery
     // action during this update, while handler transitions initialize next time.
     const lowReaction = this.reaction & 255;
-    if (pressed && !this.pendingState && !(this.flags56 & 0xc0)
+    if (sampleRecoveryInput && pressed && !this.pendingState && !this.forced && !(this.flags56 & 0xc0)
       && this.mash === 0x4000 && this.state === 4 && !pinned
       && !(linkedFlags34 & 16) && (lowReaction === 8 || lowReaction === 9)) {
       this.change(5, lowReaction === 8 ? 0x38 : 0x78);
@@ -151,6 +151,7 @@ export class Knockdown {
       } else if (this.clock.index === 0xfe) {
         this.reaction = 0;
         this.change(7);
+        this.unlinkMarked=true;this.secondaryPinner=null;
       }
     } else {
       const reaction = this.reaction & 255;
@@ -318,6 +319,7 @@ export class Knockdown {
       } else throw new RangeError(`Untranslated knockdown reaction ${reaction}`);
     }
     this.clock.step(descriptor, this.facing);
+    if(this.offsetX&0x8000)this.offsetX=this.offsetY=0;
     this.projection = projectionSnapshot(this);
     stepMovement(this);
     this.done = this.state === 0;

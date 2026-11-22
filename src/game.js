@@ -8,10 +8,11 @@ import {RunningAttack, runningMove, runningHitResponse} from './actors/running-a
 import {worldPosition, updateScreenPosition, spritePosition, projectedPosition} from './actors/projection.js';
 import {insideRingCollision, addPositionWord} from './actors/ring-collision.js';
 import {actorTables} from './data/actor-tables.js';
-import {initializeHealth,advanceDamageService,defaultMatchSettings} from './actors/match-services.js';
+import {initializeHealth,defaultMatchSettings} from './actors/match-services.js';
 import {WorldCamera} from './camera.js';
 import {SceneryAnimator} from './scenery.js';
 import {videoFrameRate} from './timing.js';
+import {MatchActors} from './actors/match-actors.js';
 
 // Ordinary walking and its descriptor clock are translated from the arcade
 // routines. Standing punch/kick handlers and their ordinary contact/reaction paths
@@ -22,16 +23,14 @@ import {videoFrameRate} from './timing.js';
 export const rules = {
   frameRate: videoFrameRate,
   depthTolerance: 17,
-  pinFrames: 180,
 };
 
-// These fallback sequences serve provisional pin/victory presentation. Native
+// These fallback sequences serve provisional result presentation. Native
 // movement and combat use their own recovered descriptor clocks.
 export const animations = {
   idle: {poses: [0], ticks: 1},
   walk: {poses: walkAnimation().poses, ticks: walkAnimation().delays[0] + 1},
   down: {poses: [111], ticks: 1},
-  pin: {poses: [28], ticks: 1},
   victory: {poses: [89, 90, 91, 92], ticks: 12},
 };
 
@@ -40,7 +39,7 @@ function fighter(type, x, y, facing, world, {computer=false,slot=0}={}) {
     maximumHealth: 0, severity: 0, state: 'idle',
     active:true,slot,flags56:computer?128:0,flags57:type,flags104:computer?0:128,
     flags32:0,forced:0,idleTimer:0,pendingDamage:0,healthAccumulator:0,world,
-    stateTicks: 0, pinTicks: 0, hits: 0,
+    stateTicks: 0, hits: 0,
     contact: 0, comboCount: 0, comboTimer: 0, previousButtons: 0,
     hitTargets: new Set(),
     movementMode: 0, moveHorizontal: 0, moveVertical: 0,
@@ -55,6 +54,7 @@ export class Match {
     this.fighters = [fighter(playerType, 103, 165, 1,this.world),
       fighter(opponentType, 219, 165, -1,this.world,{computer:ai,slot:ai?4:2})];
     this.world.actors=this.fighters;
+    this.nativeActors=new MatchActors(this);this.referee=this.nativeActors.referee;
     this.ticks = 0;
     this.time = 180;
     this.winner = null;
@@ -77,6 +77,7 @@ export class Match {
     actor.knockdown = null;
     actor.running = null;
     actor.runningAttack = null;
+    actor.pinBody = null;
     actor.pendingIdle = false;
     if (state === 'idle') { actor.spriteOffsetX = actor.spriteOffsetY = 0; actor.linkedActor = null; }
     if (state !== 'idle' && state !== 'walk' && state !== 'strike' && state !== 'heavy') actor.contact = 0;
@@ -86,12 +87,13 @@ export class Match {
     const dx = target.x - actor.x;
     const dy = target.y - actor.y;
     const attacking = this.ticks % 49 < 2;
+    const down=target.state==='down';
     return {
       horizontal: Math.abs(dx) > 29 ? Math.sign(dx) : 0,
       vertical: Math.abs(dy) > 5 ? Math.sign(dy) : 0,
-      strike: attacking && Math.abs(dx) < 40,
-      heavy: this.ticks % 157 < 2 && Math.abs(dx) < 40,
-      pin: target.state === 'down',
+      strike: !down && attacking && Math.abs(dx) < 40,
+      heavy: !down && this.ticks % 157 < 2 && Math.abs(dx) < 40,
+      pin: down && !actor.previousPin,
       run: false,
     };
   }
@@ -117,18 +119,22 @@ export class Match {
         flags33: actor.cameraFlags ?? 1, priority: actor.cameraPriority || 0, active: true};
     }), {stream: false});
     const opponentInput = this.ai ? this.computerInput(this.fighters[1], this.fighters[0]) : {};
+    this.nativeActors.sync();
     this.updateFighter(this.fighters[0], this.fighters[1], input, 0);
     this.updateFighter(this.fighters[1], this.fighters[0], opponentInput, 1);
+    this.nativeActors.sync();this.nativeActors.input();this.nativeActors.stepReferee();
     for (const actor of this.fighters) {
       this.advanceActor(actor);
     }
     // Paired handlers can change an actor already updated earlier this frame.
     for (const actor of this.fighters) this.syncBody(actor);
+    this.nativeActors.finishActors();
     // Original frame order is all actor updates, pose/contact cleanup, contact
     // dispatch, then damage and combo-window service ($000fe0-$000fec).
     for (const actor of this.fighters) {
       if (actor.animation.pose !== actor.lastPose) {
         actor.contact = 0;
+        if(actor.pinBody)actor.pinBody.contact=0;
         actor.standingAction?.hits.clear();
         actor.runningAttack?.hits.clear();
         actor.running?.hits.clear();
@@ -141,7 +147,7 @@ export class Match {
       this.resolveStrike(this.fighters[1], this.fighters[0]);
     }
     if (this.contactPhase) {
-      advanceDamageService(this.fighters);
+      this.nativeActors.damage();
       // The browser adapters share the actor's original health/status words.
       // Contact may have created a new reaction before this service runs.
       for(const actor of this.fighters){
@@ -153,6 +159,7 @@ export class Match {
   }
 
   advanceActor(actor) {
+    if(this.nativeActors.advance(actor))return;
     if (actor.runningAttack?.pendingTransition) {
       const prior = actor.runningAttack;
       const options = {...prior, pose: prior.clock.pose, clock: prior.clock,
@@ -272,7 +279,8 @@ export class Match {
     // The extra Run control supplies an A+B press edge. Holding the shortcut
     // must leave the physical punch/kick buttons available for running moves.
     const runPressed = input.run && !actor.previousRun;
-    const pressed = (buttons & ~actor.previousButtons) | (runPressed ? 3 : 0);
+    const pinPressed = input.pin && !actor.previousPin;actor.previousPin=Boolean(input.pin);
+    const pressed = (buttons & ~actor.previousButtons) | (runPressed ? 3 : 0) | (pinPressed ? 2 : 0);
     actor.previousRun = Boolean(input.run);
     actor.pressedButtons = pressed;
     actor.previousButtons = buttons;
@@ -280,6 +288,7 @@ export class Match {
     const vertical = input.vertical || 0;
     actor.inputMask = (horizontal > 0 ? 1 : horizontal < 0 ? 2 : 0)
       | (vertical > 0 ? 8 : vertical < 0 ? 4 : 0);
+    if(actor.pinBody)return;
     if (actor.pendingIdle) {
       this.setState(actor, 'idle');
       this.faceTarget(actor, target);
@@ -301,19 +310,7 @@ export class Match {
       return;
     }
     if (actor.runningAttack || actor.standingReaction || actor.standingAction) return;
-    const close = Math.abs(actor.x - target.x) < 39 && Math.abs(actor.y - target.y) < rules.depthTolerance;
-    if (input.pin && target.state === 'down' && (!target.knockdown || target.knockdown.canPin) && close) {
-      this.setState(actor, 'pin');
-      actor.pinTicks++;
-      this.count = Math.min(3, Math.floor(actor.pinTicks / 60));
-      if (actor.pinTicks >= rules.pinFrames) {
-        this.winner = index;
-        this.setState(actor, 'victory');
-      }
-      return;
-    }
-    actor.pinTicks = 0;
-    if (actor.state === 'pin') this.count = 0;
+    if(pressed===2&&this.nativeActors.beginPin(actor,target))return;
     if (pressed === 3) {
       const body = new Running({...worldPosition(actor), type: actor.type,
         facing: actor.facing > 0 ? 0x8000 : 0, pose: actor.animation.pose,
@@ -344,6 +341,7 @@ export class Match {
   }
 
   resolveStrike(actor, target) {
+    if(actor.pinBody||target.pinBody)return;
     const active = actor.standingAction || actor.runningAttack || actor.running;
     const action = active || actor.lastBody || actor;
     if (active?.pendingTransition || actor.hitTargets.has(target) || !actor.contact || !target.contact) return;
@@ -424,7 +422,7 @@ export class Match {
   }
 
   pose(actor, frames) {
-    if (actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown || actor.running || actor.runningAttack) {
+    if (actor.pinBody || actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown || actor.running || actor.runningAttack) {
       return actor.animation.pose & 0x7fff;
     }
     const animation = animations[actor.state];
@@ -433,7 +431,7 @@ export class Match {
   }
 
   mirrored(actor) {
-    if (actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown || actor.running || actor.runningAttack) {
+    if (actor.pinBody || actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown || actor.running || actor.runningAttack) {
       return Boolean(actor.animation.pose & 0x8000);
     }
     return actor.facing > 0;

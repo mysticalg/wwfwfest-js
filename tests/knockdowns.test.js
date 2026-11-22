@@ -133,9 +133,8 @@ for (const fixture of fixtures.boundaryWalks) {
   });
 }
 
-test('match pin controls wait for the downed phase and block its recovery timer while held', () => {
-  const match = new Match(0, 6);
-  match.ai = false;
+test('native cover requires a fresh eligible press and keeps the victim held after button release', () => {
+  const match = new Match(0, 6,{ai:false});
   const [player, target] = match.fighters;
   target.x = player.x + 20;
   target.health = 90;
@@ -144,15 +143,16 @@ test('match pin controls wait for the downed phase and block its recovery timer 
   target.animation = target.knockdown.clock;
   let ticks = 0;
   while (!target.knockdown.canPin && ticks++ < 150) {
-    match.step({pin: true});
+    match.step(ticks===1?{pin:true}:{});
     assert.notEqual(player.state, 'pin');
   }
   assert(ticks < 150);
   match.step({pin: true});
   assert.equal(player.state, 'pin');
-  const remaining = target.knockdown.recoveryTimer;
-  for (let tick = 0; tick < 30; tick++) match.step({pin: true});
-  assert.equal(target.knockdown.recoveryTimer, remaining);
-  match.step({});
-  assert.equal(target.knockdown.recoveryTimer, remaining - 1);
+  const victim=target.pinBody,remaining=victim.recoveryTimer;
+  for (let tick = 0; tick < 80; tick++) match.step({});
+  assert.equal(victim.recoveryTimer,remaining);
+  assert.equal(player.original.action&0x8000,0x8000);
+  assert.equal(victim.action&255,74);
+  assert.equal(match.winner,null);
 });

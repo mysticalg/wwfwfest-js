@@ -6,6 +6,7 @@ import {MusicSequencer} from './audio/music-sequencer.js';
 import {GamepadInput, neutralControls} from './gamepad.js';
 import {ArcadeInput} from './arcade-input.js';
 import {actorTables} from './data/actor-tables.js';
+import {projectedPosition} from './actors/projection.js';
 
 const element = id => document.getElementById(id);
 const canvas = element('screen');
@@ -208,8 +209,14 @@ function drawMatch() {
   const context = renderer.context;
   renderer.stage.draw(match.camera, match.scenery);
   // Native actors remain between the original scrolling stage layers.
-  const sorted = [...match.fighters].sort((a, b) => a.y - b.y);
+  const referee=match.referee;
+  const sorted = [...match.fighters,{type:12,referee,y:497-referee.yFixed/65536}].sort((a, b) => a.y - b.y);
   for (const actor of sorted) {
+    if(actor.referee){
+      if(!referee.projection)continue;
+      const pose=referee.clock.pose,position=projectedPosition(referee.projection,match.camera);
+      renderer.drawActor(12,pose&0x7fff,position.x,position.y,{mirror:Boolean(pose&0x8000)});continue;
+    }
     const frames = tables.get(actor.type);
     const position = match.drawPosition(actor);
     renderer.drawActor(actor.type, match.pose(actor, frames), position.x, position.y,
@@ -229,7 +236,7 @@ function drawMatch() {
   context.fillStyle = '#071323';
   context.fillRect(0, 222, 320, 18);
   renderer.text(`${Math.floor(match.time / 60)}:${String(match.time % 60).padStart(2, '0')}`, 160, 235, '#f8df33', 11, 'center');
-  if (match.count) renderer.text(String(match.count), 160, 101, '#fff', 28, 'center');
+  renderer.drawCounts(match.world.countTiles);
   if (state.paused || match.winner !== null) {
     context.fillStyle = '#061020df';
     context.fillRect(15, 80, 290, 65);

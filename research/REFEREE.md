@@ -1,6 +1,6 @@
 # Original referee and count services
 
-`src/actors/referee.js` translates the US rev 2 referee decision and state handlers at `$01eb3a-$01f95e`, reset `$00f958`, count graphics and scene-bit-1 foreground record. These are native JavaScript components. Normal `Match` still uses its provisional pin and has not yet integrated this referee, original pin entry/escape input, the full actor pool or scene progression.
+`src/actors/referee.js` translates the US rev 2 referee decision and state handlers at `$01eb3a-$01f95e`, reset `$00f958`, count graphics and scene-bit-1 foreground record. These native JavaScript components are now connected to the practice match's [original covers and escapes](PINS.md). Full tag/Rumble, input/AI, outside and scene progression remain unfinished.
 
 ## State and frame order
 
@@ -37,7 +37,7 @@ Countout increments every 80 updates, voices counts 17–20, distinguishes one o
 
 ## Original graphics and scene records
 
-`drawCountTiles` preserves the original glyph and attribute writes at `$0c0744/$0c0748`, or `$0c1188` for the secondary region. The 21 original templates provide four rows of one or two digits with attribute `$ea`. Clearing affects only the normal count region. These are character-layer words, separate from the provisional browser counter text.
+`drawCountTiles` preserves the original glyph and attribute writes at `$0c0744/$0c0748`, or `$0c1188` for the secondary region. The 21 original templates provide four rows of one or two digits with attribute `$ea`. Clearing affects only the normal count region. The practice renderer now displays the recovered character tiles from those words.
 
 Scene bit 1 invokes `$00eb24`: it updates the referee's priority and a type-14 foreground clipping record with original coordinates, preserved fractional words and projected position. The full type-14 renderer and scene integration remain pending. Normal referee pose recipes already have separate sprite-rendering comparisons; the referee kernel fixtures omit that sprite writer.
 
@@ -48,7 +48,7 @@ Scene bit 1 invokes `$00eb24`: it updates the referee's priority and a type-14 f
 - **42 glyph cases** verify all 21 numbers in both regions and normal-region clearing.
 - **176 composed hold/referee sequences / 170,176 updates** combine actions 26,37,54,59 with original health initialization, alternating damage and referee updates. They compare both wrestlers, partner records, referee state/projection, count-layer words, result requests and sounds. All stop at explicit subsequent handoffs; none reaches the 4,000-update observation cap. The 40 action-26 cases that waited in the earlier referee-free fixture now reach their original pin/result handoff.
 
-These are controlled component comparisons, not complete arcade matches. Global multi-actor contact, AI decisions, original pin entry and escape selection, full Rumble winner/spawn service `$01f3a0`, tag rules and subsequent scene transitions remain unfinished. The ordinary game still has a two-wrestler practice structure; its actor pool must be unified with the recovered dispatcher before these results can replace provisional pinning.
+These are controlled component comparisons, not complete arcade matches. Global multi-actor contact, AI decisions, full Rumble winner/spawn service `$01f3a0`, tag rules and subsequent scene transitions remain unfinished. The ordinary game still has a two-wrestler practice structure. [Additional pin comparisons](PINS.md) now include entry, human escape input and recovery, and these paths use the recovered dispatcher and stable pool in practice play.
 
 ```sh
 node tools/trace_referee.mjs path/to/mc68000.js path/to/program.bin tests/fixtures/referee-reference.json

@@ -6,6 +6,7 @@ import {pathToFileURL} from 'node:url';
 const [hardwarePath,programPath,outputPath]=process.argv.slice(2);
 const withDamage=Boolean(process.env.DAMAGE),composed=Boolean(process.env.COMPOSE);
 const withReferee=Boolean(process.env.REFEREE);
+const withPins=Boolean(process.env.PINS);
 if(withDamage&&!composed)throw new Error('DAMAGE references require COMPOSE=1');
 if(withReferee&&!withDamage)throw new Error('REFEREE references require DAMAGE=1 and COMPOSE=1');
 const {default:MC68000}=await import(pathToFileURL(hardwarePath));
@@ -36,12 +37,12 @@ const words={type:2,facing:0x2e,previousState:0x1e,speed:0x2a,direction:0x2c,hol
  contact:0x4c,pendingDamage:0x68,velocityX:0x58,velocityY:0x5a,velocityZ:0x5c,gravity:0x5e,offsetX:0x18,offsetY:0x1a,
  forced:0xfe,action:0x60,reaction:0x64,severity:0x70,health:0x66,maximumHealth:0x72,paddingX:0x3e,paddingY:0x40,paddingZ:0x42,eliminations:0xc4,
  mash:0xaa,inputBlockA:0xb4,inputBlockB:0xb6,supportTimer:0xe6,healthAccumulator:0x6a,resultPose:0x4a,targetX:0xbe,targetY:0xc0,
- ...(withDamage?{comboCount:0x52,comboTimer:0x54,idleTimer:0xd0}:{}),...(withReferee?{pinStatus:0x108}:{})};
+ ...(withDamage?{comboCount:0x52,comboTimer:0x54,idleTimer:0xd0}:{}),...(withReferee?{pinStatus:0x108}:{}),...(withPins?{recoveryTimer:0x9a}:{})};
 const attemptOffsets=Array.from({length:11},(_,i)=>0xe8+i*2);
 const headActions=[26,37,54,59,137];
 const actions=process.env.ACTION_SET?JSON.parse(process.env.ACTION_SET):withDamage?[26,37,54,59]:[...headActions,93,94,95,96,98,99,110,111,138,141];
-const supportedActions=[...headActions,93,94,95,96,98,99,110,111,138,141,2,24,25,36,38,40,43,44,47,48,50,51,52,58,66,67,68,6,...Array.from({length:11},(_,i)=>125+i)];
-const knockdowns=[1,2,3,4,5,6,7,8,9,11,12,13,14,16,18,19,21,22,23,24,25,27,29,33,34,35,36,37,38,41];
+const supportedActions=[...headActions,72,74,75,86,93,94,95,96,98,99,110,111,138,141,2,24,25,36,38,40,43,44,47,48,50,51,52,58,66,67,68,6,...Array.from({length:11},(_,i)=>125+i)];
+const knockdowns=[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,18,19,21,22,23,24,25,27,29,33,34,35,36,37,38,41];
 const supported=(s,a,r)=>[11,12,255].includes(s)||(s===4&&r===1)||(s===5&&[21,22,23,41,80,123,124,...supportedActions].includes(a&255))
  ||(composed&&([0,2,3,6,7].includes(s)||(s===4&&knockdowns.includes(r&255))||(s===5&&[56,120].includes(a))));
 function snapshot(index){
@@ -63,10 +64,13 @@ function refereeSnapshot(){return{state:word(refBase+0x20),clock:{flags:word(ref
  projection:[word(refBase+0x14)<<16>>16,232-(word(refBase+0x16)<<16>>16)]};}
 const countTiles=()=>[0xc0744,0xc1188].map(base=>Array.from({length:32},(_,i)=>word(base+Math.trunc(i/8)*256+(i%8)*2)));
 const cases=[];
-for(const action of actions)for(const type of headActions.includes(action)?Array.from({length:12},(_,i)=>i):[0,1])for(const facing of [0,0x8000])for(const x of withDamage?[640]:[475,640,790]){
+if(withPins)for(const action of [72,74,75,86])for(let type=0;type<12;type++)for(const facing of [0,0x8000])for(const prone of [8,9])for(const variant of ['pinWait','pinMash','pinZero']){
+ cases.push({action,type,facing,x:640,variant,prone,attackerIndex:type&1,both:true});
+}
+for(const action of withPins?[]:actions)for(const type of headActions.includes(action)?Array.from({length:12},(_,i)=>i):[0,1])for(const facing of [0,0x8000])for(const x of withDamage?[640]:[475,640,790]){
  cases.push({action,type,facing,x,variant:'human',attackerIndex:type&1,both:false});
 }
-for(const action of actions)for(const type of withDamage?[0,1]:headActions.includes(action)?[0,5,8,11]:[0,1])for(const facing of [0,0x8000]){
+for(const action of withPins?[]:actions)for(const type of withDamage?[0,1]:headActions.includes(action)?[0,5,8,11]:[0,1])for(const facing of [0,0x8000]){
  for(const variant of withDamage?['ai','opponentAI','rumble','forced','humanPartner']:['ai','opponentAI','rumble','counterWrap','partner','linked','zeroHealth','forced','outsidePartner','humanPartner','mash',
   ...([54].includes(action)?['orphan','marked']:[]),...([59].includes(action)?['phase1','phase2']:[])]){
   cases.push({action,type,facing,x:640,variant,attackerIndex:type&1,both:variant==='linked'});
@@ -104,6 +108,18 @@ for(const config of cases){
   initial[attackerIndex].action|=0x2000;initial[attackerIndex].holdFlags=variant==='phase1'?1:2;
   initial[1-attackerIndex].action=0x808d;
  }
+ if(withPins){
+  const primary=initial[attackerIndex],peer=initial[1-attackerIndex];
+  for(const body of initial){body.flags33&=~64;body.recoveryTimer=0;}
+  primary.xFixed=(primary.xFixed-96*65536)|0;
+  if(action===72){
+   Object.assign(peer,{state:0x8004,action:0,reaction:config.prone,clock:{flags:0x8004,remaining:8,index:0,pose:config.prone===8?18:19}});
+  }else{
+   primary.reaction=config.prone;
+   Object.assign(peer,{state:0x8005,action:action===86?0x801a:0x8048,flags35:1,clock:{flags:0x8005,remaining:0,index:0,pose:0xffff}});
+   if(action===74){primary.action|=0x8000;primary.pinStatus=0;}
+  }
+ }
  memory.fill(0,0x1c0000,0x1c4000);if(withReferee)memory.fill(0,0xc0000,0xc2000);cpu.d.fill(0);cpu.a.fill(0);
  const world={mode:variant==='rumble'?1:0,round:variant==='opponentAI'?4:0,inGame:true,message:0,shake:0,modeValue:1,scene:0,rope:[0,0,0,0],secondaryShake:0,
   switchTimer:0,mashPrompt:0,controlsRefresh:0,matchResult:0,resultTimer:0,dipSwitches:0,textRequests:[],assistDistance:0,assistCandidate:null};
@@ -127,6 +143,8 @@ for(const config of cases){
   putWord(base+0xfc,body.attempt26||0);if(index>=2)memory[base+0xaf]=1;
  }
  if(withDamage)for(const base of allBases)call(0xf9c2,base);
+ const healthOverrides=withPins?allBases.map((base,index)=>({health:variant==='pinZero'&&index===(action===72?1-attackerIndex:attackerIndex)?0:word(base+0x66),severity:word(base+0x70)})):null;
+ if(healthOverrides)for(const[index,values]of healthOverrides.entries())putWord(allBases[index]+0x66,values.health);
  if(withReferee){
   call(0xf958,refBase);putLong(0x1c1684,bases[0]);putLong(0x1c1688,bases[1]);
   Object.assign(world,{controlsRefresh:memory[0x1c1697],matchResult:word(0x1c1214),countWord:0,activeA:0,activeB:1,countTiles:countTiles(),messageExtra:0});
@@ -140,6 +158,13 @@ for(const config of cases){
   const presses=bases.map(base=>variant==='mash'&&tick%2===0&&(word(base+0x20)&255)===5
    &&[93,94,95,96,98,99].includes(word(base+0x60)&255)?3:0);
   for(const[index,base]of bases.entries())memory[base+0xa3]=presses[index];
+  if(withPins){
+   for(const[index,base]of bases.entries()){
+    presses[index]=variant==='pinMash'&&tick%2===0?2:0;memory[base+0xa3]=presses[index];
+    // $00cf1e gates human input before the $00de04 recovery selector.
+    if(presses[index]&&(word(base+0x20)&0x8000)&&!word(base+0xfe)&&!(memory[base+0x56]&0xc0))call(0xde04,base);
+   }
+  }
   if(presses.some(Boolean))buttonInputs[tick]=presses;
   if(composed){
    const masks=[0,0];let sampled=false;
@@ -176,6 +201,7 @@ for(const config of cases){
   if(composed&&bases.every(base=>word(base+0x20)===0x8000&&word(base+4)===word(base+0x2e)))break;
  }
  sequences.push({...config,composed,damageService:withDamage,initial,world,partnerInitial,updateOrder,boundary,count,entropyFrames,
+  ...(withPins?{pinInputs:true,healthOverrides}:{}),
   ...(withReferee?{refereeInitial}:{}),
   ...(composed?{runInputs}:{}),buttonInputs,sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
 }

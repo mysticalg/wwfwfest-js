@@ -34,16 +34,16 @@ export class Renderer {
   }
 
   async load() {
-    const [atlas, palettes, selection, recipes] = await Promise.all([
+    const [atlas, palettes, selection, recipes, counts] = await Promise.all([
       loadImage('sprite-indices.png'), loadJSON('palettes.json'),
       loadImage('selection.png'),
       Promise.all([fetch(new URL('../assets/sprite-recipes.bin', import.meta.url)).then(response => {
         if (!response.ok) throw new Error(`Could not load sprite recipes (${response.status})`);
         return response.arrayBuffer();
       }), loadJSON('sprite-recipes.json')]).then(([data, metadata]) => new SpriteRecipes(data, metadata)),
-      this.stage.load(),
+      Promise.all([loadImage('count-tiles.png'),loadJSON('count-tiles.json')]),this.stage.load(),
     ]);
-    Object.assign(this, {palettes, selection, recipes});
+    Object.assign(this, {palettes, selection, recipes,countAtlas:counts[0],countData:counts[1]});
     const scratch = document.createElement('canvas');
     scratch.width = atlas.width;
     scratch.height = atlas.height;
@@ -136,6 +136,17 @@ export class Renderer {
         context.scale(flipX ? -1 : 1, flipY ? -1 : 1);
         context.drawImage(this.tile((piece.code + tile) & 65535, piece.color), 0, 0);
         context.restore();
+      }
+    }
+  }
+
+  drawCounts(regions) {
+    for(const[index,words]of regions.entries()){
+      const [x,y]=this.countData.regions[index];
+      for(let row=0;row<4;row++)for(let col=0;col<4;col++){
+        const offset=row*8+col*2,attribute=words[offset+1];if(!attribute)continue;
+        const code=(words[offset]&255)|((attribute&15)<<8),tile=this.countData.tiles[code];
+        if(tile)this.context.drawImage(this.countAtlas,tile[0],tile[1],8,8,x+col*8,y+row*8,8,8);
       }
     }
   }

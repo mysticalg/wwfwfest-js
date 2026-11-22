@@ -1,7 +1,7 @@
 import {actorTables} from '../data/actor-tables.js';
 import {addPositionWord} from './ring-collision.js';
 const u16=value=>value&65535;
-export const isGrappleVictim=reaction=>[14,19,21,22,33,34,35,36,37,38,41].includes(reaction&255);
+export const isGrappleVictim=reaction=>[14,15,19,21,22,33,34,35,36,37,38,41].includes(reaction&255);
 
 function depthVelocity(actor,amount=48) {
   const y=actor.yFixed>>>16;
@@ -30,7 +30,19 @@ function land(actor,{whole=false,shift=0}={}) {
 export function stepGrappleVictim(actor,initialized) {
   const reaction=actor.reaction&255,data=actorTables.grappleVictims;
   let descriptor=data[reaction];
-  if(reaction===41){ // $01ad48, short stagger then flight reaction 3
+  if(reaction===15){ // $01a8c4, thrown away by a pin escape
+    if(!initialized){
+      actor.profile(5);depthVelocity(actor);
+      const skip=actor.reaction&0x1000;actor.reaction&=~0x1000;
+      if(skip){actor.clock.flags|=0x8000;actor.clock.index=actor.clock.remaining=0;}
+    }else{
+      collisionResponse(actor);
+      if((actor.clock.index&255)===3){
+        actor.paddingZ=0xffe0;
+        if(actor.collision.flags&16){landingSound(actor);actor.paddingZ=0;land(actor);}
+      }
+    }
+  }else if(reaction===41){ // $01ad48, short stagger then flight reaction 3
     if(!initialized){actor.movementMode=0;actor.comboTimerStart=64;}
     else if(actor.clock.index===0xfe){actor.change(4,3);actor.reaction=3;}
   }else if(reaction===19||reaction===21||reaction===35){

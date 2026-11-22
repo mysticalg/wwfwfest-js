@@ -2,7 +2,7 @@
 
 An early editable browser reconstruction from the supplied `wwfwfest.zip` US rev 2 ROM set. The requester asked for a native JavaScript project and confirmed permission to reproduce the game and assets.
 
-The browser runs Canvas rendering and JavaScript game objects. Walking, running/braking/rope rebounds, eight running actions and their ordinary paired captures, standing combat, normal inside-ring knockdown/recovery, camera following and normal-ring crowd animation use translated arcade routines. Other moves, outside-ring behavior, moving rope graphics, AI and pinning remain incomplete. Full arcade gameplay reconstruction remains unfinished.
+The browser runs Canvas rendering and JavaScript game objects. Walking, running/braking/rope rebounds, eight running actions and their ordinary paired captures, standing combat, normal inside-ring knockdown/recovery, covers/escapes/referee counts, camera following and normal-ring crowd animation use translated arcade routines. Other moves, outside-ring behavior, moving rope graphics, AI and complete match rules remain incomplete. Full arcade gameplay reconstruction remains unfinished.
 
 ## Run
 
@@ -16,13 +16,14 @@ Open http://localhost:8765. GitHub Pages serves the same static files.
 
 ## Edit
 
-- `src/game.js` connects recovered walking/running, standing combat and knockdowns with provisional AI and pinning.
+- `src/game.js` connects recovered walking/running, standing combat, knockdowns and pins with provisional AI and practice-match rules.
 - `src/actors/` contains translated movement, descriptor clocks, standing actions, contact geometry, ring collision, running/braking/rebounds, knockdown/recovery and projection.
 - `src/actors/grapple.js` contains the reconstructed standing grapple core for continued development. It is not yet connected to normal matches; [grapple research](research/GRAPPLES.md) lists its verified paths and remaining throw/counter integration.
 - `src/actors/grapple-throws.js`, `grapple-counters.js`, `grapple-victims.js` and `linked-actor.js` reconstruct seventeen throw paths, eleven reversals, additional victim reactions and actor handoffs for continued integration. Their reference sequences cover both participants through recovery, forced running/braking or an explicit unimplemented handoff.
 - `src/actors/grapple-submissions.js` and `grapple-services.js` reconstruct the other five headlock selections, held participants, submission completion, partner assistance, mash counters and pursuit. All twenty-two headlock-selected handlers now have native component translations; normal match integration and their global contact/pin/scene services remain unfinished.
 - `src/actors/match-services.js` supplies original character/AI health initialization, DIP decoding and active-pool damage/status timing. [Match services](research/MATCH_SERVICES.md) records their comparisons and damage-enabled paired submission paths.
-- `src/actors/referee.js` reconstructs the original eleven referee states, pin/countout clocks, result requests and count graphics. [Referee research](research/REFEREE.md) records combined hold/referee comparisons and remaining normal-match integration; the playable pin remains provisional.
+- `src/actors/referee.js` reconstructs the original eleven referee states, pin/countout clocks, result requests and count graphics. [Referee research](research/REFEREE.md) records combined hold/referee comparisons.
+- `src/actors/pin.js` and `match-actors.js` connect original covers, escapes and referee updates to stable pool records in the playable match. [Pin research](research/PINS.md) records their scope, original-program comparisons and remaining tag/Rumble/control work.
 - `src/data/actor-tables.js` contains editable original character speeds, directions, descriptors, contact records, rectangles, motion profiles and mash counts.
 - `src/camera.js`, `src/scenery.js` and `src/stage-renderer.js` implement original camera rules, crowd clocks and scrolling stage layers.
 - `src/data/stage-tables.js` contains editable camera bounds, crowd visibility/sequence data and patch coordinates.
@@ -39,7 +40,7 @@ Open http://localhost:8765. GitHub Pages serves the same static files.
 - `assets/audio/music.json` contains editable music commands, score graphs and FM instruments.
 - `third_party/ymfm/` and `tools/fm_bridge.cpp` contain the synthesis library source used to build the generated JavaScript FM renderer.
 
-Controls use arrows to move, Z to punch, X to kick, C to run, Space to pin, Enter to start and P to pause. Start running with Run or simultaneous punch/kick presses. Punch or kick while running to attack; push the opposite horizontal direction to brake. Tap punch or kick while down to help recover. Touch controls are available on touch devices.
+Controls use arrows to move, Z to punch, X to kick, C to run, Space to pin, Enter to start and P to pause. Kick near a prone opponent also starts the original cover. Tap punch or kick to escape a cover or help recover while down. Start running with Run or simultaneous punch/kick presses. Punch or kick while running to attack; push the opposite horizontal direction to brake. Touch controls are available on touch devices.
 
 Standard gamepads use the left stick or D-pad for movement, bottom face button A/Cross for punches, right B/Circle for kicks, left X/Square for running, and top Y/Triangle for pinning. Menu/Options starts a match, pauses, resumes or starts a rematch after the result. View/Share returns to selection while paused. In selection, left/right cycles the player wrestler and up/down cycles the opponent. Connect a controller, focus the page and press a button to expose it to the browser.
 
@@ -55,7 +56,7 @@ The translated main loop alternates contact/damage and crowd/streaming services 
 
 Recovered material includes 65,536 sprite tiles, 4,096 background tiles, 4,096 character tiles, original palette data, the wrestler frame lookup tables, standalone sprite chain recipes, and sampled arena and selection layouts.
 
-The playable prototype supports the ten original selectable wrestlers plus optional Legion of Doom bosses, original character/AI health, recovered walking/running/braking/rebounds, eight running actions with ordinary paired captures, standing combat, normal knockdown/recovery, scrolling through the full normal ring, animated crowd, provisional pinning, an optional computer opponent, pause, restart and touch input. Standing/running attack impacts, body collisions, landings and footsteps route original sound commands after audio is enabled. Sound explorer plays 97 sample-effect commands and 18 populated music scores through native JavaScript sequencers. Selection and match music also play after enabling audio. FM synthesis uses a JavaScript build of the BSD-licensed ymfm renderer.
+The playable prototype supports the ten original selectable wrestlers plus optional Legion of Doom bosses, original character/AI health, recovered walking/running/braking/rebounds, eight running actions with ordinary paired captures, standing combat, normal knockdown/recovery, original covers/escapes/referee counts, scrolling through the full normal ring, animated crowd, an optional computer opponent, pause, restart and touch input. Standing/running attack impacts, body collisions, landings, footsteps, referee counts and cover results route original sound commands after audio is enabled. Sound explorer plays 97 sample-effect commands and 18 populated music scores through native JavaScript sequencers. Selection and match music also play after enabling audio. FM synthesis uses a JavaScript build of the BSD-licensed ymfm renderer.
 
 Gamepad mapping, menu selection, actions, start/pause, rematch and reconnect behavior are covered by unit checks and browser tests using simulated Gamepad API devices. Physical controller acceptance remains unverified.
 

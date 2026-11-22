@@ -9,14 +9,15 @@ import {initializeHealth,advanceDamageService} from '../src/actors/match-service
 import {Referee} from '../src/actors/referee.js';
 const fixtureFiles=process.env.THROW_FIXTURE?[process.env.THROW_FIXTURE]:[
  new URL('./fixtures/grapple-submissions-reference.json',import.meta.url),new URL('./fixtures/linked-submissions-reference.json',import.meta.url),
- new URL('./fixtures/damage-submissions-reference.json',import.meta.url),new URL('./fixtures/referee-grapples-reference.json',import.meta.url)];
+ new URL('./fixtures/damage-submissions-reference.json',import.meta.url),new URL('./fixtures/referee-grapples-reference.json',import.meta.url),
+ new URL('./fixtures/pins-reference.json',import.meta.url)];
 const fixtures={sequences:fixtureFiles.flatMap(path=>JSON.parse(readFileSync(path)).sequences)};
 const bytes=['movementMode','flags32','flags33','flags34','flags35','flags56','hitCounter'];
 const words=['type','facing','previousState','speed','direction','holdFlags','timer','contact','pendingDamage','velocityX','velocityY',
  'velocityZ','gravity','offsetX','offsetY','forced','action','reaction','severity','health','maximumHealth','paddingX','paddingY','paddingZ','eliminations',
  'mash','inputBlockA','inputBlockB','supportTimer','healthAccumulator','resultPose','targetX','targetY'];
 const attemptOffsets=Array.from({length:11},(_,i)=>0xe8+i*2);
-function snapshot(actor,bodies,composed=false,damage=false,referee=false){
+function snapshot(actor,bodies,composed=false,damage=false,referee=false,pins=false){
  const result={state:actor.state|(actor.pendingState?0:0x8000)|(composed&&actor.state===2&&actor.inputInitialized?0x4000:0),
   clock:{flags:actor.clock.flags,remaining:actor.clock.remaining,index:actor.clock.index,pose:actor.clock.pose},
   xFixed:actor.xFixed,yFixed:actor.yFixed,zFixed:actor.zFixed,
@@ -27,7 +28,7 @@ function snapshot(actor,bodies,composed=false,damage=false,referee=false){
  result.motionLink=bodies.includes(actor.motionLink)?bodies.indexOf(actor.motionLink):null;
  result.assistanceTarget=bodies.includes(actor.assistanceTarget)?bodies.indexOf(actor.assistanceTarget):null;
  result.attempt26=actor.attempts[0xfc]||0;
- for(const key of [...bytes,...(damage?['flags57','flags104']:[]),...words,...(damage?['comboCount','comboTimer','idleTimer']:[]),...(referee?['pinStatus']:[])])
+ for(const key of [...bytes,...(damage?['flags57','flags104']:[]),...words,...(damage?['comboCount','comboTimer','idleTimer']:[]),...(referee?['pinStatus']:[]),...(pins?['recoveryTimer']:[])])
   result[key]=composed&&key==='previousState'?actor[key]&255:actor[key];
  return result;
 }
@@ -45,6 +46,7 @@ for(const fixture of fixtures.sequences){
    body.entropy=kind=>{const observed=entropy[entropyIndex++];assert.equal(observed?.kind,kind);return observed.value;};
   }
   if(fixture.damageService)for(const body of allBodies)initializeHealth(body,world);
+  if(fixture.healthOverrides)for(const[index,values]of fixture.healthOverrides.entries())Object.assign(allBodies[index],values);
   let referee=null;
   if(fixture.refereeInitial){
    world.activeA=allBodies[world.activeA];world.activeB=allBodies[world.activeB];world.countTiles=world.countTiles.map(row=>[...row]);
@@ -53,6 +55,7 @@ for(const fixture of fixtures.sequences){
   for(let tick=0;tick<fixture.count;tick++){
    entropy=fixture.entropyFrames[tick];entropyIndex=0;const sounds=[];
    for(const[index,body]of bodies.entries())body.pressedButtons=fixture.buttonInputs?.[tick]?.[index]||0;
+   if(fixture.pinInputs)for(const body of bodies)body.input({pressed:body.pressedButtons});
    if(fixture.composed)for(const[index,body]of bodies.entries())body.runInput(fixture.runInputs?.[tick]?.[index]||0);
    if(referee){referee.step();sounds.push(...referee.sounds);}
    for(const index of fixture.updateOrder){
@@ -66,7 +69,7 @@ for(const fixture of fixtures.sequences){
    }
    if(fixture.damageService&&!(tick&1)&&boundary===null)advanceDamageService(allBodies);
    const worldSnapshot=Object.fromEntries(Object.keys(fixture.world).map(key=>[key,['assistCandidate','activeA','activeB'].includes(key)?allBodies.indexOf(world[key])<0?null:allBodies.indexOf(world[key]):world[key]]));
-   const row={actors:bodies.map(body=>snapshot(body,allBodies,fixture.composed,fixture.damageService,Boolean(referee))),sounds,world:worldSnapshot,partners:partners.map(body=>snapshot(body,allBodies,fixture.composed,fixture.damageService,Boolean(referee)))};
+   const row={actors:bodies.map(body=>snapshot(body,allBodies,fixture.composed,fixture.damageService,Boolean(referee),fixture.pinInputs)),sounds,world:worldSnapshot,partners:partners.map(body=>snapshot(body,allBodies,fixture.composed,fixture.damageService,Boolean(referee),fixture.pinInputs))};
    if(referee)row.referee={state:referee.state|(referee.pendingState?0x8000:0),clock:{...referee.clock},xFixed:referee.xFixed,yFixed:referee.yFixed,zFixed:referee.zFixed,
     focus:allBodies.includes(referee.focus)?allBodies.indexOf(referee.focus):null,projection:Object.values(projectedPosition(referee.projection))};
    if(fixture.rows){

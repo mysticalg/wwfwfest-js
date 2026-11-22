@@ -4,8 +4,9 @@ import {Running} from './running.js';
 import {insideRingCollision,outsideRingCollision,addPositionWord} from './ring-collision.js';
 import {projectionSnapshot} from './projection.js';
 import {actorTables} from '../data/actor-tables.js';
+import {pinEscapeInput} from './pin.js';
 
-const knockdowns=[1,2,3,4,5,6,7,8,9,11,12,13,14,16,18,19,21,22,23,24,25,27,29,33,34,35,36,37,38,41];
+const knockdowns=[1,2,3,4,5,6,7,8,9,11,12,13,14,15,16,18,19,21,22,23,24,25,27,29,33,34,35,36,37,38,41];
 
 // Stable linked identities across the translated grapple/knockdown/idle states.
 // Unsupported move, counter and outside-state handoffs remain observable.
@@ -18,6 +19,18 @@ export class LinkedActor extends GrappleActor {
   }
 
   change(state,action=this.action) { super.change(state,action);this.inputInitialized=false; }
+
+  input({pressed=0,mask=0}={}) {
+    if(!this.pendingState&&!this.forced&&!(this.flags56&0xc0)){
+      pinEscapeInput(this,pressed);
+      if(pressed&&this.mash===0x4000&&this.state===4&&!(this.opponent?.flags34&16)){
+        const reaction=this.reaction&255,peer=this.auxiliary;
+        const blocked=reaction===9&&peer?.state===5&&[53,14,15,35].includes(peer.action&255)&&!(peer.action&0x1000);
+        if([8,9].includes(reaction)&&!blocked){this.change(5,reaction===8?56:120);this.mash=0;}
+      }
+    }
+    return super.input({pressed,mask});
+  }
 
   // $00e58c belongs to the input phase, before either participant updates.
   runInput(mask=0) {
@@ -53,7 +66,7 @@ export class LinkedActor extends GrappleActor {
       body.collision=this.collision;
       body.linkIdentity=this;
       for(const key of ['paddingX','paddingY','paddingZ','offsetX','offsetY'])body[key]=this[key]||0;
-      body.step({linkedFlags34:this.opponent?.flags34||0});
+      body.step({pressed:this.pressedButtons,sampleRecoveryInput:false,linkedFlags34:this.opponent?.flags34||0});
       if(body.comboTimerStart)body.comboTimer=body.comboTimerStart;
       if(body.comboReset)body.comboCount=body.comboTimer=0;
       Object.assign(this,body);this.timer=body.captureTimer;
