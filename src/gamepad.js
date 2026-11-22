@@ -2,6 +2,7 @@
 // Xbox, PlayStation and compatible layouts even when printed labels differ.
 export const gamepadButtons = {
   strike: 0, heavy: 1, run: 2, pin: 3, back: 8, start: 9,
+  partnerLeft:4,partnerRight:5,
   up: 12, down: 13, left: 14, right: 15,
 };
 
@@ -30,6 +31,7 @@ function snapshot(pad, deadZone) {
     strike: pressed(pad, 'strike'), heavy: pressed(pad, 'heavy'),
     run: pressed(pad, 'run'), pin: pressed(pad, 'pin'),
     start: pressed(pad, 'start'), back: pressed(pad, 'back'),
+    partners:pressed(pad,'partnerLeft')||pressed(pad,'partnerRight'),
   };
 }
 
@@ -52,7 +54,7 @@ export class GamepadInput {
 
   poll(enabled = true) {
     const result = {controls: neutralControls(), connected: false, lost: false,
-      startPressed: false, backPressed: false, menuHorizontal: 0, menuVertical: 0,
+      startPressed: false, backPressed: false, menuHorizontal: 0, menuVertical: 0,menuPartners:false,
       activity: false, waitingForNeutral: false, id: '', mapping: '', error: ''};
     let pads;
     try { pads = Array.from(this.readGamepads() || []).filter(pad => pad?.connected); }
@@ -83,6 +85,7 @@ export class GamepadInput {
     result.backPressed = current.back && !this.previous.back;
     result.menuHorizontal = current.horizontal !== this.previous.horizontal ? current.horizontal : 0;
     result.menuVertical = current.vertical !== this.previous.vertical ? current.vertical : 0;
+    result.menuPartners=current.partners;
     this.previous = current;
     return result;
   }

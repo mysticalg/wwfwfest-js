@@ -114,7 +114,7 @@ export function stepGrappleVictim(actor,initialized) {
     }
   }else if(reaction===22||reaction===14){ // $01ab0a / $01a6b8
     if(!initialized){
-      const counter=reaction===14,peer=counter?actor.motionLink:actor.attacker;
+      const counter=reaction===14,peer=counter?(actor.lastHit||actor.motionLink):actor.attacker;
       if(counter){
         if(!peer)throw new Error('Counter flight requires its motion link');
         actor.holdFlags=0;actor.auxiliary=peer;actor.unlinkMarked=false;

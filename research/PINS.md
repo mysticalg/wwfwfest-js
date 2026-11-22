@@ -1,5 +1,7 @@
 # Native covers, escapes and playable referee integration
 
+Current integration update: the default browser now runs a four-person native tag playtest with original input, movement AI and manual tags. See [four-person integration](TEAM_MATCH.md) for current evidence and limitations. Older adapter descriptions below record the earlier component checkpoints.
+
 The practice match now uses original pin action 72, victim 74, escape 75 and the recovered referee. The earlier 180-update pin timer and authored cover pose have been removed. Kick near a prone opponent selects the cover; Space or the gamepad's top button supplies the same action as a convenience. Human victims tap punch/kick to advance the original mash counter, then press again to select escape. Releasing the cover button does not cancel a committed original pin.
 
 ## Original handlers

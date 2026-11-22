@@ -12,11 +12,11 @@ export function stepGrappleCounter(actor,peer,initialized) {
       if(preserve){actor.clock.flags|=0x8000;actor.clock.index=actor.clock.remaining=0;}
       else if(actor.action&0x8000){
         actor.clock.flags|=0x8000;actor.clock.index=0;actor.clock.pose=96^actor.facing;actor.clock.remaining=12;
-      }else actor.motionLink=null;
+      }else actor.lastHit=actor.motionLink=null;
     }else{
       if(!(actor.action&0x8000)){
         actor.contact=actor.clock.index===0?4:1;
-        if(actor.clock.index===0&&actor.motionLink){
+        if(actor.clock.index===0&&(actor.lastHit||actor.motionLink)){
           actor.contact=0;actor.clock.remaining=12;actor.action|=0x8000;return descriptor;
         }
         if(actor.clock.index===0&&(actor.clock.remaining&255)<2){
@@ -55,7 +55,7 @@ export function stepGrappleCounter(actor,peer,initialized) {
     actor.clock.pose=43^actor.facing;peer.clock.pose=96^peer.facing;
     actor.zFixed=addPositionWord(actor.zFixed,72);
     if(action===131)peer.yFixed=addPositionWord(peer.yFixed,1);
-    actor.motionLink=peer;peer.motionLink=actor;
+    actor.lastHit=actor.motionLink=peer;peer.lastHit=peer.motionLink=actor;
     if(action===132||action===133){actor.flags33|=64;peer.flags33|=64;}
     else{actor.flags33&=~64;peer.flags33&=~64;}
   }

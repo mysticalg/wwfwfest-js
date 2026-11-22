@@ -10,9 +10,10 @@ import {projectedPosition} from '../src/actors/projection.js';
 import {participantFacing} from '../src/actors/facing.js';
 import {updateTagTargets} from '../src/actors/tag-targets.js';
 import {advanceNativeContacts} from '../src/actors/native-contact.js';
-const files=process.env.TAG_FIXTURE?[process.env.TAG_FIXTURE]:['tag-reference.json','tag-ground-reference.json'].map(name=>new URL(`./fixtures/${name}`,import.meta.url));
+import {stepHumanInput} from '../src/actors/human-input.js';
+const files=process.env.TAG_FIXTURE?[process.env.TAG_FIXTURE]:['tag-reference.json','tag-ground-reference.json','tag-manual-reference.json'].map(name=>new URL(`./fixtures/${name}`,import.meta.url));
 const fixture={sequences:files.flatMap(file=>JSON.parse(readFileSync(file)).sequences)};
-for(const config of fixture.sequences)test(`native four-participant corner tag ${config.side}, incoming ${config.type}, order ${config.order}`,()=>{
+for(const config of fixture.sequences)test(`native four-participant ${config.manual?'manual':'corner'} tag ${config.side}, incoming ${config.type}, order ${config.order}${config.manual?`, near ${config.near}`:''}`,()=>{
  const world={...config.world,rope:[0,0,0,0],effectRequests:[],paletteUpdates:{}},bodies=config.initial.map(initial=>new LinkedActor({...initial,world}));
  let entropy=[],cursor=0;
  for(const[index,body]of bodies.entries()){
@@ -27,6 +28,7 @@ for(const config of fixture.sequences)test(`native four-participant corner tag $
   for(const body of bodies)body.region=grappleRegion({x:body.xFixed>>>16,y:body.yFixed>>>16,...body});
   if(config.expanded)updateTagTargets(world);
   for(const body of bodies){
+   if(config.manual){stepHumanInput(body,{pressed:0,mask:0});continue;}
    body.region=grappleRegion({x:body.xFixed>>>16,y:body.yFixed>>>16,...body});
    if(!(body.flags56&0xc0)){
     body.inputBlockA=body.inputBlockB=0;body.input({pressed:0,mask:0});body.runInput(0);

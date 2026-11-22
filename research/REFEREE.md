@@ -1,5 +1,7 @@
 # Original referee and count services
 
+Current integration update: the default browser now runs a four-person native tag playtest with original input, movement AI and manual tags. See [four-person integration](TEAM_MATCH.md) for current evidence and limitations. Older adapter descriptions below record the earlier component checkpoints.
+
 `src/actors/referee.js` translates the US rev 2 referee decision and state handlers at `$01eb3a-$01f95e`, reset `$00f958`, count graphics and scene-bit-1 foreground record. These native JavaScript components are now connected to the practice match's [original covers and escapes](PINS.md). Full tag/Rumble, input/AI, outside and scene progression remain unfinished.
 
 ## State and frame order

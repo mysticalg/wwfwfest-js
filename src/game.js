@@ -14,6 +14,11 @@ import {SceneryAnimator} from './scenery.js';
 import {videoFrameRate} from './timing.js';
 import {MatchActors} from './actors/match-actors.js';
 import {participantFacing} from './actors/facing.js';
+import {updateTagTargets} from './actors/tag-targets.js';
+import {cleanupGrappleLinks} from './actors/grapple.js';
+import {canQueueSprite,spriteDrawOrder} from './sprite-order.js';
+import {stepAnnouncer} from './announcer.js';
+import {advanceTagTimers} from './actors/tag.js';
 
 // Ordinary walking and its descriptor clock are translated from the arcade
 // routines. Standing punch/kick handlers and their ordinary contact/reaction paths
@@ -50,11 +55,23 @@ function fighter(type, x, y, facing, world, {computer=false,slot=0}={}) {
 }
 
 export class Match {
-  constructor(playerType, opponentType, {ai=true,nativeHumanInput=false,nativeMovementAI=false,...settings}={}) {
-    this.world={...defaultMatchSettings,...settings,inGame:true,nativeHumanInput,nativeMovementAI:nativeMovementAI||nativeHumanInput};
+  constructor(playerType, opponentType, {ai=true,tagTeams=false,playerPartnerType=9,opponentPartnerType=3,nativeHumanInput=false,nativeMovementAI=false,...settings}={}) {
+    this.world={...defaultMatchSettings,...settings,inGame:true,tagTeams,nativeHumanInput:nativeHumanInput||tagTeams,nativeMovementAI:nativeMovementAI||nativeHumanInput||tagTeams};
     this.world.gameFlags??=0x8000;
+    if(tagTeams&&(this.world.mode&3))throw new RangeError('Tag-team playtest requires normal tag mode');
     this.fighters = [fighter(playerType, 103, 165, 1,this.world),
       fighter(opponentType, 219, 165, -1,this.world,{computer:ai,slot:ai?4:2})];
+    if(tagTeams){
+      this.fighters[1].slot=4;this.fighters[1].flags56=128;
+      this.fighters[0].y=this.fighters[1].y=160;
+      this.fighters.push(fighter(playerPartnerType,438-461,154,1,this.world,{slot:1}),
+        fighter(opponentPartnerType,828-461,154,-1,this.world,{computer:true,slot:5}));
+      for(const [index,actor]of this.fighters.entries()){
+        actor.flags33=[3,129,0,128][index];actor.flags56=[0,128,64,192][index];
+        actor.controlPort=index%2===0?0x140020:0;
+        initializeHealth(actor,this.world);
+      }
+    }
     this.world.actors=this.fighters;
     this.nativeActors=new MatchActors(this);this.referee=this.nativeActors.referee;
     this.ticks = 0;
@@ -102,6 +119,7 @@ export class Match {
   }
 
   step(input) {
+    if(this.world.tagTeams)return this.stepTeam(input);
     if (this.winner !== null || this.handoff) return;
     this.ticks++;
     const phase = (this.ticks - 1) >>> 0;
@@ -162,6 +180,55 @@ export class Match {
       }
     }
   }
+
+  // Normal tag playtest: every active wrestler stays in the original shared
+  // graph. Physical pool order is independent of team/HUD/controller roles.
+  stepTeam(input){
+    if(this.winner!==null||this.handoff)return;
+    this.ticks++;const phase=(this.ticks-1)>>>0;this.contactPhase=!(phase&1);
+    this.world.effectRequests=[];this.scenery.events=[];
+    this.time=Math.max(0,180-Math.floor(this.ticks/rules.frameRate));
+    if(!this.time){this.handoff={reason:'match-timeout'};return;}
+    if(!this.contactPhase){this.scenery.step(this.camera.chunkX,this.camera.chunkY);this.camera.stream();}
+    updateTagTargets(this.world);
+    this.camera.step(this.nativeActors.participants.map(f=>{
+      const a=f.original;return{x:a.xFixed>>>16,y:a.yFixed>>>16,z:a.zFixed>>>16,flags33:a.flags33,priority:a.resultPose&255,active:a.active};
+    }),{stream:false,targetX:this.world.cameraTargetX??this.camera.x,targetY:this.world.cameraTargetY??this.camera.y});
+    this.nativeActors.arbitrate();
+    advanceTagTimers(this.world);
+    this.soundCommands.push(...stepAnnouncer(this.world));
+    for(const fighter of this.nativeActors.participants){
+      const body=fighter.original;
+      // Both teammates sample the same port, even while one is on the apron.
+      // A role change therefore cannot manufacture another button edge.
+      const controls=body.controlPort===0x140020?input:{};
+      this.updateFighter(fighter,body.opponent?.owner||this.fighters[1],controls,fighter.slot);
+    }
+    this.nativeActors.input();this.nativeActors.computer();this.nativeActors.stepReferee();
+    this.spriteEntries=[];
+    if(canQueueSprite(this.referee,this.camera))this.spriteEntries.push({actor:{type:12,referee:this.referee},body:this.referee,queued:true});
+    for(const fighter of this.nativeActors.participants){
+      if(fighter.original.flags32&128)continue;
+      this.nativeActors.advance(fighter);
+      if(this.handoff)return;
+      if(canQueueSprite(fighter.original,this.camera))this.spriteEntries.push({actor:fighter,body:fighter.original,queued:true});
+    }
+    for(const fighter of this.fighters)this.nativeActors.syncVisible(fighter);
+    this.nativeActors.finishActors({cleanup:false});
+    for(const fighter of this.fighters){
+      const body=fighter.original;
+      if(body.clock.pose!==body.lastPose){body.contact=body.hitMask=0;body.lastPose=body.clock.pose;fighter.contact=0;}
+      fighter.lastPose=body.clock.pose;
+    }
+    if(this.contactPhase){this.nativeActors.contacts();this.nativeActors.damage();}
+    cleanupGrappleLinks(spriteDrawOrder(this.spriteEntries,this.camera).map(entry=>entry.body).filter(body=>body.owner));
+  }
+
+  get teamLeads(){
+    return[false,true].map(side=>this.fighters.find(f=>Boolean(f.original.flags33&128)===side&&(f.original.flags33&1)));
+  }
+
+  get controlledFighter(){return this.fighters.find(f=>(f.original.flags33&2)&&!(f.original.flags56&0xc0));}
 
   advanceActor(actor) {
     if(this.nativeActors.advance(actor))return;

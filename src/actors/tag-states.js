@@ -78,7 +78,7 @@ export function stepTagWalk(actor){
       else if(y<402)return finish(actor,descriptor);else setWord(actor,'yFixed',402);
       actor.movementMode=0;
      }
-     actor.clock.pose=actor.facing;descriptor=actorTables.grappleAnimations.hidden;
+     actor.clock.pose=(actor.clock.pose&255)|(actor.facing&0xff00);descriptor=actorTables.grappleAnimations.hidden;
     }
    }
   }
@@ -97,7 +97,7 @@ export function stepTagWalk(actor){
     if(team?y>=304:y<=386)return finish(actor,descriptor);
     setWord(actor,'yFixed',team?304:386);actor.walkMode|=0x8000;
    }
-   actor.movementMode=0;actor.clock.pose=actor.facing;actor.clock.remaining=2;
+   actor.movementMode=0;actor.clock.pose=(actor.clock.pose&255)|(actor.facing&0xff00);actor.clock.remaining=2;
   }
  }else if(mode===3){ // $010c60
   if(!initialized){

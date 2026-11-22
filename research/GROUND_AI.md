@@ -1,5 +1,7 @@
 # Ordinary movement and approach decisions
 
+Current integration update: the default browser now runs a four-person native tag playtest with original input, movement AI and manual tags. See [four-person integration](TEAM_MATCH.md) for current evidence and limitations. Older adapter descriptions below record the earlier component checkpoints.
+
 `src/actors/computer-ground.js` reconstructs ordinary idle, walking, running,
 braking and rebound AI, together with the approach decisions used by selected
 attacks. The existing linked-state AI dispatcher calls these routines for their

@@ -75,3 +75,5 @@ The original routines around `$00cf1e-$00d1d0` inspect the state byte at `$21`, 
 - [Capstone](https://www.capstone-engine.org/) decoded the 68000 instructions for inspection.
 
 [Computer research](COMPUTER.md) now records original linked-state decisions in normal practice play: clinch/headlock move weights, carrying, pin/held escapes and downed recovery. General locomotion/standing/running decisions, original match-clock cadence, attract scripts and full tag/Rumble/control services remain unfinished.
+
+The default browser now uses the [four-person native tag loop](TEAM_MATCH.md), recovered human/AI controls, manual tagging, original sprite queues and queued announcer commentary. Full gameplay, audio and scene progression remain unfinished.

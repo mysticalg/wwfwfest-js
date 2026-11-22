@@ -10,7 +10,7 @@ const pool=Array.from({length:9},(_,i)=>0x1c05b0+i*0x10c),slots=[0,1,4,5],bases=
 const word=a=>memory[a]*256+memory[a+1],long=a=>(word(a)*65536+word(a+2))|0;
 const put=(a,v)=>{memory[a]=v>>>8;memory[a+1]=v;},putLong=(a,v)=>{put(a,v>>>16);put(a+2,v);};
 const sounds=[],entropy=[],effects=[];
-const expanded=Boolean(process.env.TAG_EXPANDED);
+const manual=Boolean(process.env.TAG_MANUAL),expanded=manual||Boolean(process.env.TAG_EXPANDED);
 cpu.memorymap[0x1400].write16=(a,v)=>{if(a===0x14000c)sounds.push(v&255);};
 function call(address,actor=bases[0]){
  cpu.pc=address;cpu.a[0]=actor;cpu.sr=0x2700;cpu.a[7]=0x1c3a00;putLong(cpu.a[7],0x7ff00);let steps=0;
@@ -49,7 +49,7 @@ function snapshot(){
   cornerOccupancy:long(0x1c1670),switchTimer:word(0x1c1682),activeA:bases.indexOf(long(0x1c1684)),activeB:bases.indexOf(long(0x1c1688)),paletteUpdates:palettes}};
 }
 const configs=[];
-for(const side of [0,1])for(let type=0;type<12;type++)for(const order of [0,1])configs.push({side,type,order});
+for(const side of [0,1])for(let type=0;type<12;type++)for(const order of [0,1])for(const near of manual?[false,true]:[false])configs.push({side,type,order,...(manual?{manual,near}:{})});
 const filter=process.env.TAG_FILTER?JSON.parse(process.env.TAG_FILTER):{},sequences=[];
 for(const config of configs){
  if(!Object.entries(filter).every(([key,value])=>config[key]===value))continue;
@@ -72,6 +72,14 @@ for(const config of configs){
  const a=bases[holder],b=bases[victim];put(a+0x20,5);put(a+0x60,102);put(a+0x1c,0x8005);
  put(b+0x20,0x80ff);put(b+0x60,123);put(b+0x1c,0x80ff);put(b+4,0xffff);
  putLong(a+0x26,b);putLong(b+0x26,a);memory[a+0x33]|=64;memory[b+0x33]|=64;
+ if(manual){
+  put(a+0x60,76);memory[a+0x33]&=~64;memory[b+0x33]&=~64;
+  put(b+0x20,config.near?0x8004:0x8000);put(b+0x1c,word(b+0x20));put(b+0x64,config.near?8:0);put(b+4,config.side?0x8000:0);put(b+0x90,word(b+4));
+  put(b+0x2e,config.side?0x8000:0);put(b+0x9a,600);
+  putLong(b+6,(config.near?(config.side?736:544):640)*65536+0x1234);putLong(b+10,(config.near?(config.side?336:390):337)*65536+0x5678);
+  put(bases[incoming]+0xae,0x8002);
+  if(!config.near){putLong(a+0x26,0);putLong(b+0x26,0);}
+ }
  putLong(0x1c1684,bases[0]);putLong(0x1c1688,bases[2]);
  const initial=actors(),world={inGame:true,gameFlags:0x8000,mode:0,round:0,clockMinutesBCD:0x30,message:0,controlsRefresh:0,
   cornerOccupancy:0,switchTimer:0,activeA:0,activeB:2,paletteUpdates:{}};
@@ -100,5 +108,5 @@ for(const config of configs){
  }
  sequences.push({...config,expanded,holder,victim,incoming,initial,world,count,boundary,entropyFrames,sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
 }
-writeFileSync(output,JSON.stringify({source:expanded?'Original four-participant tag continuation: neutral human input, target service, ground/linked AI, native actor/contact/damage phase; no fresh grapple arbitration or referee, stop at declared unrecovered actor or 650-update cap':'Original four-participant corner tag: human input, active linked/apron/corner AI, actor handlers, contact and damage; stop before ordinary outgoing idle AI',sequences},null,2)+'\n');
+writeFileSync(output,JSON.stringify({source:manual?'Original normal tag action 76 and near-prone hold: human/AI/actor/contact/damage phases on four records; no fresh arbitration/referee; declared actor boundary or 650-update cap':expanded?'Original four-participant tag continuation: neutral human input, target service, ground/linked AI, native actor/contact/damage phase; no fresh grapple arbitration or referee, stop at declared unrecovered actor or 650-update cap':'Original four-participant corner tag: human input, active linked/apron/corner AI, actor handlers, contact and damage; stop before ordinary outgoing idle AI',sequences},null,2)+'\n');
 console.log(JSON.stringify({sequences:sequences.length,updates:sequences.reduce((n,s)=>n+s.count,0)}));

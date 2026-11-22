@@ -27,7 +27,13 @@ def main():
                 'delays': words(a + 8, count), 'poses': words(a + 8 + count * 2, count)}
 
     data = {
-        'actions': {str(a): descriptor(long(0x11854 + a * 4)) for a in (13,27,76,77,78,79,102)},
+        'actions': {str(a): descriptor(long(0x11854 + a * 4)) for a in (13,27,55,76,77,78,79,89,97,102)},
+        'manualAssistWeights': [[list(b[long(0x2259e+i*4)+j*2:long(0x2259e+i*4)+j*2+2]) for j in range(3)] for i in range(12)],
+        'manualNullSeverity': word(0x70),
+        'proneAssistTimers': words(0x204a2,3),
+        'benchThresholds': words(0xeff4,12),
+        'computerHitThresholds': list(b[0xf00c:0xf018]),
+        'boostTimers': words(0xf018,10),
         'tagPositions': [words(0x17af4 + i * 4, 2) for i in range(2)],
         'entryPositions': [words(0x17cc8 + i * 4, 2) for i in range(2)],
         'holdPositions': [words(0x189ae + i * 4, 2) for i in range(2)],

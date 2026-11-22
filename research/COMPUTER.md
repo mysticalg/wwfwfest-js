@@ -1,5 +1,7 @@
 # Computer decisions in linked exchanges
 
+Current integration update: the default browser now runs a four-person native tag playtest with original input, movement AI and manual tags. See [four-person integration](TEAM_MATCH.md) for current evidence and limitations. Older adapter descriptions below record the earlier component checkpoints.
+
 `src/actors/computer-grapple.js` replaces the provisional simulated button presses while a computer wrestler uses recovered linked states. It translates original target measurements, contested/controlled clinches, headlock move selection, carrying, held escape timers, pin escape decisions and downed recovery decisions. The browser calls it after human input and before the referee, in physical actor order. [Ground AI research](GROUND_AI.md) now records the recovered ordinary movement/approach kernels and development browser mode. Complete migration, tag/Rumble services and the full AI dispatcher remain unfinished. Complete computer-opponent parity is not established.
 
 `src/data/ai-tables.js` contains editable original actions, probability rows, escape times and source addresses. `tools/extract_ai.py` regenerates it from the supplied archive. No CPU executes in the delivered browser game.

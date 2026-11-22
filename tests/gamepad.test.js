@@ -18,6 +18,14 @@ test('standard face buttons map to all four gameplay actions', () => {
   assert.deepEqual(input.poll().controls, {...neutralControls(), strike: true, heavy: true, run: true, pin: true});
 });
 
+test('shoulder modifier selects partners without adding a gameplay action',()=>{
+ const controller=pad(),input=new GamepadInput(()=>[controller]);
+ press(controller,4);controller.axes[0]=1;
+ const selected=input.poll();assert.equal(selected.menuPartners,true);assert.equal(selected.menuHorizontal,1);
+ assert.deepEqual(selected.controls,{...neutralControls(),horizontal:1});
+ press(controller,4,false);assert.equal(input.poll().menuPartners,false);
+});
+
 test('stick dead zone suppresses drift and d-pad has priority over the stick', () => {
   const controller = pad();
   const input = new GamepadInput(() => [controller]);

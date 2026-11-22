@@ -1,5 +1,7 @@
 # Running attacks in the shared actor pool
 
+Current integration update: the default browser now runs a four-person native tag playtest with original input, movement AI and manual tags. See [four-person integration](TEAM_MATCH.md) for current evidence and limitations. Older adapter descriptions below record the earlier component checkpoints.
+
 `src/actors/running-action.js` translates actions 1, 4, 5, 32, 42, 45, 64 and 65
 directly on the stable `LinkedActor` records. These are the eight ordinary running
 selections recovered earlier in the standalone `RunningAttack` adapter. Original

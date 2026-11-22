@@ -2,9 +2,9 @@
 
 The native component dispatcher now reconstructs the action-102 corner carry,
 incoming partner, corner climb/wait, attack 13/27, landing and victim release.
-Four stable active records participate. This graph is not yet connected to the
-two-wrestler practice adapter. The browser still reports that dependency rather
-than starting an incomplete tag match.
+Four stable active records participate. The default browser now runs this graph
+and ordinary manual tags in a native four-person playtest; see
+[four-person integration](TEAM_MATCH.md). Full tag matches remain unfinished.
 
 ## Recovered routines
 
@@ -59,11 +59,10 @@ An extended original trace confirms that after this landing both assisting
 partners may enter the ring and fight. Ordinary shared standing handlers and the
 physical contact service are now recovered in [contact research](CONTACTS.md).
 [Ground AI research](GROUND_AI.md) now adds idle/walk/run decisions and extended
-four-participant comparisons through subsequent fighting. Original input,
-remaining move handlers and complete four-participant browser integration remain dependencies.
-The browser's action-102 dependency prompt is still expected. Ordinary tag
-action 76, other airborne attacks, outside/Rumble paths and complete team-match
-rules remain unfinished. Table extraction alone does not establish those paths.
+four-participant comparisons through subsequent fighting. Original input and four-participant browser integration are now connected.
+Manual tag 76, prone hold 55, held victim 97 and escape 89 now have native
+translations. Other airborne attacks, outside/Rumble paths and complete
+team-match rules remain unfinished. Table extraction alone does not establish those paths.
 
 ```sh
 python tools/extract_tag.py path/to/wwfwfest.zip
@@ -77,3 +76,22 @@ and `TAG_FIXTURE` selects a private detailed comparison file. `TAG_CONTINUE=1`
 is diagnostic only: it observes later original execution beyond the translated
 prefix and does not extend the asserted scope. The program image and external
 analysis CPU are excluded from browser delivery.
+
+## Manual tag and default four-person integration
+
+A further **96 original-program sequences / 42,081 updates** exercise manual
+76 tags and the nearby prone-opponent variation on both sides, all twelve
+incoming types and both actor orders. They stop at 650 updates or an explicit
+untranslated actor boundary. The total tag suite now has 192 sequences,
+including the earlier corner and extended ground components. This is bounded
+prefix evidence, not proof that every continuation or whole match works.
+
+The source action 55 prone hold, 97 victim and 89 escape include the original
+assistance requests and timers. The shared weighted choice implementation is
+in `probability.js`. The default match also calls `$00ef40` in the original
+pre-input phase for apron/boost timer maintenance.
+
+Both human teammates retain the same sampled control port while on the apron.
+Role flags select the controlled wrestler; shared held-button history prevents
+a fresh attack edge when control transfers. Character-layer palette writes
+remain requests; they must not overwrite the sprite palette banks.

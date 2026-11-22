@@ -78,6 +78,7 @@ export class LinkedActor extends GrappleActor {
       body.action=this.action;body.pendingState=this.pendingState;body.previousState=this.previousState&255;
       body.collision=this.collision;
       body.linkIdentity=this;
+      body.lastHit=this.lastHit;
       for(const key of ['paddingX','paddingY','paddingZ','offsetX','offsetY'])body[key]=this[key]||0;
       body.step({pressed:this.pressedButtons,sampleRecoveryInput:false,linkedFlags34:this.opponent?.flags34||0});
       if(body.comboTimerStart)body.comboTimer=body.comboTimerStart;

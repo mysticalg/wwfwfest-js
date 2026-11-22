@@ -7,6 +7,7 @@ import {GamepadInput, neutralControls} from './gamepad.js';
 import {ArcadeInput} from './arcade-input.js';
 import {actorTables} from './data/actor-tables.js';
 import {projectedPosition} from './actors/projection.js';
+import {spriteDrawOrder} from './sprite-order.js';
 
 const element = id => document.getElementById(id);
 const canvas = element('screen');
@@ -30,12 +31,14 @@ let musicTrack = null;
 let musicPreview = null;
 let muted = false;
 
-for (const id of ['player', 'opponent', 'actor', 'linked-actor']) {
+for (const id of ['player', 'opponent', 'player-partner','opponent-partner','actor', 'linked-actor']) {
   const types=id==='actor'?roster.map((_,type)=>type):id==='linked-actor'?
     roster.slice(0,12).map((_,type)=>type):[...actorTables.selectableTypes,4,5];
   types.forEach(type=>element(id).add(new Option(roster[type], String(type))));
 }
 element('opponent').value = '6';
+element('player-partner').value='9';
+element('opponent-partner').value='3';
 element('linked-actor').value = '6';
 
 async function prepareActor(type) {
@@ -50,11 +53,12 @@ async function startMatch() {
   element('start').disabled = true;
   const player = Number(element('player').value);
   const opponent = Number(element('opponent').value);
+  const playerPartnerType=Number(element('player-partner').value),opponentPartnerType=Number(element('opponent-partner').value);
   element('status').textContent = 'Preparing wrestlers…';
   try {
-    await Promise.all([prepareActor(player), prepareActor(opponent)]);
+    await Promise.all([...new Set([player,opponent,playerPartnerType,opponentPartnerType])].map(prepareActor));
     if (request !== matchRequest) return;
-    state.match = new Match(player, opponent,{ai:element('ai').checked});
+    state.match = new Match(player, opponent,{ai:element('ai').checked,tagTeams:true,playerPartnerType,opponentPartnerType});
     arcadeInput.reset();
     playSceneAudio(true);
     state.paused = false;
@@ -194,13 +198,16 @@ function drawSelection() {
   renderer.text('SELECT WRESTLERS', 160, 49, '#ffe64a', 17, 'center');
   const player = Number(element('player').value);
   const opponent = Number(element('opponent').value);
-  renderer.drawActor(player,0,88,168);
-  renderer.drawActor(opponent,0,235,168);
+  const partner=Number(element('player-partner').value),otherPartner=Number(element('opponent-partner').value);
+  renderer.drawActor(partner,0,61,160);renderer.drawActor(player,0,108,172);
+  renderer.drawActor(otherPartner,0,257,160);renderer.drawActor(opponent,0,211,172);
   renderer.text('1P', 83, 77, '#5aff8f', 12, 'center');
   renderer.text('VS', 160, 125, '#ffe64a', 15, 'center');
   renderer.text('CPU', 230, 77, '#ffb1ae', 12, 'center');
   renderer.text(roster[player].toUpperCase(), 83, 191, '#fff', 8, 'center');
   renderer.text(roster[opponent].toUpperCase(), 230, 191, '#fff', 8, 'center');
+  renderer.text(roster[partner].toUpperCase(),83,204,'#b8d7ff',7,'center');
+  renderer.text(roster[otherPartner].toUpperCase(),230,204,'#b8d7ff',7,'center');
   renderer.text('PRESS ENTER TO START', 160, 224, '#ffe64a', 10, 'center');
 }
 
@@ -210,7 +217,8 @@ function drawMatch() {
   renderer.stage.draw(match.camera, match.scenery);
   // Native actors remain between the original scrolling stage layers.
   const referee=match.referee;
-  const sorted = [...match.fighters,{type:12,referee,y:497-referee.yFixed/65536}].sort((a, b) => a.y - b.y);
+  const sorted = match.world.tagTeams?spriteDrawOrder(match.spriteEntries||[],match.camera).map(entry=>entry.actor):
+    [...match.fighters,{type:12,referee,y:497-referee.yFixed/65536}].sort((a, b) => a.y - b.y);
   for (const actor of sorted) {
     if(actor.referee){
       if(!referee.projection)continue;
@@ -225,13 +233,20 @@ function drawMatch() {
   renderer.stage.draw(match.camera, match.scenery, true);
   context.fillStyle = '#071323';
   context.fillRect(0, 0, 320, 29);
-  match.fighters.forEach((actor, index) => {
+  (match.world.tagTeams?match.teamLeads:match.fighters).forEach((actor, index) => {
+    if(!actor)return;
     const x = index === 0 ? 9 : 180;
     renderer.text(roster[actor.type].toUpperCase(), x, 10, index === 0 ? '#68ffa1' : '#ffb5a7', 8);
     context.fillStyle = '#5c2635';
     context.fillRect(x, 16, 130, 5);
     context.fillStyle = '#f8df33';
     context.fillRect(x, 16, 130 * actor.health / actor.maximumHealth, 5);
+    if(match.world.tagTeams){
+      const partner=actor.original.partner.owner;
+      renderer.text(roster[partner.type].toUpperCase(),x,27,'#aebbd2',6);
+      context.fillStyle='#506484';context.fillRect(x+91,24,39,2);
+      context.fillStyle='#77bce8';context.fillRect(x+91,24,39*partner.health/partner.maximumHealth,2);
+    }
   });
   context.fillStyle = '#071323';
   context.fillRect(0, 222, 320, 18);
@@ -240,7 +255,7 @@ function drawMatch() {
   if (state.paused || match.winner !== null || match.handoff) {
     context.fillStyle = '#061020df';
     context.fillRect(15, 80, 290, 65);
-    renderer.text(match.handoff?'THIS MOVE IS NOT READY':state.paused ? 'PAUSED' : `${match.winner === 0 ? 'PLAYER' : 'CPU'} WINS`, 160, 108, '#ffe64a', match.handoff?13:20, 'center');
+    renderer.text(match.handoff?'MATCH CONTINUATION NOT READY':state.paused ? 'PAUSED' : `${match.winner === 0 ? 'PLAYER' : 'CPU'} WINS`, 160, 108, '#ffe64a', match.handoff?11:20, 'center');
     renderer.text(match.handoff?'ENTER TO RESTART':state.paused ? 'P TO RESUME' : 'ENTER FOR REMATCH', 160, 130, '#fff', 9, 'center');
   }
 }
@@ -344,7 +359,7 @@ function pollGamepad() {
     return;
   }
   if (state.view !== 'play' || state.match) return;
-  for (const [id, direction] of [['player', pad.menuHorizontal], ['opponent', pad.menuVertical]]) {
+  for (const [id, direction] of [[pad.menuPartners?'player-partner':'player',pad.menuHorizontal],[pad.menuPartners?'opponent-partner':'opponent',pad.menuVertical]]) {
     if (!direction) continue;
     const select = element(id);
     select.selectedIndex = (select.selectedIndex + direction + select.options.length) % select.options.length;

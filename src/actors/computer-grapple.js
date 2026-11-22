@@ -1,3 +1,5 @@
+import {computerWeightedChoice} from './probability.js';
+export {computerWeightedChoice} from './probability.js';
 import {aiTables} from '../data/ai-tables.js';
 import {pursuePoint} from './grapple-services.js';
 import {addPositionWord} from './ring-collision.js';
@@ -12,21 +14,6 @@ const setDelay=(actor,value)=>{actor.controlCounter=(actor.controlCounter&0xff00
 const gameFlags=world=>world.gameFlags??(world.inGame?0x8000:0);
 const lateMatch=world=>(world.clockMinutesBCD??0x30)<0x10;
 const random=(actor,context={})=>actor.random('ai',context)&255;
-
-// $0024dc: reject the upper 28% of each byte, at most four draws. The source
-// uses a byte accumulator and an inclusive cumulative-weight comparison.
-export function computerWeightedChoice(actor,weights){
- let value=50;
- for(let attempt=3;attempt>=0;attempt--){
-  const candidate=random(actor,{weighted:true,attempt})>>>1;
-  if(candidate<100){value=candidate||1;break;}
- }
- let sum=0;
- for(let index=0;index<weights.length;index++){
-  sum=(sum+weights[index])&255;if(sum>=value)return index;
- }
- throw new RangeError('Original AI probability row does not cover its draw');
-}
 
 // $01b468. These distances and strategy bits are AI-owned. The back-down
 // anchor is 40 here, whereas the separate $fe28 facing service uses 16.
@@ -138,7 +125,7 @@ function finishCarry(actor){
  return selectedAction(actor,9);
 }
 
-const held={93:[2,103],95:[2,92],96:[3,91],98:[4,90],99:[4,85]};
+const held={93:[2,103],95:[2,92],96:[3,91],97:[5,89],98:[4,90],99:[4,85]};
 const noOpHandlers=new Set([0x1d47a]);
 export function supportsComputerGrapple(actor){
  if(supportsComputerGround(actor))return true;
@@ -147,7 +134,7 @@ export function supportsComputerGrapple(actor){
  if(actor.state!==5)return false;
  const action=actor.action&255,handler=aiTables.actionHandlers[action]&0x7fffffff;
  if(!actor.pendingState&&!(aiTables.actionHandlers[action]&0x80000000))return true;
- return noOpHandlers.has(handler)||handler===0x1d908||[21,22,23,74,75,80,86,93,94,95,96,98,99].includes(action)
+ return noOpHandlers.has(handler)||handler===0x1d908||handler===0x1d678||[21,22,23,74,75,80,86,93,94,95,96,97,98,99].includes(action)
   ||supportsGroundAction(handler)
   ||(handler===0x1d9b8&&Boolean(flags(actor)&16));
 }
@@ -255,12 +242,12 @@ export function stepComputerAction(actor){ // $01d208 and the recovered handlers
  if(action===23){setFlags(actor,flags(actor)|8);actor.flagsB7&=~12;return true;}
  if(action===80){actor.flagsB7|=128;return true;}
  if([75,86].includes(action)){actor.pinStatus=0;return true;}
- if([74,94].includes(action)){
+ if(handler===0x1d678){
   if(!(actor.action&0x4000)){
    actor.action|=0x4000;
    setDelay(actor,!actor.health?8:actor.health>=128?0:actor.health>=101?1:actor.health>=80?2:actor.health>=64?3:actor.health>=37?4:5);
   }
-  if((actor.pinStatus&255)===delay(actor))actor.change(5,action===74?75:86);
+  if((actor.pinStatus&255)===delay(actor))actor.change(5,[74,100].includes(action)?75:86);
   return true;
  }
  if(held[action]){
@@ -268,7 +255,7 @@ export function stepComputerAction(actor){ // $01d208 and the recovered handlers
    actor.action|=0x4000;actor.aiEscapeTimer=aiTables.heldEscapeTimes[held[action][0]][actor.severity];actor.controlCounter=held[action][1];
   }
   actor.aiEscapeTimer=u16(actor.aiEscapeTimer-1);
-  if(!actor.aiEscapeTimer)actor.change(5,actor.controlCounter);return true;
+  if(!actor.aiEscapeTimer){if(action===97&&actor.holdFlags)actor.aiEscapeTimer=1;else actor.change(5,actor.controlCounter);}return true;
  }
  if(handler===0x1d9b8&&(flags(actor)&16)){
   if(!(actor.action&0x4000)){

@@ -1,5 +1,7 @@
 # Original human input and move selection
 
+Current integration update: the default browser now runs a four-person native tag playtest with original input, movement AI and manual tags. See [four-person integration](TEAM_MATCH.md) for current evidence and limitations. Older adapter descriptions below record the earlier component checkpoints.
+
 `src/actors/human-input.js` translates the per-actor human phase at `$00e3ca`.
 It consumes the sampled press byte and joystick word; `ArcadeInput` still owns
 the board's separate button-edge sampling boundary.

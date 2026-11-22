@@ -3,6 +3,8 @@ import {actorTables} from '../data/actor-tables.js';
 import {healthSeverity} from './projection.js';
 import {addPositionWord} from './ring-collision.js';
 import {aimAtParticipant} from './pin.js';
+import {computerWeightedChoice} from './probability.js';
+import {selectRumbleAssistant,initializeMash,mashHeldInput} from './grapple-services.js';
 
 const u16=value=>value&65535;
 const side=actor=>actor.flags33&128?1:0;
@@ -13,6 +15,22 @@ const position=(actor,x,y,z)=>{
  if(z!==undefined)actor.zFixed=addPositionWord(actor.zFixed,z-(actor.zFixed>>>16));
 };
 const activePointer=(world,actor)=>{world[side(actor)?'activeB':'activeA']=actor;};
+
+// $00ef40 visits the first six physical records, including inactive slots.
+export function advanceTagTimers(world){
+ for(const a of world.actors.slice(0,6)){
+  if(a.flags33&32){
+   if(a.apronTimer)a.apronTimer=u16(a.apronTimer-1);
+   if(a.apronTimer)continue;
+   a.apronTimer=a.flagsC6=a.hitCounter=0;a.flags33&=~32;
+  }else if(!(a.flags56&128)){
+   if(!(a.flags32&1))a.apronTimer=0;
+   else if((a.apronTimer||0)>tagTables.benchThresholds[a.flags57??a.type]){a.flagsC6=(a.flagsC6||0)|64;a.apronTimer=937;}
+  }else if((a.hitCounter||0)>tagTables.computerHitThresholds[a.flags57??a.type]){
+   a.apronTimer=tagTables.boostTimers[world.round];a.flags33|=32;
+  }
+ }
+}
 
 // $00bcae updates the character-owned palette banks for active player slots.
 export function refreshTeamPalettes(world){
@@ -54,13 +72,108 @@ export function beginTagAssistExit(actor){
  actor.flags56&=~64;victimPartner.flags32|=4;victimPartner.flags56|=64;victimPartner.opponent=holder;
 }
 
-export const isTagAction=action=>[77,78,79,102].includes(action&255);
+export const isTagAction=action=>[55,76,77,78,79,89,97,102].includes(action&255);
 export const isCornerAttack=action=>[13,27].includes(action&255);
+
+// $01e986: the special normal-tag hold is selected by the downed opponent's
+// position/facing, rather than a random probability gate.
+export function tagProneOpportunity(actor){
+ const p=actor.opponent;if(!actor.world.inGame||p.state!==4||(p.reaction&255)!==8)return false;
+ const x=p.xFixed>>>16,y=p.yFixed>>>16;
+ return side(actor)?y<352&&(p.facing&0x8000?x>=720&&x<768:x>=664):
+  y>=368&&(p.facing&0x8000?x<618:x>=504&&x<584);
+}
+
+// $0206e6. Returning false requests the incoming partner's corner mount.
+export function beginManualTagAssistance(actor){
+ const world=actor.world,p=actor.partner;if(!world.inGame)return true;
+ if(world.mode&1){
+  const candidate=selectRumbleAssistant(actor);
+  if(candidate){candidate.assistanceTarget=actor.auxiliary;actor.assistanceTarget=candidate;}
+  return true;
+ }
+ actor.flags56|=64;p.flags56&=~64;activePointer(world,actor);actor.flags34=(actor.flags34|1)&~2;
+ actor.pendingState=true;actor.action=55;actor.inputBlockA&=~16;
+ if(p.flags33&2)return true;
+ const severity=actor.auxiliary?.severity??tagTables.manualNullSeverity;
+ if(computerWeightedChoice(actor,tagTables.manualAssistWeights[p.flags57??p.type][severity])===0){
+  p.holdFlags=side(p)?7:4;p.opponent=actor.opponent;p.change(8);return false;
+ }
+ p.inputBlockA|=128;p.assistanceTarget=actor.opponent;return true;
+}
+
+function beginProneVictimAssistance(actor){ // $020412
+ const world=actor.world;if(!world.inGame)return;
+ if(world.mode&1){const p=selectRumbleAssistant(actor);if(p){p.assistanceTarget=actor.auxiliary;actor.assistanceTarget=p;}return;}
+ const p=actor.partner;p.supportTimer=tagTables.proneAssistTimers[p.severity];p.flags34=(p.flags34|5)&~2;
+ if(actor.flags33&2)p.opponent=actor.auxiliary;
+ else{p.inputBlockA|=128;p.assistanceTarget=actor.auxiliary;}
+}
+
+function finishProneVictimAssistance(actor){ // $0205cc
+ const world=actor.world,peer=actor.auxiliary;
+ if(world.mode&1){if(actor.assistanceTarget)actor.assistanceTarget.inputBlockA&=~128;return;}
+ peer.flags34&=~1;if(peer.flags33&2)peer.flags56&=~64;
+ if(!(peer.partner.flags33&2)){peer.partner.inputBlockA&=~128;world.controlsRefresh=(world.controlsRefresh||0)|1;}
+ actor.partner.flags34&=~4;
+ if(actor.partner.flags33&2)actor.partner.flags56&=~64;else actor.partner.inputBlockA&=~128;
+}
 
 export function stepTagAction(actor,peer,initialized){
  const action=actor.action&255,at=index=>actor.clock.index===index&&!actor.clock.remaining;
  let descriptor=tagTables.actions[action];
- if(action===102){ // $0188ee
+ if(action===76){ // $0179ca
+  const p=actor.partner;
+  if(!initialized){
+   actor.movementMode=0;position(actor,...tagTables.tagPositions[side(actor)],320);
+   actor.facing=(actor.facing&255)|(actor.flags33&128)<<8;p.change(5,77);actor.flags32&=~8;
+  }else{
+   if((actor.clock.index&255)===1&&(actor.clock.remaining&255)<2){
+    if(tagProneOpportunity(actor)){
+     exchangeTeamRoles(actor,p);transferTagAssistance(actor,p);actor.flags32&=~1;
+     actor.opponent.recoveryTimer=actor.opponent.mash=4096;
+     if(beginManualTagAssistance(actor)){p.change(1);p.walkMode=2;p.flags32|=1;}
+     return descriptor;
+    }
+    actor.drawMode=2;actor.xFixed=addPositionWord(actor.xFixed,actor.facing&0x8000?32:-32);actor.world.message=(actor.type<<8)|24;
+   }
+   if(actor.clock.index===0xfe){
+    transferTagAssistance(actor,p);exchangeTeamRoles(actor,p);actor.change(1);actor.walkMode=3;
+    actor.unlinkMarked=true;actor.facing^=0x8000;actor.clock.pose=actor.facing;actor.drawMode=4;
+    p.clock.remaining=0;actor.direction=0;actor.xFixed=addPositionWord(actor.xFixed,(p.xFixed>>>16)-(actor.xFixed>>>16));
+   }
+  }
+ }else if(action===55){ // $016c98, hold the prone opponent for the partner
+  if(!initialized){
+   actor.movementMode=0;peer.change(5,97);
+   if(!(actor.action&0x8000)){
+    peer.copyPeerPosition(actor,true);actor.facing=(actor.facing&255)|(peer.facing&0xff00);
+    actor.flags33|=64;peer.flags33|=64;
+    const p=actor.partner;if(!(p.flags32&2)){p.change(5,78);if(actor.flagsC6&64){actor.flagsC6&=~64;actor.flags33|=32;}}
+    return descriptor;
+   }
+   actor.clock.flags|=0x8000;actor.clock.index=actor.clock.remaining=0;
+  }
+  if(at(0))peer.action|=0x8000;
+  if(actor.clock.index===0xfe)actor.clock.index=actor.clock.remaining=0;
+ }else if(action===97){ // $018710
+  actor.clock.flags|=0x8000;
+  if(!initialized&&!(actor.action&0x8000)){initializeMash(actor,5);beginProneVictimAssistance(actor);actor.holdFlags=170;}
+  else{
+   mashHeldInput(actor,actor.pressedButtons||0);
+   if(actor.action&0x8000){actor.clock.pose=0xffff;actor.holdFlags=u16(actor.holdFlags-1);if(!actor.holdFlags)actor.change(5,89);}
+   else actor.clock.pose=18^(actor.facing&0xff00);
+  }
+ }else if(action===89){ // $0184b4, escape from the temporary prone hold
+  if(!initialized){peer.change(255);actor.flags35&=~4;peer.flags35&=~2;}
+  else{
+   if(at(0)){
+    peer.change(4);peer.reaction=2;peer.pendingDamage=3;peer.facing^=0x8000;actor.unlinkMarked=true;
+    actor.flags33&=~64;peer.flags33&=~64;finishProneVictimAssistance(actor);actor.sounds.push(41);
+   }
+   if(actor.clock.index===0xfe){actor.change(7);actor.clock.pose=104^(actor.facing&0xff00);}
+  }
+ }else if(action===102){ // $0188ee
   if(!initialized){
    actor.movementMode=0;const[x,y]=tagTables.holdPositions[side(actor)];position(actor,x,y);position(peer,x,y);
    actor.facing=peer.facing=side(actor)?0:0x8000;peer.change(255);

@@ -1,0 +1,1045 @@
+{
+  "source": "Original $009ba8/$009ecc announcer service from explicit message and active-role inputs. All 46 phrase entries, 24 name entries with lead/bench eligibility, and interrupted requests. No full audio synthesis comparison.",
+  "sequences": [
+    {
+      "config": {
+        "message": 3840,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 2200,
+      "sha256": "3752847c18da8bc5be4b425207e31becb5fecc121ed1b11cc915d3b0f2fc2877"
+    },
+    {
+      "config": {
+        "message": 3841,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 49,
+      "sha256": "0e4fc1d73e453015f41ac1841a2050035e94bdb38e50702366288221cfbca3b2"
+    },
+    {
+      "config": {
+        "message": 3842,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 49,
+      "sha256": "38e428f8470f72b76ee2ad3372f8cab7c527fb41b09bcbf1876ff503245e4d01"
+    },
+    {
+      "config": {
+        "message": 3843,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 57,
+      "sha256": "e79583999c48b68d5f471d0e8169d46383c71e72bcd883d9515d89c3e5d422de"
+    },
+    {
+      "config": {
+        "message": 3844,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 63,
+      "sha256": "d250c716224b0e5d094abf0beddb75387259cb635ae6359d66e3c59569820286"
+    },
+    {
+      "config": {
+        "message": 3845,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 49,
+      "sha256": "647de7106b86643b9194502498994ea96207173bb9359dcb2b5d90cdd462e5db"
+    },
+    {
+      "config": {
+        "message": 3846,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 71,
+      "sha256": "723aa88828746fdd2dcc81c836ab3f2c2e7d2800fa1a3f592ea72b9a517584c6"
+    },
+    {
+      "config": {
+        "message": 3847,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 21,
+      "sha256": "69cb9cf9c38d20e3e4e41d5aec5857e4b7424e79b662b5f257fc15ca505e3e3c"
+    },
+    {
+      "config": {
+        "message": 3848,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 41,
+      "sha256": "38da1805f35b2bae91518b929f716c3d3a836f66b7c2004d792fd235b8599c9f"
+    },
+    {
+      "config": {
+        "message": 3849,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 81,
+      "sha256": "6717c6e39efdaaf87473e5ee01a9639023c5bd18adf2b15203402d7f332360d0"
+    },
+    {
+      "config": {
+        "message": 3850,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 61,
+      "sha256": "24388e81cb737ed5d1c9a1454bbf15acc3130a498cb76945be035c98722952d8"
+    },
+    {
+      "config": {
+        "message": 3851,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 59,
+      "sha256": "657f4c3f165edb053d6358cdeeaa2c704ad2b8d137edd72205e668d0b1dccf1e"
+    },
+    {
+      "config": {
+        "message": 3852,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 47,
+      "sha256": "5679d8f976064c90c89dab2703935db1c06f1fbc79da2215a25169a3666aa79c"
+    },
+    {
+      "config": {
+        "message": 3853,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 59,
+      "sha256": "b9608d8fc100b507713092f0f7c2c55752ac527f9677c9bbde5f00c8e32013de"
+    },
+    {
+      "config": {
+        "message": 3854,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 49,
+      "sha256": "febc066d87683a1406528896efdf39dfaccea1436cefed51e3e02fdc706d2d58"
+    },
+    {
+      "config": {
+        "message": 3855,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 77,
+      "sha256": "221fb39c857c602805f407fe2398a1b5090d04d14cdaea1c3c41ecb3c722e54f"
+    },
+    {
+      "config": {
+        "message": 3856,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 45,
+      "sha256": "d4409fec98162c884658206673a7b85849ff0b6a165e08169eb8d909f89b220b"
+    },
+    {
+      "config": {
+        "message": 3857,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 63,
+      "sha256": "3544023601aa69718d3c3be4e986afe125bbd9afe44101da5db8bbf0ecd89dcd"
+    },
+    {
+      "config": {
+        "message": 3858,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 43,
+      "sha256": "ffa62c34b2e29db2f1b03d035d586622e36546d58c25af18610e28f2835895af"
+    },
+    {
+      "config": {
+        "message": 3859,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 63,
+      "sha256": "e87704a5b138dc0e2de3dd6eaf2a7182d865faee89316c34d290e5e12dfb6582"
+    },
+    {
+      "config": {
+        "message": 3860,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 53,
+      "sha256": "eaf320514eaaadfdcdb031b285220f80f1f318836aecb640f9bf3174a6c04a8b"
+    },
+    {
+      "config": {
+        "message": 3861,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 55,
+      "sha256": "327446df2ca0f8773487a82b16991106d8663433e9ef2adb329458465cbe815b"
+    },
+    {
+      "config": {
+        "message": 3862,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 103,
+      "sha256": "20eb732b5fcde471d3f80b9e2361cce3d6b8aac782ad3d289ff296d00f432799"
+    },
+    {
+      "config": {
+        "message": 3863,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 89,
+      "sha256": "e2a170d09accb44385e7d30541d57263f7e1ef0af4a831ccb19f3e6701b946e6"
+    },
+    {
+      "config": {
+        "message": 3864,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 69,
+      "sha256": "a7cd436e21378e438180fd3d2389f8f7e84a743d13c7931018d3207d4368dba1"
+    },
+    {
+      "config": {
+        "message": 3865,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 73,
+      "sha256": "efd62150eaa60846e544cdd7acde7e7a85a05759943d5302202e85e349191d83"
+    },
+    {
+      "config": {
+        "message": 3866,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 41,
+      "sha256": "f369fc2056a8e304f5a5c128943564ba2c7d1a8d095ebc2ec3ca33545f2f2d40"
+    },
+    {
+      "config": {
+        "message": 3867,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 67,
+      "sha256": "f0b73bf427050b0f15098dd932d639f68747446f3800e7cce11ac514eaebb6c8"
+    },
+    {
+      "config": {
+        "message": 3868,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 57,
+      "sha256": "5b21aaa9d1cc336167f0341c96f05162d37342a613717bab149ac593021227be"
+    },
+    {
+      "config": {
+        "message": 3869,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 59,
+      "sha256": "36507282b43a702b8386f1cb22c9eca4e008f236186b3cc448a2e5eca6cf107a"
+    },
+    {
+      "config": {
+        "message": 3870,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 65,
+      "sha256": "ecec934c55415cc3354b98902edd455656d6c04ed6dc4321aa835c0f220b10bb"
+    },
+    {
+      "config": {
+        "message": 3871,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 43,
+      "sha256": "463187aa5d154c1cca7ba435c201386321d46a92ede3efee671ba16bf4dffd93"
+    },
+    {
+      "config": {
+        "message": 3872,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 83,
+      "sha256": "7485de305002978c09796001267948ca292f2bb8f711a57ed213ff0faef52109"
+    },
+    {
+      "config": {
+        "message": 3873,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 51,
+      "sha256": "9cfd2fa5ec425d72f99ae6567e3341b5d766a3a99a8b5651fe0f3190397b5017"
+    },
+    {
+      "config": {
+        "message": 3874,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 91,
+      "sha256": "e0c6ff1a8c263c002a5c570eff281f5fa622dc9d3e1c9df90f803f426a512383"
+    },
+    {
+      "config": {
+        "message": 3875,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 75,
+      "sha256": "c40155d3f0b090aa09a0e5589446b20dca3d6c349a6002bedf276acc04bc7f31"
+    },
+    {
+      "config": {
+        "message": 3876,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 69,
+      "sha256": "29e8fa4f3438f3d733c975ed43f2f9e34a13389c30880265e4258af5b18fa529"
+    },
+    {
+      "config": {
+        "message": 3877,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 87,
+      "sha256": "a8209ecf6f5ad330689fc3b2d92973d62bd31c7565d4651324ccbaa19c2bad68"
+    },
+    {
+      "config": {
+        "message": 3878,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 61,
+      "sha256": "34a803b80eebb924d877b54b0476315b2e3208063d24d9c663a69f64f6d92c8a"
+    },
+    {
+      "config": {
+        "message": 3879,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 83,
+      "sha256": "1c26fde3c4855dcae85165fc58886a93340644179183815485cc6edf558761d9"
+    },
+    {
+      "config": {
+        "message": 3880,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 71,
+      "sha256": "5c6c1606a60a5bb697d015442dfb4c05d531cd8a4f0b548046a331bb77cfc785"
+    },
+    {
+      "config": {
+        "message": 3881,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 89,
+      "sha256": "ef294a1aab08a49146e1fb4ada3278bd5b41b2786ec443a7f6651b88b83ae0c9"
+    },
+    {
+      "config": {
+        "message": 3882,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 267,
+      "sha256": "8ce7cea9f94bac8c1bbb76afb362d5395671300e95f727118c7810faa9ccca80"
+    },
+    {
+      "config": {
+        "message": 3883,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 181,
+      "sha256": "79a2b8211f6fa692b61b8336c1648a60f6763a46d8b4d7b101c5b4daa5064dfc"
+    },
+    {
+      "config": {
+        "message": 3884,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 31,
+      "sha256": "d141340beed9615cbbaee576d2478a285870adf5656bf81ae3a9f2e8c362230b"
+    },
+    {
+      "config": {
+        "message": 3885,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 59,
+      "sha256": "1acff85b597cb570cd75081b9fe5d38ecc0e6fc67355d114611e84106af4d84f"
+    },
+    {
+      "config": {
+        "message": 24,
+        "type": 0,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 24,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 117,
+      "sha256": "4c27bbffcd745608644c4302630a037548a4f53300f6de20d5205ffbe2f6d5a8"
+    },
+    {
+      "config": {
+        "message": 280,
+        "type": 1,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 280,
+        "type": 1,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 103,
+      "sha256": "83ed0a76588178ef48f8622f0c32e744f9392c2b566a1cbc6919a4d0e2d337f5"
+    },
+    {
+      "config": {
+        "message": 536,
+        "type": 2,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 536,
+        "type": 2,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 97,
+      "sha256": "4c06b2e54540863bc24d2f786caf43f379cf969ab509450f614520d66e344d6a"
+    },
+    {
+      "config": {
+        "message": 792,
+        "type": 3,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 792,
+        "type": 3,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 119,
+      "sha256": "126900bc0bf21a76861aa3dc2dcd65eaf77ca965211053d0dd256c124a389fb8"
+    },
+    {
+      "config": {
+        "message": 1048,
+        "type": 4,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 1048,
+        "type": 4,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 99,
+      "sha256": "e953eb91996e5138fa0e7ae70ea1929c459f6c02e7b65b9db6323081f5ac37eb"
+    },
+    {
+      "config": {
+        "message": 1304,
+        "type": 5,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 1304,
+        "type": 5,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 97,
+      "sha256": "f7ca92ae55da4d0a80e204e144366fa6ba9c1331bad424615563ab62a4c8abcc"
+    },
+    {
+      "config": {
+        "message": 1560,
+        "type": 6,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 1560,
+        "type": 6,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 111,
+      "sha256": "1551d504d4c9a30db5c6a0759f05a1256ecf29157637108088bac746ff0614f5"
+    },
+    {
+      "config": {
+        "message": 1816,
+        "type": 7,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 1816,
+        "type": 7,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 138,
+      "sha256": "1994a760752e515f363888bd989291465304c9038163853f9ea471d8ffb2be5f"
+    },
+    {
+      "config": {
+        "message": 2072,
+        "type": 8,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 2072,
+        "type": 8,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 113,
+      "sha256": "1ef9e6c7312e9d11b450ba1d0500cb2fdeda9e2a31ac1bd6d348eb4e02b9ff30"
+    },
+    {
+      "config": {
+        "message": 2328,
+        "type": 9,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 2328,
+        "type": 9,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 119,
+      "sha256": "1f7fe531fa1b21e60257106635d94c08b5b8528b392581cfcbd19f53028dd57f"
+    },
+    {
+      "config": {
+        "message": 2584,
+        "type": 10,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 2584,
+        "type": 10,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 107,
+      "sha256": "50c5b81fc98a7b539fc71925bf4a450673fa096fc8f88532439b54d2125b19ea"
+    },
+    {
+      "config": {
+        "message": 2840,
+        "type": 11,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 2840,
+        "type": 11,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 109,
+      "sha256": "a56fa6a4467110864b26679b44719052d1906ff1eaf313fb0c43eb6964f1aee4"
+    },
+    {
+      "config": {
+        "message": 3096,
+        "type": 0,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 3096,
+        "type": 0,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 133,
+      "sha256": "537b2622cf724cb330c867bd1d0f2da78354024568cd3c50992b8399419dbe5c"
+    },
+    {
+      "config": {
+        "message": 3352,
+        "type": 1,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 3352,
+        "type": 1,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 197,
+      "sha256": "0af43cfbca20ede0c7988dad3741410aacec1ed5a9696bf91a70c799cf8c7a0a"
+    },
+    {
+      "config": {
+        "message": 3608,
+        "type": 2,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 3608,
+        "type": 2,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 197,
+      "sha256": "8b73c7b462475d30828ae6fc16573158bb6e36f76953cca9837c9cd5a13d38c6"
+    },
+    {
+      "config": {
+        "message": 3864,
+        "type": 3,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 69,
+      "sha256": "a7cd436e21378e438180fd3d2389f8f7e84a743d13c7931018d3207d4368dba1"
+    },
+    {
+      "config": {
+        "message": 3864,
+        "type": 3,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 69,
+      "sha256": "a7cd436e21378e438180fd3d2389f8f7e84a743d13c7931018d3207d4368dba1"
+    },
+    {
+      "config": {
+        "message": 4120,
+        "type": 4,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 4120,
+        "type": 4,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 197,
+      "sha256": "af6bb07d88e71dca7587d00caf87e94c3cee44bc7d97af50a8008db6e3ff5684"
+    },
+    {
+      "config": {
+        "message": 4376,
+        "type": 5,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 4376,
+        "type": 5,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 197,
+      "sha256": "5b2d6051cdfbd933a76dbb8681cda5f082e9de74939fe00ed75aea2fabc9ca45"
+    },
+    {
+      "config": {
+        "message": 4632,
+        "type": 6,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 4632,
+        "type": 6,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 197,
+      "sha256": "db2d00f404f2247446e0e470870b20b53f6f38ef19bb7da8e6b627636dc2edaf"
+    },
+    {
+      "config": {
+        "message": 4888,
+        "type": 7,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 4888,
+        "type": 7,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 197,
+      "sha256": "52214d52b3dead5c4806b7708913700d2c300c9ed297c0b6299829b8ac61524d"
+    },
+    {
+      "config": {
+        "message": 5144,
+        "type": 8,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 5144,
+        "type": 8,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 133,
+      "sha256": "830ba8280041ddd24d588b19d8334262fc4676976b9a91ea0fe7be557381b28b"
+    },
+    {
+      "config": {
+        "message": 5400,
+        "type": 9,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 5400,
+        "type": 9,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 325,
+      "sha256": "f9cf9087ef0672fcfd90363db6b501e7ccdf5ed5682bdba1a0f6c3db7fe7bfad"
+    },
+    {
+      "config": {
+        "message": 5656,
+        "type": 10,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 5656,
+        "type": 10,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 133,
+      "sha256": "42bfb28135588246df57e96be7eda5994ef0231a5fa3c1838ca4dffc4c83022b"
+    },
+    {
+      "config": {
+        "message": 5912,
+        "type": 11,
+        "lead": false,
+        "interrupt": false
+      },
+      "count": 1,
+      "sha256": "cfa2c17732cf31bc61ebd17157a0d281e9569e993d9ce3c6cc84b5a169a2b604"
+    },
+    {
+      "config": {
+        "message": 5912,
+        "type": 11,
+        "lead": true,
+        "interrupt": false
+      },
+      "count": 133,
+      "sha256": "91fa011c2b0be02ea1efc874fcac1b15404838a7f5fad939a6d7a0ee69eb8709"
+    },
+    {
+      "config": {
+        "message": 3842,
+        "type": 0,
+        "lead": true,
+        "interrupt": true
+      },
+      "count": 49,
+      "sha256": "38e428f8470f72b76ee2ad3372f8cab7c527fb41b09bcbf1876ff503245e4d01"
+    },
+    {
+      "config": {
+        "message": 3862,
+        "type": 0,
+        "lead": true,
+        "interrupt": true
+      },
+      "count": 103,
+      "sha256": "20eb732b5fcde471d3f80b9e2361cce3d6b8aac782ad3d289ff296d00f432799"
+    },
+    {
+      "config": {
+        "message": 3872,
+        "type": 0,
+        "lead": true,
+        "interrupt": true
+      },
+      "count": 83,
+      "sha256": "7485de305002978c09796001267948ca292f2bb8f711a57ed213ff0faef52109"
+    },
+    {
+      "config": {
+        "message": 3874,
+        "type": 0,
+        "lead": true,
+        "interrupt": true
+      },
+      "count": 91,
+      "sha256": "e0c6ff1a8c263c002a5c570eff281f5fa622dc9d3e1c9df90f803f426a512383"
+    },
+    {
+      "config": {
+        "message": 3877,
+        "type": 0,
+        "lead": true,
+        "interrupt": true
+      },
+      "count": 87,
+      "sha256": "a8209ecf6f5ad330689fc3b2d92973d62bd31c7565d4651324ccbaa19c2bad68"
+    },
+    {
+      "config": {
+        "message": 3879,
+        "type": 0,
+        "lead": true,
+        "interrupt": true
+      },
+      "count": 83,
+      "sha256": "1c26fde3c4855dcae85165fc58886a93340644179183815485cc6edf558761d9"
+    },
+    {
+      "config": {
+        "message": 3882,
+        "type": 0,
+        "lead": true,
+        "interrupt": true
+      },
+      "count": 267,
+      "sha256": "8ce7cea9f94bac8c1bbb76afb362d5395671300e95f727118c7810faa9ccca80"
+    },
+    {
+      "config": {
+        "message": 3883,
+        "type": 0,
+        "lead": true,
+        "interrupt": true
+      },
+      "count": 181,
+      "sha256": "79a2b8211f6fa692b61b8336c1648a60f6763a46d8b4d7b101c5b4daa5064dfc"
+    },
+    {
+      "config": {
+        "message": 3884,
+        "type": 0,
+        "lead": true,
+        "interrupt": true
+      },
+      "count": 31,
+      "sha256": "d141340beed9615cbbaee576d2478a285870adf5656bf81ae3a9f2e8c362230b"
+    },
+    {
+      "config": {
+        "message": 3885,
+        "type": 0,
+        "lead": true,
+        "interrupt": true
+      },
+      "count": 59,
+      "sha256": "1acff85b597cb570cd75081b9fe5d38ecc0e6fc67355d114611e84106af4d84f"
+    }
+  ]
+}

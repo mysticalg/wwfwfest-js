@@ -136,10 +136,11 @@ class HumanControl {
   if(a.state===4)return false;
   if(!(a.flags32&1)){
    const rescue=this.rescue();if(rescue!==null){wordAction(a,rescue);return true;}
-   if(!(p.flags34&7)&&(a.state===0||a.state===1&&!(a.walkMode&255))
-    &&a.secondaryOpponent?.state===4&&[8,9].includes(a.secondaryOpponent.reaction&255)
-    &&humanMoveBounds(a,a.secondaryOpponent,0)){
-    const next=a.secondaryOpponent;a.secondaryOpponent=p;a.opponent=next;
+   if(!(p.flags35&7)){
+    const standing=a.state===0||a.state===1&&!(a.walkMode&255),next=standing?a.secondaryOpponent:p;
+    if(next&&(!standing||next.state===4&&[8,9].includes(next.reaction&255))&&humanMoveBounds(a,next,0)){
+     a.secondaryOpponent=p;a.opponent=next;
+    }
    }
   }
   const row=this.selectRow();if(row===null)return false;
