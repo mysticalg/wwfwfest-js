@@ -36,6 +36,15 @@ def main():
         'polarY': words(0x240a, 65),
         'walkAnimations': [descriptor(address) for address in
                            (0x10832, 0x1084a, 0x10862, 0x1087a)],
+        'standingAttacks': [descriptor(address) for address in (0x11a90, 0x19206)],
+        'standingReactions': [descriptor(address) for address in (0x1a2c0, 0x1a612)],
+        'contacts': [list(program[0x2411c + index * 7:0x2411c + (index + 1) * 7])
+                     for index in range(34)],
+        'attackRectangles': [list(struct.unpack_from('>4b', program, 0x2420a + index * 4))
+                             for index in range(11)],
+        'hurtRectangles': [list(struct.unpack_from('>4b', program, 0x24236 + index * 4))
+                           for index in range(11)],
+        'reactionFacingMap': list(program[0x23fde:0x23fde + 36]),
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
@@ -43,7 +52,8 @@ def main():
         '// Original table addresses are documented in research/ACTORS.md.\n'
         'export const actorTables = ' + json.dumps(data, indent=2) + ';\n',
         encoding='utf-8')
-    print(f'Recovered movement tables and {len(data["walkAnimations"])} walk descriptors')
+    print(f'Recovered movement, {len(data["walkAnimations"])} walk descriptors, '
+          f'{len(data["standingAttacks"])} standing attacks and {len(data["contacts"])} contact records')
 
 
 if __name__ == '__main__':

@@ -44,7 +44,7 @@ Movement mode 2 adds signed 8.8 velocity words to the position longs and subtrac
 - Four idle-entry scenarios through the complete original actor dispatcher.
 - Twelve character locomotion runs through the original idle/walk update handlers, animation dispatcher and movement routine. Each runs 120 updates with starts, eight directions, reversals and stopping. The integrated JavaScript match produces the same positions and pose words in this bounded ordinary context.
 
-These checks establish the translated paths within the stated inputs. They do not establish full-match equivalence, ring collisions, combat, tag rules, Royal Rumble, camera behavior or physical controller acceptance. Arena constraints, running, attacks, hit checks, damage, recovery, AI and pinning remain provisional. Other animation descriptors in the fixture verify the generic clock, not their complete action handlers.
+These checks establish the translated paths within the stated inputs. They do not establish full-match equivalence, ring collisions, tag rules, Royal Rumble, camera behavior or physical controller acceptance. Ordinary standing attacks and their contact/reaction paths now have separate comparisons in [combat research](COMBAT.md). Arena constraints, running, airborne reactions, other moves, AI and pinning remain provisional. Other animation descriptors in this fixture verify the generic clock, not their complete action handlers.
 
 Reproduce data extraction from the archive:
 
@@ -61,6 +61,6 @@ npm run check
 
 The analysis interpreter came from [iapx86's hardware project](https://github.com/iapx86/JavaScript), revision `9ca520534893f4348274aa24b979d99697f3102d`. It is excluded from this repository and the browser runtime.
 
-## Next action paths
+## Standing action paths
 
-The ordinary standing-button fallback at `$00d6fa` returns move-table row zero. `$00d1d6` selects a three-byte row from each character's table, whose pointer table begins at `$00d73e`. Row zero is `[0,114,255]` for all twelve types. Action zero points through `$011854` to descriptor `$011a90` and handler `$011ac8`. The descriptor's poses are 0,146,147,148,147 with delays 10,6,4,10,2. The handler selects contact record `$21`, switching to `$07` on animation index 3, and handles completion at index `$fe`. Collision handling and contact-record interpretation still need translation before this action replaces a prototype attack.
+The ordinary standing-button fallback at `$00d6fa` returns move-table row zero. `$00d1d6` selects a three-byte row from each character's table, whose pointer table begins at `$00d73e`. Row zero is `[0,114,255]` for all twelve types. Its individual-button attacks now replace the prototype attacks. [Combat research](COMBAT.md) records their contact shapes, handlers, reactions, sound routing and verification limits.

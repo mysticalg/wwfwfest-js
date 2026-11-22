@@ -46,11 +46,11 @@ The supplied program uses 565 frame indices for each of the first 12 actor types
 
 `src/renderer.js` reproduces the recovered tile-chain interpretation in Canvas. The stage PNG files were assembled from decoded background tiles, tilemaps, scroll values and palettes observed in offline traces. They are fixed stage layouts.
 
-`src/game.js` combines translated ordinary idle/walk behavior with provisional match rules. Character walking speeds, direction-table displacement, facing behavior and idle/walk animation clocks now use recovered routines and data. [Actor research](ACTORS.md) records the original addresses and bounded comparison tests. Combat, running, arena constraints, AI and pinning still use authored rules.
+`src/game.js` combines translated ordinary idle/walk and standing punch/kick behavior with provisional match rules. Character walking speeds, direction-table displacement, facing behavior and idle/walk animation clocks use recovered routines and data. [Actor research](ACTORS.md) records their original addresses and comparisons. [Combat research](COMBAT.md) covers the standing attack handlers, contact geometry, ordinary reactions, damage and sound-command routing. Other moves, airborne reactions, running, arena constraints, AI and pinning remain incomplete.
 
 Next reverse engineering work must map object states and routines to each combat action, recover actual hit regions and damage tables, implement dependent grapple poses, connect original action descriptors and test complete tag and Rumble matches against reference runs.
 
-The native sample-effect sequencer matches original-driver event traces across 100 scenarios. Its sample playback and verification scope are documented in [audio research](AUDIO.md). The native music interpreter now matches 31 original-driver scenarios and drives the JavaScript FM renderer. The score data, synthesis checks and remaining audio work are described in [music research](MUSIC.md). Complete gameplay sound routing remains unfinished.
+The native sample-effect sequencer matches original-driver event traces across 100 scenarios. Its sample playback and verification scope are documented in [audio research](AUDIO.md). The native music interpreter matches 31 original-driver scenarios and drives the JavaScript FM renderer. The score data, synthesis checks and remaining audio work are described in [music research](MUSIC.md). Standing punch/kick hit sounds now use original response commands. Complete gameplay sound routing remains unfinished.
 
 ## Actor state work
 

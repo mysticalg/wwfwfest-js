@@ -341,7 +341,10 @@ function frame(time) {
   pollGamepad();
   if (state.ready) {
     while (accumulator >= 1000 / rules.frameRate) {
-      if (state.view === 'play' && state.match && !state.paused) state.match.step(input());
+      if (state.view === 'play' && state.match && !state.paused) {
+        state.match.step(input());
+        for (const command of state.match.takeSoundCommands()) audio.command(command);
+      }
       if (state.view === 'frames' && state.cycling && ++cycleTicks % 8 === 0) {
         setPose((state.pose + 1) % tables.get(state.actor).length);
       }

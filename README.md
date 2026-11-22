@@ -2,7 +2,7 @@
 
 An early editable browser reconstruction from the supplied `wwfwfest.zip` US rev 2 ROM set. The requester asked for a native JavaScript project and confirmed permission to reproduce the game and assets.
 
-The browser runs Canvas rendering and JavaScript game objects. Ordinary walking, character speeds and idle/walk animation timing now follow translated arcade routines. Combat, running, arena constraints, AI and pinning remain provisional. Full arcade gameplay reconstruction remains unfinished.
+The browser runs Canvas rendering and JavaScript game objects. Ordinary walking, character speeds, idle/walk timing, standing punches/kicks, their contact geometry and ordinary hit reactions now follow translated arcade routines. Other moves, airborne reactions, running, arena constraints, AI and pinning remain incomplete. Full arcade gameplay reconstruction remains unfinished.
 
 ## Run
 
@@ -16,9 +16,9 @@ Open http://localhost:8765. GitHub Pages serves the same static files.
 
 ## Edit
 
-- `src/game.js` connects recovered locomotion with provisional combat, recovery, AI and pinning.
-- `src/actors/` contains translated fixed-point movement and descriptor animation clocks.
-- `src/data/actor-tables.js` contains editable original character speeds, directions and walk descriptors.
+- `src/game.js` connects recovered locomotion and standing combat with provisional airborne recovery, AI and pinning.
+- `src/actors/` contains translated fixed-point movement, descriptor clocks, standing actions, contact geometry and hit responses.
+- `src/data/actor-tables.js` contains editable original character speeds, directions, descriptors, contact records and rectangles.
 - `src/renderer.js` draws recovered sprite chain recipes and original palettes.
 - `src/app.js` connects the controls, match screen and animation explorer.
 - `assets/poses-*.json` contains editable per-wrestler frame records. Each record carries its ROM source address.
@@ -30,9 +30,9 @@ Open http://localhost:8765. GitHub Pages serves the same static files.
 - `assets/audio/music.json` contains editable music commands, score graphs and FM instruments.
 - `third_party/ymfm/` and `tools/fm_bridge.cpp` contain the synthesis library source used to build the generated JavaScript FM renderer.
 
-Controls use arrows to move, Z to strike, X for a heavy strike, C to run, Space to pin, Enter to start and P to pause. Touch controls are available on touch devices.
+Controls use arrows to move, Z to punch, X to kick, C to run, Space to pin, Enter to start and P to pause. Touch controls are available on touch devices.
 
-Standard gamepads use the left stick or D-pad for movement, bottom face button A/Cross for strikes, right B/Circle for heavy strikes, left X/Square for running, and top Y/Triangle for pinning. Menu/Options starts a match, pauses, resumes or starts a rematch after the result. View/Share returns to selection while paused. In selection, left/right cycles the player wrestler and up/down cycles the opponent. Connect a controller, focus the page and press a button to expose it to the browser.
+Standard gamepads use the left stick or D-pad for movement, bottom face button A/Cross for punches, right B/Circle for kicks, left X/Square for running, and top Y/Triangle for pinning. Menu/Options starts a match, pauses, resumes or starts a rematch after the result. View/Share returns to selection while paused. In selection, left/right cycles the player wrestler and up/down cycles the opponent. Connect a controller, focus the page and press a button to expose it to the browser.
 
 The first connected controller is used for the current single-player prototype. A 25% stick dead zone suppresses drift. Losing the active pad pauses the match. Reconnection and background-tab recovery require neutral controls before input resumes. Pads without the browser's standard mapping use the default button order, which may differ by device.
 
@@ -44,11 +44,11 @@ Provisional action animations skip unresolved or empty frame records. Idle/walk 
 
 Recovered material includes 65,536 sprite tiles, 4,096 background tiles, 4,096 character tiles, original palette data, the wrestler frame lookup tables, standalone sprite chain recipes, and sampled arena and selection layouts.
 
-The playable prototype supports ten selectable wrestlers, movement, two provisional attacks, damage, knockdown, pinning, an optional computer opponent, pause, restart and touch input. Sound explorer plays the 97 recovered sample-effect commands and 18 populated music scores through their native JavaScript sequencers. Selection and match music play after enabling audio. FM synthesis uses the bundled JavaScript build of the BSD-licensed ymfm renderer. Ring camera movement and scenery animation are pending. Stage images currently preserve one captured layout.
+The playable prototype supports ten selectable wrestlers, recovered walking and standing punch/kick paths, damage, provisional knockdown/pinning, an optional computer opponent, pause, restart and touch input. Punch/kick hit responses route their original sound commands after audio is enabled. Sound explorer plays the 97 recovered sample-effect commands and 18 populated music scores through their native JavaScript sequencers. Selection and match music also play after enabling audio. FM synthesis uses the bundled JavaScript build of the BSD-licensed ymfm renderer. Ring camera movement and scenery animation are pending. Stage images currently preserve one captured layout.
 
 Gamepad mapping, menu selection, actions, start/pause, rematch and reconnect behavior are covered by unit checks and browser tests using simulated Gamepad API devices. Physical controller acceptance remains unverified.
 
-Still pending are the remaining arcade state machines, exact move and grapple rules, hitboxes, combat statistics and animations, tag-team and Royal Rumble rules, entrances, complete gameplay sound routing and full-match parity testing. Some compound poses require another object's context. Combat vocalizations and effects remain unconnected while their original event routing is reconstructed.
+Still pending are the remaining arcade state machines, other move and grapple rules, airborne reactions, original health initialization, tag-team and Royal Rumble rules, entrances, complete gameplay sound routing and full-match parity testing. Some compound poses require another object's context. Further combat vocalizations and effects await their original event routing.
 
 Research notes and provenance are in `research/REVERSE_ENGINEERING.md`. Browser delivery contains recovered data and native source. Offline analysis used CPU tracing to observe original rendering routines. Those analysis dependencies are excluded from the browser project.
 
@@ -60,7 +60,7 @@ python tools/inspect_rom.py path/to/wwfwfest.zip --output rom-analysis
 
 The pose recipe JSON is a separate research export and is preserved by this tool.
 
-`tools/extract_audio.py` regenerates the editable effect scripts and sample data from the ZIP. `tools/extract_music.py` regenerates the native score graph and instrument data. `tools/extract_actors.py` regenerates movement and walk animation data. Run `npm run check` with Node.js 22 or newer for syntax, original-program comparisons and controller checks. [Actor verification](research/ACTORS.md), [effect research](research/AUDIO.md), [music verification](research/MUSIC.md)
+`tools/extract_audio.py` regenerates the editable effect scripts and sample data from the ZIP. `tools/extract_music.py` regenerates the native score graph and instrument data. `tools/extract_actors.py` regenerates actor movement, standing actions and contact data. Run `npm run check` with Node.js 22 or newer for syntax, original-program comparisons and controller checks. [Actor verification](research/ACTORS.md), [combat verification](research/COMBAT.md), [effect research](research/AUDIO.md), [music verification](research/MUSIC.md)
 
 ## Rights
 
