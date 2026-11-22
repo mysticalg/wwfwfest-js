@@ -36,9 +36,9 @@ Zero health does not itself set a permanent-down state in these original handler
 
 ## Projection and current scene
 
-The current practice scene uses the camera captured with its arena layout, x `$01cd` and y `$0241`. Screen positions are converted to world positions before physics. Rendering uses integer position words as `$00248c` does, then the recovered sprite recipe's inverted projected-y convention. This preserves height and avoids rounding flight/depth fractions into invented pixel positions.
+Actor-coordinate conversion uses the reference origin captured with the earlier arena layout, x `$01cd` and y `$0241`. World positions remain independent of the now-moving camera. Rendering uses integer position words as `$00248c` does, then the sprite recipe's inverted projected-y convention. This preserves height and avoids rounding flight/depth fractions into invented pixel positions. [Camera research](CAMERA.md) covers the scrolling layers and camera logic.
 
-Normal depth walking now runs ring correction before movement, including the original boundary overshoot/correction timing. The fixed rectangular depth clamp has been removed. The standing punch's entry nudge also uses the recovered inside-ring routine. Horizontal view limits remain while camera scrolling is unfinished. Moving back from a recovered position outside those practice limits does not snap the actor to a boundary.
+Normal walking runs ring correction before movement, including the original boundary overshoot/correction timing. Both the fixed rectangular depth clamp and the former horizontal view limits have been removed. The standing punch's entry nudge also uses the recovered inside-ring routine. Recovery reads the moving camera when selecting roll direction, matching the original global-camera read.
 
 ## Verification
 
@@ -47,13 +47,13 @@ Normal depth walking now runs ring correction before movement, including the ori
 - 32,768 inside-ring collision cases, including probes, facing, existing flags, depth/mat boundaries and slanted sides.
 - 117 complete knockdown/recovery sequences, comparing every update's state, reaction/action, animation clock, pose word, fixed-point position, velocities, gravity, collision flags, recovery/mash counters, facing, status and sound output. Cases cover both directions, normal/severe reactions, near-rope positions, button-mash recovery, blocked recovery and zero health.
 - 1,028 health/severity cases and 128 original projection cases, including fractional position round trips.
-- Six integrated 620-update controlled-input runs of actor updates, pose/contact cleanup, contact dispatch and damage service. Four timed standing punches produce a knockdown followed by recovery. Comparisons cover either actor receiving the hits, normal/low/zero remaining health, and human recovery inputs. Positions, poses, ordinary states, contacts, health/severity, combo counters/timers, facing and sound commands match each original run.
-- Two 428-update depth-walking runs through the original ring boundaries, with different character speeds, starts and stops.
+- Six integrated 620-update controlled-input runs of camera following, actor updates, pose/contact cleanup, contact dispatch and damage service. Four timed standing punches produce a knockdown followed by recovery. Comparisons cover either actor receiving the hits, normal/low/zero remaining health, and human recovery inputs. Positions, poses, ordinary states, contacts, health/severity, combo counters/timers, facing, sound commands and camera origins match each original run.
+- Four 428-update walking runs through both axes of the original ring boundaries, with different character speeds, starts and stops.
 - Match wiring that prevents a pin during flight and blocks/resumes the downed timer when the provisional pin control is held/released.
 
 Browser checks used a simulated standard gamepad. They observed flight height, bounce/down/roll/get-up states, recovery-button edges, original punch/landing command order, movement after recovery and no page errors. Physical controllers remain unverified.
 
-These checks cover the named normal inside-ring paths. They exclude outside-ring collision modes, rope animation, other throw/airborne handlers, special stagger follow-ups, full pin rules, camera scrolling and complete match logic. Practice health initialization, AI, running and horizontal view constraints remain provisional. The browser contains translated functions and recovered tables. CPU execution is confined to offline fixture generation.
+These checks cover the named normal inside-ring paths. They exclude outside-ring collision modes, rope animation, other throw/airborne handlers, special stagger follow-ups, full pin rules and complete match logic. Practice health initialization, AI and running remain provisional. Camera scrolling has separate original-program and pixel comparisons in [camera research](CAMERA.md). The browser contains translated functions and recovered tables. CPU execution is confined to offline fixture generation.
 
 ```sh
 python tools/extract_actors.py path/to/wwfwfest.zip

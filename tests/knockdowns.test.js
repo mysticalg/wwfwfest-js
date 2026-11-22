@@ -97,7 +97,8 @@ for (const fixture of fixtures.matches) {
           : ({idle: 0, walk: 1, strike: 5, heavy: 5, hurt: 4})[actor.state],
         actor.animation.pose, actor.contact, world.xFixed, world.yFixed, world.zFixed,
         actor.health, actor.severity, actor.comboCount, actor.comboTimer, actor.facing > 0 ? 0x8000 : 0];
-      }), sounds: match.takeSoundCommands()};
+      }), sounds: match.takeSoundCommands(), camera: [match.camera.x, match.camera.y,
+        match.camera.backgroundX, match.camera.backgroundY]};
       if (fixture.rows) assert.deepEqual(row, fixture.rows[tick], `tick ${tick}`);
       hash.add(row);
     }
@@ -106,8 +107,8 @@ for (const fixture of fixtures.matches) {
   });
 }
 
-for (const fixture of fixtures.depthWalks) {
-  test(`native depth walking reaches and stops at the original ring bounds for type ${fixture.type}`, () => {
+for (const fixture of fixtures.boundaryWalks) {
+  test(`native ${fixture.axis} walking reaches and stops at the original ring bounds for type ${fixture.type}`, () => {
     const match = new Match(fixture.type, 6);
     match.ai = false;
     const actor = match.fighters[0];
@@ -118,8 +119,8 @@ for (const fixture of fixtures.depthWalks) {
     const hash = digest();
     let row;
     let frame = 0;
-    for (const {vertical, ticks} of fixture.segments) for (let tick = 0; tick < ticks; tick++, frame++) {
-      match.step({vertical});
+    for (const {vertical = 0, horizontal = 0, ticks} of fixture.segments) for (let tick = 0; tick < ticks; tick++, frame++) {
+      match.step({vertical, horizontal});
       const world = worldPosition(actor);
       row = [world.xFixed, world.yFixed, world.zFixed, actor.animation.pose, actor.contact, actor.movementMode];
       if (fixture.rows) assert.deepEqual(row, fixture.rows[frame], `frame ${frame}`);

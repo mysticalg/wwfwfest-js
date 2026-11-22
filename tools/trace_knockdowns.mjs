@@ -182,8 +182,13 @@ for (let index = 0; index < 128; index++) {
 const matches = [];
 for (const attackerIndex of [0, 1]) for (const initialHealth of [100, 20, 3]) {
   memory.fill(0, actor, actor + 0x10c * 2);
+  putWord(0x1c17e6, 0x1cd);
+  putWord(0x1c17ea, 0x1cd);
+  putWord(0x1c17ee, 0x241);
+  putWord(0x1c17f2, 0x241);
   for (const base of [actor, target]) {
     memory[base] = 128;
+    memory[base + 0x33] = 1;
     putLong(base + 6, (base === actor ? 0x280 : 0x280 + 40) * 65536);
     putLong(base + 10, 0x14c0000);
     putLong(base + 14, 0x1400000);
@@ -207,6 +212,8 @@ for (const attackerIndex of [0, 1]) for (const initialHealth of [100, 20, 3]) {
   let recoveryFinished = false;
   for (let tick = 0; tick < frames; tick++) {
     sounds.length = 0;
+    call(0x25b5c);
+    call(0x28a62);
     const strike = [0, 49, 98, 147].includes(tick);
     const mash = attackerIndex === 1 && !recoveryFinished && tick > 180 && tick % 4 === 0;
     if (mash) mashFrames.push(tick);
@@ -246,7 +253,7 @@ for (const attackerIndex of [0, 1]) for (const initialHealth of [100, 20, 3]) {
     const row = {actors: [actor, target].map(base => [word(base + 0x20) & 255, word(base + 4),
       word(base + 0x4c), long(base + 6), long(base + 10), long(base + 14),
       word(base + 0x66), word(base + 0x70), word(base + 0x52), word(base + 0x54), word(base + 0x2e)]),
-      sounds: [...sounds]};
+      sounds: [...sounds], camera: [word(0x1c17e6), word(0x1c17ee), word(0x1c17ea), word(0x1c17f2)]};
     hash.add(row);
     rows.push(row);
     if ((word(actor + 0x20) & 255) === 4 && (word(actor + 0x64) & 255) >= 2) sawKnockdown = true;
@@ -256,8 +263,8 @@ for (const attackerIndex of [0, 1]) for (const initialHealth of [100, 20, 3]) {
     ...(process.env.DETAIL ? {rows} : {})});
 }
 
-const depthWalks = [];
-for (const type of [0, 8]) {
+const boundaryWalks = [];
+for (const type of [0, 8]) for (const axis of ['depth', 'horizontal']) {
   memory.fill(0, actor, actor + 0x10c * 2);
   memory[actor] = 128;
   putWord(actor + 2, type);
@@ -272,14 +279,18 @@ for (const type of [0, 8]) {
   putWord(actor + 0x4c, 1);
   putWord(target + 6, 700);
   putLong(actor + 0x7a, target);
-  const segments = [{vertical: -1, ticks: 140}, {vertical: 0, ticks: 4},
-    {vertical: 1, ticks: 280}, {vertical: 0, ticks: 4}];
+  const segments = axis === 'depth' ? [{vertical: -1, ticks: 140}, {vertical: 0, ticks: 4},
+    {vertical: 1, ticks: 280}, {vertical: 0, ticks: 4}]
+    : [{horizontal: -1, ticks: 200}, {horizontal: 0, ticks: 4},
+      {horizontal: 1, ticks: 220}, {horizontal: 0, ticks: 4}];
   const hash = digest();
   const rows = [];
-  for (const {vertical, ticks} of segments) for (let tick = 0; tick < ticks; tick++) {
-    const desiredState = vertical ? 1 : 0;
+  for (const {vertical = 0, horizontal = 0, ticks} of segments) for (let tick = 0; tick < ticks; tick++) {
+    const desiredState = vertical || horizontal ? 1 : 0;
     if ((word(actor + 0x20) & 255) !== desiredState) putWord(actor + 0x20, desiredState);
-    putWord(actor + 0x2c, word(0xe516 + (vertical < 0 ? 4 : vertical > 0 ? 8 : 0) * 2));
+    const direction = (horizontal > 0 ? 1 : horizontal < 0 ? 2 : 0)
+      | (vertical < 0 ? 4 : vertical > 0 ? 8 : 0);
+    putWord(actor + 0x2c, word(0xe516 + direction * 2));
     call(0xfe28);
     const state = word(actor + 0x20);
     if (!(state & 0x8000)) {
@@ -302,10 +313,10 @@ for (const type of [0, 8]) {
     hash.add(row);
     rows.push(row);
   }
-  depthWalks.push({type, segments, ...hash.finish(), final: rows.at(-1),
+  boundaryWalks.push({type, axis, segments, ...hash.finish(), final: rows.at(-1),
     ...(process.env.DETAIL ? {rows} : {})});
 }
 
 writeFileSync(outputPath, JSON.stringify({collision: collision.finish(), scenarios: fixtures,
-  severityCases, projectionCases, matches, depthWalks}, null, 2));
+  severityCases, projectionCases, matches, boundaryWalks}, null, 2));
 console.log(`Captured 32,768 ring collision cases and ${fixtures.length} complete knockdown/recovery scenarios`);

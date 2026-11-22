@@ -198,16 +198,15 @@ function drawSelection() {
 function drawMatch() {
   const match = state.match;
   const context = renderer.context;
-  context.drawImage(renderer.arena, 0, 0);
-  // The captured camera position stays fixed in the current practice scene.
-  // Characters are independent JS objects drawn between original stage layers.
+  renderer.stage.draw(match.camera, match.scenery);
+  // Native actors remain between the original scrolling stage layers.
   const sorted = [...match.fighters].sort((a, b) => a.y - b.y);
   for (const actor of sorted) {
     const frames = tables.get(actor.type);
     const position = match.drawPosition(actor);
     renderer.drawPose(frames, match.pose(actor, frames), position.x, position.y, match.mirrored(actor));
   }
-  context.drawImage(renderer.foreground, 0, 0);
+  renderer.stage.draw(match.camera, match.scenery, true);
   context.fillStyle = '#071323';
   context.fillRect(0, 0, 320, 29);
   match.fighters.forEach((actor, index) => {

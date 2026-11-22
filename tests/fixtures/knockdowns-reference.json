@@ -12178,7 +12178,7 @@
       "frames": 620,
       "mashFrames": [],
       "count": 620,
-      "sha256": "bf5ae0052201b17b2d7a7372eefd333f33204303d15a6bd0fe95a513dbe50c7d",
+      "sha256": "54dd8508c10cf6e622e96450a251db7bfd597c112a6afcb1bba09f4d527af109",
       "final": {
         "actors": [
           [
@@ -12208,7 +12208,13 @@
             0
           ]
         ],
-        "sounds": []
+        "sounds": [],
+        "camera": [
+          504,
+          572,
+          504,
+          572
+        ]
       }
     },
     {
@@ -12217,7 +12223,7 @@
       "frames": 620,
       "mashFrames": [],
       "count": 620,
-      "sha256": "859b7d17219e059c3d2d080c1fff27c9e904da1084a3456bcd52b770a5c09c5f",
+      "sha256": "edd43442895644d4908baea277858954da32891055a6c28a4813ce500bbe8606",
       "final": {
         "actors": [
           [
@@ -12247,7 +12253,13 @@
             0
           ]
         ],
-        "sounds": []
+        "sounds": [],
+        "camera": [
+          504,
+          572,
+          504,
+          572
+        ]
       }
     },
     {
@@ -12256,7 +12268,7 @@
       "frames": 620,
       "mashFrames": [],
       "count": 620,
-      "sha256": "a4b01ca1048e87c262477531815bde757c1f9b995a090a366ad95efe9b0fa0d3",
+      "sha256": "52885bfee4677f3fb406355f5aebb16e4a9ac9b0a08818a0465996219337127a",
       "final": {
         "actors": [
           [
@@ -12286,7 +12298,13 @@
             0
           ]
         ],
-        "sounds": []
+        "sounds": [],
+        "camera": [
+          504,
+          572,
+          504,
+          572
+        ]
       }
     },
     {
@@ -12321,7 +12339,7 @@
         280
       ],
       "count": 620,
-      "sha256": "7400bea700a348bdfbb83eaf166cdc89a643352824858b509c7a05dc9b63c542",
+      "sha256": "5a0f1a1b28ed5f125fa48cd21967a044ae3e60b3d1d03112e04b4a96cffa074f",
       "final": {
         "actors": [
           [
@@ -12329,7 +12347,7 @@
             32768,
             1,
             41320448,
-            19496960,
+            24018944,
             20979712,
             96,
             0,
@@ -12351,7 +12369,13 @@
             0
           ]
         ],
-        "sounds": []
+        "sounds": [],
+        "camera": [
+          495,
+          589,
+          495,
+          589
+        ]
       }
     },
     {
@@ -12399,7 +12423,7 @@
         332
       ],
       "count": 620,
-      "sha256": "394870a4f3051ec89d01f1249430fa8c517540f903c50fa89af6882f7d37f60d",
+      "sha256": "70c932a47af0b8aba8e558c3671848b3af82fbae73932c4398f83757e341521d",
       "final": {
         "actors": [
           [
@@ -12429,7 +12453,13 @@
             0
           ]
         ],
-        "sounds": []
+        "sounds": [],
+        "camera": [
+          495,
+          572,
+          495,
+          572
+        ]
       }
     },
     {
@@ -12477,7 +12507,7 @@
         332
       ],
       "count": 620,
-      "sha256": "9701474f57e189ab267ff47740a542c61e583844ad6a9b1a50edc30b5d03eef3",
+      "sha256": "1e167b3fec01eea315e69637503d095d72b767bf564fc1d9dd902e55d639181c",
       "final": {
         "actors": [
           [
@@ -12507,13 +12537,20 @@
             0
           ]
         ],
-        "sounds": []
+        "sounds": [],
+        "camera": [
+          495,
+          572,
+          495,
+          572
+        ]
       }
     }
   ],
-  "depthWalks": [
+  "boundaryWalks": [
     {
       "type": 0,
+      "axis": "depth",
       "segments": [
         {
           "vertical": -1,
@@ -12544,7 +12581,40 @@
       ]
     },
     {
+      "type": 0,
+      "axis": "horizontal",
+      "segments": [
+        {
+          "horizontal": -1,
+          "ticks": 200
+        },
+        {
+          "horizontal": 0,
+          "ticks": 4
+        },
+        {
+          "horizontal": 1,
+          "ticks": 220
+        },
+        {
+          "horizontal": 0,
+          "ticks": 4
+        }
+      ],
+      "count": 428,
+      "sha256": "77c06ab9396fc180069cee869fdd31c5f959b7884a9a5aab1c9887159c7beebb",
+      "final": [
+        51851264,
+        21757952,
+        20971520,
+        0,
+        1,
+        0
+      ]
+    },
+    {
       "type": 8,
+      "axis": "depth",
       "segments": [
         {
           "vertical": -1,
@@ -12570,6 +12640,38 @@
         18382848,
         20971520,
         32768,
+        1,
+        0
+      ]
+    },
+    {
+      "type": 8,
+      "axis": "horizontal",
+      "segments": [
+        {
+          "horizontal": -1,
+          "ticks": 200
+        },
+        {
+          "horizontal": 0,
+          "ticks": 4
+        },
+        {
+          "horizontal": 1,
+          "ticks": 220
+        },
+        {
+          "horizontal": 0,
+          "ticks": 4
+        }
+      ],
+      "count": 428,
+      "sha256": "95165db888cb3f5edea6156c0dd77d5b44c4bc1fd3b3b67b9dc3482ef65266be",
+      "final": [
+        51863552,
+        21757952,
+        20971520,
+        0,
         1,
         0
       ]

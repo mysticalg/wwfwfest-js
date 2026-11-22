@@ -3,14 +3,16 @@ import {walkAnimation, walkDelta, walkSpeed} from './actors/movement.js';
 import {groundContact} from './actors/contact.js';
 import {StandingAction, StandingReaction, standingHitResponse} from './actors/standing-action.js';
 import {Knockdown} from './actors/knockdown.js';
-import {worldPosition, updateScreenPosition, spritePosition, healthSeverity, practiceCamera} from './actors/projection.js';
+import {worldPosition, updateScreenPosition, spritePosition, healthSeverity} from './actors/projection.js';
 import {insideRingCollision, addPositionWord} from './actors/ring-collision.js';
 import {actorTables} from './data/actor-tables.js';
+import {WorldCamera} from './camera.js';
+import {SceneryAnimator} from './scenery.js';
 
 // Ordinary walking and its descriptor clock are translated from the arcade
 // routines. Standing punch/kick handlers and their ordinary contact/reaction paths
 // are translated too. Normal inside-ring knockdown/recovery now uses its original
-// handlers and physics. Running, horizontal view constraints, AI and match rules
+// handlers and physics. Running, AI and match rules
 // remain provisional until their remaining handlers are recovered.
 export const rules = {
   frameRate: 60,
@@ -50,6 +52,9 @@ export class Match {
     this.ai = true;
     this.count = 0;
     this.soundCommands = [];
+    this.camera = new WorldCamera();
+    this.scenery = new SceneryAnimator();
+    this.scenery.step(this.camera.chunkX, this.camera.chunkY);
   }
 
   setState(actor, state) {
@@ -86,6 +91,12 @@ export class Match {
       this.winner = this.fighters[0].health >= this.fighters[1].health ? 0 : 1;
       return;
     }
+    this.camera.step(this.fighters.map(actor => {
+      const world = worldPosition(actor);
+      return {x: world.xFixed >>> 16, y: world.yFixed >>> 16, z: world.zFixed >>> 16,
+        flags33: actor.cameraFlags ?? 1, priority: actor.cameraPriority || 0, active: true};
+    }));
+    this.scenery.step(this.camera.chunkX, this.camera.chunkY);
     const opponentInput = this.ai ? this.computerInput(this.fighters[1], this.fighters[0]) : {};
     this.updateFighter(this.fighters[0], this.fighters[1], input, 0);
     this.updateFighter(this.fighters[1], this.fighters[0], opponentInput, 1);
@@ -123,6 +134,7 @@ export class Match {
     }
     if (actor.knockdown) {
       const pinned = this.fighters.some(other => other !== actor && other.state === 'pin');
+      actor.knockdown.cameraY = this.camera.y;
       actor.knockdown.step({pressed: actor.pressedButtons, pinned});
       updateScreenPosition(actor, actor.knockdown);
       actor.facing = actor.knockdown.facing & 0x8000 ? 1 : -1;
@@ -169,10 +181,7 @@ export class Match {
       const delta = walkDelta(actor.type, actor.moveHorizontal, actor.moveVertical);
       const multiplier = actor.state === 'run' ? rules.runMultiplier : 1;
       const dx = delta.x * multiplier / 65536;
-      // Horizontal view bounds remain while this practice scene has a fixed
-      // camera. Recovered positions outside that view return without snapping.
-      if (dx < 0) actor.x = Math.max(actor.x + dx, Math.min(actor.x, 35));
-      else if (dx > 0) actor.x = Math.min(actor.x + dx, Math.max(actor.x, 285));
+      actor.x += dx;
       actor.y += delta.y * multiplier / 65536;
     }
   }
@@ -257,7 +266,7 @@ export class Match {
       target.knockdown = new Knockdown({...worldPosition(target), reaction,
         facing: target.facing > 0 ? 0x8000 : 0, pose: target.animation.pose,
         health: target.health, maximumHealth: target.maximumHealth, severity: target.severity,
-        flags56: target === this.fighters[1] && this.ai ? 128 : 0, cameraY: practiceCamera.y,
+        flags56: target === this.fighters[1] && this.ai ? 128 : 0, cameraY: this.camera.y,
         movementMode: target.movementMode, speed: walkSpeed(target.type),
         direction: actorTables.inputDirections[(target.moveHorizontal > 0 ? 1 : target.moveHorizontal < 0 ? 2 : 0)
           | (target.moveVertical > 0 ? 8 : target.moveVertical < 0 ? 4 : 0)]});
@@ -286,6 +295,6 @@ export class Match {
   }
 
   drawPosition(actor) {
-    return spritePosition(actor);
+    return spritePosition(actor, this.camera);
   }
 }

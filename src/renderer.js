@@ -1,3 +1,5 @@
+import {StageRenderer} from './stage-renderer.js';
+
 export const roster = [
   'Hulk Hogan', 'Ultimate Warrior', 'Mr. Perfect', 'Big Boss Man',
   'Hawk', 'Animal', 'Sgt. Slaughter', 'Ted DiBiase', 'Earthquake', 'Jake Roberts',
@@ -26,15 +28,15 @@ export class Renderer {
     this.context.imageSmoothingEnabled = false;
     this.tileCache = new Map();
     this.poseTables = new Map();
+    this.stage = new StageRenderer(this.context);
   }
 
   async load() {
-    const [atlas, palettes, arena, foreground, selection, portraits] = await Promise.all([
+    const [atlas, palettes, selection, portraits] = await Promise.all([
       loadImage('sprite-indices.png'), loadJSON('palettes.json'),
-      loadImage('arena.png'), loadImage('arena-front.png'),
-      loadImage('selection.png'), loadImage('roster.png'),
+      loadImage('selection.png'), loadImage('roster.png'), this.stage.load(),
     ]);
-    Object.assign(this, {palettes, arena, foreground, selection, portraits});
+    Object.assign(this, {palettes, selection, portraits});
     const scratch = document.createElement('canvas');
     scratch.width = atlas.width;
     scratch.height = atlas.height;

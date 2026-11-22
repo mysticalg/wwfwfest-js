@@ -2,7 +2,7 @@
 
 An early editable browser reconstruction from the supplied `wwfwfest.zip` US rev 2 ROM set. The requester asked for a native JavaScript project and confirmed permission to reproduce the game and assets.
 
-The browser runs Canvas rendering and JavaScript game objects. Ordinary walking, standing punches/kicks, contact rules, ordinary hit reactions and normal inside-ring knockdown/recovery now follow translated arcade routines. Other moves, outside-ring behavior, running, camera scrolling, AI and pinning remain incomplete. Full arcade gameplay reconstruction remains unfinished.
+The browser runs Canvas rendering and JavaScript game objects. Walking, standing combat, normal inside-ring knockdown/recovery, camera following and normal-ring crowd animation use translated arcade routines. Other moves, outside-ring behavior, native running, AI and pinning remain incomplete. Full arcade gameplay reconstruction remains unfinished.
 
 ## Run
 
@@ -19,6 +19,9 @@ Open http://localhost:8765. GitHub Pages serves the same static files.
 - `src/game.js` connects recovered locomotion, standing combat and knockdowns with provisional AI and pinning.
 - `src/actors/` contains translated movement, descriptor clocks, standing actions, contact geometry, ring collision, knockdown/recovery and projection.
 - `src/data/actor-tables.js` contains editable original character speeds, directions, descriptors, contact records, rectangles, motion profiles and mash counts.
+- `src/camera.js`, `src/scenery.js` and `src/stage-renderer.js` implement original camera rules, crowd clocks and scrolling stage layers.
+- `src/data/stage-tables.js` contains editable camera bounds, crowd visibility/sequence data and patch coordinates.
+- `assets/arena-palettes.json` preserves editable stage colors. `tools/extract_stage.py` regenerates the scrolling artwork and data from the archive.
 - `src/renderer.js` draws recovered sprite chain recipes and original palettes.
 - `src/app.js` connects the controls, match screen and animation explorer.
 - `assets/poses-*.json` contains editable per-wrestler frame records. Each record carries its ROM source address.
@@ -44,11 +47,11 @@ Provisional action animations skip unresolved or empty frame records. Idle/walk 
 
 Recovered material includes 65,536 sprite tiles, 4,096 background tiles, 4,096 character tiles, original palette data, the wrestler frame lookup tables, standalone sprite chain recipes, and sampled arena and selection layouts.
 
-The playable prototype supports ten selectable wrestlers, recovered walking, standing punch/kick, normal knockdown/recovery paths, provisional pinning, an optional computer opponent, pause, restart and touch input. Punch/kick hits and knockdown landings route their original sound commands after audio is enabled. Sound explorer plays the 97 recovered sample-effect commands and 18 populated music scores through their native JavaScript sequencers. Selection and match music also play after enabling audio. FM synthesis uses the bundled JavaScript build of the BSD-licensed ymfm renderer. Ring camera movement and scenery animation are pending. Stage images currently preserve one captured layout, with horizontal view limits for practice play.
+The playable prototype supports ten selectable wrestlers, recovered walking, standing combat, normal knockdown/recovery, scrolling through the full normal ring, animated crowd, provisional pinning, an optional computer opponent, pause, restart and touch input. Punch/kick hits and landings route original sound commands after audio is enabled. Sound explorer plays 97 sample-effect commands and 18 populated music scores through native JavaScript sequencers. Selection and match music also play after enabling audio. FM synthesis uses a JavaScript build of the BSD-licensed ymfm renderer.
 
 Gamepad mapping, menu selection, actions, start/pause, rematch and reconnect behavior are covered by unit checks and browser tests using simulated Gamepad API devices. Physical controller acceptance remains unverified.
 
-Still pending are the remaining arcade state machines, other move/grapple/airborne paths, outside-ring behavior, original health initialization, tag-team and Royal Rumble rules, entrances, complete gameplay sound routing and full-match parity testing. Practice health remains 100 points. Some compound poses require another object's context. Further combat vocalizations and effects await their original event routing.
+Still pending are native running, other move/grapple/airborne paths, outside-ring behavior, rope effects, other scenery modes, original health initialization, tag-team and Royal Rumble rules, entrances, complete audio routing and full-match parity. Practice health remains 100 points. Some compound poses require another object's context. Further combat vocalizations and effects await their original event routing.
 
 Research notes and provenance are in `research/REVERSE_ENGINEERING.md`. Browser delivery contains recovered data and native source. Offline analysis used CPU tracing to observe original rendering routines. Those analysis dependencies are excluded from the browser project.
 
@@ -60,7 +63,7 @@ python tools/inspect_rom.py path/to/wwfwfest.zip --output rom-analysis
 
 The pose recipe JSON is a separate research export and is preserved by this tool.
 
-`tools/extract_audio.py` regenerates effect scripts and sample data from the ZIP. `tools/extract_music.py` regenerates the native score graph and instruments. `tools/extract_actors.py` regenerates actor, contact, motion and recovery data. Run `npm run check` with Node.js 22 or newer for syntax, original-program comparisons and controller checks. [Actor verification](research/ACTORS.md), [combat verification](research/COMBAT.md), [knockdown verification](research/KNOCKDOWNS.md), [effects](research/AUDIO.md), [music](research/MUSIC.md)
+`tools/extract_audio.py` regenerates effect scripts/sample data, `tools/extract_music.py` the score graph/instruments, `tools/extract_actors.py` actor data, and `tools/extract_stage.py` the normal ring layers/crowd. Run `npm run check` with Node.js 22 or newer for syntax, original-program comparisons and controller checks. [Actors](research/ACTORS.md), [combat](research/COMBAT.md), [knockdowns](research/KNOCKDOWNS.md), [camera and stage pixel verification](research/CAMERA.md), [effects](research/AUDIO.md), [music](research/MUSIC.md)
 
 ## Rights
 

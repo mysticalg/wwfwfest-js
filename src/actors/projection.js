@@ -1,5 +1,5 @@
-// Camera values captured with the current arena layout (original frame 4500).
-// The fixed scene remains a practice view until camera/scene logic is translated.
+// Reference origin for the match's stored actor coordinates (original frame
+// 4500). World physics stays independent of the moving rendering camera.
 export const practiceCamera = {x: 0x1cd, y: 0x241, matHeight: 0x140};
 
 export function worldPosition(actor) {
@@ -19,10 +19,10 @@ export function updateScreenPosition(actor, world) {
 // $00248c uses position integer words before the sprite recipe inverts y.
 // Pose extraction used projected origin (128,128), with screen y origin 104.
 // Combining those yields the 232 constant for the recovered local recipes.
-export function spritePosition(actor) {
+export function spritePosition(actor, camera = practiceCamera) {
   const world = worldPosition(actor);
-  return {x: (world.xFixed >>> 16) - practiceCamera.x,
-    y: 232 + practiceCamera.y - (world.yFixed >>> 16) - (world.zFixed >>> 16)};
+  return {x: (world.xFixed >>> 16) - camera.x,
+    y: 232 + camera.y - (world.yFixed >>> 16) - (world.zFixed >>> 16)};
 }
 
 // $0240e8, after pending damage is applied. The low-health threshold is the
