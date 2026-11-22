@@ -165,6 +165,17 @@ export const tagTables = {
         75,
         76
       ]
+    },
+    "119": {
+      "source": 103304,
+      "update": 103316,
+      "mode": 1,
+      "delays": [
+        24
+      ],
+      "poses": [
+        479
+      ]
     }
   },
   "manualAssistWeights": [

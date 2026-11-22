@@ -413,6 +413,29 @@ export const actorTables = {
         149
       ]
     },
+    "46": {
+      "source": 89238,
+      "update": 89274,
+      "mode": 1,
+      "delays": [
+        32,
+        2,
+        8,
+        9,
+        6,
+        65280,
+        16
+      ],
+      "poses": [
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188
+      ]
+    },
     "64": {
       "source": 95788,
       "update": 95812,
@@ -3152,6 +3175,13 @@ export const actorTables = {
         419
       ]
     },
+    "31": {
+      "source": 110496,
+      "update": 71762,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
     "32": {
       "source": 108050,
       "update": 108062,
@@ -3238,6 +3268,13 @@ export const actorTables = {
     "39": {
       "source": 111166,
       "update": 111172,
+      "mode": 0,
+      "delays": [],
+      "poses": []
+    },
+    "40": {
+      "source": 110496,
+      "update": 71762,
       "mode": 0,
       "delays": [],
       "poses": []
@@ -3772,6 +3809,19 @@ export const actorTables = {
         394
       ]
     }
+  },
+  "rescueAnimation": {
+    "source": 76148,
+    "update": 76164,
+    "mode": 1,
+    "delays": [
+      20,
+      16
+    ],
+    "poses": [
+      228,
+      229
+    ]
   },
   "tauntAnimations": [
     {

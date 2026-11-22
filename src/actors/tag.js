@@ -72,7 +72,7 @@ export function beginTagAssistExit(actor){
  actor.flags56&=~64;victimPartner.flags32|=4;victimPartner.flags56|=64;victimPartner.opponent=holder;
 }
 
-export const isTagAction=action=>[55,57,76,77,78,79,89,97,102].includes(action&255);
+export const isTagAction=action=>[55,57,76,77,78,79,89,97,102,119].includes(action&255);
 export const isCornerAttack=action=>[13,27].includes(action&255);
 
 // $01e986: the special normal-tag hold is selected by the downed opponent's
@@ -122,7 +122,11 @@ function finishProneVictimAssistance(actor){ // $0205cc
 export function stepTagAction(actor,peer,initialized){
  const action=actor.action&255,at=index=>actor.clock.index===index&&!actor.clock.remaining;
  let descriptor=tagTables.actions[action];
- if(action===57){ // $016db0, apron strike and return to apron movement
+ if(action===119){ // $019394, interrupt/re-enter the near-prone tag hold
+  if(!peer)throw new Error('Tag-hold interruption requires its paired holder');
+  if(!initialized)peer.change(255);
+  else if((actor.clock.index&255)===0xfe){actor.change(5,0x8061);peer.change(5,0x8037);}
+ }else if(action===57){ // $016db0, apron strike and return to apron movement
   if(!initialized){actor.movementMode=0;return descriptor;}
   actor.contact=actor.clock.index===2?25:0;
   if((actor.clock.index&255)===0xfe){actor.change(1);actor.walkMode=1;actor.unlinkMarked=true;actor.clock.pose=actor.facing;return descriptor;}

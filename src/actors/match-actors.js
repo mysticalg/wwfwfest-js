@@ -142,7 +142,7 @@ export class MatchActors {
   if(body.state===5&&(body.action&255)===102&&!body.partner?.active){
    this.match.handoff={slot:body.slot,state:body.state,action:body.action,reaction:body.reaction,reason:'tag-team-pool'};body.sounds=[];
   }else if(!body.pendingTransition)body.step();
-  else if(body.forced&0x8000){
+  else if(!this.match.world.tagTeams&&(body.forced&0x8000)){
    body.sounds=[];
    this.match.winner=this.match.fighters.findIndex(f=>!(f.original.forced&1));
   }else{

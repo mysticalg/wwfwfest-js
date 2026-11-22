@@ -52,6 +52,34 @@ export function stepRunningAction(a,initialized){
    const miss=(a.clock.index&255)===1&&!a.clock.remaining&&!(a.action&0x8000);
    if(miss||(a.clock.index&255)===0xfe){a.change(0);a.unlinkMarked=true;}
   }
+ }else if(action===46){ // $015cba, airborne counter through the last-hit link
+  if(!initialized){a.movementMode=0;a.lastHit=null;low(a,'offsetX',64);low(a,'offsetY',80);}
+  else{
+   if(!(a.action&0x8000)){
+    if(!a.clock.index){
+     a.contact=5;
+     if(a.lastHit?.state===4&&(a.lastHit.reaction&255)===31){
+      peer=a.auxiliary=a.lastHit;a.unlinkMarked=false;a.flags33|=64;peer.flags33|=64;
+      peer.change(255);peer.auxiliary=a;peer.unlinkMarked=false;a.action|=0x8000;
+      a.clock.remaining=0;low(a,'offsetX',48);low(a,'offsetY',80);return descriptor;
+     }
+    }
+    if(!a.clock.remaining){
+     a.change(0);a.unlinkMarked=true;a.offsetX|=0x8000;a.clock.remaining=2;a.clock.pose=a.facing;return descriptor;
+    }
+   }
+   if((a.clock.index&255)===1&&!a.clock.remaining){low(a,'offsetX',64);low(a,'offsetY',80);}
+   if(a.clock.index===2&&!a.clock.remaining){a.profile(9);a.flags33|=8;a.paddingX=80;a.announce(19);}
+   else if(a.clock.index===5&&(a.collision.flags&16)){a.landingSound();a.movementMode=0;a.clock.remaining=0;a.paddingX=0;a.world.shake=14;}
+   else if((a.clock.index&255)===0xfe){
+    if(!peer)throw new Error('Counter throw requires its accepted-contact link');
+    peer.facing=(peer.facing&255)|(a.facing&0xff00);a.placePeer(peer,128,-1);move(a,32);
+    a.offsetX|=0x8000;a.change(7);a.requestPin();a.clock.pose=104^(a.facing&0xff00);
+    reaction(peer,6);peer.pendingDamage=16;a.partnerSupport(peer);peer.hitCounter=(peer.hitCounter+5)&255;
+    peer.clock.pose=(peer.clock.pose&255)|(a.facing&0xff00);peer.facing^=0x8000;peer.reaction|=0x2000;peer.flags32|=8;
+    a.sounds.push(50);a.unlinkMarked=true;a.flags33&=~64;peer.flags33&=~64;
+   }
+  }
  }else if(action===32||action===45){ // $015c56, including the entry update
   if(collisionResponse(a))a.change(6);
   else{

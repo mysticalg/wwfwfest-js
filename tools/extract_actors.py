@@ -42,7 +42,7 @@ def main():
         'runningMoveTables': [list(program[address:address + 9]) for address in
                               struct.unpack_from('>12I', program, 0xd73e)],
         'runningAttacks': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854 + action * 4)[0])
-                           for action in (1, 4, 5, 32, 39, 42, 45, 64, 65)},
+                           for action in (1, 4, 5, 32, 39, 42, 45, 46, 64, 65)},
         'runningPairedAnimations': {'runningCapture': descriptor(0x12168), 'airborneCapture': descriptor(0x11e32), 'cornerCapture': descriptor(0x11e4a)},
         'runningVictims': {str(reaction): descriptor(struct.unpack_from('>I', program, 0x1a214+reaction*4)[0]) for reaction in (16,18,20,29)},
         'absentAuxiliaryAimTarget': {'xFixed': struct.unpack_from('>i', program, 0x7f006)[0],
@@ -82,7 +82,7 @@ def main():
             ('largeTarget',0x1789c),('wallSlam',0x1421e),('alternateLift',0x15ebe))},
         'automaticPinThresholds': words(0x10308, 12),
         'grappleVictims': {str(reaction): descriptor(struct.unpack_from('>I', program, 0x1a214 + reaction * 4)[0])
-                           for reaction in (0, 10, 14, 15, 19, 21, 22, 28, 32, 33, 34, 35, 36, 37, 38, 39, 41)},
+                           for reaction in (0, 10, 14, 15, 19, 21, 22, 28, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41)},
         'grappleAnimations': {name: descriptor(address) for name, address in {
             'contested': 0x11690, 'entry': 0x116a8, 'control': 0x11722,
             'hidden': 0x11800, 'hold': 0x13f20, 'carry': 0x13fca,
@@ -97,6 +97,7 @@ def main():
         'standingAttacks': [descriptor(address) for address in (0x11a90, 0x19206)],
         'standingPunchAssist': descriptor(0x11aac),
         'groundAnimations': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854+action*4)[0]) for action in (8,60,62,117,121)},
+        'rescueAnimation': descriptor(0x12974),
         'tauntAnimations': [descriptor(struct.unpack_from('>I', program, 0x1954c+i*4)[0]) for i in range(12)],
         'tauntRepeats': list(program[0x1957c:0x19588]),
         'standingReactions': [descriptor(address) for address in (0x1a2c0, 0x1a612)],

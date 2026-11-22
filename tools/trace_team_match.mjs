@@ -37,6 +37,7 @@ const words={grappleIndex:0x48,lastPose:0x90,type:2,facing:0x2e,state:0x20,actio
  walkMode:0xae,apronTimer:0xc8,supportTimer:0xe6,recoveryTimer:0x9a,mash:0xaa,healthAccumulator:0x6a,idleTimer:0xd0,
  forced:0xfe,comboCount:0x52,comboTimer:0x54,resultPose:0x4a,pinStatus:0x108};
 const bytes={moveToggle:0x62,movementMode:1,flags32:0x32,flags33:0x33,flags34:0x34,flags35:0x35,flags56:0x56,flags57:0x57,flags74:0x74,flags75:0x75,flagsC6:0xc6,hitCounter:0xc7,aiFlagsB9:0xb9,region:0x31};
+const rescue=Boolean(process.env.TEAM_RESCUE),attemptOffsets=[...Array.from({length:10},(_,i)=>0xd2+i*2),...Array.from({length:11},(_,i)=>0xe8+i*2)];
 if(expanded){words.hitMask=0x8e;words.cornerInput=0xac;words.targetX=0xbe;words.targetY=0xc0;}
 function actors(){return bases.map(base=>{
  const result={active:Boolean(memory[base]&128)};
@@ -45,6 +46,7 @@ function actors(){return bases.map(base=>{
  for(const[key,offset]of [['xFixed',6],['yFixed',10],['zFixed',14],['controlPort',0x8a]])result[key]=long(base+offset);
  for(const[key,offset]of [['auxiliaryIndex',0x26],['opponentIndex',0x7a],['partnerIndex',0x86]])result[key]=bases.indexOf(long(base+offset)&0x7fffffff);
  if(expanded)for(const[key,offset]of [['lastHitIndex',0x92],['secondaryPinnerIndex',0x9c],['secondaryOpponentIndex',0x82]])result[key]=bases.indexOf(long(base+offset)&0x7fffffff);
+ if(rescue){result.assistanceTargetIndex=bases.indexOf(long(base+0x7e)&0x7fffffff);result.attempts=Object.fromEntries(attemptOffsets.map(offset=>[offset,word(base+offset)]));}
  result.unlinkMarked=Boolean(memory[base+0x26]&128);
  result.clock={flags:word(base+0x1c),remaining:word(base+0x22),index:word(base+0x24),pose:word(base+4)};
  result.projection=[word(base+0x14)<<16>>16,232-(word(base+0x16)<<16>>16)];return result;
@@ -57,8 +59,8 @@ function snapshot(){
 }
 
 const sequences=[],filter=process.env.TEAM_FILTER?JSON.parse(process.env.TEAM_FILTER):{};
-const profiles=process.env.TEAM_PRONE?['prone34','prone34-cpu','prone34-broken','prone34-escape','prone34-zero','apron57','apron57-cpu','apron57-hit','apron57-cpu-hit']:process.env.TEAM_CATCH?['catch39-hit','catch39-miss','catch39-run','catch39-cpu']:process.env.TEAM_TAUNT?['taunt-human','taunt-cpu','taunt-loop']:process.env.TEAM_HOLD?['hold29','hold29-cpu','hold29-broken','hold29-escape','held83-punch','held83-kick']:process.env.TEAM_GETUP?['getup','getup-broken','getup-back','getup-cpu-boost','getup-human-boost']:['neutral','advance','run','tag'];
-for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.env.TEAM_HOLD||process.env.TEAM_TAUNT||process.env.TEAM_CATCH||process.env.TEAM_PRONE?Array.from({length:12},(_,i)=>i):[0,7,10]){
+const profiles=rescue?['rescue-prone-front','rescue-prone-back','rescue-pin-front','rescue-pin-back','rescue-pin-control','rescue-hold97','rescue-forced','rescue-null']:process.env.TEAM_LAUNCH?['launch46-hit','launch46-run','launch46-miss','launch46-cpu','launch46-clash']:process.env.TEAM_PRONE?['prone34','prone34-cpu','prone34-broken','prone34-escape','prone34-zero','apron57','apron57-cpu','apron57-hit','apron57-cpu-hit']:process.env.TEAM_CATCH?['catch39-hit','catch39-miss','catch39-run','catch39-cpu']:process.env.TEAM_TAUNT?['taunt-human','taunt-cpu','taunt-loop']:process.env.TEAM_HOLD?['hold29','hold29-cpu','hold29-broken','hold29-escape','held83-punch','held83-kick']:process.env.TEAM_GETUP?['getup','getup-broken','getup-back','getup-cpu-boost','getup-human-boost']:['neutral','advance','run','tag'];
+for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.env.TEAM_HOLD||process.env.TEAM_TAUNT||process.env.TEAM_CATCH||process.env.TEAM_PRONE||process.env.TEAM_LAUNCH||rescue?Array.from({length:12},(_,i)=>i):[0,7,10]){
  const config={profile,type};if(!Object.entries(filter).every(([k,v])=>config[k]===v))continue;
  memory.fill(0,0x1c0000,0x1c4000);memory.fill(0,0x180000,0x181000);memory.fill(0,0xc0000,0xc4000);cpu.d.fill(0);cpu.a.fill(0);
  put(0x1c007c,0x8000);put(0x1c0066,16);put(0x1c16a0,0x30);putLong(0x1c005c,0);
@@ -101,6 +103,19 @@ for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.
   a.yFixed=p.yFixed=337*65536;a.zFixed=p.zFixed=320*65536;
   if(profile==='catch39-run'){p.change(2);p.direction=face?192:64;p.holdFlags=0;}
  }
+ if(profile.startsWith('launch46')){
+  let a=seed.fighters[0].original,p=seed.fighters[1].original;
+  const cpu=profile==='launch46-cpu'||profile==='launch46-clash';
+  if(cpu)[a,p]=[p,a];
+  a.type=a.flags57=type;a.change(5,46);a.auxiliary=null;
+  if(cpu){a.action|=0x4000;a.inputBlockA|=16;}
+  const face=type&1?0:0x8000;a.facing=face;p.facing=face^0x8000;
+  const gap=profile==='launch46-miss'?180:profile==='launch46-cpu'?80:32;
+  a.xFixed=640*65536+0x1234;p.xFixed=(640+(face?1:-1)*gap)*65536+0x4321;
+  a.yFixed=p.yFixed=337*65536;a.zFixed=p.zFixed=320*65536;
+  if(profile!=='launch46-run')p.flags56=0;
+  if(profile!=='launch46-miss'){p.change(2);p.direction=face?192:64;p.holdFlags=0;}
+ }
  if(profile.startsWith('prone34')){
   let a=seed.fighters[0].original,p=seed.fighters[1].original;
   if(profile==='prone34-cpu'||profile==='prone34-escape')[a,p]=[p,a];
@@ -122,6 +137,21 @@ for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.
   if(hit){p.change(0);if(!cpu)p.flags56=0;}
   else p.change(5,121);
  }
+ if(rescue){
+  const [q,a,p,s]=slots.map(slot=>seed.nativeActors.pool[slot]);
+  const face=type&1?0:0x8000;
+  for(const b of [q,a,p,s]){b.yFixed=337*65536;b.zFixed=320*65536;}
+  Object.assign(a,{type,flags57:type,flags32:0,flags33:2,flags56:0,facing:face,xFixed:(face?600:680)*65536+0x1234,auxiliary:p});a.change(5,10);
+  Object.assign(q,{flags33:1,flags56:64,facing:face,xFixed:640*65536+0x2345,auxiliary:p,assistanceTarget:a});
+  Object.assign(p,{flags33:193,flags35:1,facing:face,xFixed:640*65536+0x3456,auxiliary:q,assistanceTarget:s});
+  q.change(5,0x804a);q.pendingState=false;Object.assign(q.clock,{flags:0x8005,index:0,remaining:0xff00,pose:18|face});q.flags33|=64;q.reaction=profile==='rescue-pin-back'?9:8;
+  p.change(5,0x8048);p.pendingState=false;Object.assign(p.clock,{flags:0x8005,index:0,remaining:0,pose:0xffff});
+  if(profile.startsWith('rescue-prone')){p.change(4);p.reaction=profile.endsWith('front')?8:9;p.recoveryTimer=600;p.flags33&=~64;p.flags35=0;p.auxiliary=null;p.attempts[0xe4]=[0,0xffff,7][type%3];q.change(0);q.flags33&=~64;q.auxiliary=null;q.xFixed=520*65536;}
+  if(profile==='rescue-pin-control')q.flags56=0;
+  if(profile==='rescue-hold97'){q.flags56=0;p.action=0x8061;p.holdFlags=170;p.flags35=0;q.action=0x8037;q.clock.remaining=5;}
+  if(profile==='rescue-forced')p.forced=0x8000;
+  if(profile==='rescue-null')a.auxiliary=null;
+ }
  for(const[slot,base]of pool.entries()){putLong(base+0x86,pool[slot^1]||pool[8]);memory[base+0x56]=slot<4?64:128;memory[base+0x32]=1;}
  for(const[i,base]of bases.entries()){
   const body=seed.nativeActors.pool[slots[i]];put(base,0x8000);
@@ -129,10 +159,11 @@ for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.
   for(const[key,offset]of Object.entries(bytes))memory[base+offset]=body[key]||0;
   for(const[key,offset]of [['xFixed',6],['yFixed',10],['zFixed',14],['controlPort',0x8a]])putLong(base+offset,body[key]||0);
   for(const[key,offset]of [['auxiliary',0x26],['opponent',0x7a],['partner',0x86],['secondaryOpponent',0x82]])putLong(base+offset,body[key]?pool[body[key].slot]:0);
+  if(rescue){putLong(base+0x7e,body.assistanceTarget?pool[body.assistanceTarget.slot]:0);for(const offset of attemptOffsets)put(base+offset,body.attempts[offset]||0);}
   for(const[key,offset]of [['flags',0x1c],['remaining',0x22],['index',0x24],['pose',4]])put(base+offset,body.clock[key]);
  }
  putLong(0x1c1684,bases[0]);putLong(0x1c1688,bases[2]);call(0xf958,ref);
- const initial=actors(),entropyFrames=[],inputs=[],rows=[],hash=createHash('sha256');let previousButtons=0,tagPressed=false,count=0,boundary=null,resultRequest=false,acceptedApronHit=false;
+ const initial=actors(),entropyFrames=[],inputs=[],rows=[],hash=createHash('sha256');let previousButtons=0,tagPressed=false,count=0,boundary=null,resultRequest=false,acceptedApronHit=false,acceptedLaunch=false,acceptedRescue=false;
  for(let tick=0;tick<400;tick++){
   sounds.length=entropy.length=effects.length=0;putLong(0x1c0080,tick);
   const input={};
@@ -164,12 +195,19 @@ for(const profile of profiles)for(const type of process.env.TEAM_GETUP||process.
    const cpu=profile.includes('cpu'),target=cpu?0:2,attacker=cpu?3:1;
    if(row.actors[target].health<initial[target].health&&row.actors[target].lastHitIndex===attacker)acceptedApronHit=true;
   }
+  if(profile==='launch46-hit'||profile==='launch46-cpu'){
+   const cpu=profile==='launch46-cpu',attacker=cpu?2:0,target=cpu?0:2;
+   if((row.actors[attacker].action&0x8000)&&row.actors[attacker].auxiliaryIndex===target)acceptedLaunch=true;
+  }
+  if(rescue){const [q,a,p]=row.actors;if(profile.startsWith('rescue-prone')&&p.attempts[0xe4]===((initial[2].attempts[0xe4]+1)&65535))acceptedRescue=true;else if(profile.startsWith('rescue-pin')&&(q.state&255)===7&&(p.state&255)===4&&p.reaction===15)acceptedRescue=true;else if(profile==='rescue-hold97'&&(p.state&255)===5&&(p.action&255)===119)acceptedRescue=true;}
   inputs.push(input);entropyFrames.push([...entropy]);count++;
   resultRequest=profile==='prone34-zero'&&Boolean(word(ref+0x20)&0x8000)&&(word(ref+0x20)&255)===9;
   if(boundary||resultRequest)break;
  }
  if(profile.startsWith('apron57')&&profile.endsWith('-hit'))assert(acceptedApronHit,'Declared accepted apron strike must hit its target');
- sequences.push({config,world,initial,inputs,entropyFrames,count,boundary,...(resultRequest?{resultRequest:true}:{}),...(acceptedApronHit?{acceptedApronHit:true}:{}),sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
+ if((profile==='launch46-hit'||profile==='launch46-cpu')&&!process.env.LAUNCH_DIAG)assert(acceptedLaunch,`Declared counter must capture its running target: ${profile}, type ${type}`);
+ if(rescue&&!['rescue-forced','rescue-null'].includes(profile))assert(acceptedRescue,`Declared rescue must interrupt its target: ${profile}, type ${type}`);
+ sequences.push({config,world,initial,inputs,entropyFrames,count,boundary,...(resultRequest?{resultRequest:true}:{}),...(acceptedApronHit?{acceptedApronHit:true}:{}),...(acceptedLaunch?{acceptedLaunch:true}:{}),...(acceptedRescue?{acceptedRescue:true}:{}),sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
 }
 writeFileSync(output,JSON.stringify({source:'Composed normal tag playtest from explicit synthetic four-record starting states: original camera, targets, arbitration, tag timers, announcer, human input, AI, referee, actor/collision/projection/physics, alternating contacts/damage and original sprite-queue cleanup; omit title/round/scene/bookkeeping, VRAM stream and effect-object updates; stop before unsupported actor, at the 400-update cap, or at the first submission result request in the declared zero-health scenario. Original random observations replayed at native calls.',sequences},null,2)+'\n');
 console.log(JSON.stringify({sequences:sequences.length,updates:sequences.reduce((n,s)=>n+s.count,0),boundaries:sequences.map(s=>s.boundary)}));

@@ -79,14 +79,14 @@ analysis CPU are excluded from browser delivery.
 
 ## Manual tag and default four-person integration
 
-A further **96 original-program sequences / 43,185 updates** exercise manual
+A further **96 original-program sequences / 56,137 updates** exercise manual
 76 tags and the nearby prone-opponent variation on both sides, all twelve
 incoming types and both actor orders. They stop at 650 updates or an explicit
 untranslated actor boundary. The total tag suite now has 192 sequences,
 including the earlier corner and extended ground components. This is bounded
 prefix evidence, not proof that every continuation or whole match works.
 
-The source action 55 prone hold, 97 victim and 89 escape include the original
+The source action 55 prone hold, 97 victim, interruption 119 and 89 escape include the original
 assistance requests and timers. The shared weighted choice implementation is
 in `probability.js`. The default match also calls `$00ef40` in the original
 pre-input phase for apron/boost timer maintenance.

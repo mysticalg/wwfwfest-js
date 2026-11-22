@@ -1,7 +1,7 @@
 import {actorTables} from '../data/actor-tables.js';
 import {addPositionWord} from './ring-collision.js';
 const u16=value=>value&65535;
-export const isGrappleVictim=reaction=>[0,10,14,15,19,21,22,28,32,33,34,35,36,37,38,39,41].includes(reaction&255);
+export const isGrappleVictim=reaction=>[0,10,14,15,19,21,22,28,31,32,33,34,35,36,37,38,39,40,41].includes(reaction&255);
 
 function depthVelocity(actor,amount=48) {
   const y=actor.yFixed>>>16;
@@ -30,6 +30,9 @@ function land(actor,{whole=false,shift=0}={}) {
 // handler writes the whole word. State-5 outside handoffs remain explicit.
 export function stepGrappleVictim(actor,initialized) {
   const reaction=actor.reaction&255,data=actorTables.grappleVictims;
+  // $011852 is an RTS; these mode-zero waits retain the current pose, clock
+  // initialization bit and motion until the catcher updates their shared link.
+  if(reaction===31||reaction===40)return data[reaction];
   if(reaction===39){ // $01b244, eight-call escape impact before falling
     if(!initialized){actor.clock.flags|=0x8000;actor.clock.pose=0x17d|actor.facing;actor.clock.remaining=8;}
     actor.clock.remaining=u16(actor.clock.remaining-1);

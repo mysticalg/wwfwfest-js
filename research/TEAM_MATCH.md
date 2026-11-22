@@ -84,7 +84,7 @@ program image and detailed research files are excluded from browser delivery.
 
 Action 8 now raises a front-prone opponent into the original standing clinch,
 including interrupted grabs, paired positions, camera priority and boosted CPU
-arbitration. Another **60 sequences / 21,374 updates** cover all twelve player
+arbitration. Another **60 sequences / 23,599 updates** cover all twelve player
 types, both facings, several ring positions, lost links, back-prone targets and
 CPU/human boost variations. They retain explicit later-action boundaries or a
 400-update cap.
@@ -92,7 +92,7 @@ CPU/human boost variations. They retain explicit later-action boundaries or a
 `actors/standing-holds.js` adds action 29's staggered hold, victim 83's normal
 and two impact loops, holder impact actions 115/116, elbow escape 87 and holder
 reaction 118. It preserves paired links, mash/AI escape clocks, combo timing,
-partner assistance and controller requests. Another **72 sequences / 27,174
+partner assistance and controller requests. Another **72 sequences / 27,960
 updates** compare both holder sides, all twelve type combinations, interrupted
 links, punch/kick reactions and repeated human escape input. The source trace
 executes the original whole four-record core around those seeded situations;
@@ -111,12 +111,10 @@ and one-time sound request. Another **36 sequences / 14,400 updates** cover
 all twelve types in human, CPU and already-started-loop contexts; all reach
 the 400-update cap.
 
-The combined four-record comparison now covers **336 sequences / 121,336
-updates**. An uncontrolled native neutral run with the default RNG now reaches
-2,031 updates before untranslated action 46, compared with the earlier
-standing-hold boundary around 388. That diagnostic is progress evidence, not a
-source-matched complete match. Outside/Rumble behavior, action 28's related hold,
-rescue actions, other remaining moves and complete rounds are unfinished.
+The four-record comparison through version 0.1.27 comprised 336 sequences.
+The counter/rescue extension below adds new cases and extends older prefixes.
+Outside/Rumble behavior, action 28's related hold, other remaining moves and
+complete rounds remain unfinished.
 
 Set `TEAM_GETUP=1`, `TEAM_HOLD=1` or `TEAM_TAUNT=1` to regenerate the corresponding
 seeded scenarios. The normal twelve-profile fixture uses none of these options.
@@ -137,7 +135,7 @@ Action 34 now captures the front-prone victim and loops the original submission
 with damage, protection, assistance and completion requests. Escape 92 and
 its short impact reaction 39 are also translated. Apron strike 57 sets its
 original contact window and visual requests, then resumes apron movement.
-**108 sequences / 34,388 updates** cover both sides, interrupted grabs, human
+**108 sequences / 39,504 updates** cover both sides, interrupted grabs, human
 escape input, zero-health completion requests, and apron misses/accepted hits.
 The 24 accepted-hit scenarios explicitly require damage through the bench
 wrestler's last-hit pointer. One controlled side uses an unassigned passive
@@ -151,9 +149,9 @@ The older get-up and standing-hold references now continue past newly recovered
 34/57 boundaries; their counts above reflect the extended prefixes.
 
 The tag component comparisons also extend through these newly supported moves:
-48 extended corner cases now cover 31,130 updates, and 96 manual-tag cases cover
-43,185 updates. Together with the earlier 48 corner prefixes, the tag component
-suite has 192 cases / 82,547 updates. Its documented reduced service loop and
+48 extended corner cases now cover 31,200 updates, and 96 manual-tag cases cover
+56,137 updates. Together with the earlier 48 corner prefixes, the tag component
+suite has 192 cases / 95,569 updates. Its documented reduced service loop and
 reverse-order stress cases remain distinct from the full four-record core.
 
 A local simulated-controller check ran into the CPU's catch, selected the prone
@@ -161,3 +159,63 @@ submission with simultaneous punch/kick, and mashed free through escape 92.
 It observed original impact/damage requests, preserved linked artwork and no
 page errors, with native audio enabled and CPU AI disabled for controlled
 setups. Physical-pad and listening acceptance remain unverified.
+
+## Running counter and rescue update (0.1.28)
+
+Action 46 now catches through the accepted-contact pointer, preserves paired
+flags and positions, plays the airborne descriptor, and requests the original
+landing, damage, pin and announcer services. The short mode-zero victim waits
+31/40 preserve their incoming motion and pose. **60 sequences / 22,282 updates**
+cover catches, misses, running targets and both physical contact priorities.
+The positive catch scenarios require an actual accepted linked capture. The
+all-type dispatch checks seed the handler directly: they do not establish that
+each character can select the move. Its original frames 182–188 are populated
+for types 1, 5 and 9; the browser check uses Ultimate Warrior.
+
+`actors/rescue.js` translates action 10's prone hit and interruptions of
+committed pins/holds, including damage, counter wrapping, assistance release,
+controller requests and the original message ordering. Tag continuation 119
+runs the interrupted near-prone animation and restores actions 97/55. A normal
+mode source call in action 10 retains A1's descriptor at `$023b26`, so its
+message differs from the contact handler's actor-pointer call. The translation
+preserves that observed behavior, including a later pin-count message override.
+
+**360 handler sequences / 14,400 updates** check all twelve types, both modes,
+front/back prone hits, normal and late-count pins, other committed holds,
+secondary-pin branches, forced targets, unsupported targets and absent links.
+Only the rescuer updates in these kernel comparisons; the other three records
+capture linked writes. Mode-1 and secondary-pin coverage is a handler check,
+not complete Royal Rumble or secondary-pin gameplay.
+
+Another **96 composed sequences / 35,670 updates** run the normal four-record
+core around front/back prone hits, pin interruptions, near-prone interruption,
+forced targets and absent links. Positive cases require the actual interruption.
+Explicit synthetic role/AI configurations include a controlled assistant and
+both an AI-held and a human-eligible lead. The near-prone continuation uses an
+unassigned passive lead to prevent ordinary AI from restarting its hold. These
+are seeded integration checks, not evidence that every seed is reachable from
+ordinary play. A forced unfinished continuation now reports a boundary in the
+four-record playtest, instead of using the older two-person winner shortcut.
+
+The combined four-record reference now covers **492 sequences / 187,415
+updates**; the separate tag component suite covers **192 / 95,569**. Older
+get-up, hold, apron and tag prefixes now continue past their newly supported
+10/46/119 boundaries. Remaining boundaries and 400/650-update caps are retained.
+A native default neutral diagnostic reaches 2,262 updates before action 28;
+it is not an original-program comparison or a complete match.
+
+A simulated standard-pad browser check enabled native audio, ran into Warrior's
+counter, selected a pin break with punch, resumed movement with the restored
+lead, and rendered continuation 119 through re-entry. Controlled setups kept
+CPU AI off. It observed damage/sound requests and no page errors or actor
+handoffs in these scenarios. The tag/menu/controller regression check also
+reaches all three count sounds and the original result request, then stops at
+the unfinished forced walk-mode-12 continuation. It verifies restart from that
+boundary; it does not establish the original victory sequence. Physical
+controller and listening acceptance remain unverified.
+
+Use `TEAM_LAUNCH=1` or `TEAM_RESCUE=1` with `trace_team_match.mjs` for the new
+composed cohorts. `trace_rescue.mjs` generates the separate handler cohort;
+`RESCUE_FILTER` accepts profile/mode/type JSON, and `RESCUE_FIXTURE` selects a
+comparison file. External CPU research and detailed traces remain excluded
+from browser delivery. No runtime CPU emulator is introduced.
