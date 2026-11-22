@@ -54,6 +54,8 @@ Next reverse engineering work must map object states and routines to each combat
 
 [Standing grapple research](GRAPPLES.md) now records translated pair arbitration, arena-dependent headlock move choice and linked clinch/hold/carry/whip/escape kernels. They are verified as components and remain separate from normal matches while their selected throws, counters and victim reactions are reconstructed.
 
+Ten selected throw handlers and six additional victim reactions now have attacker, victim and composed linked-actor comparisons. The shared dispatcher follows those named paths through knockdown, recovery, get-up and idle, retaining explicit counter/outside handoffs. Normal grapple entry is still awaiting the remaining move graph and game-wide service integration.
+
 The native sample-effect sequencer matches original-driver event traces across 100 scenarios. Its sample playback and verification scope are documented in [audio research](AUDIO.md). The native music interpreter matches 31 original-driver scenarios and drives the JavaScript FM renderer. The score data, synthesis checks and remaining audio work are described in [music research](MUSIC.md). Standing punch/kick hit sounds now use original response commands. Complete gameplay sound routing remains unfinished.
 
 ## Actor state work

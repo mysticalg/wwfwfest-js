@@ -19,6 +19,7 @@ Open http://localhost:8765. GitHub Pages serves the same static files.
 - `src/game.js` connects recovered walking/running, standing combat and knockdowns with provisional AI and pinning.
 - `src/actors/` contains translated movement, descriptor clocks, standing actions, contact geometry, ring collision, running/braking/rebounds, knockdown/recovery and projection.
 - `src/actors/grapple.js` contains the reconstructed standing grapple core for continued development. It is not yet connected to normal matches; [grapple research](research/GRAPPLES.md) lists its verified paths and remaining throw/counter integration.
+- `src/actors/grapple-throws.js`, `grapple-victims.js` and `linked-actor.js` reconstruct ten throw paths, their additional victim reactions and actor handoffs for continued integration. Their reference sequences cover both participants through recovery or an explicit unimplemented handoff.
 - `src/data/actor-tables.js` contains editable original character speeds, directions, descriptors, contact records, rectangles, motion profiles and mash counts.
 - `src/camera.js`, `src/scenery.js` and `src/stage-renderer.js` implement original camera rules, crowd clocks and scrolling stage layers.
 - `src/data/stage-tables.js` contains editable camera bounds, crowd visibility/sequence data and patch coordinates.

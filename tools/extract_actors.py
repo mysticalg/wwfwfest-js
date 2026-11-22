@@ -57,6 +57,12 @@ def main():
             ('kind1Rumble', 0x10644, 5), ('kind2AI', 0x10649, 3),
             ('kind2Human', 0x1064c, 3), ('kind3', 0x1064f, 3),
         )},
+        'grappleThrows': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854 + action * 4)[0])
+                          for action in (2, 24, 36, 40, 44, 50, 52, 58, 66, 68)},
+        'grappleThrowVariants': {'largeTarget': descriptor(0x1789c)},
+        'automaticPinThresholds': words(0x10308, 12),
+        'grappleVictims': {str(reaction): descriptor(struct.unpack_from('>I', program, 0x1a214 + reaction * 4)[0])
+                           for reaction in (19, 21, 22, 34, 35, 41)},
         'grappleAnimations': {name: descriptor(address) for name, address in {
             'contested': 0x11690, 'entry': 0x116a8, 'control': 0x11722,
             'hidden': 0x11800, 'hold': 0x13f20, 'carry': 0x13fca,

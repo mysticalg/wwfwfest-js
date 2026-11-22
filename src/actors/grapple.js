@@ -3,6 +3,7 @@ import {addPositionWord,insideRingCollision} from './ring-collision.js';
 import {ActorAnimation} from './animation.js';
 import {stepMovement,walkSpeed} from './movement.js';
 import {projectionSnapshot} from './projection.js';
+import {isGrappleThrow,stepGrappleThrow} from './grapple-throws.js';
 
 const u16 = value => value & 65535;
 
@@ -138,8 +139,9 @@ export class GrappleActor {
       xFixed:0,yFixed:0,zFixed:0x1400000,facing:0,movementMode:0,speed:0,direction:0,
       flags32:0,flags33:0,flags34:0,flags35:0,flags56:0,flags74:0,flagsB7:0,forced:0,
       holdFlags:0,timer:0,controlCounter:0,inputBlockA:0,inputBlockB:0,comboCount:0,comboTimer:0,pendingDamage:0,
-      hitCounter:0,contact:0,severity:0,moveToggle:0,region:0,offsetX:0,offsetY:0,velocityX:0,velocityY:0,
-      velocityZ:0,gravity:0,auxiliary:null,unlinkMarked:false,sceneRefresh:0},initial);
+      hitCounter:0,contact:0,health:100,maximumHealth:100,severity:0,moveToggle:0,region:0,offsetX:0,offsetY:0,velocityX:0,velocityY:0,
+      velocityZ:0,gravity:0,auxiliary:null,unlinkMarked:false,sceneRefresh:0,
+      attempts:{},partner:null,world:{mode:0,round:0,inGame:true,message:0,shake:0},entropy:null},initial);
     this.pendingState=!(this.state&0x8000);
     this.state&=255;
     this.clock=new ActorAnimation(initial.clock||{pose:initial.pose||0});
@@ -150,7 +152,7 @@ export class GrappleActor {
   get pendingTransition() {
     return ![11,12,255].includes(this.state)
       && !(this.state===4&&this.reaction===1)
-      && !(this.state===5&&[21,22,23,41,80,123,124].includes(this.action&255));
+      && !(this.state===5&&([21,22,23,41,80,123,124].includes(this.action&255)||isGrappleThrow(this.action)));
   }
 
   // The byte tested at $b7 is the low half of the input-block word at $b6.
@@ -210,6 +212,38 @@ export class GrappleActor {
     this.change(5,80);
   }
 
+  profile(index) {
+    [this.velocityX,this.velocityZ,this.gravity]=actorTables.motionProfiles[index];
+    this.velocityY=0;if(this.facing&0x8000)this.velocityX=u16(-this.velocityX);this.movementMode=2;
+  }
+
+  attempt(offset) {
+    const prior=this.attempts[offset]||0;this.attempts[offset]=u16(prior+1);return prior;
+  }
+
+  random(kind) {
+    if(typeof this.entropy!=='function')throw new Error(`Original entropy required for ${kind}`);
+    return this.entropy(kind,this);
+  }
+
+  contest(kind,counter=0) {
+    const actorAI=Boolean(this.flags56&128),targetAI=Boolean(this.auxiliary?.flags56&128);
+    return grappleContest({kind,counter,actorAI,targetAI,severity:this.severity,...this.world,
+      randomNibble:kind===1&&actorAI?undefined:this.random('contest')});
+  }
+
+  announce(id) { this.world.message=((this.type&255)<<8)|(id&255); }
+  landingSound() { this.sounds.push(this.flags33&4?45:41); }
+
+  requestPin() {
+    if(this.world.inGame&&!(this.flags33&2)&&(this.random('pin')&255)<actorTables.automaticPinThresholds[this.type])this.flags34|=16;
+  }
+
+  partnerSupport(peer) {
+    const partner=peer.partner;
+    if(!(this.world.mode&1)&&partner&&(partner.state&255)===1&&(partner.walkMode&255)===1)partner.flags34|=32;
+  }
+
   step() {
     this.sounds=[];
     if(this.pendingTransition)return this;
@@ -266,14 +300,15 @@ export class GrappleActor {
         this.movementMode=0;this.timer=128;
         if(!this.comboCount){this.comboCount=4;this.comboTimer=64;}
       }else{
-        if(!this.forced&&peer&&peer.auxiliary!==this){this.auxiliary=null;this.unlinkMarked=false;}
+        if(!this.forced&&peer&&(peer.unlinkMarked||peer.auxiliary!==this)){this.auxiliary=null;this.unlinkMarked=false;}
         this.contact=1;this.timer=u16(this.timer-1);
         if(!this.timer){this.change(0);this.sceneRefresh=1;}
       }
     }else{
       const action=this.action&255;
       descriptor=data[({21:'hold',22:'carry',23:'whip',41:'clinchStrike',80:'break',123:'held',124:'escape'})[action]];
-      if(action===41){
+      if(isGrappleThrow(action))descriptor=stepGrappleThrow(this,peer,initialized);
+      else if(action===41){
         if(!initialized){
           this.movementMode=0;this.holdFlags&=~0x8000;peer.holdFlags|=0x8000;peer.change(255);
         }else{

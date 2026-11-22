@@ -34,6 +34,10 @@ The face-up recovery action rolls in depth according to the camera value, then g
 
 Zero health does not itself set a permanent-down state in these original handlers. The translated damage response and recovery path now preserve that behavior. Original match defeat is a separate remaining task.
 
+The high reaction flag `$2000`, used by several throws, can select reaction 1's timed stagger after get-up. This now retains the original previous-state and forced-state gates. The standing grapple research adds victim reactions 19,21,22,34,35,41, the normal outside-ring collision plane, rope requests and explicit outside-state handoffs. Those additional throw paths are component-tested and remain separate from normal `Match` gameplay while the rest of the grapple graph is reconstructed. [Grapple research](GRAPPLES.md) records their attacker and paired-sequence coverage.
+
+Probe results now retain the source's collision-word behavior: the face-down downed-state probe replaces the current collision flags, while the horizontal nudge helper preserves the previous flags and refreshes its correction fields. Orphan link cleanup also recognizes a peer's pending unlink marker before the late frame cleanup.
+
 ## Projection and current scene
 
 Actor-coordinate conversion uses the reference origin captured with the earlier arena layout, x `$01cd` and y `$0241`. World positions remain independent of the now-moving camera. Rendering uses integer position words as `$00248c` does, then the sprite recipe's inverted projected-y convention. It caches that result before physics, matching the original actor service order. This preserves height and avoids rounding flight/depth fractions into invented pixel positions. [Camera research](CAMERA.md) covers the scrolling layers and camera logic.
