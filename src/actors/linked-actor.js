@@ -53,7 +53,10 @@ export class LinkedActor extends GrappleActor {
       body.collision=this.collision;
       body.linkIdentity=this;
       for(const key of ['paddingX','paddingY','paddingZ','offsetX','offsetY'])body[key]=this[key]||0;
-      body.step({linkedFlags34:this.opponent?.flags34||0});Object.assign(this,body);this.timer=body.captureTimer;
+      body.step({linkedFlags34:this.opponent?.flags34||0});
+      if(body.comboTimerStart)body.comboTimer=body.comboTimerStart;
+      if(body.comboReset)body.comboCount=body.comboTimer=0;
+      Object.assign(this,body);this.timer=body.captureTimer;
       return this;
     }
     return super.step();

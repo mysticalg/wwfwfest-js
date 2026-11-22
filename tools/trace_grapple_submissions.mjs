@@ -5,14 +5,19 @@ import {readFileSync,writeFileSync} from 'node:fs';
 import {pathToFileURL} from 'node:url';
 const [hardwarePath,programPath,outputPath]=process.argv.slice(2);
 const withDamage=Boolean(process.env.DAMAGE),composed=Boolean(process.env.COMPOSE);
+const withReferee=Boolean(process.env.REFEREE);
 if(withDamage&&!composed)throw new Error('DAMAGE references require COMPOSE=1');
+if(withReferee&&!withDamage)throw new Error('REFEREE references require DAMAGE=1 and COMPOSE=1');
 const {default:MC68000}=await import(pathToFileURL(hardwarePath));
 const memory=new Uint8Array(0x200000);memory.set(readFileSync(programPath));
 const cpu=new MC68000(),sounds=[],entropy=[],textRequests=[];
 for(let page=0;page<0x2000;page++){cpu.memorymap[page].base=memory.subarray(page*256,(page+1)*256);cpu.memorymap[page].write=null;}
+// The Rumble pin tail can write through an already-cleared link into ROM.
+for(let page=0;page<0x800;page++)cpu.memorymap[page].write=()=>{};
 cpu.memorymap[0x1400].write16=(a,v)=>{if(a===0x14000c)sounds.push(v&255);};
 const bases=[0x1c05b0,0x1c06bc],partners=[0x1c07c8,0x1c08d4];
 const allBases=[...bases,...partners];
+const refBase=0x1c11f4;
 const word=a=>memory[a]*256+memory[a+1],long=a=>(word(a)*65536+word(a+2))|0;
 const putWord=(a,v)=>{memory[a]=v>>>8;memory[a+1]=v;},putLong=(a,v)=>{putWord(a,v>>>16);putWord(a+2,v);};
 function call(address,current=bases[0]){
@@ -31,7 +36,7 @@ const words={type:2,facing:0x2e,previousState:0x1e,speed:0x2a,direction:0x2c,hol
  contact:0x4c,pendingDamage:0x68,velocityX:0x58,velocityY:0x5a,velocityZ:0x5c,gravity:0x5e,offsetX:0x18,offsetY:0x1a,
  forced:0xfe,action:0x60,reaction:0x64,severity:0x70,health:0x66,maximumHealth:0x72,paddingX:0x3e,paddingY:0x40,paddingZ:0x42,eliminations:0xc4,
  mash:0xaa,inputBlockA:0xb4,inputBlockB:0xb6,supportTimer:0xe6,healthAccumulator:0x6a,resultPose:0x4a,targetX:0xbe,targetY:0xc0,
- ...(withDamage?{comboCount:0x52,comboTimer:0x54,idleTimer:0xd0}:{})};
+ ...(withDamage?{comboCount:0x52,comboTimer:0x54,idleTimer:0xd0}:{}),...(withReferee?{pinStatus:0x108}:{})};
 const attemptOffsets=Array.from({length:11},(_,i)=>0xe8+i*2);
 const headActions=[26,37,54,59,137];
 const actions=process.env.ACTION_SET?JSON.parse(process.env.ACTION_SET):withDamage?[26,37,54,59]:[...headActions,93,94,95,96,98,99,110,111,138,141];
@@ -53,6 +58,10 @@ function snapshot(index){
  for(const[name,offset]of Object.entries(words))result[name]=word(base+offset)&(composed&&name==='previousState'?255:65535);
  return result;
 }
+function refereeSnapshot(){return{state:word(refBase+0x20),clock:{flags:word(refBase+0x1c),remaining:word(refBase+0x22),index:word(refBase+0x24),pose:word(refBase+4)},
+ xFixed:long(refBase+6),yFixed:long(refBase+10),zFixed:long(refBase+14),focus:allBases.includes(long(refBase+0x56))?allBases.indexOf(long(refBase+0x56)):null,
+ projection:[word(refBase+0x14)<<16>>16,232-(word(refBase+0x16)<<16>>16)]};}
+const countTiles=()=>[0xc0744,0xc1188].map(base=>Array.from({length:32},(_,i)=>word(base+Math.trunc(i/8)*256+(i%8)*2)));
 const cases=[];
 for(const action of actions)for(const type of headActions.includes(action)?Array.from({length:12},(_,i)=>i):[0,1])for(const facing of [0,0x8000])for(const x of withDamage?[640]:[475,640,790]){
  cases.push({action,type,facing,x,variant:'human',attackerIndex:type&1,both:false});
@@ -95,7 +104,7 @@ for(const config of cases){
   initial[attackerIndex].action|=0x2000;initial[attackerIndex].holdFlags=variant==='phase1'?1:2;
   initial[1-attackerIndex].action=0x808d;
  }
- memory.fill(0,0x1c0000,0x1c4000);cpu.d.fill(0);cpu.a.fill(0);
+ memory.fill(0,0x1c0000,0x1c4000);if(withReferee)memory.fill(0,0xc0000,0xc2000);cpu.d.fill(0);cpu.a.fill(0);
  const world={mode:variant==='rumble'?1:0,round:variant==='opponentAI'?4:0,inGame:true,message:0,shake:0,modeValue:1,scene:0,rope:[0,0,0,0],secondaryShake:0,
   switchTimer:0,mashPrompt:0,controlsRefresh:0,matchResult:0,resultTimer:0,dipSwitches:0,textRequests:[],assistDistance:0,assistCandidate:null};
  putWord(0x1c007c,1);memory[0x1c0161]=world.mode;putWord(0x1c0162,world.round);
@@ -105,6 +114,7 @@ for(const config of cases){
   xFixed:0,yFixed:0,zFixed:0,facing:0,holdFlags:0,clock:{flags:0,remaining:0,index:0,pose:0},attempts:{},attempt26:0}));
  const allInitial=[...initial,...partnerInitial];
  if(withDamage)for(const body of allInitial)Object.assign(body,{flags57:body.type,flags104:body.flags56&128?0:128,comboCount:0,comboTimer:0,idleTimer:0});
+ if(withReferee)for(const body of allInitial)body.pinStatus=0;
  for(const[index,body]of allInitial.entries()){
   const base=allBases[index];memory[base]=128;putWord(base+0x20,body.state);
   putLong(base+0x26,body.auxiliaryIndex===null?0:allBases[index^1]|(body.unlinkMarked?0x80000000:0));
@@ -117,6 +127,11 @@ for(const config of cases){
   putWord(base+0xfc,body.attempt26||0);if(index>=2)memory[base+0xaf]=1;
  }
  if(withDamage)for(const base of allBases)call(0xf9c2,base);
+ if(withReferee){
+  call(0xf958,refBase);putLong(0x1c1684,bases[0]);putLong(0x1c1688,bases[1]);
+  Object.assign(world,{controlsRefresh:memory[0x1c1697],matchResult:word(0x1c1214),countWord:0,activeA:0,activeB:1,countTiles:countTiles(),messageExtra:0});
+ }
+ const refereeInitial=withReferee?refereeSnapshot():null;
  const updateOrder=both||composed?[0,1]:[attackerIndex],hash=createHash('sha256'),rows=[],entropyFrames=[],runInputs={},buttonInputs={};
  textRequests.length=0;
  let boundary=null,count=0;
@@ -134,6 +149,7 @@ for(const config of cases){
    }
    if(sampled)runInputs[tick]=masks;
   }
+  if(withReferee){const state=word(refBase+0x20)&255;call(long(0x1eb78+state*4),refBase);call(0x1ed16,refBase);call(0x248c,refBase);}
   for(const index of updateOrder){
    const base=bases[index],state=word(base+0x20);
    if(!supported(state&255,word(base+0x60),word(base+0x64))){boundary=index;break;}
@@ -153,12 +169,14 @@ for(const config of cases){
   Object.assign(row.world,{switchTimer:word(0x1c1682),mashPrompt:memory[0x1c167a],controlsRefresh:memory[0x1c1697],
    matchResult:word(0x1c1214),resultTimer:word(0x1c169e),textRequests:[...textRequests],assistDistance:word(0x1c1692),
    assistCandidate:allBases.includes(long(0x1c168c))?allBases.indexOf(long(0x1c168c)):null});
+  if(withReferee){Object.assign(row.world,{countWord:word(0x1c169a),countTiles:countTiles(),messageExtra:word(0x1c15d4)});row.referee=refereeSnapshot();}
   entropyFrames.push([...entropy]);hash.update(JSON.stringify(row)+'\n');count++;
   if(process.env.DETAIL)rows.push(row);
   if(boundary!==null)break;
   if(composed&&bases.every(base=>word(base+0x20)===0x8000&&word(base+4)===word(base+0x2e)))break;
  }
  sequences.push({...config,composed,damageService:withDamage,initial,world,partnerInitial,updateOrder,boundary,count,entropyFrames,
+  ...(withReferee?{refereeInitial}:{}),
   ...(composed?{runInputs}:{}),buttonInputs,sha256:hash.digest('hex'),...(process.env.DETAIL?{rows}:{})});
 }
 writeFileSync(outputPath,JSON.stringify({source:'wwfwfest US rev 2, original attacker kernels and linked handoffs',sequences},null,2)+'\n');

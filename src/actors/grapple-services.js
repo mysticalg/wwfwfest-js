@@ -1,4 +1,5 @@
 import {actorTables} from '../data/actor-tables.js';
+import {recoverTeamHealth} from './match-services.js';
 
 const u16=value=>value&65535;
 const ai=actor=>Boolean(actor.flags56&128);
@@ -150,12 +151,7 @@ export function submissionComplete(actor) {
   if(!(world.mode&1)){
     world.matchResult=0x8009;world.resultTimer=0;actor.sounds.push(50,50);
     actor.forced=actor.partner.forced=0x8000;peer.forced=peer.partner.forced=0x8001;
-    const amount=actorTables.teamRecovery[((world.dipSwitches||0)&0x6000)>>>13];
-    for(const body of (world.actors||[actor,peer,actor.partner,peer.partner]).slice(0,4)){
-      if(body.forced&1)continue;
-      body.health=u16(body.health+amount);body.healthAccumulator=u16((body.healthAccumulator||0)+amount);
-      if(body.health>=body.maximumHealth)body.health=body.maximumHealth;
-    }
+    recoverTeamHealth(world.actors||[actor,peer,actor.partner,peer.partner],world.dipSwitches||0);
     actor.resultPose=4;
     if(!ai(actor)){world.message=0x0f2a;(world.textRequests??=[]).push(38);return true;}
   }

@@ -50,3 +50,13 @@ export function applyActorDamage(actor) {
 export function advanceDamageService(actors) {
   for(const actor of actors.slice(0,9))if(actor?.active)applyActorDamage(actor);
 }
+
+// $008bd0 deliberately visits the first four records, including inactive ones.
+export function recoverTeamHealth(actors,dipSwitches=0) {
+  const amount=actorTables.teamRecovery[(dipSwitches&0x6000)>>>13];
+  for(const actor of actors.slice(0,4)){
+    if(actor.forced&1)continue;
+    actor.health=u16(actor.health+amount);actor.healthAccumulator=u16((actor.healthAccumulator||0)+amount);
+    if(actor.health>=actor.maximumHealth)actor.health=actor.maximumHealth;
+  }
+}

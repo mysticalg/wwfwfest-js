@@ -58,6 +58,8 @@ All twenty-two headlock-selected handlers, eleven reversals and eleven additiona
 
 [Original health and damage services](MATCH_SERVICES.md) now supply character/AI initialization and the playable match's pending-damage phase. Additional paired comparisons combine initialization, actor handlers and damage through the selected submission completion requests. Contact/pin/AI/scene integration and full matches remain unfinished.
 
+[The referee translation](REFEREE.md) adds original following, pin/countout clocks, result requests, control/submission/victory gestures and count-layer words. Further composed hold comparisons include the referee before actor updates and close the matching action-26 pin waits. Its state aliases the original global submission-result word. Normal browser matches still need the unified actor pool and original pin entry/escape handling before these components replace provisional pinning.
+
 The native sample-effect sequencer matches original-driver event traces across 100 scenarios. Its sample playback and verification scope are documented in [audio research](AUDIO.md). The native music interpreter matches 31 original-driver scenarios and drives the JavaScript FM renderer. The score data, synthesis checks and remaining audio work are described in [music research](MUSIC.md). Standing punch/kick hit sounds now use original response commands. Complete gameplay sound routing remains unfinished.
 
 ## Actor state work

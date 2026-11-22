@@ -102,6 +102,13 @@ def main():
         'initialComputerHealth': words(0xfa88, 10),
         'difficultyHealth': list(struct.unpack_from('>4h', program, 0xfa9c)),
         'selectableTypes': words(0x8998, 10),
+        'referee': {
+            'returnMasks': list(program[0x1f240:0x1f244]),
+            'returnDirections': list(program[0x1f244:0x1f248]),
+            'walkDirections': list(program[0x1f832:0x1f852]),
+            'countGlyphs': [list(program[address:address + (8 if index < 10 else 16)])
+                            for index,address in enumerate(struct.unpack_from('>21I', program, 0x1f960))],
+        },
         'knockdownAnimations': {name: descriptor(address) for name, address in {
             'flight': 0x1a354, 'flightSevere': 0x1a364,
             'bounce': 0x1a3f8, 'bounceSevere': 0x1a404,
