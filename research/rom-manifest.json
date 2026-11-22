@@ -1,0 +1,167 @@
+{
+  "set": "WWF WrestleFest (US, rev 2)",
+  "files": [
+    {
+      "name": "31a11-2.ic42",
+      "size": 65536,
+      "crc32": "5ddebfea",
+      "sha256": "f89e7782e7535576b2ebf8c5daea61c5fa2ecefff0b8b3280dea09efa57c25f7"
+    },
+    {
+      "name": "31a12-0.ic33",
+      "size": 131072,
+      "crc32": "d0803e20",
+      "sha256": "a52511efecc99adb06c16c551c8fc84cfc9275c868906486d0d7c48544fdedb7"
+    },
+    {
+      "name": "31a13-2.ic19",
+      "size": 262144,
+      "crc32": "7175bca7",
+      "sha256": "ec7205d5fbc6c1bd047bf3521d35289893c33a3a4eba910479a8bc8814cf8b87"
+    },
+    {
+      "name": "31a14-2.ic18",
+      "size": 262144,
+      "crc32": "5d06bfd1",
+      "sha256": "cf60fa23b69ec2a175aa56b5272c24e1c9c50c8823d24a55d0b792118324ee8e"
+    },
+    {
+      "name": "31j0.ic1",
+      "size": 262144,
+      "crc32": "8a12b450",
+      "sha256": "8122d0d030dc123063a82508a6110fe99f1c4e93fa7a1782ed6f0195350f4228"
+    },
+    {
+      "name": "31j1.ic2",
+      "size": 262144,
+      "crc32": "82ed7155",
+      "sha256": "b8524545494104a6c9906c556e01fa01d23948631105ce6ceb033c671a8b5787"
+    },
+    {
+      "name": "31j10.ic73",
+      "size": 524288,
+      "crc32": "6c522edb",
+      "sha256": "e4cbe71f079e2cb95b3463115557fa1d99e18ea975f2d3354827b01994fc4615"
+    },
+    {
+      "name": "31j2.ic8",
+      "size": 1048576,
+      "crc32": "b5a97465",
+      "sha256": "777ff629b2117aa9294a32a6ba1ba8b16c43810570ec93760a404130afbf2a4b"
+    },
+    {
+      "name": "31j3.ic9",
+      "size": 1048576,
+      "crc32": "e395cf1d",
+      "sha256": "90f1b7156eae59b2eceec43032dde5ebb8e0f9ce131dfb97558cb01c6282fe2a"
+    },
+    {
+      "name": "31j4.ic10",
+      "size": 1048576,
+      "crc32": "00edb66a",
+      "sha256": "21442322aed07bcaebd6155ba768b0b3e93be89857bacb8a58731985ec34b2ac"
+    },
+    {
+      "name": "31j5.ic11",
+      "size": 1048576,
+      "crc32": "2ce545e8",
+      "sha256": "8d7b3f88d6bb73a0d374d840ae0df25e554cb0d8f8c6ca4cdbabc9ed4c494616"
+    },
+    {
+      "name": "31j6.ic12",
+      "size": 1048576,
+      "crc32": "79956cf8",
+      "sha256": "38a9e2aa3f784d799d2e371c8d754893febe5459889359356efa3d8ec32a45e9"
+    },
+    {
+      "name": "31j7.ic13",
+      "size": 1048576,
+      "crc32": "74d774c3",
+      "sha256": "a56c15fe548cfc8d4ad947554023ad524958461e95d093290400b094a2d6fe7d"
+    },
+    {
+      "name": "31j8.ic14",
+      "size": 1048576,
+      "crc32": "44abe127",
+      "sha256": "7a8b7f9c9b6c42750182a4c8f967b7d15f38f339be74e0f22093acbd5343961f"
+    },
+    {
+      "name": "31j9.ic15",
+      "size": 1048576,
+      "crc32": "dd387289",
+      "sha256": "e689c2ebbe3c6236f2ea866c4f350bc6a56283468b8530b59eb46fe89f54047d"
+    }
+  ],
+  "graphics": {
+    "sprites": 65536,
+    "tiles": 4096,
+    "characters": 4096
+  },
+  "poses": [
+    {
+      "type": 0,
+      "entries": 565,
+      "requiresContext": 256
+    },
+    {
+      "type": 1,
+      "entries": 565,
+      "requiresContext": 259
+    },
+    {
+      "type": 2,
+      "entries": 565,
+      "requiresContext": 74
+    },
+    {
+      "type": 3,
+      "entries": 565,
+      "requiresContext": 73
+    },
+    {
+      "type": 4,
+      "entries": 565,
+      "requiresContext": 78
+    },
+    {
+      "type": 5,
+      "entries": 565,
+      "requiresContext": 86
+    },
+    {
+      "type": 6,
+      "entries": 565,
+      "requiresContext": 68
+    },
+    {
+      "type": 7,
+      "entries": 565,
+      "requiresContext": 267
+    },
+    {
+      "type": 8,
+      "entries": 565,
+      "requiresContext": 259
+    },
+    {
+      "type": 9,
+      "entries": 565,
+      "requiresContext": 257
+    },
+    {
+      "type": 10,
+      "entries": 565,
+      "requiresContext": 77
+    },
+    {
+      "type": 11,
+      "entries": 565,
+      "requiresContext": 75
+    },
+    {
+      "type": 12,
+      "entries": 19,
+      "requiresContext": 1
+    }
+  ]
+}

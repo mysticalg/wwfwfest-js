@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#11141b">
+  <title>WrestleFest · JavaScript reconstruction</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <div><h1>WrestleFest</h1><p>JavaScript reconstruction · early playable prototype</p></div>
+      <a href="https://github.com/mysticalg/wwfwfest-js">Source on GitHub ↗</a>
+    </header>
+    <nav aria-label="Views"><button id="play-tab" aria-pressed="true">Play</button><button id="frames-tab" aria-pressed="false">Animation explorer</button></nav>
+    <section class="screen-wrap" aria-label="Game">
+      <canvas id="screen" width="320" height="240" tabindex="0" aria-label="WrestleFest game screen. Use the controls below."></canvas>
+      <p id="status" role="status">Loading recovered assets…</p>
+    </section>
+    <section id="play-controls">
+      <div class="actions"><button id="start" disabled>Start match</button><button id="reset" disabled>Reset</button><button id="pause" disabled>Pause</button><button id="fullscreen">Fullscreen</button><label><input id="ai" type="checkbox" checked> Computer opponent</label></div>
+      <div class="pickers"><label>Player <select id="player"></select></label><label>Opponent <select id="opponent"></select></label></div>
+      <p class="instructions"><kbd>← ↑ ↓ →</kbd> move · <kbd>Z</kbd> strike · <kbd>X</kbd> heavy strike · <kbd>C</kbd> run · <kbd>Space</kbd> pin · <kbd>Enter</kbd> start · <kbd>P</kbd> pause</p>
+      <div class="touch" aria-label="Touch controls"><div><button data-key="ArrowUp">↑</button><div><button data-key="ArrowLeft">←</button><button data-key="ArrowDown">↓</button><button data-key="ArrowRight">→</button></div></div><div><button data-key="KeyZ">Strike</button><button data-key="KeyX">Heavy</button><button data-key="Space">Pin</button></div></div>
+      <p class="note">Recovered original graphics and pose tables. Movement, combat, AI, and pinning currently use provisional JavaScript rules. Arcade match logic and audio are still being reconstructed.</p>
+    </section>
+    <section id="frame-controls" hidden>
+      <div class="pickers"><label>Wrestler <select id="actor"></select></label><label>Pose <input id="pose-number" type="number" value="0" min="0" max="564"></label><label><input id="mirror" type="checkbox"> Mirror</label></div>
+      <input id="pose-range" type="range" min="0" max="564" value="0" aria-label="Pose index">
+      <div class="actions"><button id="previous">Previous pose</button><button id="next">Next pose</button><button id="animate">Cycle poses</button></div>
+      <p id="pose-info"></p>
+      <p class="note">Pose indices expose the ROM's frame table. Some records require another object or animation context and remain unresolved.</p>
+    </section>
+  </main>
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

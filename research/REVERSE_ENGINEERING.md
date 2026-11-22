@@ -1,0 +1,57 @@
+# Reverse engineering notes
+
+## Identity and program layout
+
+The supplied ZIP contains the US rev 2 program pair `31a14-2.ic18` and `31a13-2.ic19`. The even bytes come from IC18 and the odd bytes from IC19, producing a 524,288-byte big-endian Motorola 68000 program. The initial stack is `$1c3bd4` and the reset entry is `$000654`.
+
+`rom-manifest.json` records each input member's length, CRC32 and SHA-256. The original Z80 program is `31a11-2.ic42`. ADPCM data is `31j10.ic73`.
+
+## Confirmed addresses
+
+| Address | Observed role |
+| --- | --- |
+| `$000434` | Level 2 interrupt, coin input accounting |
+| `$000654` | Reset and boot sequence |
+| `$000826` | Level 3 interrupt and frame service dispatch |
+| `$001e2e` | DIP switch read and packing |
+| `$001e7c` | Wait over frame service flag |
+| `$001f2e` | Clear working RAM |
+| `$001f7c` | Clear background layout buffers |
+| `$001fae` | Clear character tile layer |
+| `$001fee` | Clear sprite descriptors |
+| `$002846` | Assemble ordered sprite list |
+| `$002958` | Depth sort object pointers by object word at offset `$0a` |
+| `$002a16` | Load palette groups |
+| `$002afa` | Allocate sprite palette bank |
+| `$002ed2` | Base of 32-byte sprite palette records |
+| `$00c43c` | Object sprite preparation |
+| `$00c452` | Frame table lookup and sprite recipe expansion |
+| `$025708` | Palette transition routine |
+| `$03813a` | Relative actor frame-index table offsets |
+| `$0381de` | Actor recipe-data base pointers |
+
+The selected assembly listing preserves instructions for boot, input accounting, layer clearing and palette handling. Capstone sentinel-looking operands at the end of a limited disassembly range are incomplete reads and require a larger range before use.
+
+## Recovered graphics
+
+Sprite data is assembled from IC9, IC8, IC11, IC10, IC12, IC13, IC15 and IC14 in that order. Four planes occupy offsets 0, `$1000000`, `$2000000`, `$3000000` in bits. Each 16 by 16 tile advances 256 bits within its plane. The x offsets are 0 through 7 and 128 through 135. Y offsets are 0 through 120 in steps of 8.
+
+The renderer ports the recovered chain descriptor behavior. Flag bit 4 flips x, bit 3 flips y, and bits 5 through 7 encode the vertical tile count minus one. Each JSON pose carries local x/y offsets, the flags, tile code and local palette index.
+
+The original recipe expander was exercised offline with each type and frame index at a fixed origin. It produced standalone recipes for the delivered JSON tables. Entries that exceeded the bounded evaluation are marked `requiresContext`. Context-dependent recipes need continued analysis before use. Extraction success alone does not verify composite pose semantics.
+
+The supplied program uses 565 frame indices for each of the first 12 actor types, with a shared 19-entry referee table. Types 10 and 11 contain alternate Legion of Doom graphics. The application exposes their frame records in the explorer.
+
+## Native source and fidelity
+
+`src/renderer.js` reproduces the recovered tile-chain interpretation in Canvas. The stage PNG files were assembled from decoded background tiles, tilemaps, scroll values and palettes observed in offline traces. They are fixed stage layouts.
+
+`src/game.js` is an editable provisional match implementation. Its numerical rules and animation timing have not been translated from the arcade's move and state tables. No arcade-fidelity claim is made for those rules. They provide a playable development surface while the state machines are reconstructed.
+
+Next reverse engineering work must map object states and routines to each action, recover actual hit regions and damage tables, implement dependent grapple poses, recover animation sequence timing, translate sound sequencing and test complete tag and Rumble matches against reference runs.
+
+## Research references
+
+- [FinalBurn Neo hardware driver](https://github.com/finalburnneo/FBNeo/blob/master/src/burn/drv/pst90s/d_wwfwfest.cpp) supplied hardware memory and bitplane descriptions. Its driver source is not included in the browser bundle.
+- [iapx86 JavaScript hardware project](https://github.com/iapx86/JavaScript) supplied a temporary offline 68000 trace tool. Its CPU implementation is excluded from the delivered project.
+- [Capstone](https://www.capstone-engine.org/) decoded the 68000 instructions for inspection.
