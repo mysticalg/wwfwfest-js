@@ -45,7 +45,7 @@ Each group hashes every original descriptor's six hardware-significant bytes in 
 
 An independent Python rasterizer decodes the original sprite ROMs and palette words, then draws **210 original CPU descriptor captures**. Native browser Canvas output matches every resulting full 320-by-240 RGBA hash exactly. Cases include normal/run/rebound poses, paired holds across several types, both facings, missing combinations and edge clipping. Two additional browser checks confirm that editable standalone overrides match the corresponding original image in both directions. Paired explorer selection and unused-entry labels also passed browser checks without page errors.
 
-These are sprite-rendering comparisons, not proof of complete gameplay parity. Running attacks, grapples, paired physics, original match rules and remaining audio routing still need their own native logic and reference runs.
+These are sprite-rendering comparisons, not proof of complete gameplay parity. Ordinary running attacks and their paired physics now have separate native comparisons in [running action research](RUNNING_ATTACKS.md). Standing grapples, other paired actions, original match rules and remaining audio routing still need their own native logic and reference runs.
 
 ## Reproduction
 

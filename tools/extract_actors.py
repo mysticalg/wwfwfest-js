@@ -37,6 +37,12 @@ def main():
         'runAnimations': {name: descriptor(address) for name, address in {
             'run': 0x10ea2, 'brake': 0x10fc2, 'rebound': 0x11010,
         }.items()},
+        'runningMoveRows': list(program[0xd2b0:0xd2f8]),
+        'runningMoveTables': [list(program[address:address + 9]) for address in
+                              struct.unpack_from('>12I', program, 0xd73e)],
+        'runningAttacks': {str(action): descriptor(struct.unpack_from('>I', program, 0x11854 + action * 4)[0])
+                           for action in (1, 4, 5, 32, 42, 45, 64, 65)},
+        'runningPairedAnimations': {'runningCapture': descriptor(0x12168), 'airborneCapture': descriptor(0x11e32)},
         'inputDirections': words(0xe516, 16),
         'polarX': words(0x2388, 65),
         'polarY': words(0x240a, 65),
@@ -52,7 +58,7 @@ def main():
                            for index in range(11)],
         'reactionFacingMap': list(program[0x23fde:0x23fde + 36]),
         'motionProfiles': [list(struct.unpack_from('>3H', program, 0x25da + index * 6))
-                           for index in range(24)],
+                           for index in range(38)],
         'recoveryMashCounts': list(program[0xff40:0xff44]),
         'knockdownAnimations': {name: descriptor(address) for name, address in {
             'flight': 0x1a354, 'flightSevere': 0x1a364,
@@ -61,6 +67,8 @@ def main():
             'down': 0x1a540, 'downBack': 0x1a54c,
             'turn': 0x1a67a, 'getup': 0x11076,
             'rollRecovery': 0x16d3e, 'backRecovery': 0x193c6,
+            'captureWait': 0x1a940, 'grabbed': 0x1a9d6,
+            'ropeStagger': 0x1acc2, 'bump': 0x1ad30, 'released': 0x1ad80, 'runReleased': 0x1ae62,
         }.items()},
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)

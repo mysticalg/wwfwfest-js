@@ -8,19 +8,22 @@ import {actorTables} from '../data/actor-tables.js';
 export class Running {
   constructor({type = 0, xFixed, yFixed, zFixed = 0x1400000,
     facing = 0, pose = facing, movementMode = 0, speed = 0, direction = 0,
-    flags32 = 0, flags33 = 0, bounceCount = 0, previousState = 0, clock} = {}) {
+    flags32 = 0, flags33 = 0, bounceCount = 0, previousState = 0, clock,
+    state = 2, contact = 0, offsetX = 0, offsetY = 0} = {}) {
     if (!Number.isInteger(type) || type < 0 || type >= actorTables.runSpeeds.length) {
       throw new RangeError('Invalid wrestler type');
     }
     Object.assign(this, {type, xFixed, yFixed, zFixed, facing, movementMode,
       speed, direction, flags32, flags33, bounceCount, previousState});
-    this.state = 2;
+    this.state = state;
     this.pendingState = true;
     this.inputInitialized = false;
     this.clock = new ActorAnimation({...clock, pose});
     this.lastPose = pose;
-    this.contact = 0;
-    this.offsetX = this.offsetY = 0;
+    this.hits = new Set();
+    this.contact = contact;
+    this.offsetX = offsetX;
+    this.offsetY = offsetY;
     this.done = false;
     this.sounds = [];
     this.ropeEvents = [];
@@ -130,6 +133,7 @@ export class Running {
     stepMovement(this);
     if (this.clock.pose !== this.lastPose) {
       this.contact = 0;
+      this.hits.clear();
       this.lastPose = this.clock.pose;
     }
     this.done = this.state === 0;

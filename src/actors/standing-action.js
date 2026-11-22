@@ -2,7 +2,7 @@ import {ActorAnimation} from './animation.js';
 import {actorTables} from '../data/actor-tables.js';
 
 // Normal standing action 0 ($011ac8) and action $72 ($01921a). Entry nudges
-// against ring boundaries are handled by the world collision path, still open.
+// against ring boundaries are handled by the translated world collision path.
 export class StandingAction {
   constructor(button, pose, contact = 1) {
     this.button = button;

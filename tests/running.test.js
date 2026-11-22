@@ -43,7 +43,9 @@ test('match controller shortcut preserves original run, brake, rebound, motion a
     const match = new Match(initial.type, 6);
     match.ai = false;
     const actor = match.fighters[0];
+    // The one-actor locomotion reference has no collision partner in its lane.
     updateScreenPosition(actor, initial);
+    match.fighters[1].y = actor.y + 64;
     actor.facing = initial.facing ? 1 : -1;
     actor.animation.pose = actor.lastPose = initial.pose ?? initial.facing;
     Object.assign(actor.animation, initial.clock);

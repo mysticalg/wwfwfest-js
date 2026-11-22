@@ -1,6 +1,6 @@
 # Native running, braking and rope rebounds
 
-`src/actors/running.js` translates the ordinary inside-ring state 2/3/6 handlers. `src/game.js` connects them to keyboard, touch and standard gamepad input. Running is a persistent action: releasing the button does not stop the wrestler. Push the opposite horizontal direction to brake. The dedicated Run control supplies the original simultaneous punch/kick input.
+`src/actors/running.js` translates the ordinary inside-ring state 2/3/6 handlers. `src/game.js` connects them to keyboard, touch and standard gamepad input. Running is a persistent action: releasing the button does not stop the wrestler. Push the opposite horizontal direction to brake. The dedicated Run control supplies the original simultaneous punch/kick press edge. Holding that shortcut leaves the physical punch/kick buttons available for running attacks.
 
 ## Original routines
 
@@ -40,4 +40,4 @@ npm run check
 
 ## Remaining work
 
-This implements normal inside-ring locomotion and rebound physics. The rope requests are recovered, but moving rope graphics remain to be integrated. Running attacks, other action-selection rows, paired wrestling states, outside-ring collision kinds 3/5 and mode-dependent behavior remain unfinished. The current match AI and rules remain provisional. CPU execution is confined to offline research; the browser runs translated JavaScript functions.
+This implements normal inside-ring locomotion and rebound physics. The rope requests are recovered, but moving rope graphics remain to be integrated. The eight ordinary running actions, paired captures and body collisions are now described in [running action research](RUNNING_ATTACKS.md). Other action-selection rows, standing grapple states, outside-ring collision kinds 3/5 and mode-dependent behavior remain unfinished. The current match AI and rules remain provisional. CPU execution is confined to offline research; the browser runs translated JavaScript functions.

@@ -2,6 +2,7 @@ import {ActorAnimation} from './animation.js';
 import {stepMovement} from './movement.js';
 import {insideRingCollision, addPositionWord} from './ring-collision.js';
 import {actorTables} from '../data/actor-tables.js';
+import {worldPosition} from './projection.js';
 
 const u16 = value => value & 0xffff;
 
@@ -11,22 +12,27 @@ export class Knockdown {
   constructor({xFixed, yFixed, zFixed = 0x1400000, facing = 0, pose = 0,
     reaction = 2, health = 100, maximumHealth = 100, severity = 0,
     flags32 = 0, flags33 = 0, flags56 = 0, recoveryTimer = 0,
-    mash = 0, cameraY = 0x241, movementMode = 0, speed = 0, direction = 0} = {}) {
+    mash = 0, cameraY = 0x241, movementMode = 0, speed = 0, direction = 0,
+    state = 4, clock, flags34 = 0, velocityX = 0, velocityY = 0, velocityZ = 0, gravity = 0,
+    captureTimer = 0, attacker = null} = {}) {
     Object.assign(this, {xFixed, yFixed, zFixed, facing, health, maximumHealth, severity,
-      flags32, flags33, flags56, recoveryTimer, mash, cameraY});
-    this.state = 4;
+      flags32, flags33, flags56, flags34, recoveryTimer, mash, cameraY, captureTimer, attacker});
+    this.state = state;
     this.reaction = reaction;
     this.action = 0;
-    this.clock = new ActorAnimation({pose});
+    this.clock = new ActorAnimation({...clock, pose});
     this.pendingState = true;
     this.previousState = 0;
     Object.assign(this, {movementMode, speed, direction});
-    this.velocityX = this.velocityY = this.velocityZ = this.gravity = 0;
+    Object.assign(this, {velocityX, velocityY, velocityZ, gravity});
     this.paddingX = this.paddingY = this.paddingZ = 0;
     this.collision = {kind: 0, flags: 0, x: 0, y: 0, z: 0};
     this.done = false;
     this.comboReset = false;
+    this.comboTimerStart = 0;
     this.sounds = [];
+    this.linked = false;
+    this.offsetX = this.offsetY = 0;
   }
 
   get canPin() {
@@ -80,6 +86,7 @@ export class Knockdown {
   step({pressed = 0, pinned = false, linkedFlags34 = 0} = {}) {
     this.sounds = [];
     this.comboReset = false;
+    this.comboTimerStart = 0;
     // $00de04 is an input-phase transition. It initializes the selected recovery
     // action during this update, while handler transitions initialize next time.
     const lowReaction = this.reaction & 255;
@@ -207,6 +214,65 @@ export class Knockdown {
             this.reaction &= 0x7fff;
           }
         }
+      } else if (reaction === 16 || reaction === 18) {
+        descriptor = data.captureWait;
+        this.clock.pose = 0xffff;
+        this.clock.remaining = 0xff00;
+        this.clock.flags |= 0x8000;
+        if (!initialized) this.captureTimer = 32;
+        this.captureTimer = u16(this.captureTimer - 1);
+        if (!this.captureTimer) this.change(0);
+      } else if (reaction === 29) {
+        descriptor = data.grabbed;
+        if (!initialized) {
+          this.facing ^= 0x8000;
+          this.linked = true;
+          if (!this.attacker) throw new Error('Running grab requires its linked attacker');
+          const attacker = this.attacker.owner ? worldPosition(this.attacker.owner) : this.attacker;
+          for (const [field, offset] of [['xFixed', 0], ['yFixed', -1], ['zFixed', 0]]) {
+            this[field] = addPositionWord(this[field], (attacker[field] >>> 16) - (this[field] >>> 16) + offset);
+          }
+          this.movementMode = 0;
+        } else if (this.clock.index === 0xfe) {
+          const wasRunning = this.previousState === 2;
+          this.change(4, wasRunning ? 27 : 2);
+          this.facing ^= 0x8000;
+          this.xFixed = addPositionWord(this.xFixed, this.facing & 0x8000 ? -8 : 8);
+          this.yFixed = addPositionWord(this.yFixed, -1);
+          this.zFixed = addPositionWord(this.zFixed, wasRunning ? 64 : 16);
+          if (!wasRunning) this.clock.pose = this.facing ^ 17;
+          this.linked = false;
+        }
+      } else if (reaction === 24) {
+        descriptor = data.bump;
+        if (!initialized) { this.movementMode = 0; this.comboTimerStart = 64; }
+        else if (this.clock.index === 0xfe) this.change(0);
+      } else if (reaction === 23 || reaction === 25 || reaction === 27) {
+        descriptor = reaction === 23 ? data.ropeStagger : reaction === 25 ? data.released : data.runReleased;
+        if (!initialized) {
+          if (reaction === 23) {
+            this.flags33 &= ~16;
+            this.profile(13);
+          } else if (reaction === 25) {
+            this.profile(this.flags34 & 8 ? 36 : 19);
+            this.flags34 &= ~8;
+          } else {
+            this.profile(20);
+            const y = this.yFixed >>> 16;
+            if (u16(y + 32) >= 0x198) this.velocityY = 0xffd0;
+            else if (u16(y - 32) < 0x118) this.velocityY = 0x30;
+          }
+        } else if (this.collision.flags & 16) {
+          this.sounds.push(0x29);
+          this.change(4, 5);
+          if (reaction === 27) { this.reaction = 5; this.paddingZ = 0; }
+          this.clock.pose = this.facing ^ (reaction === 25 && this.severity !== 2 ? 20 : 31);
+          if (reaction === 25 || reaction === 27) {
+            const distance = reaction === 25 ? -64 : -56;
+            this.xFixed = addPositionWord(this.xFixed, this.facing & 0x8000 ? -distance : distance);
+          }
+        }
+        if (reaction === 27 && initialized && !(this.collision.flags & 16)) this.paddingZ = 0xfff0;
       } else throw new RangeError(`Untranslated knockdown reaction ${reaction}`);
     }
     this.clock.step(descriptor, this.facing);
