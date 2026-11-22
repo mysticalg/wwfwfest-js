@@ -3,18 +3,23 @@ import {Match, rules} from './game.js';
 import {NativeAudio} from './audio/native-audio.js';
 import {decodeSample} from './audio/sample-codec.js';
 import {MusicSequencer} from './audio/music-sequencer.js';
+import {GamepadInput, neutralControls} from './gamepad.js';
 
 const element = id => document.getElementById(id);
 const canvas = element('screen');
 const renderer = new Renderer(canvas);
 export const audio = new NativeAudio();
 const held = new Set();
+const gamepads = new GamepadInput();
+let padControls = neutralControls();
+let gamepadWasUsed = false;
 export const state = {view: 'play', match: null, paused: false, ready: false, pose: 0, actor: 0, cycling: false};
 const tables = new Map();
 let accumulator = 0;
 let previousTime = performance.now();
 let cycleTicks = 0;
 let actorRequest = 0;
+let matchRequest = 0;
 let soundEffect = null;
 let soundWaveform = null;
 let musicTrack = null;
@@ -34,13 +39,15 @@ async function prepareActor(type) {
 }
 
 async function startMatch() {
-  if (!state.ready) return;
+  if (!state.ready || element('start').disabled) return;
+  const request = ++matchRequest;
   element('start').disabled = true;
   const player = Number(element('player').value);
   const opponent = Number(element('opponent').value);
   element('status').textContent = 'Preparing wrestlers…';
   try {
     await Promise.all([prepareActor(player), prepareActor(opponent)]);
+    if (request !== matchRequest) return;
     state.match = new Match(player, opponent);
     state.match.ai = element('ai').checked;
     playSceneAudio(true);
@@ -50,10 +57,22 @@ async function startMatch() {
     element('status').textContent = '';
     canvas.focus();
   } catch (error) {
-    element('status').textContent = error.message;
+    if (request === matchRequest) element('status').textContent = error.message;
   } finally {
-    element('start').disabled = false;
+    if (request === matchRequest) element('start').disabled = false;
   }
+}
+
+function resetMatch() {
+  matchRequest++;
+  state.match = null;
+  state.paused = false;
+  element('start').disabled = !state.ready;
+  element('pause').textContent = 'Pause';
+  element('status').textContent = '';
+  audio.pause(false);
+  held.clear();
+  playSceneAudio();
 }
 
 function playSceneAudio(opening = false) {
@@ -276,15 +295,50 @@ function drawSoundExplorer() {
 
 function input() {
   return {
-    horizontal: Number(held.has('ArrowRight')) - Number(held.has('ArrowLeft')),
-    vertical: Number(held.has('ArrowDown')) - Number(held.has('ArrowUp')),
-    strike: held.has('KeyZ'), heavy: held.has('KeyX'), run: held.has('KeyC'), pin: held.has('Space'),
+    horizontal: Math.sign(Number(held.has('ArrowRight')) - Number(held.has('ArrowLeft')) + padControls.horizontal),
+    vertical: Math.sign(Number(held.has('ArrowDown')) - Number(held.has('ArrowUp')) + padControls.vertical),
+    strike: held.has('KeyZ') || padControls.strike, heavy: held.has('KeyX') || padControls.heavy,
+    run: held.has('KeyC') || padControls.run, pin: held.has('Space') || padControls.pin,
   };
+}
+
+function pollGamepad() {
+  const active = !document.hidden && document.hasFocus();
+  const pad = gamepads.poll(active);
+  padControls = pad.controls;
+  let message = pad.error || 'Controller support ready. Connect a pad and press a button.';
+  if (pad.connected) {
+    message = `${pad.id}${pad.mapping === 'standard' ? '' : ' · Default button order'}`;
+    if (!active) message += ' · Click the game to enable input.';
+    else if (pad.waitingForNeutral) message += ' · Release the controls to resume input.';
+  }
+  if (element('controller-status').textContent !== message) element('controller-status').textContent = message;
+  if (pad.lost && gamepadWasUsed && state.match && !state.paused) togglePause();
+  if (pad.lost) gamepadWasUsed = false;
+  if (pad.activity) gamepadWasUsed = true;
+  if (!state.ready || element('start').disabled) return;
+  if (pad.backPressed) {
+    if (state.view !== 'play') setView('play');
+    else if (state.match && (state.paused || state.match.winner !== null)) resetMatch();
+  }
+  if (pad.startPressed) {
+    if (state.view !== 'play') setView('play');
+    else if (!state.match || state.match.winner !== null) startMatch();
+    else togglePause();
+    return;
+  }
+  if (state.view !== 'play' || state.match) return;
+  for (const [id, direction] of [['player', pad.menuHorizontal], ['opponent', pad.menuVertical]]) {
+    if (!direction) continue;
+    const select = element(id);
+    select.selectedIndex = (select.selectedIndex + direction + select.options.length) % select.options.length;
+  }
 }
 
 function frame(time) {
   accumulator += Math.min(100, time - previousTime);
   previousTime = time;
+  pollGamepad();
   if (state.ready) {
     while (accumulator >= 1000 / rules.frameRate) {
       if (state.view === 'play' && state.match && !state.paused) state.match.step(input());
@@ -302,14 +356,7 @@ function frame(time) {
 }
 
 element('start').addEventListener('click', startMatch);
-element('reset').addEventListener('click', () => {
-  state.match = null;
-  state.paused = false;
-  element('pause').textContent = 'Pause';
-  audio.pause(false);
-  held.clear();
-  playSceneAudio();
-});
+element('reset').addEventListener('click', resetMatch);
 element('pause').addEventListener('click', togglePause);
 element('play-tab').addEventListener('click', () => setView('play'));
 element('frames-tab').addEventListener('click', () => setView('frames'));
@@ -355,20 +402,32 @@ const gameKeys = new Set(['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Ke
 window.addEventListener('keydown', event => {
   if (['INPUT', 'SELECT'].includes(event.target.tagName)) return;
   if (event.code === 'KeyP' && !event.repeat) {
+    gamepadWasUsed = false;
     event.preventDefault();
     togglePause();
     return;
   }
   if (event.target.tagName === 'BUTTON') return;
-  if (gameKeys.has(event.code)) { event.preventDefault(); held.add(event.code); }
+  if (gameKeys.has(event.code)) { event.preventDefault(); held.add(event.code); gamepadWasUsed = false; }
   if (event.code === 'Enter' && !event.repeat && state.view === 'play') { event.preventDefault(); startMatch(); }
 });
 window.addEventListener('keyup', event => held.delete(event.code));
-window.addEventListener('blur', () => held.clear());
-document.addEventListener('visibilitychange', () => { held.clear(); previousTime = performance.now(); accumulator = 0; });
+function suspendInput() {
+  held.clear();
+  padControls = neutralControls();
+  gamepads.suspend();
+  if (gamepadWasUsed && state.match && !state.paused) togglePause();
+}
+window.addEventListener('blur', suspendInput);
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) suspendInput();
+  previousTime = performance.now();
+  accumulator = 0;
+});
 for (const button of document.querySelectorAll('[data-key]')) {
   button.addEventListener('pointerdown', event => {
     event.preventDefault();
+    gamepadWasUsed = false;
     button.setPointerCapture(event.pointerId);
     held.add(button.dataset.key);
   });

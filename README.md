@@ -30,6 +30,10 @@ Open http://localhost:8765. GitHub Pages serves the same static files.
 
 Controls use arrows to move, Z to strike, X for a heavy strike, C to run, Space to pin, Enter to start and P to pause. Touch controls are available on touch devices.
 
+Standard gamepads use the left stick or D-pad for movement, bottom face button A/Cross for strikes, right B/Circle for heavy strikes, left X/Square for running, and top Y/Triangle for pinning. Menu/Options starts a match, pauses, resumes or starts a rematch after the result. View/Share returns to selection while paused. In selection, left/right cycles the player wrestler and up/down cycles the opponent. Connect a controller, focus the page and press a button to expose it to the browser.
+
+The first connected controller is used for the current single-player prototype. A 25% stick dead zone suppresses drift. Losing the active pad pauses the match. Reconnection and background-tab recovery require neutral controls before input resumes. Pads without the browser's standard mapping use the default button order, which may differ by device.
+
 The animation explorer exposes all recovered frame table entries, including records marked as requiring additional animation context. The first 12 actor types each have 565 entries. The referee has 19 entries. Successful extraction of a frame does not establish the correct gameplay use or timing of that frame.
 
 Native match animations skip unresolved or empty frame records. The explorer preserves those records for continued research.
@@ -39,6 +43,8 @@ Native match animations skip unresolved or empty frame records. The explorer pre
 Recovered material includes 65,536 sprite tiles, 4,096 background tiles, 4,096 character tiles, original palette data, the wrestler frame lookup tables, standalone sprite chain recipes, and sampled arena and selection layouts.
 
 The playable prototype supports ten selectable wrestlers, movement, two provisional attacks, damage, knockdown, pinning, an optional computer opponent, pause, restart and touch input. Sound explorer plays the 97 recovered sample-effect commands and 18 populated music scores through their native JavaScript sequencers. Selection and match music play after enabling audio. FM synthesis uses the bundled JavaScript build of the BSD-licensed ymfm renderer. Ring camera movement and scenery animation are pending. Stage images currently preserve one captured layout.
+
+Gamepad mapping, menu selection, actions, start/pause, rematch and reconnect behavior are covered by unit checks and browser tests using simulated Gamepad API devices. Physical controller acceptance remains unverified.
 
 Still pending are faithful arcade state machines, exact move and grapple rules, hitboxes, character statistics, animation timing, tag-team and Royal Rumble rules, entrances, complete gameplay sound routing and full-match parity testing. Some compound poses require another object's context. Combat vocalizations and effects remain unconnected while their original event routing is reconstructed.
 

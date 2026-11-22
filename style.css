@@ -171,6 +171,9 @@ input[type=number] {
   font-family:monospace;
   color:#b9cbff
 }
+#controller-status {
+  overflow-wrap:anywhere;
+}
 @media(pointer:coarse) {
   .touch {
     display:flex
