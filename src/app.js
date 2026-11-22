@@ -204,7 +204,7 @@ function drawMatch() {
   const sorted = [...match.fighters].sort((a, b) => a.y - b.y);
   for (const actor of sorted) {
     const frames = tables.get(actor.type);
-    renderer.drawPose(frames, match.pose(actor, frames), actor.x, actor.y - 8, actor.facing > 0);
+    renderer.drawPose(frames, match.pose(actor, frames), actor.x, actor.y - 8, match.mirrored(actor));
   }
   context.drawImage(renderer.foreground, 0, 0);
   context.fillStyle = '#071323';

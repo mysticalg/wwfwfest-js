@@ -1,10 +1,10 @@
-// Native gameplay reconstruction. These rules are provisional and explicitly
-// independent of the arcade executable. Edit these values and methods to change
-// behavior. Exact arcade timings, grapples, damage tables, and AI remain open.
+import {ActorAnimation} from './actors/animation.js';
+import {walkAnimation, walkDelta} from './actors/movement.js';
+
+// Ordinary walking and its descriptor clock are translated from the arcade
+// routines. Combat, running, arena constraints, AI and match rules are provisional.
 export const rules = {
   frameRate: 60,
-  walkSpeed: 0.8,
-  depthSpeed: 0.5,
   runMultiplier: 2.0,
   maximumHealth: 100,
   strikeDamage: 6,
@@ -14,10 +14,11 @@ export const rules = {
   pinFrames: 180,
 };
 
-// Pose numbers refer to recovered frame-table entries shared across the roster.
+// Walking uses the recovered descriptor clock below. Other action sequences
+// remain provisional, with pose numbers from the recovered frame tables.
 export const animations = {
-  idle: {poses: [0, 1], ticks: 18},
-  walk: {poses: [1, 2, 3, 4, 5, 6, 7, 8], ticks: 5},
+  idle: {poses: [0], ticks: 1},
+  walk: {poses: walkAnimation().poses, ticks: walkAnimation().delays[0] + 1},
   run: {poses: [9, 10, 11, 12, 13, 14], ticks: 4},
   strike: {poses: [60, 61, 62, 65], ticks: 4},
   heavy: {poses: [146, 147, 148, 149], ticks: 6},
@@ -29,7 +30,8 @@ export const animations = {
 
 function fighter(type, x, y, facing) {
   return {type, x, y, facing, health: rules.maximumHealth, state: 'idle',
-    stateTicks: 0, downTicks: 0, pinTicks: 0, hits: 0};
+    stateTicks: 0, downTicks: 0, pinTicks: 0, hits: 0,
+    animation: new ActorAnimation({pose: facing > 0 ? 0x8000 : 0})};
 }
 
 export class Match {
@@ -46,6 +48,7 @@ export class Match {
     if (actor.state === state) return;
     actor.state = state;
     actor.stateTicks = 0;
+    actor.animation.reset();
   }
 
   computerInput(actor, target) {
@@ -73,6 +76,10 @@ export class Match {
     const opponentInput = this.ai ? this.computerInput(this.fighters[1], this.fighters[0]) : {};
     this.updateFighter(this.fighters[0], this.fighters[1], input, 0);
     this.updateFighter(this.fighters[1], this.fighters[0], opponentInput, 1);
+    for (const actor of this.fighters) {
+      if (actor.state === 'walk') actor.animation.step(walkAnimation(), actor.facing > 0 ? 0x8000 : 0);
+      else if (actor.state === 'idle') actor.animation.idle(actor.facing > 0 ? 0x8000 : 0);
+    }
   }
 
   updateFighter(actor, target, input, index) {
@@ -111,10 +118,13 @@ export class Match {
     const horizontal = input.horizontal || 0;
     const vertical = input.vertical || 0;
     if (horizontal || vertical) {
-      const speed = input.run ? rules.walkSpeed * rules.runMultiplier : rules.walkSpeed;
-      actor.x = Math.max(35, Math.min(285, actor.x + horizontal * speed));
-      actor.y = Math.max(105, Math.min(179, actor.y + vertical * rules.depthSpeed));
-      if (horizontal) actor.facing = horizontal;
+      const delta = walkDelta(actor.type, horizontal, vertical);
+      const multiplier = input.run ? rules.runMultiplier : 1;
+      actor.x = Math.max(35, Math.min(285, actor.x + delta.x * multiplier / 65536));
+      actor.y = Math.max(105, Math.min(179, actor.y + delta.y * multiplier / 65536));
+      // Normal walking faces the linked opponent ($00fe28), including when
+      // backing away. Running is still the prototype's authored action.
+      if (input.run && horizontal) actor.facing = horizontal;
       this.setState(actor, input.run ? 'run' : 'walk');
     } else {
       this.setState(actor, 'idle');
@@ -138,8 +148,14 @@ export class Match {
   }
 
   pose(actor, frames) {
+    if (actor.state === 'idle' || actor.state === 'walk') return actor.animation.pose & 0x7fff;
     const animation = animations[actor.state];
     const poses = animation.poses.filter(index => frames[index]?.pieces.length && !frames[index].requiresContext);
     return poses[Math.floor(actor.stateTicks / animation.ticks) % poses.length] ?? 0;
+  }
+
+  mirrored(actor) {
+    if (actor.state === 'idle' || actor.state === 'walk') return Boolean(actor.animation.pose & 0x8000);
+    return actor.facing > 0;
   }
 }
