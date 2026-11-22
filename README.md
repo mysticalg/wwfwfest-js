@@ -1,6 +1,6 @@
 # WrestleFest JavaScript reconstruction
 
-An early editable browser reconstruction from the supplied `wwfwfest.zip` US rev 2 ROM set. The owner requested a native JavaScript project and confirmed permission to reproduce the game and assets.
+An early editable browser reconstruction from the supplied `wwfwfest.zip` US rev 2 ROM set. The requester asked for a native JavaScript project and confirmed permission to reproduce the game and assets.
 
 The browser runs Canvas rendering and JavaScript game objects. The gameplay loop is in `src/game.js`. Its movement, combat, AI and pinning rules are provisional authored rules. Exact arcade gameplay reconstruction remains unfinished.
 
@@ -49,4 +49,4 @@ The pose recipe JSON is a separate research export and is preserved by this tool
 
 ## Rights
 
-Original game artwork, character names, branding and game data retain their original ownership. This repository does not grant third-party rights to those materials. Permission to reproduce them was confirmed by the requesting owner in this session. Hardware research references retain their upstream ownership and licensing.
+Original game artwork, character names, branding and game data retain their original ownership. This repository does not grant third-party rights to those materials. The requester confirmed permission to reproduce them in this session. Hardware research references retain their upstream ownership and licensing.

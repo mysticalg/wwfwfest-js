@@ -30,7 +30,7 @@ The supplied ZIP contains the US rev 2 program pair `31a14-2.ic18` and `31a13-2.
 | `$03813a` | Relative actor frame-index table offsets |
 | `$0381de` | Actor recipe-data base pointers |
 
-The selected assembly listing preserves instructions for boot, input accounting, layer clearing and palette handling. Capstone sentinel-looking operands at the end of a limited disassembly range are incomplete reads and require a larger range before use.
+The selected assembly listing preserves instructions for boot, input accounting, layer clearing and palette handling. Bounded code ranges include extra decode context before truncating the displayed listing.
 
 ## Recovered graphics
 

@@ -73,6 +73,10 @@ function setPose(value) {
 async function chooseActor() {
   const request = ++actorRequest;
   const actor = Number(element('actor').value);
+  const controls = ['pose-number', 'pose-range', 'previous', 'next', 'animate'];
+  element('frame-controls').setAttribute('aria-busy', 'true');
+  element('pose-info').textContent = 'Loading poses…';
+  for (const id of controls) element(id).disabled = true;
   try {
     const frames = await prepareActor(actor);
     if (request !== actorRequest) return;
@@ -81,6 +85,11 @@ async function chooseActor() {
     setPose(0);
   } catch (error) {
     element('status').textContent = error.message;
+  } finally {
+    if (request === actorRequest) {
+      element('frame-controls').setAttribute('aria-busy', 'false');
+      for (const id of controls) element(id).disabled = false;
+    }
   }
 }
 
