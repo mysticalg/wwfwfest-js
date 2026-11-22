@@ -3,6 +3,7 @@ import {walkAnimation, walkDelta, walkSpeed} from './actors/movement.js';
 import {groundContact} from './actors/contact.js';
 import {StandingAction, StandingReaction, standingHitResponse} from './actors/standing-action.js';
 import {Knockdown} from './actors/knockdown.js';
+import {Running} from './actors/running.js';
 import {worldPosition, updateScreenPosition, spritePosition, healthSeverity} from './actors/projection.js';
 import {insideRingCollision, addPositionWord} from './actors/ring-collision.js';
 import {actorTables} from './data/actor-tables.js';
@@ -12,11 +13,10 @@ import {SceneryAnimator} from './scenery.js';
 // Ordinary walking and its descriptor clock are translated from the arcade
 // routines. Standing punch/kick handlers and their ordinary contact/reaction paths
 // are translated too. Normal inside-ring knockdown/recovery now uses its original
-// handlers and physics. Running, AI and match rules
+// handlers and physics. Running/braking/rebounds use original handlers too. AI and match rules
 // remain provisional until their remaining handlers are recovered.
 export const rules = {
   frameRate: 60,
-  runMultiplier: 2.0,
   maximumHealth: 100,
   depthTolerance: 17,
   pinFrames: 180,
@@ -27,7 +27,6 @@ export const rules = {
 export const animations = {
   idle: {poses: [0], ticks: 1},
   walk: {poses: walkAnimation().poses, ticks: walkAnimation().delays[0] + 1},
-  run: {poses: [9, 10, 11, 12, 13, 14], ticks: 4},
   down: {poses: [111], ticks: 1},
   pin: {poses: [28], ticks: 1},
   victory: {poses: [89, 90, 91, 92], ticks: 12},
@@ -65,7 +64,9 @@ export class Match {
     actor.standingAction = null;
     actor.standingReaction = null;
     actor.knockdown = null;
+    actor.running = null;
     actor.pendingIdle = false;
+    if (state === 'idle') actor.spriteOffsetX = actor.spriteOffsetY = 0;
     if (state !== 'idle' && state !== 'walk' && state !== 'strike' && state !== 'heavy') actor.contact = 0;
   }
 
@@ -123,7 +124,7 @@ export class Match {
   advanceActor(actor) {
     const facing = actor.facing > 0 ? 0x8000 : 0;
     let collision = {kind: 0, flags: 0};
-    if (!actor.knockdown && actor.movementMode) {
+    if (!actor.knockdown && !actor.running && actor.movementMode) {
       const world = worldPosition(actor);
       collision = insideRingCollision({x: world.xFixed >>> 16, y: world.yFixed >>> 16,
         z: world.zFixed >>> 16, facing});
@@ -132,7 +133,17 @@ export class Match {
       world.zFixed = addPositionWord(world.zFixed, collision.z);
       updateScreenPosition(actor, world);
     }
-    if (actor.knockdown) {
+    if (actor.running) {
+      actor.running.step({mask: actor.inputMask});
+      updateScreenPosition(actor, actor.running);
+      actor.facing = actor.running.facing & 0x8000 ? 1 : -1;
+      actor.movementMode = actor.running.movementMode;
+      actor.contact = actor.running.contact;
+      actor.spriteOffsetX = actor.running.offsetX;
+      actor.spriteOffsetY = actor.running.offsetY;
+      actor.pendingIdle = actor.running.done;
+      this.soundCommands.push(...actor.running.sounds);
+    } else if (actor.knockdown) {
       const pinned = this.fighters.some(other => other !== actor && other.state === 'pin');
       actor.knockdown.cameraY = this.camera.y;
       actor.knockdown.step({pressed: actor.pressedButtons, pinned});
@@ -174,15 +185,13 @@ export class Match {
       }
       actor.standingReaction.step(facing);
       actor.pendingIdle = actor.standingReaction.done;
-    } else if (actor.state === 'run') actor.movementMode = 1;
-    else actor.movementMode = 0;
+    } else actor.movementMode = 0;
 
-    if (!actor.knockdown && (actor.state === 'walk' || actor.state === 'run')) {
+    if (!actor.knockdown && actor.state === 'walk') {
       const delta = walkDelta(actor.type, actor.moveHorizontal, actor.moveVertical);
-      const multiplier = actor.state === 'run' ? rules.runMultiplier : 1;
-      const dx = delta.x * multiplier / 65536;
+      const dx = delta.x / 65536;
       actor.x += dx;
-      actor.y += delta.y * multiplier / 65536;
+      actor.y += delta.y / 65536;
     }
   }
 
@@ -192,16 +201,21 @@ export class Match {
 
   updateFighter(actor, target, input, index) {
     actor.stateTicks++;
-    const buttons = (input.strike ? 1 : 0) | (input.heavy ? 2 : 0);
+    const buttons = (input.strike || input.run ? 1 : 0) | (input.heavy || input.run ? 2 : 0);
     const pressed = buttons & ~actor.previousButtons;
     actor.pressedButtons = pressed;
     actor.previousButtons = buttons;
+    const horizontal = input.horizontal || 0;
+    const vertical = input.vertical || 0;
+    actor.inputMask = (horizontal > 0 ? 1 : horizontal < 0 ? 2 : 0)
+      | (vertical > 0 ? 8 : vertical < 0 ? 4 : 0);
     if (actor.pendingIdle) {
       this.setState(actor, 'idle');
       actor.facing = Math.floor(target.x) >= Math.floor(actor.x) ? 1 : -1;
       return;
     }
     if (actor.state === 'down') return;
+    if (actor.running) return;
     if (actor.standingReaction || actor.standingAction) return;
     const close = Math.abs(actor.x - target.x) < 39 && Math.abs(actor.y - target.y) < rules.depthTolerance;
     if (input.pin && target.state === 'down' && (!target.knockdown || target.knockdown.canPin) && close) {
@@ -216,10 +230,18 @@ export class Match {
     }
     actor.pinTicks = 0;
     if (actor.state === 'pin') this.count = 0;
+    if (pressed === 3) {
+      const body = new Running({...worldPosition(actor), type: actor.type,
+        facing: actor.facing > 0 ? 0x8000 : 0, pose: actor.animation.pose,
+        movementMode: actor.movementMode, clock: actor.animation});
+      this.setState(actor, 'run');
+      actor.running = body;
+      actor.animation = body.clock;
+      return;
+    }
     actor.facing = Math.floor(target.x) >= Math.floor(actor.x) ? 1 : -1;
     if (pressed) {
-      // Combined-button running is still open. Single-button row-zero
-      // actions are the recovered punch 0 and kick $72.
+      // Single-button row-zero actions are punch 0 and kick $72.
       const button = pressed & 2 ? 1 : 0;
       const contact = actor.contact;
       this.setState(actor, button ? 'heavy' : 'strike');
@@ -227,15 +249,11 @@ export class Match {
       actor.animation = actor.standingAction.clock;
       return;
     }
-    const horizontal = input.horizontal || 0;
-    const vertical = input.vertical || 0;
     actor.moveHorizontal = horizontal;
     actor.moveVertical = vertical;
     if (horizontal || vertical) {
-      // Normal walking faces the linked opponent ($00fe28), including when
-      // backing away. Running is still the prototype's authored action.
-      if (input.run && horizontal) actor.facing = horizontal;
-      this.setState(actor, input.run ? 'run' : 'walk');
+      // Normal walking faces the linked opponent ($00fe28), including when backing away.
+      this.setState(actor, 'walk');
     } else {
       this.setState(actor, 'idle');
     }
@@ -251,7 +269,7 @@ export class Match {
     };
     if (!groundContact(body(actor), body(target))) return;
     const response = standingHitResponse(action.button, actor.facing > 0 ? 0x8000 : 0,
-      {contact: target.contact, flags33: 0, comboCount: target.comboCount,
+      {contact: target.contact, flags33: target.running?.flags33 || 0, comboCount: target.comboCount,
         facing: target.facing > 0 ? 0x8000 : 0});
     if (!response.accepted) return;
     action.hits.add(target);
@@ -279,7 +297,7 @@ export class Match {
   }
 
   pose(actor, frames) {
-    if (actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown) {
+    if (actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown || actor.running) {
       return actor.animation.pose & 0x7fff;
     }
     const animation = animations[actor.state];
@@ -288,7 +306,7 @@ export class Match {
   }
 
   mirrored(actor) {
-    if (actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown) {
+    if (actor.state === 'idle' || actor.state === 'walk' || actor.standingAction || actor.standingReaction || actor.knockdown || actor.running) {
       return Boolean(actor.animation.pose & 0x8000);
     }
     return actor.facing > 0;

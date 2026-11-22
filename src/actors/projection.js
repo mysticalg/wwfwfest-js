@@ -21,8 +21,10 @@ export function updateScreenPosition(actor, world) {
 // Combining those yields the 232 constant for the recovered local recipes.
 export function spritePosition(actor, camera = practiceCamera) {
   const world = worldPosition(actor);
-  return {x: (world.xFixed >>> 16) - camera.x,
-    y: 232 + camera.y - (world.yFixed >>> 16) - (world.zFixed >>> 16)};
+  const offsetX = (actor.spriteOffsetX || 0) << 24 >> 24;
+  const offsetY = (actor.spriteOffsetY || 0) << 24 >> 24;
+  return {x: (world.xFixed >>> 16) - camera.x + (actor.facing > 0 ? -offsetX : offsetX),
+    y: 232 + camera.y - (world.yFixed >>> 16) - (world.zFixed >>> 16) - offsetY};
 }
 
 // $0240e8, after pending damage is applied. The low-health threshold is the

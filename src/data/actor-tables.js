@@ -29,6 +29,67 @@ export const actorTables = {
     12,
     12
   ],
+  "runSpeeds": [
+    47,
+    53,
+    49,
+    45,
+    56,
+    48,
+    44,
+    56,
+    40,
+    47,
+    48,
+    47
+  ],
+  "runAnimations": {
+    "run": {
+      "source": 69282,
+      "update": 69314,
+      "mode": 2,
+      "delays": [
+        6,
+        6,
+        6,
+        6,
+        6,
+        6
+      ],
+      "poses": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    "brake": {
+      "source": 69570,
+      "update": 69582,
+      "mode": 1,
+      "delays": [
+        65280
+      ],
+      "poses": [
+        10
+      ]
+    },
+    "rebound": {
+      "source": 69648,
+      "update": 69664,
+      "mode": 1,
+      "delays": [
+        8,
+        12
+      ],
+      "poses": [
+        105,
+        105
+      ]
+    }
+  },
   "inputDirections": [
     0,
     64,

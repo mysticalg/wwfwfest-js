@@ -46,7 +46,7 @@ Movement mode 2 adds signed 8.8 velocity words to the position longs and subtrac
 - Four idle-entry scenarios through the complete original actor dispatcher.
 - Twelve character locomotion runs through the original idle/walk update handlers, animation dispatcher and movement routine. Each runs 120 updates with starts, eight directions, reversals and stopping. The integrated JavaScript match produces the same positions and pose words in this bounded ordinary context.
 
-These checks establish the translated paths within the stated inputs. They do not establish full-match equivalence, tag rules, Royal Rumble or physical controller acceptance. Standing attacks have separate comparisons in [combat research](COMBAT.md), inside-ring collision/knockdowns in [knockdown research](KNOCKDOWNS.md), and camera/scenery in [camera research](CAMERA.md). Running, other moves, AI and pinning remain provisional. Other animation descriptors in this fixture verify the generic clock, not their complete action handlers.
+These checks establish the translated paths within the stated inputs. They do not establish full-match equivalence, tag rules, Royal Rumble or physical controller acceptance. Standing attacks have separate comparisons in [combat research](COMBAT.md), inside-ring collision/knockdowns in [knockdown research](KNOCKDOWNS.md), and camera/scenery in [camera research](CAMERA.md). Running/braking/rebound handlers have separate comparisons in [running research](RUNNING.md). Other moves, AI and pinning remain provisional. Other animation descriptors in this fixture verify the generic clock, not their complete action handlers.
 
 Reproduce data extraction from the archive:
 

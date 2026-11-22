@@ -33,6 +33,10 @@ def main():
     data = {
         'walkSpeeds': list(program[0x108ee:0x108ee + 12]),
         'alternateWalkSpeeds': list(program[0x108fa:0x108fa + 12]),
+        'runSpeeds': list(program[0x10f8a:0x10f8a + 12]),
+        'runAnimations': {name: descriptor(address) for name, address in {
+            'run': 0x10ea2, 'brake': 0x10fc2, 'rebound': 0x11010,
+        }.items()},
         'inputDirections': words(0xe516, 16),
         'polarX': words(0x2388, 65),
         'polarY': words(0x240a, 65),

@@ -46,7 +46,7 @@ The supplied program uses 565 frame indices for each of the first 12 actor types
 
 `src/renderer.js` reproduces the recovered tile-chain interpretation in Canvas. The legacy `arena.png` files preserve the earlier captured reference view. Normal match rendering now uses recovered scrolling world layers and crowd patches, with native camera/scenery functions documented in [camera research](CAMERA.md).
 
-`src/game.js` combines translated locomotion, standing combat, normal inside-ring knockdown/recovery and camera behavior with provisional match rules. [Actor research](ACTORS.md) covers locomotion, [combat research](COMBAT.md) standing attacks, [knockdown research](KNOCKDOWNS.md) ring collision/recovery, and [camera research](CAMERA.md) scrolling/scenery. Other moves, outside-ring behavior, running, AI and pinning remain incomplete.
+`src/game.js` combines translated walking/running/rebounds, standing combat, normal inside-ring knockdown/recovery and camera behavior with provisional match rules. [Actor research](ACTORS.md) covers locomotion, [combat research](COMBAT.md) standing attacks, [knockdown research](KNOCKDOWNS.md) ring collision/recovery, and [camera research](CAMERA.md) scrolling/scenery. [Running research](RUNNING.md) documents ordinary runs, braking and rope rebound physics. Other moves, outside-ring behavior, moving rope graphics, AI and pinning remain incomplete.
 
 Next reverse engineering work must map object states and routines to each combat action, recover actual hit regions and damage tables, implement dependent grapple poses, connect original action descriptors and test complete tag and Rumble matches against reference runs.
 
